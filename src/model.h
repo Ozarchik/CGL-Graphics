@@ -6,16 +6,16 @@
 #include <glad/glad.h>
 #include <string>
 
-#include "justmesh.h"
-#include "shaderprogram.h"
+#include "shader.h"
 #include "texturebase.h"
+#include "mesh.h"
 
 namespace CGL {
 class Model {
 public:
     Model(const std::string& filepath);
 
-    void draw(CGL::ShaderProgram& shaderProgram);
+    void draw(CGL::Shader& Shader);
     void load(const std::string& filepath);
 
 private:

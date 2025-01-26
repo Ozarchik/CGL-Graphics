@@ -1,0 +1,1 @@
+-I"C:/libs/glfw-3.4/install/include" -IC:/libs/glad/include -IC:/libs/glm/install/include -IC:/libs/assimp/deploy/include

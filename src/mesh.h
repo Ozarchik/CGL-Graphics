@@ -9,7 +9,7 @@
 #include <iostream>
 
 #include "buffer.h"
-#include "shaderprogram.h"
+#include "shader.h"
 #include "texture.h"
 #include "texturebase.h" 
 #include "vertex.h"
@@ -21,7 +21,7 @@ class Mesh {
 public:
     Mesh() = default;
     Mesh(const std::vector<Vertex>& vertices, const std::vector<TextureBase>& textures, const std::vector<unsigned int>& indices);
-    virtual void draw(ShaderProgram& shaderProgram) {
+    virtual void draw(Shader& Shader) {
         // bind appropriate textures
         unsigned int diffuseNr  = 1;
         unsigned int specularNr = 1;
@@ -43,7 +43,7 @@ public:
                 number = std::to_string(heightNr++); // transfer unsigned int to string
 
             // now set the sampler to the correct texture unit
-            glUniform1i(glGetUniformLocation(shaderProgram.id(), (name + number).c_str()), i);
+            glUniform1i(glGetUniformLocation(Shader.id(), (name + number).c_str()), i);
             // and finally bind the texture
             glBindTexture(GL_TEXTURE_2D, m_textures[i].id);
         }

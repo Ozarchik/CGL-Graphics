@@ -30,12 +30,12 @@ public:
 private:
     float m_pitch, m_yaw, m_roll;
     float m_x, m_y;
-    float m_sensvity = 0.1f;
+    float m_sensvity = 0.05f;
 
     glm::vec3 m_pos = glm::vec3(0.0f, 0.0f, 3.0f);
     glm::vec3 m_front = glm::vec3(0.0f, 0.0f, -1.0f);
     glm::vec3 m_up = glm::vec3(0.0f, 1.0f, 0.0f);
 
-    float m_speed = 0.05f;
+    float m_speed = 0.01f;
 };
 };

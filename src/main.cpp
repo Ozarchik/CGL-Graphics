@@ -5,24 +5,22 @@
 
 #include "buffer.h"
 #include "camera.h"
-#include "context.h"
 #include "cube.h"
 #include "light.h"
 #include "texture.h"
-#include "matrix4.h"
+#include "transform.h"
 #include "model.h"
 #include "scene.h"
 #include "shader.h"
-#include "shaderprogram.h"
+#include "window.h"
 
-void processInput();
-void framebufferSizeCallback(GLFWwindow* window, int width, int height);
-void mouseCallback(GLFWwindow* window, double x, double y);
+// void processInput();
+// void framebufferSizeCallback(GLFWwindow* window, int width, int height);
+// void mouseCallback(GLFWwindow* window, double x, double y);
 
-CGL::Context context;
+CGL::Window window;
+CGL::Shader shader;
 CGL::Scene scene;
-CGL::ShaderProgram objectShader;
-CGL::ShaderProgram lightShader;
 CGL::Camera camera;
 
 CGL::Mesh* cube = nullptr;
@@ -37,60 +35,62 @@ void initOpenGL()
 	}
 
 	glEnable(GL_DEPTH_TEST);
-	glfwSetFramebufferSizeCallback(context.getWindow(), framebufferSizeCallback);
-	glfwSetCursorPosCallback(context.getWindow(), mouseCallback);
-	glViewport(0, 0, context.width(), context.height());
+    glViewport(0, 0, window.width(), window.height());
 }
 
 int loop() {					
-    CGL::Model renderModel("src/backpack.obj");
+    // CGL::Model renderModel("src/backpack.obj");
 	// CGL::Model renderModel("src/InteriorTest.fbx");
-	while (!glfwWindowShouldClose(context.getWindow())) {
 
-		processInput();
+    CGL::InputController inputController(&window, &camera);
+
+    while (!glfwWindowShouldClose(window.getWindow())) {
+
+        inputController.process();
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		double timeVal = glfwGetTime() * 60;
 
-		objectShader.use();
+        shader.use();
 
-		CGL::Matrix4 view = camera.getLookAt();
-		objectShader.setMat4("view", view.data());
+		CGL::Transform view = camera.getLookAt();
+        shader.setMat4("view", view.data());
 
-		CGL::Matrix4 projection;
-		projection.perspective(45.0f, context.width()/context.height(), 1.0f, 100.0f);
-		objectShader.setMat4("projection", projection.data());
+		CGL::Transform projection;
+        projection.perspective(45.0f, window.width()/window.height(), 1.0f, 100.0f);
+        shader.setMat4("projection", projection.data());
 
-		CGL::Matrix4 model;
+		CGL::Transform model;
 
 		// model.rotate(90.0f, 1.0f, 1.0f, 0.0f);
-		objectShader.setMat4("model", model.data());
+        shader.setMat4("model", model.data());
 		model.translate(0.0f, 0.0f, 25.0f);
 
-        objectShader.setVec3("viewPos", camera.pos());
+        shader.setVec3("viewPos", camera.pos());
 
-		objectShader.setVec3("light.position", glm::vec3(1.2f, 1.0f, 2.0f));
-        objectShader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
-        objectShader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
-        objectShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+        shader.setVec3("light.position", glm::vec3(1.2f, 1.0f, 2.0f));
+        shader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
+        shader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
+        shader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
-        objectShader.setFloat("material.shininess", 64.0f);
-		objectShader.setInt("material.diffuse", 0);
-		objectShader.setInt("material.specular", 1);
-//		light.setup(objectShader);
+        shader.setFloat("material.shininess", 64.0f);
+        shader.setInt("material.diffuse", 0);
+        shader.setInt("material.specular", 1);
+//		light.setup(shader);
 
 //		lightShader.use();
 //		lightShader.setMat4("model", model.data());
 //		lightShader.setMat4("view", view.data());
 //		lightShader.setMat4("projection", projection.data());
 
-		// scene.render(objectShader);
+        scene.render(shader);
 		// scene.render(lightShader);
 		
-		renderModel.draw(objectShader);
-		context.update();
+        // renderModel.draw(shader);
+
+        window.update();
 	}
 
 	return 0;
@@ -98,10 +98,10 @@ int loop() {
 
 int main()
 {
-	context.init();
+    window.init();
 	initOpenGL();
 
-	cube = new CGL::Cube(glm::vec3(0.0f, 0.0f, 2.0f));
+    cube = new CGL::Cube(glm::vec3(3.0f, 3.0f, 2.0f));
 	lightCube = new CGL::Cube(glm::vec3(1.0f, 1.0f, -4.0f));
 
 	// texture1.loadImage("src/container2.png", CGL::RGBA);
@@ -110,44 +110,44 @@ int main()
 	scene.addMesh(cube);
 	scene.addMesh(lightCube);
 
-    objectShader = CGL::ShaderProgram("src/vertex.glsl", "src/fragment.glsl");
-	lightShader = CGL::ShaderProgram("src/vertexLight.glsl", "src/fragmentLight.glsl");
+    shader = CGL::Shader("shaders/vertex.glsl", "shaders/fragment.glsl");
+    // lightShader = CGL::Shader("shaders/vertexLight.glsl", "shaders/fragmentLight.glsl");
 
 	return loop();
 }
 
-void processInput()
-{
-	auto window = context.getWindow();
+// void processInput()
+// {
+//     auto window = window.getWindow();
 
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-	    glfwSetWindowShouldClose(context.getWindow(), true);
+// 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+//         glfwSetWindowShouldClose(window.getWindow(), true);
 
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		camera.stepFront();
+// 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+// 		camera.stepFront();
 
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		camera.stepBack();
+// 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+// 		camera.stepBack();
 
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		camera.stepLeft();
+// 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+// 		camera.stepLeft();
 
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		camera.stepRight();
+// 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+// 		camera.stepRight();
 
-	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
-	    camera.stepDown();
+// 	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
+// 	    camera.stepDown();
 
-	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
-		camera.stepUp();
-}
+// 	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
+// 		camera.stepUp();
+// }
 
-void framebufferSizeCallback(GLFWwindow* window, int width, int height)
-{
-	glViewport(0, 0, width, height);
-}
+// void framebufferSizeCallback(GLFWwindow* window, int width, int height)
+// {
+// 	glViewport(0, 0, width, height);
+// }
 
-void mouseCallback(GLFWwindow* window, double x, double y)
-{
-    camera.rotate(x, y);
-}
+// void mouseCallback(GLFWwindow* window, double x, double y)
+// {
+//     camera.rotate(x, y);
+// }

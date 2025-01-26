@@ -6,7 +6,7 @@
 
 #include <vector>
 
-#include "shaderprogram.h"
+#include "shader.h"
 
 namespace CGL {
 class Light {
@@ -14,7 +14,7 @@ public:
     Light() = default;
     Light(const glm::vec3& position, const glm::vec3& color);
 
-    void setup(ShaderProgram& shaderProgram);
+    void setup(Shader& Shader);
     
 private:
     glm::vec3 m_pos;

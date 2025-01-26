@@ -5,8 +5,8 @@ CGL::Light::Light(const glm::vec3& pos, const glm::vec3& color)
 {
 }
 
-void CGL::Light::setup(ShaderProgram& shaderProgram)
+void CGL::Light::setup(Shader& Shader)
 {
-    shaderProgram.setVec3("lightPos", m_pos);
-    shaderProgram.setVec3("lightColor", m_color);
+    Shader.setVec3("lightPos", m_pos);
+    Shader.setVec3("lightColor", m_color);
 }

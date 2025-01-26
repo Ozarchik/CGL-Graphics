@@ -1,12 +1,12 @@
 #include "scene.h"
 
 
-void CGL::Scene::render(ShaderProgram& shaderProgram)
+void CGL::Scene::render(Shader& Shader)
 {
-    shaderProgram.use();
+    Shader.use();
 
     for (const auto obj: m_meshes) {
-        obj->draw(shaderProgram);
+        obj->draw(Shader);
     }
 }
 

@@ -6,10 +6,10 @@ CGL::Model::Model(const std::string& filepath)
     load(filepath);
 }
 
-void CGL::Model::draw(ShaderProgram& shaderProgram)
+void CGL::Model::draw(Shader& Shader)
 {
     for (auto m: m_meshes) {
-        m.draw(shaderProgram);
+        m.draw(Shader);
     }
 }
 

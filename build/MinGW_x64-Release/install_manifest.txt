@@ -1,0 +1,2 @@
+C:/MyCode/CGL-Graphics/build/MinGW_x64-Release/shaders/fragment.glsl
+C:/MyCode/CGL-Graphics/build/MinGW_x64-Release/shaders/vertex.glsl

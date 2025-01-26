@@ -1,0 +1,3 @@
+C:/MyCode/CGL-Graphics/build/CMakeFiles/CGL-Graphics.dir
+C:/MyCode/CGL-Graphics/build/CMakeFiles/edit_cache.dir
+C:/MyCode/CGL-Graphics/build/CMakeFiles/rebuild_cache.dir

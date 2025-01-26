@@ -1,12 +1,12 @@
 #pragma once
 #include <vector>
 #include "mesh.h"
-#include "shaderprogram.h"
+#include "shader.h"
 
 namespace CGL {
 class Scene {
 public:
-    void render(ShaderProgram& shaderProgram);
+    void render(Shader& Shader);
     void addMesh(Mesh* mesh);
     void clear();
     
