@@ -23,3 +23,8 @@ void CGL::Scene::clear()
 
     m_meshes.clear();
 }
+
+std::vector<CGL::Mesh *> CGL::Scene::meshes() const
+{
+    return m_meshes;
+}

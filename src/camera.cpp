@@ -1,9 +1,16 @@
 #include "camera.h"
+#include <iostream>
 
 
 glm::mat4 CGL::Camera::getLookAt()
 {
     return glm::lookAt(m_pos, m_pos + m_front, m_up);
+}
+
+CGL::Camera::Camera()
+{
+    m_front = glm::vec3(0.0f, 0.0f, 1.0f);
+    update();
 }
 
 float CGL::Camera::x() const
@@ -14,6 +21,11 @@ float CGL::Camera::x() const
 float CGL::Camera::y() const
 {
     return m_y;
+}
+
+void CGL::Camera::setPos(glm::vec3 pos)
+{
+    m_pos = pos;
 }
 
 glm::vec3 CGL::Camera::pos() const
@@ -27,7 +39,8 @@ void CGL::Camera::rotate(float targX, float targY)
     static float lastY = targY;
 
 	float xoffset = targX - lastX;
-	float yoffset = lastY - targY;
+    float yoffset = lastY - targY;
+
 	lastX = targX;
 	lastY = targY;
 
@@ -35,16 +48,22 @@ void CGL::Camera::rotate(float targX, float targY)
 	yoffset *= m_sensvity;
 
 	m_yaw += xoffset;
-	m_pitch += yoffset;
+    m_pitch += yoffset;
 
-	if (m_pitch > 89.0f)  m_pitch = 89.0f;
-	if (m_pitch < -89.0f) m_pitch = -89.0f;
+    if (m_pitch > 89.0f)  m_pitch = 89.0f;
+    if (m_pitch < -89.0f) m_pitch = -89.0f;
 
-	glm::vec3 direction;
-	direction.x = cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
-	direction.y = sin(glm::radians(m_pitch));
-	direction.z = sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
-	m_front = glm::normalize(direction);
+    update();
+}
+
+void CGL::Camera::update()
+{
+    glm::vec3 direction;
+    direction.x = cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
+    direction.y = sin(glm::radians(m_pitch));
+    direction.z = sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
+
+    m_front = glm::normalize(direction);
 }
 
 void CGL::Camera::move(float x)

@@ -10,10 +10,12 @@
 #include "texturebase.h"
 #include "mesh.h"
 
+using std::string;
+
 namespace CGL {
 class Model {
 public:
-    Model(const std::string& filepath);
+    Model(const std::string& filepath, bool flipUV);
 
     void draw(CGL::Shader& Shader);
     void load(const std::string& filepath);
@@ -23,11 +25,13 @@ private:
     Mesh processMesh(aiMesh* mesh, const aiScene* scene);
 
     std::vector<TextureBase> loadTextures(aiMaterial* material, aiTextureType type, std::string typeName);
-    unsigned int textureFromFile(const char *path, const std::string &directory, bool gamma = false);
 
 private:
     std::vector<CGL::Mesh> m_meshes;
     std::string m_directory;
     std::vector<TextureBase> textures_loaded;
+    std::vector<TextureBase> loadMaterialTextures(aiMaterial *mat, aiTextureType type, string typeName);
+
+    bool m_flipUV = false;
 };
-};
+}

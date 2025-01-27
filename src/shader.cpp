@@ -80,7 +80,7 @@ void CGL::Shader::setFloat(const std::string& name, float value)
 
 void CGL::Shader::setMat4(const std::string &name, const glm::mat4 &mat) const
 {
-	glUniformTransformfv(glGetUniformLocation(m_id, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(m_id, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
 GLint CGL::Shader::getUniformLoc(const std::string& name) const

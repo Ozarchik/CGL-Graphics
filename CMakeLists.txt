@@ -16,7 +16,9 @@ set(ASSIMP_LIB C:/libs/assimp/deploy/bin/libassimp-5.dll)
 
 
 add_executable(${PROJECT_NAME}
-    src/inputcontroller.h src/inputcontroller.cpp)
+    src/application.h src/application.cpp
+    src/sphere.h src/sphere.cpp)
+
 target_link_libraries(${PROJECT_NAME} PRIVATE
     ${GLFW_LIB}
     ${GLM_LIB}
@@ -44,10 +46,18 @@ target_sources(${PROJECT_NAME} PRIVATE
 
 
 install(
-    DIRECTORY ${CMAKE_SOURCE_DIR}/shaders
+    DIRECTORY ${CMAKE_SOURCE_DIR}/shaders ${CMAKE_SOURCE_DIR}/textures
     DESTINATION ${CMAKE_BINARY_DIR}
 )
 
+# add_custom_command (
+#     TARGET ${PROJECT_NAME}
+#     POST_BUILD
+#     COMMAND ${CMAKE_COMMAND}
+#     -E copy_directory_if_different
+#     "${CMAKE_CURRENT_SOURCE_DIR}/shaders"
+#     "${CMAKE_BINARY_DIR}>/shaders"
+# )
 
 # add_custom_command (
 #     TARGET ${PROJECT_NAME} POST_BUILD

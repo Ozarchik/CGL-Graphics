@@ -2,12 +2,17 @@
 
 CGL::Transform::Transform()
 {
-    m_matrix = glm::mat4(1.0f);
+    reset();
 }
 
 CGL::Transform::Transform(const glm::mat4& mat)
 {
     m_matrix = mat;
+}
+
+void CGL::Transform::reset()
+{
+    m_matrix = glm::mat4(1.0f);
 }
 
 void CGL::Transform::translate(float x, float y, float z)
@@ -43,6 +48,12 @@ void CGL::Transform::perspective(float fov, float ration, float near, float far)
         near,
         far
     );
+}
+
+CGL::Transform &CGL::Transform::operator*(Transform &right)
+{
+    m_matrix *= right.data();
+    return *this;
 }
 
 glm::mat4 CGL::Transform::data() const

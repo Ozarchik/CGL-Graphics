@@ -14,7 +14,6 @@ void CGL::Window::init()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
-
 	m_window = glfwCreateWindow(m_width, m_height, m_title.c_str(), nullptr, nullptr);
 
 	if (!m_window) {
@@ -60,3 +59,8 @@ bool CGL::Window::alive()
 {
 	return m_alive;
 }
+
+// void CGL::Window::framebufferSizeCallback(GLFWwindow* window, int width, int height)
+// {
+//     glViewport(0, 0, width, height);
+// }

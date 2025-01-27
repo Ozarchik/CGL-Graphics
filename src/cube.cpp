@@ -3,8 +3,34 @@
 #include <iostream>
 
 CGL::Cube::Cube(const glm::vec3& position)
-    : Mesh()
+    : Mesh(), m_x(position.x), m_y(position.y), m_z(position.z)
 {
+    m_pos = position;
+    glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
+
+    m_coordBuffer.setVector(vectices, CGL::VertexBuffer);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GL_FLOAT), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    m_normalBuffer.setVector(normals, CGL::VertexBuffer);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);
+
+    m_texBuffer.setVector(texes, CGL::VertexBuffer);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(2);
+
+    m_colorBuffer.setVector(colors, CGL::VertexBuffer);
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GL_FLOAT), (void*)0);
+    glEnableVertexAttribArray(3);
+}
+
+CGL::Cube::Cube(const glm::vec3& position, const std::vector<TextureBase>& textures)
+    : Mesh(), m_x(position.x), m_y(position.y), m_z(position.z)
+{
+    m_textures = textures;
+
     m_pos = position;
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
@@ -54,7 +80,7 @@ CGL::Cube::Cube(const std::vector<Vertex>& vertices, const std::vector<TextureBa
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
     // vertex texture coords
     glEnableVertexAttribArray(2);	
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoords));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texcoord));
 }
 
 CGL::Cube::~Cube()
@@ -65,25 +91,15 @@ CGL::Cube::~Cube()
 void CGL::Cube::draw(Shader &Shader) 
 {
 
-    // bind appropriate textures
-    // unsigned int diffuseNr  = 1;
-    // unsigned int specularNr = 1;
-    // for(unsigned int i = 0; i < m_textures.size(); i++)
-    // {
-    //     glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
-    //     // retrieve texture number (the N in diffuse_textureN)
-    //     std::string number;
-    //     std::string name = m_textures[i].type;
-    //     if(name == "texture_diffuse")
-    //         number = std::to_string(diffuseNr++);
-    //     else if(name == "texture_specular")
-    //         number = std::to_string(specularNr++); // transfer unsigned int to string
+    for(unsigned int i = 0; i < m_textures.size(); i++) {
+        glActiveTexture(GL_TEXTURE0 + i);
 
-    //     // now set the sampler to the correct texture unit
-    //     glUniform1i(glGetUniformLocation(Shader.id(), (name + number).c_str()), i);
-    //     // and finally bind the texture
-    //     glBindTexture(GL_TEXTURE_2D, m_textures[i].id);
-    // }
+        // glUniform1i(glGetUniformLocation(Shader.id(), (std::string("meterial.") + m_textures[i].type).c_str()), i);
+        // glUniform1i(glGetUniformLocation(Shader.id(), (m_textures[i].type).c_str()), i);
+
+        glBindTexture(GL_TEXTURE_2D, m_textures[i].id);
+    }
+
     
     // draw mesh
     glBindVertexArray(VAO);
