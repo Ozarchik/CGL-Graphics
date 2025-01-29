@@ -1,5 +1,11 @@
 #include "mesh.h"
 
+CGL::Mesh::Mesh(const glm::vec3 &pos)
+    : m_pos(pos)
+{
+
+}
+
 CGL::Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<TextureBase>& textures, const std::vector<unsigned int>& indices)
     : m_vertices(vertices), m_textures(textures), m_indices(indices)
 {

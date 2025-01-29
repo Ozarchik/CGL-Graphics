@@ -1,5 +1,9 @@
 #include "scene.h"
 
+CGL::Scene::~Scene()
+{
+    clear();
+}
 
 void CGL::Scene::render(Shader& Shader)
 {

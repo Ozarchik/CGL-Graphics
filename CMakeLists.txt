@@ -17,7 +17,12 @@ set(ASSIMP_LIB C:/libs/assimp/deploy/bin/libassimp-5.dll)
 
 add_executable(${PROJECT_NAME}
     src/application.h src/application.cpp
-    src/sphere.h src/sphere.cpp)
+    src/sphere.h src/sphere.cpp
+    shaders/skybox.vert
+    shaders/skybox.frag
+    src/normalmap.h src/normalmap.cpp
+    shaders/brick.vert
+    shaders/brick.frag)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     ${GLFW_LIB}

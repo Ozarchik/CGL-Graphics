@@ -20,6 +20,7 @@ namespace CGL {
 class Mesh {
 public:
     Mesh() = default;
+    Mesh(const glm::vec3& pos);
     Mesh(const std::vector<Vertex>& vertices, const std::vector<TextureBase>& textures, const std::vector<unsigned int>& indices);
 
     virtual void setup();

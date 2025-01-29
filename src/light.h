@@ -9,15 +9,8 @@
 #include "shader.h"
 
 namespace CGL {
-class Light {
-public:
-    Light() = default;
-    Light(const glm::vec3& position, const glm::vec3& color);
-
-    void setup(Shader& Shader);
-    
-private:
-    glm::vec3 m_pos;
-    glm::vec3 m_color;
+struct Light {
+    glm::vec3 pos;
+    glm::vec3 color;
 };
-};
+}

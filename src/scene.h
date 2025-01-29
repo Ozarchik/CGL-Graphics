@@ -6,6 +6,8 @@
 namespace CGL {
 class Scene {
 public:
+    Scene() = default;
+    ~Scene();
     void render(Shader& Shader);
     void addMesh(Mesh* mesh);
     void clear();

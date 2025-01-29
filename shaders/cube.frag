@@ -26,22 +26,36 @@ struct Light {
 };
 
 uniform Material material;
-uniform Light light;
+uniform Light lights[3];
 
 void main()
 {
-    vec3 norm = normalize(fNormal);
-    vec3 lightDir = normalize(light.position - fPos);
-    vec3 reflectDir = reflect(-lightDir, norm);
-    vec3 cameraDir = normalize(viewPos - fPos);
+    vec3 resultColor;
+    vec3 amb ;
+    vec3 diff;
+    vec3 spec;
 
-    vec3 amb = vec3(texture(material.diffuse, fTexCoords));
-    vec3 diff = vec3(texture(material.diffuse, fTexCoords)) * max(dot(lightDir, norm), 0.0);
-    vec3 spec = vec3(texture(material.specular, fTexCoords)) * pow(max(dot(cameraDir, reflectDir), 0.0), material.shininess);
+    vec4 cameraLight = vec4(1.0);
+    float angleSplit = 10; // degree
 
-    vec3 resultColor = (amb + diff + spec) * light.color; // * fColor;
+    for (int i = 0; i < 3; i++) {
+        vec3 norm = normalize(fNormal);
+        vec3 lightDir = normalize(lights[i].position - fPos);
+        vec3 reflectDir = reflect(-lightDir, norm);
+        vec3 cameraDir = normalize(viewPos - fPos);
+
+        amb = vec3(texture(material.diffuse, fTexCoords));
+        diff = vec3(texture(material.diffuse, fTexCoords)) * max(dot(lightDir, norm), 0.0);
+        spec = vec3(texture(material.specular, fTexCoords)) * pow(max(dot(cameraDir, reflectDir), 0.0), material.shininess);
+
+        // vec3 combColor = (amb + diff + spec) * lights[i].color;
+        vec3 combColor = (fColor) * lights[i].color;
+        resultColor += combColor;
+    }
+
+    // resultColor = (amb + diff + spec) * light.color; // * fColor;
 
     // FragColor = vec4(resultColor, 1.0);
-    FragColor = vec4(fColor, 1.0);
+    FragColor = vec4(resultColor, 1.0);
 }
 

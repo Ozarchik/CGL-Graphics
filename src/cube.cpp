@@ -2,10 +2,9 @@
 #include <string>
 #include <iostream>
 
-CGL::Cube::Cube(const glm::vec3& position)
-    : Mesh(), m_x(position.x), m_y(position.y), m_z(position.z)
+CGL::Cube::Cube()
+    : Mesh(glm::vec3(0.0f, 0.0f, 0.0f))
 {
-    m_pos = position;
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
@@ -26,12 +25,34 @@ CGL::Cube::Cube(const glm::vec3& position)
     glEnableVertexAttribArray(3);
 }
 
-CGL::Cube::Cube(const glm::vec3& position, const std::vector<TextureBase>& textures)
-    : Mesh(), m_x(position.x), m_y(position.y), m_z(position.z)
+CGL::Cube::Cube(const glm::vec3& pos)
+    : Mesh(pos)
+{
+    glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
+
+    m_coordBuffer.setVector(vectices, CGL::VertexBuffer);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GL_FLOAT), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    m_normalBuffer.setVector(normals, CGL::VertexBuffer);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);
+
+    m_texBuffer.setVector(texes, CGL::VertexBuffer);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(2);
+
+    m_colorBuffer.setVector(colors, CGL::VertexBuffer);
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GL_FLOAT), (void*)0);
+    glEnableVertexAttribArray(3);
+}
+
+CGL::Cube::Cube(const glm::vec3& pos, const std::vector<TextureBase>& textures)
+    : Mesh(pos)
 {
     m_textures = textures;
 
-    m_pos = position;
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 

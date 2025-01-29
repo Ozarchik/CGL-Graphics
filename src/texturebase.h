@@ -56,4 +56,32 @@ struct TextureBase {
 
         return textureID;
     }
+
+    static unsigned int loadCubmap(const std::string &dir, const std::vector<std::string>& faces)
+    {
+        unsigned int texId;
+        glGenTextures(1, &texId);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, texId);
+
+        int w, h, channels;
+        unsigned char* data;
+
+        for (unsigned int i = 0; i < faces.size(); i++) {
+            data = stbi_load((dir + "/" + faces[i]).c_str(), &w, &h, &channels, 0);
+            glTexImage2D (
+                GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0,
+                GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, data
+            );
+
+            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+            free(data);
+        }
+
+        return texId;
+    }
 };
