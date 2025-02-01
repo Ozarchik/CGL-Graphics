@@ -3,25 +3,25 @@
 #include <iostream>
 
 CGL::Cube::Cube(const unsigned int& size)
-    : Mesh(glm::vec3(0.0f, 0.0f, 0.0f)), m_size(size)
+    : Mesh(glm::vec3(0.0, 0.0, 0.0)), m_size(size)
 {
     glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
+    glGenBuffers(1, &VBO);
 
-    m_coordBuffer.setVector(vectices, CGL::VertexBufferType);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GL_FLOAT), (void*)0);
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(CGL::Vertex), (void*)offsetof(CGL::Vertex, position));
     glEnableVertexAttribArray(0);
 
-    m_normalBuffer.setVector(normals, CGL::VertexBufferType);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(CGL::Vertex), (void*)offsetof(CGL::Vertex, normal));
     glEnableVertexAttribArray(1);
 
-    m_texureBuffer.setVector(texes, CGL::VertexBufferType);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), (void*)0);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(CGL::Vertex), (void*)offsetof(CGL::Vertex, texcoord));
     glEnableVertexAttribArray(2);
 
-    m_colorBuffer.setVector(colors, CGL::VertexBufferType);
-    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GL_FLOAT), (void*)0);
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(CGL::Vertex), (void*)offsetof(CGL::Vertex, color));
     glEnableVertexAttribArray(3);
 }
 
