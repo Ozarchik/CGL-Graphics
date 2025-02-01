@@ -15,6 +15,7 @@ public:
 
 	int width() const;
 	int height() const;
+    float aspect() const;
 
 	void init();
 

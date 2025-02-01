@@ -49,7 +49,7 @@ CGL::Mesh CGL::Model::processMesh(aiMesh* mesh, const aiScene* scene)
 {
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
-    std::vector<TextureBase> textures;
+    std::vector<CGL::TextureBase> textures;
 
     for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
         Vertex vertex;
@@ -81,19 +81,19 @@ CGL::Mesh CGL::Model::processMesh(aiMesh* mesh, const aiScene* scene)
     }
 
     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-    std::vector<TextureBase> diffuseMaps = loadTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+    std::vector<CGL::TextureBase> diffuseMaps = loadTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
     textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
     // 2. specular maps
-    std::vector<TextureBase> specularMaps = loadTextures(material, aiTextureType_SPECULAR, "texture_specular");
+    std::vector<CGL::TextureBase> specularMaps = loadTextures(material, aiTextureType_SPECULAR, "texture_specular");
     textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 
     return CGL::Mesh(vertices, textures, indices);
 }
 
-std::vector<TextureBase> CGL::Model::loadTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
+std::vector<CGL::TextureBase> CGL::Model::loadTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
 {
-    std::vector<TextureBase> textures;
+    std::vector<CGL::TextureBase> textures;
     for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
     {
         aiString str;
@@ -111,8 +111,8 @@ std::vector<TextureBase> CGL::Model::loadTextures(aiMaterial* mat, aiTextureType
         }
         if(!skip)
         {   // if texture hasn't been loaded already, load it
-            TextureBase texture;
-            texture.id = TextureBase::loadFromFile(m_directory + "/" + std::string(str.C_Str()));
+            CGL::TextureBase texture;
+            texture.id = CGL::TextureBase::loadFromFile(m_directory + "/" + std::string(str.C_Str())).id;
             texture.type = typeName;
             texture.path = str.C_Str();
             textures.push_back(texture);

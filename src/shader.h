@@ -30,6 +30,12 @@ public:
 
 	GLuint id() const;
 
+    void setMVP(
+        const CGL::Transform& model,
+        const CGL::Transform& view,
+        const CGL::Transform& projection
+    );
+
 	void setInt(const std::string& name, int value);
 	void setFloat(const std::string& name, float value);
     void setMat4(const std::string &name, const CGL::Transform& transform) const;

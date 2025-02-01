@@ -6,12 +6,12 @@
 namespace CGL {
 
 enum BufferType {
-	VertexBuffer = GL_ARRAY_BUFFER,
-	ElementBuffer = GL_ELEMENT_ARRAY_BUFFER,
+    VertexBufferType = GL_ARRAY_BUFFER,
+    ElementBufferType = GL_ELEMENT_ARRAY_BUFFER,
 };
 
 template <typename T>
-class Buffer {
+struct Buffer {
 public:
     Buffer() = default;
 	Buffer(const std::vector<T>& array, BufferType type) {
@@ -26,8 +26,8 @@ public:
 		glBufferData(m_type, array.size()*sizeof(T), array.data(), GL_STATIC_DRAW);
 	}
 
-private:
+public:
 	GLuint m_id;
 	BufferType m_type;
 };
-};
+}

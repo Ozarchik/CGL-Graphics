@@ -6,7 +6,7 @@ CGL::Mesh::Mesh(const glm::vec3 &pos)
 
 }
 
-CGL::Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<TextureBase>& textures, const std::vector<unsigned int>& indices)
+CGL::Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<CGL::TextureBase>& textures, const std::vector<unsigned int>& indices)
     : m_vertices(vertices), m_textures(textures), m_indices(indices)
 {
     m_vertices = vertices;
@@ -83,7 +83,7 @@ void CGL::Mesh::draw(Shader &Shader) {
     glActiveTexture(GL_TEXTURE0);
 }
 
-void CGL::Mesh::addTexture(const std::vector<TextureBase>& textures)
+void CGL::Mesh::addTexture(const std::vector<CGL::TextureBase>& textures)
 {
     m_textures = textures;
 }

@@ -1,28 +1,32 @@
 #include "camera.h"
 #include <iostream>
 
-
-glm::mat4 CGL::Camera::getLookAt()
-{
-    return glm::lookAt(m_pos, m_pos + m_front, m_up);
-}
-
 CGL::Camera::Camera()
 {
-    m_front = glm::vec3(0.0f, 0.0f, 1.0f);
+    // m_front = glm::vec3(0.0f, 0.0f, -1.0f);
     m_worldUp = m_up;
 
     update();
 }
 
-float CGL::Camera::x() const
+glm::mat4 CGL::Camera::getLookAt() const
 {
-    return m_x;
+    return glm::lookAt(m_pos, m_pos + m_front, m_up);
 }
 
-float CGL::Camera::y() const
+void CGL::Camera::correctSpeed(float coeff)
 {
-    return m_y;
+    m_deltaTime = coeff;
+}
+
+void CGL::Camera::setSpeed(float speed)
+{
+    m_speed = speed;
+}
+
+float CGL::Camera::speed() const
+{
+    return m_speed;
 }
 
 void CGL::Camera::setPos(glm::vec3 pos)
@@ -82,30 +86,35 @@ void CGL::Camera::move(float x, float y, float z)
 
 void CGL::Camera::stepUp()
 {
-    m_pos += m_speed * m_up;
+    m_pos += m_speed * m_up * m_deltaTime;
 }
 
 void CGL::Camera::stepDown()
 {
-    m_pos -= m_speed * m_up;
+    m_pos -= m_speed * m_up * m_deltaTime;
 }
 
 void CGL::Camera::stepFront()
 {
-    m_pos += m_speed * m_front;
+    m_pos += m_speed * m_front * m_deltaTime;
 }
 
 void CGL::Camera::stepBack()
 {
-    m_pos -= m_speed * m_front;
+    m_pos -= m_speed * m_front * m_deltaTime;
 }
 
 void CGL::Camera::stepLeft()
 {
-    m_pos -= glm::normalize(glm::cross(m_front, m_up)) * m_speed;
+    m_pos -= glm::normalize(glm::cross(m_front, m_up)) * m_speed * m_deltaTime;
 }
 
 void CGL::Camera::stepRight()
 {
-    m_pos += glm::normalize(glm::cross(m_front, m_up)) * m_speed;
+    m_pos += glm::normalize(glm::cross(m_front, m_up)) * m_speed * m_deltaTime;
+}
+
+glm::vec3 CGL::Camera::front() const
+{
+    return m_front;
 }

@@ -6,26 +6,24 @@
 #include "stb_image.h"
 #include <iostream>
 
-enum TextureType {
-    
-};
-
+namespace CGL {
 struct TextureBase {
     unsigned int id;
     std::string type;
     std::string path;
 
     static TextureBase create(const std::string &filepath, const std::string& name) {
-        unsigned int id = loadFromFile(filepath);
+        unsigned int id = loadFromFile(filepath).id;
         return {id, name, filepath};
     }
 
-    static unsigned int loadFromFile(const std::string &filepath)
+    static TextureBase loadFromFile(const std::string &filepath, bool flipVertical = false)
     {
         unsigned int textureID;
         glGenTextures(1, &textureID);
 
         int width, height, nrComponents;
+        stbi_set_flip_vertically_on_load(flipVertical);
         unsigned char *data = stbi_load(filepath.c_str(), &width, &height, &nrComponents, 0);
         if (data)
         {
@@ -54,7 +52,11 @@ struct TextureBase {
             stbi_image_free(data);
         }
 
-        return textureID;
+        stbi_set_flip_vertically_on_load(false);
+
+        TextureBase tex;
+        tex.id = textureID;
+        return tex;
     }
 
     static unsigned int loadCubmap(const std::string &dir, const std::vector<std::string>& faces)
@@ -73,15 +75,16 @@ struct TextureBase {
                 GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, data
             );
 
-            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-            free(data);
+            stbi_image_free(data);
         }
+
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
         return texId;
     }
 };
+}

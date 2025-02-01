@@ -12,12 +12,26 @@ public:
     Transform(const glm::mat4& mat);
 
     void reset();
+
     void scale(float x, float y, float z);
-    void rotate(float angle, float x, float y, float z);
+    void scale(float val);
+    void scaleX(float val);
+    void scaleY(float val);
+    void scaleZ(float val);
+
     void translate(float x, float y, float z);
+    void translateX(float val);
+    void translateY(float val);
+    void translateZ(float val);
+
+    void rotate(float angle, float x, float y, float z);
+
+
+
     void perspective(float fov, float ratio, float near, float far);
 
-    Transform& operator*(Transform& right);
+    Transform operator*(Transform& right);
+    Transform& operator*=(Transform& right);
 
     glm::mat4 data() const;
 

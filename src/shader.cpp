@@ -68,6 +68,17 @@ GLuint CGL::Shader::id() const
 	return m_id;
 }
 
+void CGL::Shader::setMVP(
+    const CGL::Transform& model,
+    const CGL::Transform& view,
+    const CGL::Transform& projection
+)
+{
+    setMat4("model", model.data());
+    setMat4("view", view.data());
+    setMat4("projection", projection.data());
+}
+
 void CGL::Shader::setInt(const std::string& name, int value)
 {
 	glUniform1i(getUniformLoc(name), value);

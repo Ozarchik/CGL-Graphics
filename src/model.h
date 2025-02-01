@@ -24,13 +24,13 @@ private:
     void processNode(aiNode* node, const aiScene* scene);
     Mesh processMesh(aiMesh* mesh, const aiScene* scene);
 
-    std::vector<TextureBase> loadTextures(aiMaterial* material, aiTextureType type, std::string typeName);
+    std::vector<CGL::TextureBase> loadTextures(aiMaterial* material, aiTextureType type, std::string typeName);
 
 private:
     std::vector<CGL::Mesh> m_meshes;
     std::string m_directory;
-    std::vector<TextureBase> textures_loaded;
-    std::vector<TextureBase> loadMaterialTextures(aiMaterial *mat, aiTextureType type, string typeName);
+    std::vector<CGL::TextureBase> textures_loaded;
+    std::vector<CGL::TextureBase> loadMaterialTextures(aiMaterial *mat, aiTextureType type, string typeName);
 
     bool m_flipUV = false;
 };

@@ -70,7 +70,7 @@ CGL::Sphere::Sphere()
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
 
-    m_colorBuffer.setVector(colors, CGL::VertexBuffer);
+    m_colorBuffer.setVector(colors, CGL::VertexBufferType);
     glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GL_FLOAT), (void*)0);
     glEnableVertexAttribArray(3);
 }

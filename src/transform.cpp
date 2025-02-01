@@ -17,18 +17,47 @@ void CGL::Transform::reset()
 
 void CGL::Transform::translate(float x, float y, float z)
 {
-    m_matrix = glm::translate (
-        m_matrix,
-        glm::vec3(x, y, z)
-    );
+    m_matrix = glm::translate(m_matrix, glm::vec3(x, y, z));
+}
+
+void CGL::Transform::translateX(float val)
+{
+    m_matrix = glm::translate(m_matrix, glm::vec3(val, 0.0, 0.0));
+}
+
+void CGL::Transform::translateZ(float val)
+{
+    m_matrix = glm::translate(m_matrix, glm::vec3(0.0, 0.0, val));
+}
+
+void CGL::Transform::translateY(float val)
+{
+    m_matrix = glm::translate(m_matrix, glm::vec3(0.0, val, 0.0));
 }
 
 void CGL::Transform::scale(float x, float y, float z)
 {
-    m_matrix = glm::scale (
-        m_matrix,
-        glm::vec3(x, y, z)
-    );
+    m_matrix = glm::scale(m_matrix, glm::vec3(x, y, z));
+}
+
+void CGL::Transform::scale(float val)
+{
+    m_matrix = glm::scale(m_matrix, glm::vec3(val, val, val));
+}
+
+void CGL::Transform::scaleX(float val)
+{
+    m_matrix = glm::scale(m_matrix, glm::vec3(val, 1.0, 1.0));
+}
+
+void CGL::Transform::scaleY(float val)
+{
+    m_matrix = glm::scale(m_matrix, glm::vec3(1.0, val, 1.0));
+}
+
+void CGL::Transform::scaleZ(float val)
+{
+    m_matrix = glm::scale(m_matrix, glm::vec3(1.0, 1.0, val));
 }
 
 void CGL::Transform::rotate(float angle, float x, float y, float z)
@@ -50,9 +79,15 @@ void CGL::Transform::perspective(float fov, float ration, float near, float far)
     );
 }
 
-CGL::Transform &CGL::Transform::operator*(Transform &right)
+CGL::Transform CGL::Transform::operator*(Transform &right)
 {
-    m_matrix *= right.data();
+    auto matrix = m_matrix * right.m_matrix;
+    return CGL::Transform(matrix);
+}
+
+CGL::Transform &CGL::Transform::operator*=(Transform &right)
+{
+    m_matrix *= right.m_matrix;
     return *this;
 }
 

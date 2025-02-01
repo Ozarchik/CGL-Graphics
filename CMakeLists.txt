@@ -5,6 +5,7 @@ find_package(CGLHelper)
 
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_SOURCE_DIR}/examples)
 include_directories(C:/libs/glfw/install/include)
 include_directories(C:/libs/glad/include)
 include_directories(C:/libs/glm/install/include)
@@ -16,13 +17,9 @@ set(ASSIMP_LIB C:/libs/assimp/deploy/bin/libassimp-5.dll)
 
 
 add_executable(${PROJECT_NAME}
-    src/application.h src/application.cpp
-    src/sphere.h src/sphere.cpp
-    shaders/skybox.vert
-    shaders/skybox.frag
-    src/normalmap.h src/normalmap.cpp
-    shaders/brick.vert
-    shaders/brick.frag)
+    examples/cullface.h examples/cullface.cpp
+    shaders/cullface.vert
+    shaders/cullface.frag)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     ${GLFW_LIB}
@@ -32,11 +29,13 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 
 file(GLOB sources
     "src/*.cpp"
+    "examples/*.cpp"
     "C:/libs/glad/src/glad.c"
 )
 
 file(GLOB headers
     "src/*.h"
+    "examples/*.h"
 )
 
 file(GLOB shaders
@@ -54,6 +53,16 @@ install(
     DIRECTORY ${CMAKE_SOURCE_DIR}/shaders ${CMAKE_SOURCE_DIR}/textures
     DESTINATION ${CMAKE_BINARY_DIR}
 )
+
+install (
+    FILES
+    ${GLFW_LIB} ${ASSIMP_LIB}
+    DESTINATION ${CMAKE_BINARY_DIR}
+)
+
+# install(
+#     DIRECTORY )
+# )
 
 # add_custom_command (
 #     TARGET ${PROJECT_NAME}
