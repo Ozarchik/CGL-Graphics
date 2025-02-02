@@ -17,6 +17,11 @@ CGL::Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<CGL::Text
     Mesh::setup();
 }
 
+void CGL::Mesh::setPrimitiveType(GLenum type)
+{
+    m_primitiveType = type;
+}
+
 void CGL::Mesh::setup() {
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -76,7 +81,7 @@ void CGL::Mesh::draw(Shader &Shader) {
 
     // draw mesh
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(m_indices.size()), GL_UNSIGNED_INT, 0);
+    glDrawElements(m_primitiveType, static_cast<unsigned int>(m_indices.size()), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
     // always good practice to set everything back to defaults once configured.

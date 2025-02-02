@@ -23,6 +23,7 @@ public:
     Mesh(const glm::vec3& pos);
     Mesh(const std::vector<Vertex>& vertices, const std::vector<CGL::TextureBase>& textures, const std::vector<unsigned int>& indices);
 
+    void setPrimitiveType(GLenum type);
     virtual void setup();
     virtual void draw(Shader& Shader);
 
@@ -39,5 +40,6 @@ protected:
     CGL::Buffer<float> m_normalBuffer;
     CGL::Buffer<float> m_colorBuffer;
     CGL::Buffer<float> m_texureBuffer;
+    GLenum m_primitiveType = GL_TRIANGLES;
 };
 }

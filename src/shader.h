@@ -11,7 +11,8 @@ namespace CGL {
 
 enum ShaderType {
     VERTEX_SHADER = GL_VERTEX_SHADER,
-    FRAGMENT_SHADER = GL_FRAGMENT_SHADER
+    FRAGMENT_SHADER = GL_FRAGMENT_SHADER,
+    GEOMETRY_SHADER = GL_GEOMETRY_SHADER
 };
 
 enum ErrorCode {
@@ -23,6 +24,7 @@ class Shader {
 public:
     Shader() = default;
     Shader(const std::string& vShaderPath, const std::string& fShaderPath);
+    Shader(const std::string& vShaderPath, const std::string& fShaderPath, const std::string& gShaderPath);
 
     GLuint loadShader(const std::string& shaderSrc, ShaderType type);
 
@@ -40,6 +42,7 @@ public:
 	void setFloat(const std::string& name, float value);
     void setMat4(const std::string &name, const CGL::Transform& transform) const;
 	void setMat4(const std::string& name, const glm::mat4& mat) const;
+    void setVec2(const std::string& name, const glm::vec2& vec);
 	void setVec3(const std::string& name, const glm::vec3& vec);
 	void setVec3(const std::string& name, float x, float y, float z);
 
@@ -47,8 +50,9 @@ public:
 
 private:
     void compile(GLuint vId, GLuint fId);
+    void compile(GLuint vId, GLuint fId, GLuint gId);
 
 private:
     GLuint m_id;
 };
-};
+}

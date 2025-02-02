@@ -17,6 +17,7 @@ private:
     unsigned int floorVAO;
     unsigned int floorVBO;
     unsigned int floorTex;
+    unsigned int brickTex;
     CGL::Shader m_shader;
 };
 }

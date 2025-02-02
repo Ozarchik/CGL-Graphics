@@ -26,12 +26,11 @@ public:
 
     void rotate(float angle, float x, float y, float z);
 
-
-
+    void ortogonal(float left, float right, float bottom, float top, float near, float far);
     void perspective(float fov, float ratio, float near, float far);
 
-    Transform operator*(Transform& right);
-    Transform& operator*=(Transform& right);
+    Transform operator*(const Transform& right) const;
+    Transform& operator*=(const Transform& right);
 
     glm::mat4 data() const;
 

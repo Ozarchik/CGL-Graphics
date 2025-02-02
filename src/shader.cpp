@@ -11,6 +11,14 @@ CGL::Shader::Shader(const std::string& vShaderPath, const std::string& fShaderPa
     compile(vId, fId);
 }
 
+CGL::Shader::Shader(const std::string &vShaderPath, const std::string &fShaderPath, const std::string &gShaderPath)
+{
+    GLuint vId = loadShader(vShaderPath, CGL::VERTEX_SHADER);
+    GLuint fId = loadShader(fShaderPath, CGL::FRAGMENT_SHADER);
+    GLuint gId = loadShader(gShaderPath, CGL::GEOMETRY_SHADER);
+    compile(vId, fId, gId);
+}
+
 
 GLuint CGL::Shader::loadShader(const std::string& shaderSrc, ShaderType type)
 {
@@ -49,6 +57,8 @@ GLuint CGL::Shader::loadShader(const std::string& shaderSrc, ShaderType type)
             std::cout << "Vertex shader compile failed: " << infoLog << std::endl;
         } else if (type == FRAGMENT_SHADER) {
             std::cout << "Fragment shader compile failed: " << infoLog << std::endl;
+        } else if (type == GEOMETRY_SHADER) {
+            std::cout << "Geometry shader compile failed: " << infoLog << std::endl;
         } else {
             std::cout << "Underfined shader compile failed: " << infoLog << std::endl;
         }
@@ -119,6 +129,29 @@ void CGL::Shader::compile(GLuint vId, GLuint fId)
         glGetProgramInfoLog(m_id, 512, nullptr, infoLog);
         std::cout << "Shader program link failed: " << infoLog << std::endl;
     }
+}
+
+void CGL::Shader::compile(GLuint vId, GLuint fId, GLuint gId)
+{
+    m_id = glCreateProgram();
+    glAttachShader(m_id, vId);
+    glAttachShader(m_id, fId);
+    glAttachShader(m_id, gId);
+    glLinkProgram(m_id);
+
+    int sucess;
+    char infoLog[512];
+
+    glGetProgramiv(m_id, GL_LINK_STATUS, &sucess);
+    if (!sucess) {
+        glGetProgramInfoLog(m_id, 512, nullptr, infoLog);
+        std::cout << "Shader program link failed: " << infoLog << std::endl;
+    }
+}
+
+void CGL::Shader::setVec2(const std::string &name, const glm::vec2 &vec)
+{
+    glUniform2f(getUniformLoc(name), vec.x, vec.y);
 }
 
 void CGL::Shader::setVec3(const std::string& name, float x, float y, float z)

@@ -15,6 +15,7 @@ void CGL::Rectangle::draw(Shader& shader)
 {
     m_vertexBuffer.use();
     glBindTexture(GL_TEXTURE_2D, m_texureBuffer.m_id);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glDrawArrays(m_primitiveType, 0, 6);
+    // glDrawArraysInstanced(m_primitiveType, 0, 6, 4);
     glBindTexture(GL_TEXTURE_2D, 0);
 }

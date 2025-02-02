@@ -176,7 +176,8 @@ void CGL::Cube::draw(Shader &Shader)
     // draw mesh
     glBindVertexArray(VAO);
     // glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(m_indices.size()), GL_UNSIGNED_INT, 0);
-    glDrawArrays(GL_TRIANGLES, 0, 36);
+    glDrawArrays(m_primitiveType, 0, 36);
+    // glDrawArraysInstanced(m_primitiveType, 0, 36, 100);
     glBindVertexArray(0);
 
     // always good practice to set everything back to defaults once configured.

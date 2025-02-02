@@ -17,9 +17,11 @@ set(ASSIMP_LIB C:/libs/assimp/deploy/bin/libassimp-5.dll)
 
 
 add_executable(${PROJECT_NAME}
-    examples/cullface.h examples/cullface.cpp
-    shaders/cullface.vert
-    shaders/cullface.frag)
+    examples/geometrynormalexample.h examples/geometrynormalexample.cpp
+    examples/instancing.h examples/instancing.cpp
+    shaders/instance.vert
+    shaders/instance.frag
+    examples/planet.h examples/planet.cpp)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     ${GLFW_LIB}
@@ -50,7 +52,10 @@ target_sources(${PROJECT_NAME} PRIVATE
 
 
 install(
-    DIRECTORY ${CMAKE_SOURCE_DIR}/shaders ${CMAKE_SOURCE_DIR}/textures
+    DIRECTORY
+    ${CMAKE_SOURCE_DIR}/shaders
+    ${CMAKE_SOURCE_DIR}/textures
+    ${CMAKE_SOURCE_DIR}/assets
     DESTINATION ${CMAKE_BINARY_DIR}
 )
 

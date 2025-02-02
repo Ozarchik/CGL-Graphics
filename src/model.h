@@ -15,6 +15,7 @@ using std::string;
 namespace CGL {
 class Model {
 public:
+    Model() = default;
     Model(const std::string& filepath, bool flipUV);
 
     void draw(CGL::Shader& Shader);

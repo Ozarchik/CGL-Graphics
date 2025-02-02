@@ -69,6 +69,11 @@ void CGL::Transform::rotate(float angle, float x, float y, float z)
     );
 }
 
+void CGL::Transform::ortogonal(float left, float right, float bottom, float top, float near, float far)
+{
+    m_matrix = glm::ortho(left, right, bottom, top, near, far);
+}
+
 void CGL::Transform::perspective(float fov, float ration, float near, float far)
 {
     m_matrix = glm::perspective(
@@ -79,13 +84,13 @@ void CGL::Transform::perspective(float fov, float ration, float near, float far)
     );
 }
 
-CGL::Transform CGL::Transform::operator*(Transform &right)
+CGL::Transform CGL::Transform::operator*(const Transform &right) const
 {
     auto matrix = m_matrix * right.m_matrix;
     return CGL::Transform(matrix);
 }
 
-CGL::Transform &CGL::Transform::operator*=(Transform &right)
+CGL::Transform &CGL::Transform::operator*=(const Transform &right)
 {
     m_matrix *= right.m_matrix;
     return *this;

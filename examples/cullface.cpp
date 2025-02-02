@@ -1,16 +1,35 @@
 #include "cullface.h"
 #include "cube.h"
 
+unsigned int VBO, VAO;
+unsigned int tex;
 CGL::CullFace::CullFace()
 {
     m_shader = CGL::Shader("shaders/cullface.vert", "shaders/cullface.frag");
-    m_scene.addMesh(new CGL::Cube);
+    tex = CGL::TextureBase::loadFromFile("textures/brick/brick.jpg").id;
+    // m_scene.addMesh(new CGL::Cube(tex));
+
+
+    // cullface vertices
+
+    glGenBuffers(1, &VBO);
+    glGenVertexArrays(1, &VAO);
+
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(cullFaceVertices), &cullFaceVertices[0], GL_STATIC_DRAW);
+
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5*sizeof(float), (void*)(3*sizeof(float)));
 }
 
 void CGL::CullFace::use(const CGL::Window& window, const CGL::Camera& camera)
 {
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
+    // glEnable(GL_CULL_FACE);
+    glCullFace(GL_FRONT);
+    glFrontFace(GL_CW);
 
     CGL::Transform model, view, projection;
     view = camera.getLookAt();
@@ -22,4 +41,9 @@ void CGL::CullFace::use(const CGL::Window& window, const CGL::Camera& camera)
     for (const auto& m: m_scene.meshes()) {
         m->draw(m_shader);
     }
+
+    // cullface
+    glBindVertexArray(VAO);
+    glBindTexture(GL_TEXTURE_2D, tex);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
 }

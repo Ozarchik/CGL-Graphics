@@ -13,8 +13,10 @@ struct TextureBase {
     std::string path;
 
     static TextureBase create(const std::string &filepath, const std::string& name) {
-        unsigned int id = loadFromFile(filepath).id;
-        return {id, name, filepath};
+        TextureBase texture = loadFromFile(filepath);
+        texture.type = name;
+        texture.path = filepath;
+        return texture;
     }
 
     static TextureBase loadFromFile(const std::string &filepath, bool flipVertical = false)
@@ -25,8 +27,8 @@ struct TextureBase {
         int width, height, nrComponents;
         stbi_set_flip_vertically_on_load(flipVertical);
         unsigned char *data = stbi_load(filepath.c_str(), &width, &height, &nrComponents, 0);
-        if (data)
-        {
+
+        if (data) {
             GLenum format;
             if (nrComponents == 1)
                 format = GL_RED;
@@ -45,9 +47,7 @@ struct TextureBase {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
             stbi_image_free(data);
-        }
-        else
-        {
+        } else {
             std::cout << "Texture failed to load at path: " << filepath << std::endl;
             stbi_image_free(data);
         }

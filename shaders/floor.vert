@@ -11,4 +11,5 @@ void main(void)
 {
     fTex = aTex;
     gl_Position = MVP * vec4(aPos, 1.0);
+    gl_PointSize = gl_Position.z;
 }

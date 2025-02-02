@@ -1,30 +1,32 @@
 #include "floor.h"
 #include "glad/glad.h"
+#include "texturebase.h"
 
 CGL::Floor::Floor()
 {
-    float floorVertices[] = {
-        -10.0, 0.0, 10.0, 0.0, 1.0,
-        -10.0, 0.0, 0.0, 0.0, 0.0,
-         10.0, 0.0, 0.0, 1.0, 0.0,
+    m_shader = CGL::Shader("shaders/floor.vert", "shaders/floor.frag");
 
-        10.0, 0.0, 0.0, 1.0, 0.0,
-        10.0, 0.0, 10.0, 1.0, 1.0,
-        -10.0, 0.0, 10.0, 0.0, 1.0
+    float floorVertices[] = {
+        -1.0, 0.0, 1.0, 0.0, 1.0,
+        -1.0, 0.0, 0.0, 0.0, 0.0,
+         1.0, 0.0, 0.0, 1.0, 0.0,
+
+        1.0, 0.0, 0.0, 1.0, 0.0,
+        1.0, 0.0, 1, 1.0, 1.0,
+        -1.0, 0.0, 1.0, 0.0, 1.0
     };
 
-    int rows = 15, cols = 15;
-    unsigned char floorTexture[rows*cols*3] {0};
+    int rows = 10, cols = 10;
+    unsigned char floorTexture[rows*cols*4] {0};
 
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
+    for (int i = 0; i < rows; i += 1) {
+        for (int j = 0; j < cols; j += 2) {
 
-            int index = ((rows - 1 - j) * cols + i) * 3;
-            static bool even = false;
-            even = !even;
-            floorTexture[index]   = even ? 255 : 0;
-            floorTexture[index+1] = even ? 255 : 0;
-            floorTexture[index+2] = even ? 255 : 0;
+            int index = 4*(i*cols + j + i % 2);
+            floorTexture[index]   = 255;
+            floorTexture[index+1] = 0;
+            floorTexture[index+2] = 0;
+            floorTexture[index+3] = 0;
         }
     }
 
@@ -42,30 +44,67 @@ CGL::Floor::Floor()
 
     glGenTextures(1, &floorTex);
     glBindTexture(GL_TEXTURE_2D, floorTex);
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, rows, cols, 0, GL_RGB, GL_UNSIGNED_BYTE, floorTexture);
+    // glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, rows, cols, 0, GL_RGBA, GL_UNSIGNED_BYTE, floorTexture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // glGenerateMipmap(GL_TEXTURE_2D);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    brickTex = CGL::TextureBase::loadFromFile("textures/brick/brick.jpg").id;
 }
 
 void CGL::Floor::use(const CGL::Window& window, const CGL::Camera& camera)
 {
     m_shader.use();
-    glBindVertexArray(floorVAO);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, floorTex);
 
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, brickTex);
+
+    glBindVertexArray(floorVAO);
+
     CGL::Transform model;
     CGL::Transform view = camera.getLookAt();
-    CGL::Transform projection = glm::perspective(glm::radians(45.0f), window.aspect(), 1.0f, 100.0f);;
+    CGL::Transform projection = glm::perspective(glm::radians(45.0f), window.aspect(), 1.0f, 100.0f);
 
+    auto primType = GL_TRIANGLES; //GL_POINTS;
+
+    model.translateY(1);
+    model.translateZ(-50);
+    model.rotate(120, 1, 0, 0);
+    model.scale(10);
+    static int count = 0;
+    count++;
+    model.rotate(count/15.0, 0.0, 0.0, 1);
     CGL::Transform mvp = projection * view * model;
     m_shader.setMat4("MVP", mvp);
     m_shader.setInt("floorTexture", 0);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    m_shader.setInt("brickTexture", 1);
+
+    glEnable(GL_PROGRAM_POINT_SIZE);
+    glDrawArrays(primType, 0, 6);
+
+    model.rotate(45, 0.0, 0.0, 1);
+    mvp = projection * view * model;
+    m_shader.setMat4("MVP", mvp);
+
+    glDrawArrays(primType, 0, 6);
+
+    model.rotate(45, 0.0, 0.0, 1);
+    mvp = projection * view * model;
+    m_shader.setMat4("MVP", mvp);
+
+    glDrawArrays(primType, 0, 6);
+
+    model.rotate(45, 0.0, 0.0, 1);
+    mvp = projection * view * model;
+    m_shader.setMat4("MVP", mvp);
+
+    glDrawArrays(primType, 0, 6);
+
     glBindVertexArray(0);
+    glActiveTexture(GL_TEXTURE0);
 }
