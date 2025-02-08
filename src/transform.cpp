@@ -15,6 +15,11 @@ void CGL::Transform::reset()
     m_matrix = glm::mat4(1.0f);
 }
 
+void CGL::Transform::translate(const glm::vec3& pos)
+{
+    m_matrix = glm::translate(m_matrix, pos);
+}
+
 void CGL::Transform::translate(float x, float y, float z)
 {
     m_matrix = glm::translate(m_matrix, glm::vec3(x, y, z));

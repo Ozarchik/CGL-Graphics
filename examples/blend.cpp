@@ -4,11 +4,13 @@
 #include "cube.h"
 #include "rectangle.h"
 
+#include "textureloader.h"
+
 CGL::Blend::Blend()
 {
     m_shader = CGL::Shader("shaders/blend.vert", "shaders/blend.frag");
-    CGL::TextureBase winTex = CGL::TextureBase::loadFromFile("textures/window/blending_transparent_window.png", true);
-    CGL::TextureBase contTex = CGL::TextureBase::loadFromFile("textures/container/container.png", true);
+    CGL::TextureBase winTex = CGL::TextureLoader::loadFromFile("textures/window/blending_transparent_window.png", true);
+    CGL::TextureBase contTex = CGL::TextureLoader::loadFromFile("textures/container/container.png", true);
     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 

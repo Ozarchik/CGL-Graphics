@@ -1,124 +1,41 @@
 #include "model.h"
-#include <iostream>
 
-CGL::Model::Model(const std::string& filepath, bool flipUV)
-    : m_flipUV(flipUV)
+CGL::Model::Model(const std::vector<CGL::Mesh>& meshes)
+    : m_meshes(meshes)
 {
-    load(filepath);
 }
 
-void CGL::Model::draw(Shader& Shader)
+void CGL::Model::draw(Shader &shader)
 {
-    for (auto m: m_meshes) {
-        m.draw(Shader);
-    }
-}
+    unsigned int diffuseNr  = 1;
+    unsigned int specularNr = 1;
+    unsigned int normalNr   = 1;
+    unsigned int heightNr   = 1;
 
-void CGL::Model::load(const std::string& filepath)
-{
-    Assimp::Importer importer;
+    for(unsigned int i = 0; i < m_textures.size(); i++) {
+        glActiveTexture(GL_TEXTURE0 + i);
 
-    unsigned int flags = aiProcess_Triangulate;
-    if (m_flipUV) flags |= aiProcess_FlipUVs;
+        CGL::TextureBase texture = m_textures[i];
+        std::string number;
+        std::string name = texture.type;
 
-    const aiScene* scene = importer.ReadFile(filepath, flags);
+        if(name == "texture_diffuse")
+            number = std::to_string(diffuseNr++);
+        else if(name == "texture_specular")
+            number = std::to_string(specularNr++);
+        else if(name == "texture_normal")
+            number = std::to_string(normalNr++);
+        else if(name == "texture_height")
+            number = std::to_string(heightNr++);
 
-    if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
-        std::cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << std::endl;
-        return;
-    }
-
-    m_directory = filepath.substr(0, filepath.find_last_of('/'));
-
-    processNode(scene->mRootNode, scene);
-}
-
-void CGL::Model::processNode(aiNode* node, const aiScene* scene)
-{
-    for (unsigned int i = 0; i < node->mNumMeshes; i++) {
-        aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-        m_meshes.push_back(processMesh(mesh, scene));
+        shader.setInt((name + number).c_str(), i);
+        glBindTexture(GL_TEXTURE_2D, m_textures[i].id);
     }
 
-    for (unsigned int i = 0; i < node->mNumChildren; i++) {
-        processNode(node->mChildren[i], scene);
-    }
-}
-
-CGL::Mesh CGL::Model::processMesh(aiMesh* mesh, const aiScene* scene)
-{
-    std::vector<Vertex> vertices;
-    std::vector<unsigned int> indices;
-    std::vector<CGL::TextureBase> textures;
-
-    for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
-        Vertex vertex;
-        vertex.position.x = mesh->mVertices[i].x;
-        vertex.position.y = mesh->mVertices[i].y;
-        vertex.position.z = mesh->mVertices[i].z;
-
-        if (mesh->HasNormals()) {
-            vertex.normal.x = mesh->mNormals[i].x;
-            vertex.normal.y = mesh->mNormals[i].y;
-            vertex.normal.z = mesh->mNormals[i].z;
-        }
-
-        if (mesh->mTextureCoords[0]) {
-            vertex.texcoord.x = mesh->mTextureCoords[0][i].x;
-            vertex.texcoord.y = mesh->mTextureCoords[0][i].y;
-        } else {
-            vertex.texcoord = glm::vec2(0.0f, 0.0f);
-        }
-
-        vertices.push_back(vertex);
+    std::vector<CGL::Mesh> m_meshes;
+    for (auto& m: m_meshes) {
+        m.draw(shader);
     }
 
-    for(unsigned int i = 0; i < mesh->mNumFaces; i++)
-    {
-        aiFace face = mesh->mFaces[i];
-        for(unsigned int j = 0; j < face.mNumIndices; j++)
-            indices.push_back(face.mIndices[j]);
-    }
-
-    aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-    std::vector<CGL::TextureBase> diffuseMaps = loadTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
-    textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-
-    // 2. specular maps
-    std::vector<CGL::TextureBase> specularMaps = loadTextures(material, aiTextureType_SPECULAR, "texture_specular");
-    textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-
-    return CGL::Mesh(vertices, textures, indices);
-}
-
-std::vector<CGL::TextureBase> CGL::Model::loadTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
-{
-    std::vector<CGL::TextureBase> textures;
-    for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
-    {
-        aiString str;
-        mat->GetTexture(type, i, &str);
-        // check if texture was loaded before and if so, continue to next iteration: skip loading a new texture
-        bool skip = false;
-        for(unsigned int j = 0; j < textures_loaded.size(); j++)
-        {
-            if(std::strcmp(textures_loaded[j].path.data(), str.C_Str()) == 0)
-            {
-                textures.push_back(textures_loaded[j]);
-                skip = true; // a texture with the same filepath has already been loaded, continue to next one. (optimization)
-                break;
-            }
-        }
-        if(!skip)
-        {   // if texture hasn't been loaded already, load it
-            CGL::TextureBase texture;
-            texture.id = CGL::TextureBase::loadFromFile(m_directory + "/" + std::string(str.C_Str())).id;
-            texture.type = typeName;
-            texture.path = str.C_Str();
-            textures.push_back(texture);
-            textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecessary load duplicate textures.
-        }
-    }
-
-    return textures;
+    glActiveTexture(GL_TEXTURE0);
 }

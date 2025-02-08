@@ -12,9 +12,7 @@ public:
     void use();
 
 private:
-    unsigned int VBO;
-    unsigned int VAO;
-    unsigned int TEX;
+    unsigned int vbo, vao, tex;
 };
 }
 

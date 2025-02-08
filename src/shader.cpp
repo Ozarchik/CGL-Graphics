@@ -89,6 +89,19 @@ void CGL::Shader::setMVP(
     setMat4("projection", projection.data());
 }
 
+void CGL::Shader::setBool(const std::string& name, bool state)
+{
+    glUniform1i(getUniformLoc(name), state);
+}
+
+bool CGL::Shader::getBool(const std::string& name)
+{
+    int state[1];
+    glGetUniformiv(m_id, getUniformLoc(name), state);
+
+    return state[0];
+}
+
 void CGL::Shader::setInt(const std::string& name, int value)
 {
 	glUniform1i(getUniformLoc(name), value);
@@ -111,7 +124,13 @@ void CGL::Shader::setMat4(const std::string &name, const glm::mat4 &mat) const
 
 GLint CGL::Shader::getUniformLoc(const std::string& name) const
 {
-	return glGetUniformLocation(m_id, name.c_str());
+    GLint loc = glGetUniformLocation(m_id, name.c_str());
+
+    if (loc == -1) {
+        std::cout << "Uniform [" << name  << "] is not found" << std::endl;
+    }
+
+    return loc;
 }
 
 void CGL::Shader::compile(GLuint vId, GLuint fId)

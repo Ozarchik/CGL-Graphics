@@ -7,7 +7,7 @@ namespace CGL {
 class FrameBuffer
 {
 public:
-    FrameBuffer();
+    FrameBuffer(int width = 800, int height = 600);
     ~FrameBuffer();
 
     void use();
@@ -19,12 +19,10 @@ public:
     void enableDepth(bool mode);
 
 private:
-    unsigned int fbo;
-    unsigned int rbo;
+    unsigned int fbo, rbo;
+    unsigned int vao, vbo;
     unsigned int texture;
-    CGL::Cube* testCube;
 
-    unsigned int quadVAO, quadVBO;
 };
 }
 

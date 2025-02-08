@@ -19,6 +19,7 @@ public:
     void scaleY(float val);
     void scaleZ(float val);
 
+    void translate(const glm::vec3& pos);
     void translate(float x, float y, float z);
     void translateX(float val);
     void translateY(float val);

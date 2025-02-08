@@ -8,19 +8,21 @@
 
 #include <iostream>
 
-#include "buffer.h"
 #include "shader.h"
 #include "texture.h"
 #include "texturebase.h" 
 #include "vertex.h"
+#include "meshbuffer.h"
 
 #include "stb_image.h"
 
 namespace CGL {
 class Mesh {
 public:
-    Mesh() = default;
-    Mesh(const glm::vec3& pos);
+    Mesh();
+    Mesh(const std::vector<Vertex>& vertices);
+    Mesh(const std::vector<Vertex>& vertices, const TextureBase& texture);
+    Mesh(const std::vector<Vertex>& vertices, const std::vector<CGL::TextureBase>& textures);
     Mesh(const std::vector<Vertex>& vertices, const std::vector<CGL::TextureBase>& textures, const std::vector<unsigned int>& indices);
 
     void setPrimitiveType(GLenum type);
@@ -30,16 +32,7 @@ public:
     virtual void addTexture(const std::vector<CGL::TextureBase>& textures);
 
 protected:
-    std::vector<Vertex> m_vertices;
-    std::vector<unsigned int> m_indices;
-    std::vector<CGL::TextureBase> m_textures;
-
-    glm::vec3 m_pos = glm::vec3(0.0f);
-    unsigned int VAO, VBO, EBO;
-    CGL::Buffer<float> m_coordBuffer;
-    CGL::Buffer<float> m_normalBuffer;
-    CGL::Buffer<float> m_colorBuffer;
-    CGL::Buffer<float> m_texureBuffer;
+    CGL::MeshBuffer m_buffer;
     GLenum m_primitiveType = GL_TRIANGLES;
 };
 }

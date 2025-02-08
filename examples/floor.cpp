@@ -1,6 +1,7 @@
 #include "floor.h"
 #include "glad/glad.h"
 #include "texturebase.h"
+#include "textureloader.h"
 
 CGL::Floor::Floor()
 {
@@ -52,7 +53,7 @@ CGL::Floor::Floor()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-    brickTex = CGL::TextureBase::loadFromFile("textures/brick/brick.jpg").id;
+    brickTex = CGL::TextureLoader::loadFromFile("textures/brick/brick.jpg").id;
 }
 
 void CGL::Floor::use(const CGL::Window& window, const CGL::Camera& camera)

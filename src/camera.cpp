@@ -72,6 +72,40 @@ void CGL::Camera::update()
     m_front = glm::normalize(direction);
     m_right = glm::normalize(glm::cross(m_front, m_worldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
     m_up    = glm::normalize(glm::cross(m_right, m_front));
+
+    // std::cout << "Camera pos: (" << m_pos.x << "," << m_pos.y << "," << m_pos.z << ")" << std::endl;
+}
+
+void CGL::Camera::keyEventHandler(const KeyEvent& event)
+{
+    switch (event.type()) {
+    case CGL::Key_A: {
+        stepLeft();
+    } break;
+    case CGL::Key_D: {
+        stepRight();
+    } break;
+    case CGL::Key_S: {
+        stepBack();
+    } break;
+    case CGL::Key_W: {
+        stepForward();
+    } break;
+    case CGL::Key_C: {
+        stepUp();
+    } break;
+    case CGL::Key_Z: {
+        stepDown();
+    } break;
+    case CGL::Key_Space: {
+        stepUp();
+    } break;
+    }
+}
+
+void CGL::Camera::mouseEventHandler(const MouseEvent &event)
+{
+    rotate(event.dx(), event.dy());
 }
 
 void CGL::Camera::move(float x)
@@ -94,7 +128,7 @@ void CGL::Camera::stepDown()
     m_pos -= m_speed * m_up * m_deltaTime;
 }
 
-void CGL::Camera::stepFront()
+void CGL::Camera::stepForward()
 {
     m_pos += m_speed * m_front * m_deltaTime;
 }

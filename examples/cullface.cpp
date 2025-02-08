@@ -1,12 +1,14 @@
 #include "cullface.h"
 #include "cube.h"
+#include "textureloader.h"
+
 
 unsigned int VBO, VAO;
 unsigned int tex;
 CGL::CullFace::CullFace()
 {
     m_shader = CGL::Shader("shaders/cullface.vert", "shaders/cullface.frag");
-    tex = CGL::TextureBase::loadFromFile("textures/brick/brick.jpg").id;
+    tex = CGL::TextureLoader::loadFromFile("textures/brick/brick.jpg").id;
     // m_scene.addMesh(new CGL::Cube(tex));
 
 

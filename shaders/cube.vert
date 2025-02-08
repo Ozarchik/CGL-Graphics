@@ -17,9 +17,9 @@ void main()
 {
     fTexCoords = aTexCoords;
 
-    fPos = vec3(model * vec4(aPos, 1.0));
-    gl_Position = projection * view * vec4(fPos, 1.0);
+    gl_Position = projection * view * model * vec4(aPos, 1.0);
 
+    fPos = vec3(model * vec4(aPos, 1.0));
     fNormal = mat3(transpose(inverse(model))) * aNormal;
     fColor = aColor;
 }

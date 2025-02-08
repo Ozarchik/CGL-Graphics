@@ -1,6 +1,7 @@
 #include "planet.h"
 #include "cube.h"
 #include "sphere.h"
+#include "modelloader.h"
 
 constexpr unsigned int rockCount = 200;
 glm::vec3 coords[rockCount];
@@ -28,9 +29,9 @@ CGL::Planet::Planet()
     // m_scene.addMesh(new CGL::Cube);
     m_scene.addMesh(new CGL::Sphere);
 
-    m_planet.load("assets/planet/planet.obj");
-    // m_rock.load("assets/planet/planet.obj");
-    // m_rock.load("assets/rock/rock.obj");
+    CGL::ModelLoader modelLoader;
+    m_planet = modelLoader.load("assets/planet/planet.obj");
+    m_rock = modelLoader.load("assets/sphere/model.obj");
 
     for (int i = 0; i < rockCount; i++) {
         float angle = float(i)/rockCount * 360;
@@ -78,8 +79,9 @@ void CGL::Planet::use (
     m_shader.setMat4("projection", projection);
     m_planet.draw(m_shader);
     const_cast<CGL::Transform&>(model).scale(0.5);
-    // -- [ROCK] --
 
+
+    // -- [ROCK] --
 
     for (int i = 0; i < rockCount; i++) {
         CGL::Transform modifModel = model;
@@ -87,18 +89,21 @@ void CGL::Planet::use (
         m_shaderInst.use();
 
         modifModel.translate(coords[i].x, coords[i].y, coords[i].z);
-        modifModel.rotate(angles[i], 0.2, 0.4, 0.6);
+        modifModel.rotate(angles[i], 0.2f, 0.4f, 0.6f);
         modifModel.scale(scales[i]);
-        modifModel.rotate(count++/1000.0, 0.0, 1.0, 0.0);
+        modifModel.rotate(count++/1000.0f, 0.0, 1.0, 0.0);
+
+        modifModel.scale(0.01);
 
         m_shaderInst.setMat4("model", modifModel);
         m_shaderInst.setMat4("view", view);
         m_shaderInst.setMat4("projection", projection);
         m_shaderInst.setVec3("rockColor", colors[i]);
 
-        for (const auto& m: m_scene.meshes()) {
-            m->draw(m_shaderInst);
-        }
+        m_rock.draw(m_shaderInst);
+        // for (const auto& m: m_scene.meshes()) {
+        //     m->draw(m_shaderInst);
+        // }
     }
 
     count++;

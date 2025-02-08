@@ -1,5 +1,6 @@
 #include "normalmap.h"
 #include "texturebase.h"
+#include "textureloader.h"
 
 CGL::NormalMap::NormalMap(
     CGL::Window* window,
@@ -73,8 +74,8 @@ CGL::NormalMap::NormalMap(
 
     // ---------------------
 
-    tex = CGL::TextureBase::loadFromFile("textures/brick/brick.jpg").id;
-    normalMap = CGL::TextureBase::loadFromFile("textures/brick/brick_normal.jpg").id;
+    tex = CGL::TextureLoader::loadFromFile("textures/brick/brick.jpg").id;
+    normalMap = CGL::TextureLoader::loadFromFile("textures/brick/brick_normal.jpg").id;
 
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);

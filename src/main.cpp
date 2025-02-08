@@ -11,12 +11,11 @@
 #include "geometrynormalexample.h"
 #include "instancing.h"
 #include "planet.h"
+#include "lightscene.h"
 
-#include "buffer.h"
 #include "camera.h"
 #include "cube.h"
 #include "sphere.h"
-#include "light.h"
 #include "texture.h"
 #include "transform.h"
 #include "model.h"
@@ -57,15 +56,17 @@ int loop() {
 
     float lastFrame = 0.0f;
     glEnable(GL_DEPTH_TEST);
+    // glEnable(GL_FRAMEBUFFER_SRGB);
 
-    CGL::ShadowMap shadowMap;
-    CGL::Blend blend;
-    CGL::CullFace cullFace;
-    CGL::Floor floor;
-    CGL::GeometryExample geometryExample;
-    CGL::GeometryNormalExample geomNormalExample;
-    CGL::Instancing instancing;
-    CGL::Planet planet;
+    // CGL::ShadowMap shadowMap;
+    // CGL::Blend blend;
+    // CGL::CullFace cullFace;
+    // CGL::Floor floor;
+    // CGL::GeometryExample geometryExample;
+    // CGL::GeometryNormalExample geomNormalExample;
+    // CGL::Instancing instancing;
+    // CGL::Planet planet;
+    CGL::LightScene lightScene;
 
     while (!glfwWindowShouldClose(window.getWindow())) {
         float currentFrame = glfwGetTime();
@@ -80,6 +81,10 @@ int loop() {
 
         double timeVal = glfwGetTime() * 60;
 
+        CGL::Transform model, view, projection;
+        view = camera.getLookAt();
+        projection.perspective(45.0f, window.aspect(), 0.1f, 100.0f);
+
 
         // --- EXAMPLES ---
 
@@ -90,11 +95,21 @@ int loop() {
         // geometryExample.use(window, camera);
         // geomNormalExample.use(model, view, projection);
         // instancing.use(model, view, projection);
+        // planet.use(model, view, projection);
 
-        CGL::Transform model, view, projection;
-        view = camera.getLookAt();
-        projection.perspective(45.0f, window.aspect(), 0.1f, 100.0f);
-        planet.use(model, view, projection);
+        lightScene.use(camera, model, view, projection);
+
+        static bool pressed = false;
+        if (inputController.isKeySpacePressed()) {
+            if (!pressed) {
+                pressed = true;
+                int static c = 0;
+                std::cout << "key space pressed: " << c++ << std::endl;
+                lightScene.gammaOnOff();
+            }
+        } else {
+            pressed = false;
+        }
 
         frameBuffer.unbind();
 

@@ -4,8 +4,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "object.h"
+
 namespace CGL {
-class Camera {
+class Camera: public CGL::Object {
 public:
     Camera();
 
@@ -19,7 +21,7 @@ public:
 
     void stepUp();
     void stepDown();
-    void stepFront();
+    void stepForward();
     void stepBack();
     void stepLeft();
     void stepRight();
@@ -32,6 +34,9 @@ public:
     float speed() const;
 
     void update();
+
+    void keyEventHandler(const KeyEvent &event) override;
+    void mouseEventHandler(const MouseEvent &event) override;
 
 private:
     float m_pitch = 0.0f, m_yaw = -90.0f, m_roll = 0.0f;
