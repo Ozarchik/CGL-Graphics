@@ -1,8 +1,8 @@
 #include "sphere.h"
 
-constexpr int sectors = 100;
-constexpr int stacks = 50;
-constexpr float radius = 1.0f;
+constexpr int sectors = 300;
+constexpr int stacks = 150;
+constexpr float radius = 0.5f;
 
 std::vector<CGL::Vertex> genSphereVertices();
 std::vector<unsigned int> genSphereIndices();

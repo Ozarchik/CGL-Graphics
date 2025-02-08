@@ -13,6 +13,7 @@
 #include "planet.h"
 #include "lightscene.h"
 #include "quadrotonnel.h"
+#include "solarsystem.h"
 
 #include "camera.h"
 #include "cube.h"
@@ -65,9 +66,10 @@ int loop() {
     // CGL::GeometryExample geometryExample;
     // CGL::GeometryNormalExample geomNormalExample;
     // CGL::Instancing instancing;
-    // CGL::Planet planet;
     // CGL::LightScene lightScene;
-    CGL::QuadroTonel tonel;
+    // CGL::Planet planet;
+    // CGL::QuadroTonel tonel;
+    CGL::SolarSystem solarSystem;
 
     while (!glfwWindowShouldClose(window.handler())) {
         float currentFrame = glfwGetTime();
@@ -84,7 +86,7 @@ int loop() {
 
         CGL::Transform model, view, projection;
         view = camera.getLookAt();
-        projection.perspective(45.0f, window.aspect(), 0.1f, 100.0f);
+        projection.perspective(45.0f, window.aspect(), 0.1f, 500.0f);
 
         // --- EXAMPLES ---
 
@@ -96,8 +98,9 @@ int loop() {
         // geomNormalExample.use(model, view, projection);
         // instancing.use(model, view, projection);
         // planet.use(model, view, projection);
-        tonel.use(model, view, projection);
+        // tonel.use(model, view, projection);
         // lightScene.use(camera, model, view, projection);
+        solarSystem.use(model, view, projection);
 
         // static bool pressed = false;
         // if (inputController.isKeySpacePressed()) {

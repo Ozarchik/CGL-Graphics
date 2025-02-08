@@ -17,11 +17,13 @@ set(ASSIMP_LIB C:/libs/assimp/deploy/bin/libassimp-5.dll)
 
 
 add_executable(${PROJECT_NAME}
-    examples/geometrynormalexample.h examples/geometrynormalexample.cpp
-    examples/instancing.h examples/instancing.cpp
-    shaders/instance.vert
-    shaders/instance.frag
-    examples/planet.h examples/planet.cpp)
+    examples/lightscene.h examples/lightscene.cpp
+    src/model.h src/model.cpp
+    src/textureloader.h src/textureloader.cpp
+    src/meshbuffer.h src/meshbuffer.cpp
+    src/object.h src/object.cpp
+    src/event.h src/event.cpp
+)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     ${GLFW_LIB}

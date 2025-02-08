@@ -31,6 +31,7 @@ CGL::Planet::Planet()
 
     CGL::ModelLoader modelLoader;
     m_planet = modelLoader.load("assets/backpack/backpack.obj");
+    // m_planet = modelLoader.load("assets/furniture-pack-3d-model/Sofa.obj");
     m_rock = modelLoader.load("assets/sphere/model.obj");
 
     for (int i = 0; i < rockCount; i++) {

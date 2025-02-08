@@ -70,6 +70,6 @@ void main()
         FragColor = vec4(0.0, 1.0, 1.0, 1.0);
     }
 
-    FragColor = attenuation * vec4(combColor, 1.0);
+    FragColor = /*attenuation * */  vec4(combColor, 1.0);
 }
 
