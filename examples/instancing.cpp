@@ -51,5 +51,4 @@ void CGL::Instancing::use (
     for (const auto& m: m_scene.meshes()) {
         m->draw(m_shader);
     }
-    // m_scene.render(m_shader);
 }

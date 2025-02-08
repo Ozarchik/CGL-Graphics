@@ -7,7 +7,13 @@ CGL::MeshBuffer::MeshBuffer(const std::vector<CGL::Vertex> &vertices)
     setup();
 }
 
-CGL::MeshBuffer::MeshBuffer(const std::vector<Vertex> &vertices, const TextureBase &texture)
+CGL::MeshBuffer::MeshBuffer(const std::vector<Vertex> &vertices, const std::vector<unsigned int> &indices)
+    : vertices(vertices), indices(indices)
+{
+    setup();
+}
+
+CGL::MeshBuffer::MeshBuffer(const std::vector<Vertex> &vertices, const CGL::TextureBase& texture)
     : vertices(vertices), textures{texture}
 {
     setup();
@@ -15,6 +21,12 @@ CGL::MeshBuffer::MeshBuffer(const std::vector<Vertex> &vertices, const TextureBa
 
 CGL::MeshBuffer::MeshBuffer(const std::vector<CGL::Vertex> &vertices, const std::vector<TextureBase> &textures)
     : vertices(vertices), textures(textures)
+{
+    setup();
+}
+
+CGL::MeshBuffer::MeshBuffer(const std::vector<Vertex> &vertices, const TextureBase &texture, const std::vector<unsigned int> &indices)
+    : vertices(vertices), textures{texture}, indices(indices)
 {
     setup();
 }

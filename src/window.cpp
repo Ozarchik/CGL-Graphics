@@ -49,7 +49,7 @@ float CGL::Window::aspect() const
     return m_width/m_height;
 }
 
-GLFWwindow* CGL::Window::getWindow() const
+GLFWwindow* CGL::Window::handler() const
 {
 	return m_window;
 }

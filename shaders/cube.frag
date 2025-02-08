@@ -12,6 +12,7 @@ uniform mat4 projection;
 uniform vec3 viewPos;
 uniform vec3 viewDir;
 uniform bool gammaEnabled;
+uniform bool useColor;
 
 struct Material {
     sampler2D diffuse;
@@ -58,13 +59,17 @@ void main()
 
     float attenuation = 1.0/length(viewPos - fPos);
 
-    if (gammaEnabled) {
-        float gamma = 2.2;
-        FragColor.rgb = pow(attenuation * combColor, vec3(1.0/gamma));
+    if (!useColor) {
+        if (gammaEnabled) {
+            float gamma = 2.2;
+            FragColor.rgb = pow(attenuation * combColor, vec3(1.0/gamma));
+        } else {
+            FragColor = attenuation * vec4(combColor, 1.0);
+        }
     } else {
-        FragColor = attenuation * vec4(combColor, 1.0);
+        FragColor = vec4(0.0, 1.0, 1.0, 1.0);
     }
 
-    // FragColor = texture(diffuseTex, fTexCoords);
+    FragColor = attenuation * vec4(combColor, 1.0);
 }
 

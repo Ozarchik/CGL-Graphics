@@ -12,6 +12,7 @@
 #include "instancing.h"
 #include "planet.h"
 #include "lightscene.h"
+#include "quadrotonnel.h"
 
 #include "camera.h"
 #include "cube.h"
@@ -35,7 +36,6 @@ CGL::Camera camera;
 CGL::Shader screenShader;
 CGL::Scene scene;
 
-
 void initOpenGL()
 {
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -43,7 +43,7 @@ void initOpenGL()
 		std::abort();
 	}
 
-    glfwSetFramebufferSizeCallback(window.getWindow(), framebufferSizeCallback);
+    glfwSetFramebufferSizeCallback(window.handler(), framebufferSizeCallback);
 
     glViewport(0, 0, window.width(), window.height());
 }
@@ -66,9 +66,10 @@ int loop() {
     // CGL::GeometryNormalExample geomNormalExample;
     // CGL::Instancing instancing;
     // CGL::Planet planet;
-    CGL::LightScene lightScene;
+    // CGL::LightScene lightScene;
+    CGL::QuadroTonel tonel;
 
-    while (!glfwWindowShouldClose(window.getWindow())) {
+    while (!glfwWindowShouldClose(window.handler())) {
         float currentFrame = glfwGetTime();
 
         float deltaTime = currentFrame - lastFrame;
@@ -85,7 +86,6 @@ int loop() {
         view = camera.getLookAt();
         projection.perspective(45.0f, window.aspect(), 0.1f, 100.0f);
 
-
         // --- EXAMPLES ---
 
         // shadowMap.use(window, camera);
@@ -96,20 +96,20 @@ int loop() {
         // geomNormalExample.use(model, view, projection);
         // instancing.use(model, view, projection);
         // planet.use(model, view, projection);
+        tonel.use(model, view, projection);
+        // lightScene.use(camera, model, view, projection);
 
-        lightScene.use(camera, model, view, projection);
-
-        static bool pressed = false;
-        if (inputController.isKeySpacePressed()) {
-            if (!pressed) {
-                pressed = true;
-                int static c = 0;
-                std::cout << "key space pressed: " << c++ << std::endl;
-                lightScene.gammaOnOff();
-            }
-        } else {
-            pressed = false;
-        }
+        // static bool pressed = false;
+        // if (inputController.isKeySpacePressed()) {
+        //     if (!pressed) {
+        //         pressed = true;
+        //         int static c = 0;
+        //         std::cout << "key space pressed: " << c++ << std::endl;
+        //         lightScene.gammaOnOff();
+        //     }
+        // } else {
+        //     pressed = false;
+        // }
 
         frameBuffer.unbind();
 

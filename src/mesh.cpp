@@ -3,16 +3,28 @@
 CGL::Mesh::Mesh() {}
 
 CGL::Mesh::Mesh(const std::vector<Vertex>& vertices)
-    : m_buffer(vertices) {}
+    : m_buffer(vertices)
+{}
+
+CGL::Mesh::Mesh(const std::vector<Vertex> &vertices, const std::vector<unsigned int> &indices)
+    : m_buffer(vertices, indices)
+{}
 
 CGL::Mesh::Mesh(const std::vector<Vertex> &vertices, const TextureBase &texture)
-    : m_buffer(vertices, texture) {}
+    : m_buffer(vertices, texture)
+{}
+
+CGL::Mesh::Mesh(const std::vector<Vertex> &vertices, const TextureBase &texture, const std::vector<unsigned int> &indices)
+    : m_buffer(vertices, texture, indices)
+{}
 
 CGL::Mesh::Mesh(const std::vector<Vertex> &vertices, const std::vector<TextureBase> &textures)
-    : m_buffer(vertices, textures) {}
+    : m_buffer(vertices, textures)
+{}
 
 CGL::Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<CGL::TextureBase>& textures, const std::vector<unsigned int>& indices)
-    : m_buffer(vertices, textures, indices) {}
+    : m_buffer(vertices, textures, indices)
+{}
 
 void CGL::Mesh::setPrimitiveType(GLenum type)
 {

@@ -6,6 +6,7 @@ CGL::LightScene::LightScene()
 {
     m_shader = CGL::Shader("shaders/cube.vert", "shaders/cube.frag");
     m_lightShader = CGL::Shader("shaders/light.vert", "shaders/light.frag");
+
     auto tex = TextureLoader::loadFromFile("textures/woodparquet/woodparquet_119_basecolor-1K.png");
     auto brick = TextureLoader::loadFromFile("textures/brick/brick.jpg");
 
@@ -40,7 +41,6 @@ void CGL::LightScene::use(CGL::Camera& camera, CGL::Transform model, CGL::Transf
     m_shader.setVec3("light.position", lightPos);
 
     m_shader.setVec3("viewPos", camera.pos());
-
     m_shader.setInt("diffuseTex", 0);
 
 
@@ -60,7 +60,7 @@ void CGL::LightScene::use(CGL::Camera& camera, CGL::Transform model, CGL::Transf
 
     model.reset();
     model.translate(lightPos);
-    // m_lightShader.use();
+    m_lightShader.use();
     m_lightShader.setMat4("model", model);
     m_lightShader.setMat4("view", view);
     m_lightShader.setMat4("projection", projection);

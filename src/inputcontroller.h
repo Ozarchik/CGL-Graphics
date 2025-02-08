@@ -15,7 +15,6 @@ public:
     void process();
 
     bool isKeySpacePressed() const;
-    void resetStates();
 
     void addSubscriber(CGL::Object* object);
 
@@ -27,7 +26,7 @@ private:
     static void mouseCallback(GLFWwindow* window, double x, double y);
 
 private:
-    GLFWwindow* m_window;
+    GLFWwindow* winHandler;
     bool keySpacePressed = false;
     inline static std::vector<Object*> m_objects;
 };

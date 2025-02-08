@@ -32,7 +32,6 @@ void CGL::Model::draw(Shader &shader)
         glBindTexture(GL_TEXTURE_2D, m_textures[i].id);
     }
 
-    std::vector<CGL::Mesh> m_meshes;
     for (auto& m: m_meshes) {
         m.draw(shader);
     }

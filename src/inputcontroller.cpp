@@ -7,50 +7,44 @@ CGL::InputController::InputController
     CGL::Camera* camera
 )
 {
-    m_window = window->getWindow();
-    // m_camera = camera;
-
+    winHandler = window->handler();
     addSubscriber(camera);
 
-    glfwSetCursorPosCallback(m_window, &CGL::InputController::mouseCallback);
-    glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    // glfwSetInputMode(window->getWindow(), GLFW_STICKY_KEYS, GLFW_TRUE);
+    glfwSetCursorPosCallback(winHandler, &CGL::InputController::mouseCallback);
+    glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 void CGL::InputController::process()
 {
-    // static_assert(m_window != nullptr, "glfw m_window is not valid (null)");
+    if (glfwGetKey(winHandler, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(winHandler, true);
 
-    if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(m_window, true);
-
-    if (glfwGetKey(m_window, GLFW_KEY_W) == GLFW_PRESS)
+    if (glfwGetKey(winHandler, GLFW_KEY_W) == GLFW_PRESS)
         keyNotify(CGL::Key_W);
 
-    if (glfwGetKey(m_window, GLFW_KEY_S) == GLFW_PRESS)
+    if (glfwGetKey(winHandler, GLFW_KEY_S) == GLFW_PRESS)
         keyNotify(CGL::Key_S);
 
-    if (glfwGetKey(m_window, GLFW_KEY_A) == GLFW_PRESS)
+    if (glfwGetKey(winHandler, GLFW_KEY_A) == GLFW_PRESS)
         keyNotify(CGL::Key_A);
 
-    if (glfwGetKey(m_window, GLFW_KEY_D) == GLFW_PRESS)
+    if (glfwGetKey(winHandler, GLFW_KEY_D) == GLFW_PRESS)
         keyNotify(CGL::Key_D);
 
-    if (glfwGetKey(m_window, GLFW_KEY_Z) == GLFW_PRESS)
+    if (glfwGetKey(winHandler, GLFW_KEY_Z) == GLFW_PRESS)
         keyNotify(CGL::Key_Z);
 
-    if (glfwGetKey(m_window, GLFW_KEY_C) == GLFW_PRESS)
+    if (glfwGetKey(winHandler, GLFW_KEY_C) == GLFW_PRESS)
         keyNotify(CGL::Key_C);
 
-    if (glfwGetKey(m_window, GLFW_KEY_SPACE) == GLFW_PRESS && !keySpacePressed) {
+    if (glfwGetKey(winHandler, GLFW_KEY_SPACE) == GLFW_PRESS && !keySpacePressed) {
         keySpacePressed = true;
     }
 
-    if (glfwGetKey(m_window, GLFW_KEY_SPACE) == GLFW_RELEASE) {
+    if (glfwGetKey(winHandler, GLFW_KEY_SPACE) == GLFW_RELEASE) {
         keySpacePressed = false;
     }
 }
-
 
 void CGL::InputController::keyNotify(const CGL::KeyType &keyType)
 {
@@ -76,11 +70,6 @@ void CGL::InputController::mouseNotify(int dx, int dy)
 void CGL::InputController::mouseCallback(GLFWwindow* window, double x, double y)
 {
     mouseNotify(x, y);
-}
-
-void CGL::InputController::resetStates()
-{
-    // keySpacePressed = false;
 }
 
 void CGL::InputController::addSubscriber(Object *object)

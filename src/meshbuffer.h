@@ -11,7 +11,9 @@ struct MeshBuffer
 public:
     MeshBuffer() = default;
     MeshBuffer(const std::vector<Vertex>& vertices);
+    MeshBuffer(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
     MeshBuffer(const std::vector<Vertex>& vertices, const TextureBase& texture);
+    MeshBuffer(const std::vector<Vertex>& vertices, const TextureBase& texture, const std::vector<unsigned int>& indices);
     MeshBuffer(const std::vector<Vertex>& vertices, const std::vector<CGL::TextureBase>& textures);
     MeshBuffer(const std::vector<Vertex>& vertices, const std::vector<CGL::TextureBase>& textures, const std::vector<unsigned int>& indices);
 

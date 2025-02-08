@@ -6,6 +6,7 @@ layout (location = 2) in vec2 aTexCoord;
 layout (location = 3) in vec3 aColor;
 
 out vec3 fNormal;
+out vec3 fColor;
 
 out VS_OUT {
     vec3 normal;

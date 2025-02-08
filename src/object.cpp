@@ -2,5 +2,4 @@
 
 CGL::Object::Object()
 {
-
 }

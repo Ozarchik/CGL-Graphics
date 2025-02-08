@@ -19,7 +19,7 @@ public:
 
 	void init();
 
-    GLFWwindow* getWindow() const;
+    GLFWwindow* handler() const;
 
     // static void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 

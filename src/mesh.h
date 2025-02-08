@@ -19,17 +19,19 @@
 namespace CGL {
 class Mesh {
 public:
-    Mesh();
-    Mesh(const std::vector<Vertex>& vertices);
-    Mesh(const std::vector<Vertex>& vertices, const TextureBase& texture);
-    Mesh(const std::vector<Vertex>& vertices, const std::vector<CGL::TextureBase>& textures);
-    Mesh(const std::vector<Vertex>& vertices, const std::vector<CGL::TextureBase>& textures, const std::vector<unsigned int>& indices);
+    explicit Mesh();
+    explicit Mesh(const std::vector<Vertex>& vertices);
+    explicit Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int> &indices);
+    explicit Mesh(const std::vector<Vertex>& vertices, const TextureBase& texture);
+    explicit Mesh(const std::vector<Vertex>& vertices, const TextureBase& texture, const std::vector<unsigned int> &indices);
+    explicit Mesh(const std::vector<Vertex>& vertices, const std::vector<CGL::TextureBase>& textures);
+    explicit Mesh(const std::vector<Vertex>& vertices, const std::vector<CGL::TextureBase>& textures, const std::vector<unsigned int>& indices);
 
-    void setPrimitiveType(GLenum type);
     virtual void setup();
     virtual void draw(Shader& Shader);
-
     virtual void addTexture(const std::vector<CGL::TextureBase>& textures);
+
+    void setPrimitiveType(GLenum type);
 
 protected:
     CGL::MeshBuffer m_buffer;

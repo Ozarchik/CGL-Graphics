@@ -160,7 +160,6 @@ CGL::Cube::Cube(const glm::vec3& pos, const std::vector<CGL::TextureBase>& textu
 
 CGL::Cube::~Cube()
 {
-
 }
 
 void CGL::Cube::draw(Shader &Shader) 
