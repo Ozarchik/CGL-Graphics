@@ -1,5 +1,5 @@
-#include "stencil.h"
-#include "cube.h"
+#include <examples/stencil.h>
+#include <cgl/mesh/3D/cube.h>
 
 CGL::Stencil::Stencil()
 {

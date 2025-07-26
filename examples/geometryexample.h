@@ -1,10 +1,10 @@
 #ifndef GEOMETRYEXAMPLE_H
 #define GEOMETRYEXAMPLE_H
 
-#include "shader.h"
-#include "scene.h"
-#include "camera.h"
-#include "window.h"
+#include <cgl/shader.h>
+#include <cgl/scene.h>
+#include <cgl/camera.h>
+#include <cgl/window.h>
 
 namespace CGL {
 class GeometryExample

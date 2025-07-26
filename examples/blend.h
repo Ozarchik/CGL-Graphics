@@ -1,11 +1,11 @@
 #ifndef BLEND_H
 #define BLEND_H
 
-#include "shader.h"
-#include "scene.h"
-#include "window.h"
-#include "camera.h"
-#include "texturebase.h"
+#include <cgl/shader.h>
+#include <cgl/scene.h>
+#include <cgl/window.h>
+#include <cgl/camera.h>
+#include <cgl/texture/texturebase.h>
 
 namespace CGL {
 class Blend

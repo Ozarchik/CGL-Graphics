@@ -1,8 +1,8 @@
 #ifndef INSTANCING_H
 #define INSTANCING_H
 
-#include "shader.h"
-#include "scene.h"
+#include <cgl/shader.h>
+#include <cgl/scene.h>
 
 namespace CGL {
 class Instancing

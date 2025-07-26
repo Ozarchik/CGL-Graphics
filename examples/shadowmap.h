@@ -1,10 +1,10 @@
 #ifndef SHADOWMAP_H
 #define SHADOWMAP_H
 
-#include "shader.h"
-#include "scene.h"
-#include "window.h"
-#include "camera.h"
+#include <cgl/shader.h>
+#include <cgl/scene.h>
+#include <cgl/window.h>
+#include <cgl/camera.h>
 
 namespace CGL {
 class ShadowMap

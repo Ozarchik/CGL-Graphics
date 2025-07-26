@@ -1,11 +1,11 @@
 #ifndef LIGHTSCENE_H
 #define LIGHTSCENE_H
 
-#include "transform.h"
-#include "shader.h"
-#include "scene.h"
-#include "cube.h"
-#include "camera.h"
+#include <cgl/transform.h>
+#include <cgl/shader.h>
+#include <cgl/scene.h>
+#include <cgl/mesh/3D/cube.h>
+#include <cgl/camera.h>
 
 namespace CGL {
 class LightScene

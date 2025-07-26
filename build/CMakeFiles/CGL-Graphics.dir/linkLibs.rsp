@@ -1,1 +1,0 @@
- "C:/libs/glfw-3.4/install/bin/glfw3.dll" C:/libs/glm/install/bin/libglm.dll "C:/libs/assimp/deploy/bin/libassimp-5.dll" -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

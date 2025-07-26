@@ -1,6 +1,6 @@
-#include "shadowmap.h"
-#include "cube.h"
-#include "sphere.h"
+#include <examples/shadowmap.h>
+#include <cgl/mesh/3D/cube.h>
+#include <cgl/mesh/3D/sphere.h>
 
 CGL::ShadowMap::ShadowMap()
 {

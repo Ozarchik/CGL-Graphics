@@ -1,4 +1,4 @@
-#include "normalmapexample.h"
+#include <examples/normalmapexample.h>
 
 NormalMapExample::NormalMapExample()
 {

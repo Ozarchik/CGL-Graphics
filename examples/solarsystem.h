@@ -1,10 +1,10 @@
 #ifndef SOLARSYSTEM_H
 #define SOLARSYSTEM_H
 
-#include "scene.h"
-#include "shader.h"
-#include "window.h"
-#include "camera.h"
+#include <cgl/scene.h>
+#include <cgl/shader.h>
+#include <cgl/window.h>
+#include <cgl/camera.h>
 
 struct PlanetInfo {
     float distance;

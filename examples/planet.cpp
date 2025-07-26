@@ -1,7 +1,7 @@
-#include "planet.h"
-#include "cube.h"
-#include "sphere.h"
-#include "modelloader.h"
+#include <examples/planet.h>
+#include <cgl/mesh/3D/cube.h>
+#include <cgl/mesh/3D/sphere.h>
+#include <cgl/model/modelloader.h>
 
 constexpr unsigned int rockCount = 200;
 glm::vec3 coords[rockCount];

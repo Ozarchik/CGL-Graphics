@@ -1,44 +1,31 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.25)
 project(CGL-Graphics)
 
-find_package(CGLHelper)
-
-
-include_directories(${CMAKE_SOURCE_DIR}/src)
-include_directories(${CMAKE_SOURCE_DIR}/examples)
-include_directories(C:/libs/glfw/install/include)
-include_directories(C:/libs/glad/include)
-include_directories(C:/libs/glm/install/include)
-include_directories(C:/libs/assimp/deploy/include)
-
-set(GLFW_LIB C:/libs/glfw/install/bin/glfw3.dll)
-set(GLM_LIB C:/libs/glm/install/bin/libglm.dll)
-set(ASSIMP_LIB C:/libs/assimp/deploy/bin/libassimp-5.dll)
-
-
-add_executable(${PROJECT_NAME}
-    examples/lightscene.h examples/lightscene.cpp
-    src/model.h src/model.cpp
-    src/textureloader.h src/textureloader.cpp
-    src/meshbuffer.h src/meshbuffer.cpp
-    src/object.h src/object.cpp
-    src/event.h src/event.cpp
-)
-
-target_link_libraries(${PROJECT_NAME} PRIVATE
-    ${GLFW_LIB}
-    ${GLM_LIB}
-    ${ASSIMP_LIB}
-)
+find_package(assimp REQUIRED)
+find_package(glfw3 REQUIRED)
+find_package(glad REQUIRED)
+find_package(glm REQUIRED)
 
 file(GLOB sources
-    "src/*.cpp"
+    "cgl/*.cpp"
+    "cgl/mesh/2D/*.cpp"
+    "cgl/mesh/3D/*.cpp"
+    "cgl/mesh/common/*.cpp"
+    "cgl/event/*.cpp"
+    "cgl/model/*.cpp"
+    "cgl/texture/*.cpp"
     "examples/*.cpp"
-    "C:/libs/glad/src/glad.c"
+    # "C:/libs/glad/src/glad.c"
 )
 
 file(GLOB headers
-    "src/*.h"
+    "include/cgl/*.h"
+    "include/cgl/mesh/2D/*.h"
+    "include/cgl/mesh/3D/*.h"
+    "include/cgl/mesh/common/*.h"
+    "include/cgl/event/*.h"
+    "include/cgl/model/*.h"
+    "include/cgl/texture/*.h"
     "examples/*.h"
 )
 
@@ -46,10 +33,29 @@ file(GLOB shaders
     "shaders/*"
 )
 
-target_sources(${PROJECT_NAME} PRIVATE
+add_executable(cglg)
+
+target_sources(cglg PRIVATE
     ${sources}
     ${headers}
     ${shaders}
+)
+
+target_link_libraries(cglg PRIVATE
+    assimp::assimp
+    glm::glm
+    glad::glad
+    glfw
+)
+
+target_include_directories(cglg PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    # ${CMAKE_CURRENT_SOURCE_DIR}/examples
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/cgl/meshes
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/cgl/event
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/cgl/model
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/cgl/texture
+    ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 

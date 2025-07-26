@@ -1,6 +1,6 @@
-#include "lightscene.h"
-#include "rectangle.h"
-#include "textureloader.h"
+#include <examples/lightscene.h>
+#include <cgl/mesh/2D/rectangle.h>
+#include <cgl/texture/textureloader.h>
 
 CGL::LightScene::LightScene()
 {

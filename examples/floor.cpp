@@ -1,7 +1,7 @@
-#include "floor.h"
-#include "glad/glad.h"
-#include "texturebase.h"
-#include "textureloader.h"
+#include <examples/floor.h>
+#include <glad/glad.h>
+#include <cgl/texture/texturebase.h>
+#include <cgl/texture/textureloader.h>
 
 CGL::Floor::Floor()
 {

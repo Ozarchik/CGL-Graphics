@@ -1,5 +1,5 @@
-#include "instancing.h"
-#include "cube.h"
+#include <examples/instancing.h>
+#include <cgl/mesh/3D/cube.h>
 
 CGL::Instancing::Instancing()
 {

@@ -1,6 +1,6 @@
-#include "solarsystem.h"
-#include "sphere.h"
-#include "textureloader.h"
+#include <examples/solarsystem.h>
+#include <cgl/mesh/3D/sphere.h>
+#include <cgl/texture/textureloader.h>
 
 constexpr int kDistance = 15.0;
 constexpr int kRadius = 2.0;

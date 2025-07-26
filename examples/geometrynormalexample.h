@@ -1,8 +1,8 @@
 #ifndef GEOMETRYNORMALEXAMPLE_H
 #define GEOMETRYNORMALEXAMPLE_H
 
-#include "geometryexample.h"
-#include "model.h"
+#include <examples/geometryexample.h>
+#include <cgl/model/model.h>
 
 namespace CGL {
 class GeometryNormalExample : public GeometryExample

@@ -1,11 +1,11 @@
 #ifndef STENCIL_H
 #define STENCIL_H
 
-#include "shader.h"
-#include "scene.h"
-#include "window.h"
-#include "camera.h"
-#include "framebuffer.h"
+#include <cgl/shader.h>
+#include <cgl/scene.h>
+#include <cgl/window.h>
+#include <cgl/camera.h>
+#include <cgl/framebuffer.h>
 
 namespace CGL {
 class Stencil

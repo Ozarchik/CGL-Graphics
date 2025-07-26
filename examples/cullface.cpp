@@ -1,6 +1,6 @@
-#include "cullface.h"
-#include "cube.h"
-#include "textureloader.h"
+#include <examples/cullface.h>
+#include <cgl/mesh/3D/cube.h>
+#include <cgl/texture/textureloader.h>
 
 
 unsigned int VBO, VAO;

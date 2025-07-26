@@ -1,10 +1,10 @@
-#include "blend.h"
+#include <examples/blend.h>
 #include <glad/glad.h>
 
-#include "cube.h"
-#include "rectangle.h"
+#include <cgl/mesh/2D/rectangle.h>
+#include <cgl/mesh/3D/cube.h>
 
-#include "textureloader.h"
+#include <cgl/texture/textureloader.h>
 
 CGL::Blend::Blend()
 {

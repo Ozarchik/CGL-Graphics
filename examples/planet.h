@@ -1,9 +1,9 @@
 #ifndef PLANET_H
 #define PLANET_H
 
-#include "shader.h"
-#include "scene.h"
-#include "model.h"
+#include <cgl/shader.h>
+#include <cgl/scene.h>
+#include <cgl/model/model.h>
 
 namespace CGL {
 class Planet

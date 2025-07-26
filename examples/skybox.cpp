@@ -1,4 +1,4 @@
-#include "skybox.h"
+#include <examples/skybox.h>
 
 SkyBox::SkyBox()
 {

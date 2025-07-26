@@ -1,10 +1,10 @@
 #ifndef QUADROTONNEL_H
 #define QUADROTONNEL_H
 
-#include "scene.h"
-#include "shader.h"
-#include "window.h"
-#include "camera.h"
+#include <cgl/scene.h>
+#include <cgl/shader.h>
+#include <cgl/window.h>
+#include <cgl/camera.h>
 
 namespace CGL {
 class QuadroTonel

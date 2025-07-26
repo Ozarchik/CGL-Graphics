@@ -1,6 +1,6 @@
-#include "geometrynormalexample.h"
-#include "sphere.h"
-#include "modelloader.h"
+#include <examples/geometrynormalexample.h>
+#include <cgl/mesh/3D/sphere.h>
+#include <cgl/model/modelloader.h>
 
 CGL::GeometryNormalExample::GeometryNormalExample()
 {

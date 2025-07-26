@@ -1,9 +1,9 @@
 #ifndef CULLFACE_H
 #define CULLFACE_H
 
-#include "scene.h"
-#include "window.h"
-#include "camera.h"
+#include <cgl/scene.h>
+#include <cgl/window.h>
+#include <cgl/camera.h>
 
 namespace CGL {
 class CullFace

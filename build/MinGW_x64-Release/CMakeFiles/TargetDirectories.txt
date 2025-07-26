@@ -1,7 +1,0 @@
-C:/MyCode/CGL-Graphics/build/MinGW_x64-Release/CMakeFiles/CGL-Graphics.dir
-C:/MyCode/CGL-Graphics/build/MinGW_x64-Release/CMakeFiles/edit_cache.dir
-C:/MyCode/CGL-Graphics/build/MinGW_x64-Release/CMakeFiles/rebuild_cache.dir
-C:/MyCode/CGL-Graphics/build/MinGW_x64-Release/CMakeFiles/list_install_components.dir
-C:/MyCode/CGL-Graphics/build/MinGW_x64-Release/CMakeFiles/install.dir
-C:/MyCode/CGL-Graphics/build/MinGW_x64-Release/CMakeFiles/install/local.dir
-C:/MyCode/CGL-Graphics/build/MinGW_x64-Release/CMakeFiles/install/strip.dir

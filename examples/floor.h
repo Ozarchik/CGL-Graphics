@@ -1,9 +1,9 @@
 #ifndef FLOOR_H
 #define FLOOR_H
 
-#include "shader.h"
-#include "window.h"
-#include "camera.h"
+#include <cgl/shader.h>
+#include <cgl/window.h>
+#include <cgl/camera.h>
 
 namespace CGL {
 class Floor

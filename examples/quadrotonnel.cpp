@@ -1,8 +1,8 @@
-#include "quadrotonnel.h"
-#include "cube.h"
-#include "sphere.h"
-#include "rectangle.h"
-#include "textureloader.h"
+#include <examples/quadrotonnel.h>
+#include <cgl/mesh/3D/cube.h>
+#include <cgl/mesh/3D/sphere.h>
+#include <cgl/mesh/2D/rectangle.h>
+#include <cgl/texture/textureloader.h>
 
 CGL::QuadroTonel::QuadroTonel()
 {

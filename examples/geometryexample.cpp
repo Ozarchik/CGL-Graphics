@@ -1,7 +1,7 @@
-#include "geometryexample.h"
-#include "rectangle.h"
-#include "cube.h"
-#include "transform.h"
+#include <examples/geometryexample.h>
+#include <cgl/mesh/2D/rectangle.h>
+#include <cgl/mesh/3D/cube.h>
+#include <cgl/transform.h>
 
 CGL::GeometryExample::GeometryExample()
 {
