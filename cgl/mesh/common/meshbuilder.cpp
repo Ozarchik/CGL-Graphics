@@ -1,10 +1,5 @@
 #include <cgl/mesh/common/meshbuilder.h>
 
-CGL::MeshBuilder::MeshBuilder()
-{
-
-}
-
 void CGL::MeshBuilder::setVertices(const std::vector<CGL::Vertex>& vertices)
 {
     m_vertices = vertices;
@@ -22,6 +17,6 @@ void CGL::MeshBuilder::setTextures(const std::vector<CGL::TextureBase>& textures
 
 CGL::Mesh CGL::MeshBuilder::build()
 {
-    CGL::Mesh mesh = CGL::Mesh(m_vertices, textures, indices);
+    CGL::Mesh mesh = CGL::Mesh(m_vertices, m_textures, m_indices);
     return mesh;
 }

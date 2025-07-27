@@ -16,6 +16,7 @@ file(GLOB sources
     "cgl/ui/*.cpp"
     "cgl/model/*.cpp"
     "cgl/texture/*.cpp"
+    "cgl/tools/backtrace/*.cpp"
     "examples/*.cpp"
     # "C:/libs/glad/src/glad.c"
 )
@@ -29,6 +30,7 @@ file(GLOB headers
     "include/cgl/ui/*.h"
     "include/cgl/model/*.h"
     "include/cgl/texture/*.h"
+    "include/cgl/tools/backtrace/*.h"
     "examples/*.h"
 )
 
@@ -73,7 +75,7 @@ if (NOT ${CMAKE_BUILD_TYPE} STREQUAL "Release")
         cpptrace::cpptrace
     )
 
-    add_compile_definitions(USE_CPPTRACE)
+    add_compile_definitions(USE_BACKTRACE)
 endif()
 
 target_include_directories(cglg PRIVATE
@@ -84,6 +86,7 @@ target_include_directories(cglg PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include/cgl/model
     ${CMAKE_CURRENT_SOURCE_DIR}/include/cgl/texture
     ${CMAKE_CURRENT_SOURCE_DIR}/include/cgl/ui
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/backtrace
     ${CMAKE_CURRENT_SOURCE_DIR}/bindings
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
