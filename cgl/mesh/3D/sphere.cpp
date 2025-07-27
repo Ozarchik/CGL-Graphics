@@ -11,13 +11,13 @@ static const std::vector<CGL::Vertex> sphVertices = genSphereVertices();
 static const std::vector<unsigned int> sphIndices = genSphereIndices();
 
 CGL::Sphere::Sphere()
-    : Mesh(sphVertices, sphIndices)
+    : Mesh(sphVertices, {}, sphIndices)
 {
 }
 
 
 CGL::Sphere::Sphere(const CGL::TextureBase& texture)
-    : Mesh(sphVertices, texture, sphIndices)
+    : Mesh(sphVertices, {texture}, sphIndices)
 {
 }
 

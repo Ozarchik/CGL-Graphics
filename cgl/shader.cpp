@@ -4,6 +4,8 @@
 #include <sstream>
 // #include <filesystem>
 
+#define SHADER_LOG_MODE false
+
 CGL::Shader::Shader(const std::string& vShaderPath, const std::string& fShaderPath)
 {
     GLuint vId = loadShader(vShaderPath, CGL::VERTEX_SHADER);
@@ -126,7 +128,7 @@ GLint CGL::Shader::getUniformLoc(const std::string& name) const
 {
     GLint loc = glGetUniformLocation(m_id, name.c_str());
 
-    if (loc == -1) {
+    if (SHADER_LOG_MODE && loc == -1) {
         std::cout << "Uniform [" << name  << "] is not found" << std::endl;
     }
 

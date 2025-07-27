@@ -6,16 +6,19 @@ CGL::InputController::InputController
     CGL::Window* window,
     CGL::Camera* camera
 )
+    : m_window(window)
 {
     winHandler = window->handler();
     addSubscriber(camera);
 
-    glfwSetCursorPosCallback(winHandler, &CGL::InputController::mouseCallback);
-    glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    // glfwSetCursorPosCallback(winHandler, &CGL::InputController::mouseCallback);
+    // glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 void CGL::InputController::process()
 {
+    glfwPollEvents();
+
     if (glfwGetKey(winHandler, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(winHandler, true);
 
@@ -36,6 +39,13 @@ void CGL::InputController::process()
 
     if (glfwGetKey(winHandler, GLFW_KEY_C) == GLFW_PRESS)
         keyNotify(CGL::Key_C);
+
+    if (glfwGetKey(winHandler, GLFW_KEY_B) == GLFW_PRESS) {
+        static bool cursorEnabled = false;
+        cursorEnabled = !cursorEnabled;
+        m_window->setCursorEnabled(cursorEnabled);
+        keyNotify(CGL::Key_B);
+    }
 
     if (glfwGetKey(winHandler, GLFW_KEY_SPACE) == GLFW_PRESS && !keySpacePressed) {
         keySpacePressed = true;

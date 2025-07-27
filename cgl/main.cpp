@@ -31,6 +31,12 @@
 #include <cgl/normalmap.h>
 #include <cgl/framebuffer.h>
 #include <cgl/vertexbuffer.h>
+#include <cgl/floorgenerator.h>
+#include <cgl/ui/frame.h>
+
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 
@@ -38,6 +44,17 @@ CGL::Window window;
 CGL::Camera camera;
 CGL::Shader screenShader;
 CGL::Scene scene;
+
+
+#ifdef USE_CONAN
+#include <cpptrace/cpptrace.hpp>
+void faultHandler(int signal)
+{
+    cpptrace::stacktrace trace = cpptrace::generate_trace();
+    trace.print();
+    exit(1);
+}
+#endif
 
 void initOpenGL()
 {
@@ -61,87 +78,87 @@ int loop() {
     glEnable(GL_DEPTH_TEST);
     // glEnable(GL_FRAMEBUFFER_SRGB);
 
-    // CGL::ShadowMap shadowMap;
-    // CGL::Blend blend;
-    // CGL::CullFace cullFace;
-    // CGL::Floor floor;
-    // CGL::GeometryExample geometryExample;
-    // CGL::GeometryNormalExample geomNormalExample;
-    // CGL::Instancing instancing;
-    // CGL::LightScene lightScene;
-    // CGL::Planet planet;
-    // CGL::QuadroTonel tonel;
-    CGL::SolarSystem solarSystem;
+    CGL::FloorGenerator floorGen;
+    CGL::Frame testFrame(&window);
 
     while (!glfwWindowShouldClose(window.handler())) {
+        inputController.process();
         float currentFrame = glfwGetTime();
 
         float deltaTime = currentFrame - lastFrame;
         camera.correctSpeed(deltaTime);
         lastFrame = currentFrame;
 
-        inputController.process();
 
         frameBuffer.bind();
 
         double timeVal = glfwGetTime() * 60;
 
-        CGL::Transform model, view, projection;
-        view = camera.getLookAt();
-        projection.perspective(45.0f, window.aspect(), 0.1f, 500.0f);
+        CGL::Transform model;
+        CGL::Transform view = camera.getLookAt();
+        CGL::Transform projection = CGL::Transform::makePerspective(45.0f, window.aspect(), 0.1f, 500.0f);
 
-        // --- EXAMPLES ---
-
-        // shadowMap.use(window, camera);
-        // blend.use(window, camera);
-        // cullFace.use(window, camera);
-        // floor.use(window, camera);
-        // geometryExample.use(window, camera);
-        // geomNormalExample.use(model, view, projection);
-        // instancing.use(model, view, projection);
-        // planet.use(model, view, projection);
-        // tonel.use(model, view, projection);
-        // lightScene.use(camera, model, view, projection);
-        solarSystem.use(model, view, projection);
-
-        // static bool pressed = false;
-        // if (inputController.isKeySpacePressed()) {
-        //     if (!pressed) {
-        //         pressed = true;
-        //         int static c = 0;
-        //         std::cout << "key space pressed: " << c++ << std::endl;
-        //         lightScene.gammaOnOff();
-        //     }
-        // } else {
-        //     pressed = false;
-        // }
+        floorGen.draw(camera, model, view, projection);
 
         frameBuffer.unbind();
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        glDisable(GL_DEPTH_TEST);
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        testFrame.update();
+        
+        window.update();
 
         screenShader.use();
         screenShader.setInt("screen", 0);
-
         frameBuffer.use();
 
-        window.update();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        
+        window.swapBuffers();
 	}
 
 	return 0;
 }
 
+// How to generate floor:
+// -- Use floor generator: init(camera) -> need to read position
+// -- z coord is constant: 0 (for example)
+// -- for first step just render white color (because ambient color is black)
+// -- Need to set:
+// -- 1. side of floor 
+
 int main()
 {
+    #ifdef USE_CPPTRACE
+    signal(SIGSEGV, faultHandler); // crash by accessing to not allowed memory
+    signal(SIGFPE, faultHandler);  // crash by invalid arithmetic operation
+    #endif
+
     window.init();
 	initOpenGL();
 
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO();
+
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+    
+    ImGui::StyleColorsDark();
+
+    ImGui_ImplGlfw_InitForOpenGL(window.handler(), true);
+    ImGui_ImplOpenGL3_Init("#version 330");
+    
+
+
     screenShader = CGL::Shader("shaders/screen.vert", "shaders/screen.frag");
 
-	return loop();
+    loop();
+
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
+	return 0;
 }
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height)

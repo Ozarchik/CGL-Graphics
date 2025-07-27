@@ -2,64 +2,8 @@
 
 #include <glad/glad.h>
 
-CGL::MeshBuffer::MeshBuffer(const std::vector<CGL::Vertex> &vertices)
-    : vertices(vertices)
-{
-    setup();
-}
-
-CGL::MeshBuffer::MeshBuffer(const std::vector<Vertex> &vertices, const std::vector<unsigned int> &indices)
-    : vertices(vertices), indices(indices)
-{
-    setup();
-}
-
-CGL::MeshBuffer::MeshBuffer(const std::vector<Vertex> &vertices, const CGL::TextureBase& texture)
-    : vertices(vertices), textures{texture}
-{
-    setup();
-}
-
-CGL::MeshBuffer::MeshBuffer(const std::vector<CGL::Vertex> &vertices, const std::vector<TextureBase> &textures)
-    : vertices(vertices), textures(textures)
-{
-    setup();
-}
-
-CGL::MeshBuffer::MeshBuffer(const std::vector<Vertex> &vertices, const TextureBase &texture, const std::vector<unsigned int> &indices)
-    : vertices(vertices), textures{texture}, indices(indices)
-{
-    setup();
-}
-
 CGL::MeshBuffer::MeshBuffer(const std::vector<CGL::Vertex> &vertices, const std::vector<TextureBase> &textures, const std::vector<unsigned int> &indices)
     : vertices(vertices), textures(textures), indices(indices)
-{
-    setup();
-}
-
-void CGL::MeshBuffer::setTextures(const std::vector<TextureBase>& newTextures)
-{
-    textures = newTextures;
-}
-
-void CGL::MeshBuffer::bind()
-{
-    glBindVertexArray(vao);
-
-    for(unsigned int i = 0; i < textures.size(); i++) {
-        glActiveTexture(GL_TEXTURE0 + i);
-        glBindTexture(GL_TEXTURE_2D, textures[i].id);
-    }
-}
-
-void CGL::MeshBuffer::unbind()
-{
-    glBindVertexArray(0);
-    glActiveTexture(GL_TEXTURE0);
-}
-
-void CGL::MeshBuffer::setup()
 {
     glGenVertexArrays(1, &vao);
     glGenBuffers(1, &vbo);
@@ -82,4 +26,25 @@ void CGL::MeshBuffer::setup()
     glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(CGL::Vertex), (void*)offsetof(CGL::Vertex, color));
 
     glBindVertexArray(0);
+}
+
+void CGL::MeshBuffer::setTextures(const std::vector<TextureBase>& newTextures)
+{
+    textures = newTextures;
+}
+
+void CGL::MeshBuffer::bind()
+{
+    glBindVertexArray(vao);
+
+    for(unsigned int i = 0; i < textures.size(); i++) {
+        glActiveTexture(GL_TEXTURE0 + i);
+        glBindTexture(GL_TEXTURE_2D, textures[i].id);
+    }
+}
+
+void CGL::MeshBuffer::unbind()
+{
+    glBindVertexArray(0);
+    glActiveTexture(GL_TEXTURE0);
 }

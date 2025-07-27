@@ -29,7 +29,7 @@ CGL::Cube::Cube(const unsigned int& size)
 }
 
 CGL::Cube::Cube(const TextureBase &texture, const unsigned int &size)
-    : Mesh(vertices, texture), m_size(size)
+    : Mesh(vertices, {texture}), m_size(size)
 {
     // m_textures.push_back(texture);
 

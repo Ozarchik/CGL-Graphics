@@ -10,6 +10,7 @@ public:
 
 enum KeyType {
     Key_A,
+    Key_B,
     Key_C,
     Key_D,
     Key_S,

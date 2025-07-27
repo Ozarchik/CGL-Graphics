@@ -28,6 +28,7 @@ private:
 
 private:
     GLFWwindow* winHandler;
+    CGL::Window* m_window;
     bool keySpacePressed = false;
     inline static std::vector<Object*> m_objects;
 };

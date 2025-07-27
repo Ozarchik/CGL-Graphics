@@ -9,10 +9,10 @@ CGL::Window::Window()
 void CGL::Window::init()
 {
 	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+	// glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	// glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	// glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	// glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
 	m_window = glfwCreateWindow(m_width, m_height, m_title.c_str(), nullptr, nullptr);
 
@@ -22,9 +22,8 @@ void CGL::Window::init()
 		std::abort();
 	}
 
+	// setCursorEnabled(true);
 	glfwMakeContextCurrent(m_window);
-
-	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	m_alive = true;
 }
@@ -32,6 +31,15 @@ void CGL::Window::init()
 CGL::Window::~Window()
 {
 	glfwTerminate();
+}
+
+void CGL::Window::setCursorEnabled(bool enabled)
+{
+	if (enabled) {
+		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	} else {
+		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	}
 }
 
 CGL::Window::width() const
@@ -56,8 +64,14 @@ GLFWwindow* CGL::Window::handler() const
 
 void CGL::Window::update()
 {
+	glDisable(GL_DEPTH_TEST);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void CGL::Window::swapBuffers()
+{
 	glfwSwapBuffers(m_window);
-	glfwPollEvents();
 }
 
 bool CGL::Window::alive()

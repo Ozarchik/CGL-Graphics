@@ -35,5 +35,6 @@
 build
 
 # Generate files
-*.user
+*.user*
 *UserPresets.json
+imgui.ini

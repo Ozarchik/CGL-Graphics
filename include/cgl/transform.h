@@ -27,6 +27,9 @@ public:
 
     void rotate(float angle, float x, float y, float z);
 
+    static Transform makeOrtogonal(float left, float right, float bottom, float top, float near, float far);
+    static Transform makePerspective(float fov, float ratio, float near, float far);
+
     void ortogonal(float left, float right, float bottom, float top, float near, float far);
     void perspective(float fov, float ratio, float near, float far);
 

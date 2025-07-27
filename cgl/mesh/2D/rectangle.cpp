@@ -14,10 +14,15 @@ CGL::Rectangle::Rectangle(const CGL::TextureBase& texture)
 void CGL::Rectangle::draw(Shader& shader)
 {
     m_vertexBuffer.use();
-    if (m_buffer.textures.size()) {
-        glBindTexture(GL_TEXTURE_2D, m_buffer.textures[0].id);
-    }
-    glDrawArrays(m_primitiveType, 0, 6);
-    glDrawArraysInstanced(m_primitiveType, 0, 6, 4);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    // if (m_buffer.textures.size()) {
+    //     glBindTexture(GL_TEXTURE_2D, m_buffer.textures[0].id);
+    // }
+    // glDrawArrays(GL_TRIANGLES, 0, 6);
+    glDrawArrays(GL_LINE_LOOP, 0, 6);
+    glDrawArraysInstanced(GL_LINE_LOOP, 0, 6, 4);
+    
+    
+
+    // glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 4);
+    // glBindTexture(GL_TEXTURE_2D, 0);
 }

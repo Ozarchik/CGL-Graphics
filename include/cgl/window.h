@@ -11,7 +11,12 @@ public:
     ~Window();
 
 	void update();
+    void swapBuffers();
+
+
 	bool alive();
+
+    void setCursorEnabled(bool enabled);
 
 	int width() const;
 	int height() const;

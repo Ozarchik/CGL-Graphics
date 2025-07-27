@@ -9,4 +9,4 @@ struct Vertex {
     glm::vec2 texcoord;
     glm::vec3 color;
 };
-}
+} 

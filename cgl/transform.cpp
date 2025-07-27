@@ -1,13 +1,14 @@
 #include <cgl/transform.h>
 
 CGL::Transform::Transform()
+    : m_matrix(0.0f)
 {
     reset();
 }
 
 CGL::Transform::Transform(const glm::mat4& mat)
+    : m_matrix(mat)
 {
-    m_matrix = mat;
 }
 
 void CGL::Transform::reset()
@@ -76,22 +77,35 @@ void CGL::Transform::rotate(float angle, float x, float y, float z)
 
 void CGL::Transform::ortogonal(float left, float right, float bottom, float top, float near, float far)
 {
-    m_matrix = glm::ortho(left, right, bottom, top, near, far);
+    *this = makeOrtogonal(left, right, bottom, top, near, far);
 }
 
 void CGL::Transform::perspective(float fov, float ration, float near, float far)
 {
-    m_matrix = glm::perspective(
-        glm::radians(fov),
+    *this = makePerspective(fov, ration, near, far);
+}
+
+CGL::Transform CGL::Transform::makeOrtogonal(float left, float right, float bottom, float top, float near, float far)
+{
+    CGL::Transform transform = CGL::Transform(glm::ortho(left, right, bottom, top, near, far));
+    return transform;
+}
+
+CGL::Transform CGL::Transform::makePerspective(float fov, float ration, float near, float far)
+{
+    CGL::Transform transform = CGL::Transform(glm::perspective(
+        glm::radians(fov), 
         ration,
         near,
         far
-    );
+    ));
+
+    return transform;
 }
 
 CGL::Transform CGL::Transform::operator*(const Transform &right) const
 {
-    auto matrix = m_matrix * right.m_matrix;
+    glm::mat4 matrix = glm::mat4(m_matrix * right.m_matrix);
     return CGL::Transform(matrix);
 }
 

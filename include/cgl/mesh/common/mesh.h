@@ -13,19 +13,21 @@
 #include <cgl/texture/texturebase.h> 
 #include <cgl/vertex.h>
 #include <cgl/mesh/common/meshbuffer.h>
-
+#include <cgl/mesh/common/meshglobals.h>
+#include <cgl/mesh/common/meshcontroller.h>
 #include <cgl/stb_image.h>
+
 
 namespace CGL {
 class Mesh {
+    friend class MeshContoller;
+
 public:
-    explicit Mesh();
-    explicit Mesh(const std::vector<Vertex>& vertices);
-    explicit Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int> &indices);
-    explicit Mesh(const std::vector<Vertex>& vertices, const TextureBase& texture);
-    explicit Mesh(const std::vector<Vertex>& vertices, const TextureBase& texture, const std::vector<unsigned int> &indices);
-    explicit Mesh(const std::vector<Vertex>& vertices, const std::vector<CGL::TextureBase>& textures);
-    explicit Mesh(const std::vector<Vertex>& vertices, const std::vector<CGL::TextureBase>& textures, const std::vector<unsigned int>& indices);
+    explicit Mesh(
+        const std::vector<Vertex>& vertices = {},
+        const std::vector<CGL::TextureBase>& textures = {},
+        const std::vector<unsigned int>& indices = {}
+    );
 
     virtual ~Mesh() = default;
     virtual void setup();
@@ -37,5 +39,7 @@ public:
 protected:
     CGL::MeshBuffer m_buffer;
     GLenum m_primitiveType = GL_TRIANGLES;
+    CGL::ColorRenderMode m_colorRenderMode;
+    CGL::MeshController m_controller;
 };
 }
