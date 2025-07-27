@@ -3,6 +3,7 @@
 #include <cgl/mesh/3D/sphere.h>
 #include <cgl/mesh/2D/rectangle.h>
 #include <cgl/texture/textureloader.h>
+#include <cgl/node.h>
 
 CGL::QuadroTonel::QuadroTonel()
 {
@@ -11,15 +12,17 @@ CGL::QuadroTonel::QuadroTonel()
 
     // for (int i = 0; i < 20; i++) {
     //     if (i % 3 == 0) {
-    //         m_scene.addMesh(new CGL::Cube(texture));
+    //         m_scene.append(new CGL::Cube(texture));
     //     } else if (i % 3 == 1) {
-    //         m_scene.addMesh(new CGL::Sphere(texture));
+    //         m_scene.append(new CGL::Sphere(texture));
     //     } else {
-    //         m_scene.addMesh(new CGL::Rectangle(texture));
+    //         m_scene.append(new CGL::Rectangle(texture));
     //     }
     // }
 
-    m_scene.addMesh(new CGL::Sphere(texture));
+    CGL::Node* node = new CGL::Node;
+    node->addMesh(new CGL::Sphere(texture));
+    m_scene.append(node);
 }
 
 void CGL::QuadroTonel::use(
@@ -40,9 +43,9 @@ void CGL::QuadroTonel::use(
 
     model.translateZ(5);
     model.rotate(-90, 1.0, 0.0, 0.0);
-    for (int i = 0; i < m_scene.meshes().size(); i++) {
+    for (int i = 0; i < m_scene.nodes().size(); i++) {
         // model.translateX(2);
         m_shader.setMat4("model", model);
-        m_scene.meshes()[i]->draw(m_shader);
+        m_scene.nodes()[i]->update(m_shader);
     }
 }

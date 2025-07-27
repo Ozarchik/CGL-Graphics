@@ -2,6 +2,7 @@
 #include <cgl/mesh/3D/cube.h>
 #include <cgl/mesh/3D/sphere.h>
 #include <cgl/model/modelloader.h>
+#include <cgl/node.h>
 
 constexpr unsigned int rockCount = 200;
 glm::vec3 coords[rockCount];
@@ -26,8 +27,10 @@ CGL::Planet::Planet()
         "shaders/model.frag"
     );
 
-    // m_scene.addMesh(new CGL::Cube);
-    m_scene.addMesh(new CGL::Sphere);
+    // m_scene.append(new CGL::Cube);
+    CGL::Node* node = new CGL::Node;
+    node->addMesh(new CGL::Sphere);
+    m_scene.append(node);
 
     CGL::ModelLoader modelLoader;
     m_planet = modelLoader.load("assets/backpack/backpack.obj");

@@ -2,12 +2,15 @@
 #include <cgl/mesh/2D/rectangle.h>
 #include <cgl/mesh/3D/cube.h>
 #include <cgl/transform.h>
+#include <cgl/node.h>
 
 CGL::GeometryExample::GeometryExample()
 {
     m_shader = CGL::Shader("shaders/geometry.vert", "shaders/geometry.frag", "shaders/geometry.geom");
-    // m_scene.addMesh(new CGL::Rectangle);
-    m_scene.addMesh(new CGL::Cube);
+    // m_scene.append(new CGL::Rectangle);
+    CGL::Node* node = new CGL::Node;
+    node->addMesh(new CGL::Cube);
+    m_scene.append(node);
 }
 
 void CGL::GeometryExample::use(const Window &window, const Camera &camera)
@@ -36,8 +39,8 @@ void CGL::GeometryExample::use(const Window &window, const Camera &camera)
     // glEnable(GL_PROGRAM_POINT_SIZE);
     glPointSize(50.0f);
 
-    for (const auto& m: m_scene.meshes()) {
-        m->setPrimitiveType(GL_TRIANGLES);
-        m->draw(m_shader);
+    for (const auto& node: m_scene.nodes()) {
+        // node->setPrimitiveType(GL_TRIANGLES);
+        node->update(m_shader);
     }
 }

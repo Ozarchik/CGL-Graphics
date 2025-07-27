@@ -1,6 +1,7 @@
 #include <examples/solarsystem.h>
 #include <cgl/mesh/3D/sphere.h>
 #include <cgl/texture/textureloader.h>
+#include <cgl/node.h>
 
 constexpr int kDistance = 15.0;
 constexpr int kRadius = 2.0;
@@ -9,13 +10,18 @@ CGL::SolarSystem::SolarSystem()
 {
     m_shader = CGL::Shader("shaders/cube.vert", "shaders/cube.frag");
 
-    m_scene.addMesh(new CGL::Sphere(CGL::TextureLoader::loadFromFile("textures/planets/sun.jpg")));
-    m_scene.addMesh(new CGL::Sphere(CGL::TextureLoader::loadFromFile("textures/planets/mercury.jpg")));
-    m_scene.addMesh(new CGL::Sphere(CGL::TextureLoader::loadFromFile("textures/planets/venus.jpg")));
-    m_scene.addMesh(new CGL::Sphere(CGL::TextureLoader::loadFromFile("textures/planets/earth.bmp")));
-    m_scene.addMesh(new CGL::Sphere(CGL::TextureLoader::loadFromFile("textures/planets/moon.bmp")));
-    m_scene.addMesh(new CGL::Sphere(CGL::TextureLoader::loadFromFile("textures/planets/mars.jpg")));
-    m_scene.addMesh(new CGL::Sphere(CGL::TextureLoader::loadFromFile("textures/planets/jupiter.jpg")));
+    CGL::Node* node = new CGL::Node;
+    m_scene.append(node);
+
+    node->addMesh(new CGL::Sphere(CGL::TextureLoader::loadFromFile("textures/planets/sun.jpg")));
+    node->addMesh(new CGL::Sphere(CGL::TextureLoader::loadFromFile("textures/planets/mercury.jpg")));
+    node->addMesh(new CGL::Sphere(CGL::TextureLoader::loadFromFile("textures/planets/venus.jpg")));
+    node->addMesh(new CGL::Sphere(CGL::TextureLoader::loadFromFile("textures/planets/earth.bmp")));
+    node->addMesh(new CGL::Sphere(CGL::TextureLoader::loadFromFile("textures/planets/moon.bmp")));
+    node->addMesh(new CGL::Sphere(CGL::TextureLoader::loadFromFile("textures/planets/mars.jpg")));
+    node->addMesh(new CGL::Sphere(CGL::TextureLoader::loadFromFile("textures/planets/jupiter.jpg")));
+
+    m_scene.append(node);
 
     m_info.emplace_back(PlanetInfo{kDistance * 0.000f, kRadius * 5.000f, 200.001f, 365.00f, kDistance * 0.0000f, 1.0f});
     m_info.emplace_back(PlanetInfo{kDistance * 0.387f, kRadius * 0.382f, 58.6000f, 87.600f, kDistance * 0.0000f, 1.00f});
@@ -45,7 +51,7 @@ void CGL::SolarSystem::use(
     static float count = 0.0f;
     float x, y;
 
-    for (int i = 0; i < m_scene.meshes().size(); i++) {
+    for (int i = 0; i < m_scene.nodes().size(); i++) {
 
         model.reset();
         model.translateZ(-35.0f);
@@ -64,7 +70,7 @@ void CGL::SolarSystem::use(
         model.scale(m_info[i].radius);
 
         m_shader.setMat4("model", model);
-        m_scene.meshes()[i]->draw(m_shader);
+        m_scene.nodes()[i]->update(m_shader);
     }
 
     count += 0.1f;

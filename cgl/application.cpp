@@ -1,4 +1,8 @@
 #include <cgl/application.h>
+#include <cgl/mesh/meshes2D.h>
+#include <cgl/mesh/meshes3D.h>
+#include <cgl/texture/textureloader.h>
+#include <cgl/node.h>
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
@@ -36,6 +40,8 @@ CGL::Application::Application()
     ImGui_ImplOpenGL3_Init("#version 330");
 
     m_screenShader = CGL::Shader("shaders/screen.vert", "shaders/screen.frag");
+    m_meshShader = CGL::Shader("shaders/light.vert", "shaders/light.frag");
+    createTestObjects();
 }
 
 CGL::Application::~Application()
@@ -43,6 +49,17 @@ CGL::Application::~Application()
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
+}
+
+void CGL::Application::createTestObjects()
+{
+    auto brick = CGL::TextureLoader::loadFromFile("textures/brick/brick.jpg");
+    // m_scene.append(new Cube(brick));
+    CGL::Node* node = new CGL::Node;
+    node->addMesh(new Sphere(brick));
+    node->addMesh(new Rectangle(brick));
+
+    m_scene.append(node);
 }
 
 void CGL::Application::loop()
@@ -67,7 +84,6 @@ void CGL::Application::loop()
         m_camera.correctSpeed(deltaTime);
         lastFrame = currentFrame;
 
-
         frameBuffer.bind();
 
         double timeVal = glfwGetTime() * 60;
@@ -77,6 +93,17 @@ void CGL::Application::loop()
         CGL::Transform projection = CGL::Transform::makePerspective(45.0f, m_window.aspect(), 0.1f, 500.0f);
 
         floorGen.draw(m_camera, model, view, projection);
+
+        m_meshShader.use();
+        m_meshShader.setMVP(model, view, projection);
+        m_meshShader.setMat4("view", view);
+        m_meshShader.setVec3("light.color", 1.0, 1.0, 1.0);
+        m_meshShader.setMat4("projection", projection);
+        m_meshShader.setVec3("viewPos", m_camera.pos());
+        m_meshShader.setInt("diffuseTex", 0);
+        for (const auto& node: m_scene.nodes()) {
+            node->update(m_meshShader);
+        }
 
         frameBuffer.unbind();
 

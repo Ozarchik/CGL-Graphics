@@ -1,6 +1,7 @@
 #include <examples/lightscene.h>
 #include <cgl/mesh/2D/rectangle.h>
 #include <cgl/texture/textureloader.h>
+#include <cgl/node.h>
 
 CGL::LightScene::LightScene()
 {
@@ -12,7 +13,9 @@ CGL::LightScene::LightScene()
 
     for (int i = -10; i < 10; i++) {
         for (int j = -10; j < 10; j++) {
-            m_scene.addMesh(new CGL::Rectangle(tex));
+            CGL::Node* node = new CGL::Node;
+            node->addMesh(new CGL::Rectangle(tex));
+            m_scene.append(node);
         }
     }
 
@@ -44,7 +47,7 @@ void CGL::LightScene::use(CGL::Camera& camera, CGL::Transform model, CGL::Transf
     m_shader.setInt("diffuseTex", 0);
 
 
-    auto meshes = m_scene.meshes();
+    auto nodes = m_scene.nodes();
     int index = 0;
 
     for (int i = -10; i < 10; i++) {
@@ -54,7 +57,7 @@ void CGL::LightScene::use(CGL::Camera& camera, CGL::Transform model, CGL::Transf
             modif.translateX(i);
             modif.translateY(j);
             m_shader.setMat4("model", modif);
-            meshes[index]->draw(m_shader);
+            nodes[index]->update(m_shader);
         }
     }
 

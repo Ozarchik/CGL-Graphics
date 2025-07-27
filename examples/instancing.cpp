@@ -1,10 +1,13 @@
 #include <examples/instancing.h>
 #include <cgl/mesh/3D/cube.h>
+#include <cgl/node.h>
 
 CGL::Instancing::Instancing()
 {
     m_shader = CGL::Shader("shaders/instance.vert", "shaders/instance.frag");
-    m_scene.addMesh(new CGL::Cube);
+    CGL::Node* node = new CGL::Node;
+    node->addMesh(new CGL::Cube);
+    m_scene.append(node);
 
 
     int index = 0;
@@ -36,19 +39,19 @@ void CGL::Instancing::use (
     m_shader.setMat4("model", modifModel);
     m_shader.setMat4("view", view);
     m_shader.setMat4("projection", projection);
-    for (const auto& m: m_scene.meshes()) {
-        m->draw(m_shader);
+    for (const auto& node: m_scene.nodes()) {
+        node->update(m_shader);
     }
 
     modifModel.rotate(90.0, 1.0, 0.0, 0.0);
     m_shader.setMat4("model", modifModel);
-    for (const auto& m: m_scene.meshes()) {
-        m->draw(m_shader);
+    for (const auto& node: m_scene.nodes()) {
+        node->update(m_shader);
     }
 
     modifModel.rotate(90.0, 0.0, 1.0, 0.0);
     m_shader.setMat4("model", modifModel);
-    for (const auto& m: m_scene.meshes()) {
-        m->draw(m_shader);
+    for (const auto& node: m_scene.nodes()) {
+        node->update(m_shader);
     }
 }

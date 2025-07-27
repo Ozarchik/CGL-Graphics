@@ -1,7 +1,6 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 
-// #include <cgl/mesh/common/mesh.h>
 #include <cgl/mesh/common/mesh.h>
 
 namespace CGL {

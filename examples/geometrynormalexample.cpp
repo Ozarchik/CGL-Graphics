@@ -1,6 +1,7 @@
 #include <examples/geometrynormalexample.h>
 #include <cgl/mesh/3D/sphere.h>
 #include <cgl/model/modelloader.h>
+#include <cgl/node.h>
 
 CGL::GeometryNormalExample::GeometryNormalExample()
 {
@@ -10,7 +11,9 @@ CGL::GeometryNormalExample::GeometryNormalExample()
         "shaders/normalshow.geom"
     );
 
-    m_scene.addMesh(new CGL::Sphere);
+    CGL::Node* node = new CGL::Node;
+    node->addMesh(new CGL::Sphere);
+    m_scene.append(node);
     // model.load("assets/sphere/model.obj");
     CGL::ModelLoader modelLoader;
     object = modelLoader.load("assets/backpack/backpack.obj");

@@ -1,7 +1,7 @@
 #include <examples/cullface.h>
 #include <cgl/mesh/3D/cube.h>
 #include <cgl/texture/textureloader.h>
-
+#include <cgl/node.h>
 
 unsigned int VBO, VAO;
 unsigned int tex;
@@ -9,7 +9,7 @@ CGL::CullFace::CullFace()
 {
     m_shader = CGL::Shader("shaders/cullface.vert", "shaders/cullface.frag");
     tex = CGL::TextureLoader::loadFromFile("textures/brick/brick.jpg").id;
-    // m_scene.addMesh(new CGL::Cube(tex));
+    // m_scene.append(new CGL::Cube(tex));
 
 
     // cullface vertices
@@ -40,8 +40,8 @@ void CGL::CullFace::use(const CGL::Window& window, const CGL::Camera& camera)
     m_shader.use();
     m_shader.setMVP(model, view, projection);
 
-    for (const auto& m: m_scene.meshes()) {
-        m->draw(m_shader);
+    for (const auto& node: m_scene.nodes()) {
+        node->update(m_shader);
     }
 
     // cullface

@@ -13,6 +13,8 @@ enum KeyType {
     Key_B,
     Key_C,
     Key_D,
+    Key_E,
+    Key_Q,
     Key_S,
     Key_W,
     Key_Z,

@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include <cgl/texture/texturebase.h>
 #include <cgl/texture/textureloader.h>
+#include <cgl/node.h>
 
 CGL::Floor::Floor()
 {

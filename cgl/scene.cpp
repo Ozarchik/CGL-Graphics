@@ -5,30 +5,30 @@ CGL::Scene::~Scene()
     clear();
 }
 
-void CGL::Scene::render(Shader& Shader)
+void CGL::Scene::render(Shader& shader)
 {
-    Shader.use();
+    shader.use();
 
-    for (const auto obj: m_meshes) {
-        obj->draw(Shader);
+    for (const auto node: m_nodes) {
+        node->update(shader);
     }
 }
 
-void CGL::Scene::addMesh(Mesh* mesh)
+void CGL::Scene::append(Node* node)
 {
-    m_meshes.push_back(mesh);
+    m_nodes.push_back(node);
 }
 
 void CGL::Scene::clear()
 {
-    for (auto mesh: m_meshes) {
-        delete mesh;
+    for (auto node: m_nodes) {
+        delete node;
     }
 
-    m_meshes.clear();
+    m_nodes.clear();
 }
 
-std::vector<CGL::Mesh *> CGL::Scene::meshes() const
+std::vector<CGL::Node*> CGL::Scene::nodes() const
 {
-    return m_meshes;
+    return m_nodes;
 }

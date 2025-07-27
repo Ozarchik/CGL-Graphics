@@ -36,11 +36,13 @@ public:
     ~Application();
     void loop();
     void initOpenGL();
+    void createTestObjects();
 
 private:
     CGL::Window m_window;
     CGL::Camera m_camera;
     CGL::Shader m_screenShader;
+    CGL::Shader m_meshShader;
     CGL::Scene m_scene;
 };
 }

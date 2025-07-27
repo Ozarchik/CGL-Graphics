@@ -11,13 +11,20 @@ CGL::InputController::InputController
     winHandler = window->handler();
     addSubscriber(camera);
 
-    // glfwSetCursorPosCallback(winHandler, &CGL::InputController::mouseCallback);
-    // glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 }
 
 void CGL::InputController::process()
 {
     glfwPollEvents();
+
+    // static int frameCounter = 0;
+    // frameCounter++;
+    // if (frameCounter < 60) {
+    //     return;
+    // }
+    // frameCounter = 0;
+
 
     if (glfwGetKey(winHandler, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(winHandler, true);
@@ -27,6 +34,12 @@ void CGL::InputController::process()
 
     if (glfwGetKey(winHandler, GLFW_KEY_S) == GLFW_PRESS)
         keyNotify(CGL::Key_S);
+
+    if (glfwGetKey(winHandler, GLFW_KEY_Q) == GLFW_PRESS)
+        keyNotify(CGL::Key_Q);
+
+    if (glfwGetKey(winHandler, GLFW_KEY_E) == GLFW_PRESS)
+        keyNotify(CGL::Key_E);
 
     if (glfwGetKey(winHandler, GLFW_KEY_A) == GLFW_PRESS)
         keyNotify(CGL::Key_A);
@@ -43,8 +56,17 @@ void CGL::InputController::process()
     if (glfwGetKey(winHandler, GLFW_KEY_B) == GLFW_PRESS) {
         static bool cursorEnabled = false;
         cursorEnabled = !cursorEnabled;
-        m_window->setCursorEnabled(cursorEnabled);
-        keyNotify(CGL::Key_B);
+        // m_window->setCursorEnabled(cursorEnabled);
+        // keyNotify(CGL::Key_B);
+        static GLFWcursorposfun defaultPosCallback = glfwSetCursorPosCallback(winHandler, nullptr);
+        glfwSetCursorPosCallback(winHandler, nullptr);
+        if (cursorEnabled) {
+            glfwSetCursorPosCallback(winHandler, defaultPosCallback);
+            glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        } else {
+            glfwSetCursorPosCallback(winHandler, &CGL::InputController::mouseCallback);
+            glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        }
     }
 
     if (glfwGetKey(winHandler, GLFW_KEY_SPACE) == GLFW_PRESS && !keySpacePressed) {

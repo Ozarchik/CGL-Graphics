@@ -26,6 +26,8 @@ public:
     void stepBack();
     void stepLeft();
     void stepRight();
+    void rotateLeft();
+    void rotateRight();
 
     glm::vec3 front() const;
     glm::mat4 getLookAt() const;
@@ -49,7 +51,8 @@ private:
     glm::vec3 m_up = glm::vec3(0.0f, 1.0f, 0.0f);
     glm::vec3 m_right = glm::vec3(1.0f, 0.0f, 0.0f);
 
-
+    float lastX = 0.0f;
+    float lastY = 0.0f;
     float m_deltaTime = 0.0f;
     float m_speed = 5.5f;
 };

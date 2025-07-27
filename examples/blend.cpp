@@ -3,7 +3,7 @@
 
 #include <cgl/mesh/2D/rectangle.h>
 #include <cgl/mesh/3D/cube.h>
-
+#include <cgl/node.h>
 #include <cgl/texture/textureloader.h>
 
 CGL::Blend::Blend()
@@ -16,11 +16,13 @@ CGL::Blend::Blend()
 
 
     for (int i = 0; i < 3; i++) {
-        m_scene.addMesh(new CGL::Cube(contTex));
-        m_scene.addMesh(new CGL::Rectangle(winTex));
+        CGL::Node* node = new CGL::Node;
+        node->addMesh(new CGL::Cube(contTex));
+        node->addMesh(new CGL::Rectangle(winTex));
+        m_scene.append(node);
     }
 
-    // m_scene.addMesh(new CGL::Cube({0.0, 0.0, 0.0}, m_grassTex));
+    // m_scene.append(new CGL::Cube({0.0, 0.0, 0.0}, m_grassTex));
 }
 
 void CGL::Blend::use(const CGL::Window &window, const CGL::Camera &camera)
@@ -37,7 +39,7 @@ void CGL::Blend::use(const CGL::Window &window, const CGL::Camera &camera)
     m_shader.setMVP(model, view, projection);
     m_shader.setInt("grassTexture", 0);
 
-    for (const auto& m: m_scene.meshes()) {
+    for (const auto& node: m_scene.nodes()) {
         // model.reset();
         static int count = 0;
         model.scale(count % 2 == 0 ? 2 : 1);
@@ -48,7 +50,7 @@ void CGL::Blend::use(const CGL::Window &window, const CGL::Camera &camera)
         ++count;
 
         m_shader.setMat4("model", model);
-        m->draw(m_shader);
+        node->update(m_shader);
     }
 
     glDisable(GL_BLEND);

@@ -41,11 +41,9 @@ glm::vec3 CGL::Camera::pos() const
 
 void CGL::Camera::rotate(float targX, float targY)
 {
-    static float lastX = targX;
-    static float lastY = targY;
-
 	float xoffset = targX - lastX;
     float yoffset = lastY - targY;
+
 
 	lastX = targX;
 	lastY = targY;
@@ -84,6 +82,12 @@ void CGL::Camera::keyEventHandler(const KeyEvent& event)
     } break;
     case CGL::Key_D: {
         stepRight();
+    } break;
+    case CGL::Key_Q: {
+        rotateLeft();
+    } break;
+    case CGL::Key_E: {
+        rotateRight();
     } break;
     case CGL::Key_S: {
         stepBack();
@@ -146,6 +150,16 @@ void CGL::Camera::stepLeft()
 void CGL::Camera::stepRight()
 {
     m_pos += glm::normalize(glm::cross(m_front, m_up)) * m_speed * m_deltaTime;
+}
+
+void CGL::Camera::rotateLeft()
+{
+    rotate(lastX - 1.0, lastY);
+}
+
+void CGL::Camera::rotateRight()
+{
+    rotate(lastX + 1.0, lastY);
 }
 
 glm::vec3 CGL::Camera::front() const

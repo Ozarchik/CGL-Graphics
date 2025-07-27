@@ -12,7 +12,9 @@ CGL::FloorGenerator::FloorGenerator()
     
     for (int i = -sideSize; i < sideSize; i++) {
         for (int j = -sideSize; j < sideSize; j++) {
-            m_scene.addMesh(new CGL::Rectangle(tex));
+            CGL::Node* node = new CGL::Node;
+            node->addMesh(new CGL::Rectangle(tex));
+            m_scene.append(node);
         }
     }
     
@@ -42,7 +44,7 @@ void CGL::FloorGenerator::draw(CGL::Camera& camera, CGL::Transform  model, CGL::
     - - - - - -
     */
 
-    auto meshes = m_scene.meshes();
+    auto nodes = m_scene.nodes();
     int index = 0;
 
     for (int i = -sideSize; i < sideSize; i++) {
@@ -56,7 +58,7 @@ void CGL::FloorGenerator::draw(CGL::Camera& camera, CGL::Transform  model, CGL::
             // modif.translateX(i);
             // modif.translateY(j);
             m_shader.setMat4("model", modif);
-            meshes[index]->draw(m_shader);
+            nodes[index]->update(m_shader);
         }
     }
 
