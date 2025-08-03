@@ -31,8 +31,10 @@ CGL::Application::Application()
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
 
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
     
     ImGui::StyleColorsDark();
 
@@ -109,14 +111,44 @@ void CGL::Application::loop()
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         testFrame.update();
-        
+        m_editor.update();
+
+
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+        // TODO: Render the scene to a texture using an FBO
+        //       and then display it in the window using ImGui::Image
+        // GOAL: Split the window into left and right areas
+        //       On the left, I'll render a settings panel,
+        //       and on the right, I'll render the 3D scene
+
+        /*  -----------------------
+           |            |          |
+           |            |          |
+           |  Settings  |    3D    |
+           |            |          |
+           |            |          |
+            -----------------------
+        */
+
         m_window.update();
 
         m_screenShader.use();
         m_screenShader.setInt("screen", 0);
         frameBuffer.use();
 
+        ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
+            GLFWwindow* backup_current_context = glfwGetCurrentContext();
+            ImGui::UpdatePlatformWindows();
+            ImGui::RenderPlatformWindowsDefault();
+            glfwMakeContextCurrent(backup_current_context);
+        }
         
         m_window.swapBuffers();
 	}
