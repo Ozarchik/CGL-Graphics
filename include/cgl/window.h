@@ -19,7 +19,11 @@ public:
     void setCursorEnabled(bool enabled);
 
 	int width() const;
+    void setWidth(int width);
+
 	int height() const;
+    void setHeight(int height);
+    
     float aspect() const;
 
 	void init();

@@ -42,14 +42,24 @@ void CGL::Window::setCursorEnabled(bool enabled)
 	}
 }
 
-CGL::Window::width() const
+int CGL::Window::width() const
 {
 	return m_width;
 }
 
-CGL::Window::height() const
+void CGL::Window::setWidth(int width)
+{
+	m_width = width;
+}
+
+int CGL::Window::height() const
 {
 	return m_height;
+}
+
+void CGL::Window::setHeight(int height)
+{
+	m_height = height;
 }
 
 float CGL::Window::aspect() const
