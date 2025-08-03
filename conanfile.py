@@ -21,7 +21,7 @@ class CGLGraphicsRecipe(ConanFile):
         self.requires("glm/1.0.1")
         self.requires("assimp/5.4.3")
         self.requires("cpptrace/0.7.5")
-        self.requires("imgui/1.92.0")
+        self.requires("imgui/1.92.0-docking")
 
     def build(self):
         cmake = CMake(self)
