@@ -6,8 +6,9 @@
 3. GLFW
 4. GLM
 5. Conan (version 2.0+)
-## How to build
+6. OpenGL (version 3.3+)
 
+## How to build
 1. run conan install
    conan install . -pr:a <conan_profile> -b missing
 
