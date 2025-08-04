@@ -15,14 +15,16 @@ public:
     void bind();
     void unbind();
     void detach();
+    void rescale(int width, int height);
+    unsigned int texture() const;
 
     void setStencil(GLenum mode, unsigned char mask = 0xff);
     void enableDepth(bool mode);
 
 private:
-    unsigned int fbo, rbo;
-    unsigned int vao, vbo;
-    unsigned int texture;
+    unsigned int m_fbo, m_rbo;
+    unsigned int m_vao, m_vbo;
+    unsigned int m_texture;
 
 };
 }
