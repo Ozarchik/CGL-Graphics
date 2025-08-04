@@ -10,9 +10,14 @@
 
 ## How to build
 1. run conan install
-   conan install . -pr:a <conan_profile> -b missing
 
-2. run cmake configure and build
+   ```bash
+   conan install . -pr:a <conan_profile> -b missing
+   ```
+
+3. run cmake configure and build
+
+   ```bash
    cmake --preset conan-<build_type>
    cmake --build --preset conan-<build_type>
-   
+   ```
