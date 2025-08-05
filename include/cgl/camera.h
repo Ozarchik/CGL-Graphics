@@ -60,6 +60,7 @@ private:
     float m_deltaTime = 0.0f;
     float m_speed = 5.5f;
 
+    bool m_rotateMode = true;
     CGL::Context& m_context;
 };
 }

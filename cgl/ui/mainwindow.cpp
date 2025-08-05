@@ -78,7 +78,7 @@ void CGL::MainWindow::update()
         // std::cout << "width: " << imguiWindowWidth << ", height: " << imguiWindowHeight << std::endl;
 
         m_framebuffer.rescale(imguiWindowWidth, imguiWindowHeight);
-        glViewport(0, 0, imguiWindowWidth, imguiWindowHeight);
+        glViewport(0, 0, m_context.width(), m_context.height());
 
         ImVec2 pos = ImGui::GetCursorScreenPos();
 

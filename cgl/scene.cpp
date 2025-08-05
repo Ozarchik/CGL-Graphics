@@ -10,7 +10,7 @@ void CGL::Scene::render(Shader& shader)
     shader.use();
 
     for (const auto node: m_nodes) {
-        node->update(shader);
+        node->update();
     }
 }
 

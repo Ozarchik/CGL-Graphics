@@ -44,7 +44,6 @@ private:
     CGL::MainWindow m_mainwindow;
 
     CGL::Camera m_camera;
-    CGL::Shader m_screenShader;
     CGL::Shader m_meshShader;
     CGL::Editor m_editor;
 };

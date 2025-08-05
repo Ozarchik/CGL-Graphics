@@ -13,8 +13,7 @@ CGL::Grid::Grid()
     
     for (int i = -sideSize; i < sideSize; i++) {
         for (int j = -sideSize; j < sideSize; j++) {
-            CGL::Node* node = new CGL::Node;
-            node->addMesh(new CGL::Rectangle(tex));
+            CGL::Node* node = new CGL::Node(new CGL::Rectangle(tex), m_shader);
             m_scene.append(node);
         }
     }
@@ -58,8 +57,9 @@ void CGL::Grid::draw(CGL::Camera& camera, CGL::Transform  model, CGL::Transform 
             modif.translateY(j/8.0f); // Используем Z для пола
             // modif.translateX(i);
             // modif.translateY(j);
-            m_shader.setMat4("model", modif);
-            nodes[index]->update(m_shader);
+            // m_shader.setMat4("model", modif);
+            nodes[index]->setTransform(modif);
+            nodes[index]->update();
         }
     }
 
