@@ -49,7 +49,7 @@ void CGL::Grid::draw(CGL::Camera& camera, CGL::Transform  model, CGL::Transform 
             gradient += 0.005;
             m_shader.setFloat("gradient", gradient);
             nodes[index]->setPrimitiveType(GL_LINE_LOOP);
-            nodes[index]->update();
+            nodes[index]->update(camera, modif, view, projection);
         }
     }
 }

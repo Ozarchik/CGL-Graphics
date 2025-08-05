@@ -135,6 +135,12 @@ GLint CGL::Shader::getUniformLoc(const std::string& name) const
     return loc;
 }
 
+CGL::Shader &CGL::Shader::defaultModelShader()
+{
+    static CGL::Shader shader("shaders/model.vert", "shaders/model.frag");
+    return shader;
+}
+
 void CGL::Shader::compile(GLuint vId, GLuint fId)
 {
     m_id = glCreateProgram();

@@ -5,12 +5,16 @@ CGL::Scene::~Scene()
     clear();
 }
 
-void CGL::Scene::render(Shader& shader)
+void CGL::Scene::render(CGL::Camera& camera,
+    CGL::Transform& model,
+    CGL::Transform& view,
+    CGL::Transform& projection
+)
 {
-    shader.use();
+    // shader.use();
 
     for (const auto node: m_nodes) {
-        node->update();
+        node->update(camera, model, view, projection);
     }
 }
 

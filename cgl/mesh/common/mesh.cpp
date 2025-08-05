@@ -14,12 +14,11 @@ void CGL::Mesh::setup()
 
 }
 
-void CGL::Mesh::draw(Shader &Shader) {
-    m_buffer.bind();
+void CGL::Mesh::draw(Shader &shader) {
+    m_buffer.bind(&shader);
     glDrawElements(m_primitiveType, static_cast<unsigned int>(m_buffer.indices.size()), GL_UNSIGNED_INT, 0);
 
     m_buffer.unbind();
-    glActiveTexture(GL_TEXTURE0);
 }
 
 void CGL::Mesh::addTexture(const std::vector<TextureBase>& textures)

@@ -52,6 +52,8 @@ public:
 
 	GLint getUniformLoc(const std::string& name) const;
 
+    static Shader& defaultModelShader();
+
 private:
     void compile(GLuint vId, GLuint fId);
     void compile(GLuint vId, GLuint fId, GLuint gId);

@@ -17,7 +17,7 @@ CGL::FrameBuffer::FrameBuffer(int width, int height)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
-    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+    // glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 }
 
 CGL::FrameBuffer::~FrameBuffer()
@@ -27,15 +27,17 @@ CGL::FrameBuffer::~FrameBuffer()
 
 void CGL::FrameBuffer::bind()
 {
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_STENCIL_TEST);
-
+    // glEnable(GL_STENCIL_TEST);
     glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_texture, 0);
+    // glDepthFunc(GL_LESS);
+    glEnable(GL_DEPTH_TEST);
+
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-    glStencilMask(0x00);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_texture, 0);
+
+    // glStencilMask(0x00);
 }
 
 void CGL::FrameBuffer::setStencil(GLenum mode, unsigned char mask)
@@ -46,10 +48,10 @@ void CGL::FrameBuffer::setStencil(GLenum mode, unsigned char mask)
 
 void CGL::FrameBuffer::enableDepth(bool mode)
 {
-    if (mode)
-        glEnable(GL_DEPTH_TEST);
-    else
-        glDisable(GL_DEPTH_TEST);
+    // if (mode)
+    //     glEnable(GL_DEPTH_TEST);
+    // else
+    //     glDisable(GL_DEPTH_TEST);
 }
 
 void CGL::FrameBuffer::use()

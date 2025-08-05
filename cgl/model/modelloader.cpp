@@ -1,14 +1,15 @@
 #include <cgl/model/modelloader.h>
+#include <cgl/texture/textureloader.h>
+#include <cgl/node.h>
 #include <iostream>
 
-#include <cgl/texture/textureloader.h>
-
-CGL::Model CGL::ModelLoader::load(const std::string& filepath, bool flipUV)
+CGL::Node* CGL::ModelLoader::load(const std::string& filepath, bool flipUV)
 {
     Assimp::Importer importer;
 
-    unsigned int flags = aiProcess_Triangulate;
-    if (flipUV) flags |= aiProcess_FlipUVs;
+    unsigned int flags = aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace;
+    // unsigned int flags = aiProcess_Triangulate;
+    // if (flipUV) flags |= aiProcess_FlipUVs;
 
     const aiScene* scene = importer.ReadFile(filepath, flags);
 
@@ -19,15 +20,16 @@ CGL::Model CGL::ModelLoader::load(const std::string& filepath, bool flipUV)
 
     m_directory = filepath.substr(0, filepath.find_last_of('/'));
 
-    std::vector<CGL::Mesh> meshes;
+    std::vector<CGL::Mesh*> meshes;
     processNode(scene, scene->mRootNode, meshes);
 
-    // CGL::Model model(std::move(meshes));
-    CGL::Model model;
-    return model;
+    CGL::Transform modelTransform;
+    // modelTransform.translateY(2.0f);
+    CGL::Node* node = new CGL::Node(meshes, Shader::defaultModelShader(), modelTransform);
+    return node;
 }
 
-void CGL::ModelLoader::processNode(const aiScene* scene, aiNode* node, std::vector<CGL::Mesh>& meshes)
+void CGL::ModelLoader::processNode(const aiScene* scene, aiNode* node, std::vector<CGL::Mesh*>& meshes)
 {
     for (unsigned int i = 0; i < node->mNumMeshes; i++) {
         aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
@@ -39,13 +41,13 @@ void CGL::ModelLoader::processNode(const aiScene* scene, aiNode* node, std::vect
     }
 }
 
-CGL::Mesh CGL::ModelLoader::processMesh(const aiScene* scene, aiMesh* mesh)
+CGL::Mesh* CGL::ModelLoader::processMesh(const aiScene* scene, aiMesh* mesh)
 {
     std::vector<CGL::Vertex> vertices = loadVertices(mesh);
     std::vector<unsigned int> indices  = loadIndices(mesh);
     std::vector<CGL::TextureBase> textures = loadTextures(scene, mesh);
 
-    return CGL::Mesh(vertices, textures, indices);
+    return new CGL::Mesh(vertices, textures, indices);
 }
 
 std::vector<CGL::Vertex> CGL::ModelLoader::loadVertices(aiMesh* mesh)
@@ -66,7 +68,7 @@ std::vector<CGL::Vertex> CGL::ModelLoader::loadVertices(aiMesh* mesh)
 
         if (mesh->mTextureCoords[0]) {
             vertex.texcoord.x = mesh->mTextureCoords[0][i].x;
-            vertex.texcoord.y = mesh->mTextureCoords[0][i].y;
+            vertex.texcoord.y = mesh->mTextureCoords[0][i].y;;
         } else {
             vertex.texcoord = glm::vec2(0.0f, 0.0f);
         }
@@ -125,6 +127,7 @@ std::vector<CGL::TextureBase> CGL::ModelLoader::loadTextures(aiMaterial* mat, ai
         }
 
         if(!skip) {
+            std::cout << "load from: " << m_directory + "/" + std::string(str.C_Str()) << std::endl;
             CGL::TextureBase texture = CGL::TextureLoader::loadFromFile(m_directory + "/" + std::string(str.C_Str()));
             texture.type = typeName;
             texture.path = str.C_Str();

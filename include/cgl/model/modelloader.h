@@ -12,14 +12,15 @@
 #include <cgl/model/model.h>
 
 namespace CGL {
+class Node;
 class ModelLoader {
 public:
     ModelLoader() = default;
-    CGL::Model load(const std::string& filepath, bool flipUV = false);
+    CGL::Node* load(const std::string& filepath, bool flipUV = false);
 
 private:
-    void processNode(const aiScene* scene, aiNode* node, std::vector<CGL::Mesh>& meshes);
-    Mesh processMesh(const aiScene* scene, aiMesh* mesh);
+    void processNode(const aiScene* scene, aiNode* node, std::vector<CGL::Mesh*>& meshes);
+    CGL::Mesh* processMesh(const aiScene* scene, aiMesh* mesh);
 
     std::vector<CGL::Vertex> loadVertices(aiMesh *mesh);
     std::vector<unsigned int> loadIndices(aiMesh *mesh);

@@ -59,7 +59,7 @@ CGL::Context::Context()
 
     // glViewport(0, 0, width(), height());
     glViewport(0, 0, 400, 400);
-    glEnable(GL_DEPTH_TEST);
+    // glEnable(GL_DEPTH_TEST);
 }
 
 CGL::Context::~Context()
@@ -122,9 +122,9 @@ void CGL::Context::update()
     if (glfwWindowShouldClose(m_window))
         m_alive = false;
 
-	glDisable(GL_DEPTH_TEST);
+    // glDisable(GL_DEPTH_TEST);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
 
     setWidth(viewportWidth);
     setHeight(viewportHeight);

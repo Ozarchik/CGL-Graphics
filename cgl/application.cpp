@@ -4,6 +4,7 @@
 #include <cgl/texture/textureloader.h>
 #include <cgl/node.h>
 #include <cgl/ui/mainwindow.h>
+#include <cgl/model/modelloader.h>
 
 
 
@@ -23,7 +24,6 @@ CGL::Application::~Application()
 
 }
 
-
 void CGL::Application::createTestObjects()
 {
     auto brick = CGL::TextureLoader::loadFromFile("textures/brick/brick.jpg");
@@ -41,6 +41,9 @@ void CGL::Application::createTestObjects()
     node = new CGL::Node(new Cube(brick), m_meshShader, model);
     m_scene.append(node);
 
+    ModelLoader loader;
+    m_scene.append(loader.load("assets/models/source/textures/carriage.fbx"));
+    // m_scene.append(loader.load("assets/models/source/textures/carriage.fbx"));
 }
 
 void CGL::Application::loop()
@@ -53,13 +56,17 @@ void CGL::Application::loop()
         m_camera.update();
 
         m_mainwindow.init();
-
         m_framebuffer.bind();
+        m_framebuffer.enableDepth(true);
 
         CGL::Transform model;
         CGL::Transform view = m_camera.getLookAt();
+
         CGL::Transform projection = CGL::Transform::makePerspective(45.0f, m_context.aspect(), 0.1f, 500.0f);
 
+        grid.draw(m_camera, model, view, projection);
+
+        model.translateY(10.0f);
         grid.draw(m_camera, model, view, projection);
 
         m_meshShader.use();
@@ -69,15 +76,14 @@ void CGL::Application::loop()
         m_meshShader.setFloat("winWidth", m_context.width());
         m_meshShader.setFloat("winHeight", m_context.height());
 
-        m_scene.render(m_meshShader);
-
+        m_scene.render(m_camera, model, view, projection);
         m_framebuffer.unbind();
 
         m_mainwindow.update();
         m_context.update();
 
         m_mainwindow.render();
-        
+
         m_context.swapBuffers();
 	}
 }

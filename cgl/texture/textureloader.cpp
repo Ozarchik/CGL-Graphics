@@ -6,7 +6,7 @@ CGL::TextureBase CGL::TextureLoader::loadFromFile(const std::string &filepath, b
     glGenTextures(1, &textureID);
 
     int width, height, nrComponents;
-    stbi_set_flip_vertically_on_load(flipVertical);
+    // stbi_set_flip_vertically_on_load(true);
     unsigned char *data = stbi_load(filepath.c_str(), &width, &height, &nrComponents, 0);
 
     if (data) {
@@ -33,7 +33,7 @@ CGL::TextureBase CGL::TextureLoader::loadFromFile(const std::string &filepath, b
         stbi_image_free(data);
     }
 
-    stbi_set_flip_vertically_on_load(false);
+    // stbi_set_flip_vertically_on_load(false);
 
     return {textureID, "", ""};
 }

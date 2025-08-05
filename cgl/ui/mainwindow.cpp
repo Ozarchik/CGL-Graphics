@@ -18,7 +18,6 @@ CGL::MainWindow::MainWindow(Context &context, FrameBuffer &framebuffer)
 
     ImGui_ImplGlfw_InitForOpenGL(m_context.handler(), true);
     ImGui_ImplOpenGL3_Init("#version 330");
-
 }
 
 CGL::MainWindow::~MainWindow() {
@@ -55,7 +54,7 @@ void CGL::MainWindow::update()
             ImGui::DockBuilderAddNode(dockspace_id);
             ImGui::DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
 
-            ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.5f, &dock_id_left, &dock_id_right);
+            ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.8f, &dock_id_left, &dock_id_right);
             ImGui::DockBuilderDockWindow("3D scene", dock_id_left);
             ImGui::DockBuilderDockWindow("Hello, CGL Graphics", dock_id_right);
 

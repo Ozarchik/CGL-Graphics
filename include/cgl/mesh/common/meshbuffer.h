@@ -4,7 +4,7 @@
 #include <vector>
 #include <cgl/vertex.h>
 #include <cgl/texture/texturebase.h>
-
+#include <cgl/shader.h>
 namespace CGL {
 struct MeshBuffer
 {
@@ -16,8 +16,8 @@ public:
     );
 
     void setTextures(const std::vector<TextureBase>& newTextures);
-
-    void bind();
+    
+    void bind(CGL::Shader* shader = nullptr);
     void unbind();
 
 public:
