@@ -12,10 +12,10 @@ public:
     Context();
     ~Context();
 
-	void update();
+    void update();
     void swapBuffers();
 
-	bool alive();
+    bool isAlive();
     void setCursorEnabled(bool enabled);
 
 	int width() const;
@@ -28,6 +28,7 @@ public:
     float deltaTime() const;
 
 	void init();
+    void initOpenGL();
 
     GLFWwindow* handler() const;
 

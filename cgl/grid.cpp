@@ -1,9 +1,10 @@
-#include <cgl/floorgenerator.h>
+#include <cgl/grid.h>
 #include <cgl/mesh/2D/rectangle.h>
 #include <cgl/texture/textureloader.h>
 
-CGL::FloorGenerator::FloorGenerator()
+CGL::Grid::Grid()
 {
+
     m_shader = CGL::Shader("shaders/floorgenerator.vert", "shaders/floorgenerator.frag");
     m_lightShader = CGL::Shader("shaders/light.vert", "shaders/light.frag");
 
@@ -18,10 +19,10 @@ CGL::FloorGenerator::FloorGenerator()
         }
     }
     
-    m_lightCube = new CGL::Cube(brick);
+    // m_lightCube = new CGL::Cube(brick);
 }
 
-void CGL::FloorGenerator::draw(CGL::Camera& camera, CGL::Transform  model, CGL::Transform view, CGL::Transform projection)
+void CGL::Grid::draw(CGL::Camera& camera, CGL::Transform  model, CGL::Transform view, CGL::Transform projection)
 {
     m_shader.use();
     m_shader.setMat4("model", model);
@@ -69,5 +70,5 @@ void CGL::FloorGenerator::draw(CGL::Camera& camera, CGL::Transform  model, CGL::
     m_lightShader.setMat4("model", model);
     m_lightShader.setMat4("view", view);
     m_lightShader.setMat4("projection", projection);
-    m_lightCube->draw(m_lightShader);
+    // m_lightCube->draw(m_lightShader);
 }

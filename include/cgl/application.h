@@ -2,11 +2,7 @@
 #define CGL_APPLICATION_H
 
 
-#include <glad/glad.h>
-#include <glfw/glfw3.h>
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
+
 #include <iostream>
 #include <cmath>
 
@@ -18,32 +14,39 @@
 #include <cgl/model/model.h>
 #include <cgl/scene.h>
 #include <cgl/shader.h>
-#include <cgl/window.h>
+#include <cgl/context.h>
 #include <cgl/inputcontroller.h>
 #include <cgl/normalmap.h>
 #include <cgl/framebuffer.h>
 #include <cgl/vertexbuffer.h>
-#include <cgl/floorgenerator.h>
+#include <cgl/grid.h>
 #include <cgl/ui/frame.h>
+#include <cgl/ui/editor.h>
 #include <cgl/tools/backtrace/backtrace.h>
+#include <cgl/ui/mainwindow.h>
 
 
 namespace CGL {
 class Application
 {
 public:
-    Application();
+    Application(int argc, char* argv[]);
     ~Application();
     void loop();
-    void initOpenGL();
     void createTestObjects();
 
 private:
-    CGL::Window m_window;
+    CGL::Context m_context;
+    CGL::Scene m_scene;
+
+    CGL::InputController m_inputController;
+    CGL::FrameBuffer m_framebuffer;
+    CGL::MainWindow m_mainwindow;
+
     CGL::Camera m_camera;
     CGL::Shader m_screenShader;
     CGL::Shader m_meshShader;
-    CGL::Scene m_scene;
+    CGL::Editor m_editor;
 };
 }
 

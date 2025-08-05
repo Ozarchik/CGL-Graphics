@@ -110,6 +110,8 @@ void CGL::Camera::keyEventHandler(const KeyEvent& event)
     case CGL::Key_Space: {
         stepUp();
     } break;
+    case Key_B:
+        break;
     }
 }
 

@@ -24,10 +24,11 @@ private:
     static void mouseNotify(const CGL::MouseType &mouseType);
     static void mouseNotify(int dx, int dy);
 
+    static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int modes);
     static void mouseCallback(GLFWwindow* window, double x, double y);
 
 private:
-    GLFWwindow* winHandler;
+    inline static GLFWwindow* winHandler;
     CGL::Context* m_context;
     bool keySpacePressed = false;
     inline static std::vector<Object*> m_objects;
