@@ -23,7 +23,8 @@ void framebufferSizeCallback(GLFWwindow* window, int width, int height)
 
     int viewportX = (width - viewportWidth) / 2;
     int viewportY = (height - viewportHeight) / 2;
-    glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
+    glViewport(0, 0, 400, 400);
+    // glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
     // glViewport(0, 0, width, height);
 }
 
@@ -49,12 +50,6 @@ CGL::Context::Context()
     m_alive = true;
 
 
-    initOpenGL();
-    glEnable(GL_DEPTH_TEST);
-}
-
-void CGL::Context::initOpenGL()
-{
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         std::cout << "Failed to load GLAD" << std::endl;
         std::abort();
@@ -62,33 +57,8 @@ void CGL::Context::initOpenGL()
 
     glfwSetFramebufferSizeCallback(m_window, framebufferSizeCallback);
 
-    glViewport(0, 0, width(), height());
-}
-
-
-void CGL::Context::init()
-{
-    return;
-
-	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-
-	m_window = glfwCreateWindow(m_width, m_height, m_title.c_str(), nullptr, nullptr);
-
-	if (!m_window) {
-		std::cout << "Failed to create GLFW Window" << std::endl;
-		glfwTerminate();
-		std::abort();
-	}
-
-	// setCursorEnabled(true);
-	glfwMakeContextCurrent(m_window);
-
-	m_alive = true;
-
+    // glViewport(0, 0, width(), height());
+    glViewport(0, 0, 400, 400);
     glEnable(GL_DEPTH_TEST);
 }
 
