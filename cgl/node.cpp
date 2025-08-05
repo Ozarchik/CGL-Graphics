@@ -8,6 +8,11 @@ CGL::Node::Node(CGL::Mesh* mesh, CGL::Shader& shader, CGL::Transform transform)
     
 }
 
+CGL::Node::~Node()
+{
+    delete m_mesh;
+}
+
 void CGL::Node::setTransform(const CGL::Transform& transform)
 {
     m_transform = transform;

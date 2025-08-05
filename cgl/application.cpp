@@ -27,7 +27,6 @@ CGL::Application::~Application()
 void CGL::Application::createTestObjects()
 {
     auto brick = CGL::TextureLoader::loadFromFile("textures/brick/brick.jpg");
-    // m_scene.append(new Cube(brick));
     CGL::Transform model;
     
     model.translateX(-3.0f);
@@ -54,7 +53,6 @@ void CGL::Application::loop()
         m_camera.update();
 
         m_mainwindow.init();
-        // m_context.update();
 
         m_framebuffer.bind();
 

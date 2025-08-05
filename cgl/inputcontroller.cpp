@@ -12,19 +12,13 @@ CGL::InputController::InputController
     addSubscriber(camera);
 
     glfwSetKeyCallback(winHandler, &CGL::InputController::keyCallback);
+    glfwSetCursorPosCallback(winHandler, &CGL::InputController::mouseCallback);
+    glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 void CGL::InputController::process()
 {
     glfwPollEvents();
-
-    // static int frameCounter = 0;
-    // frameCounter++;
-    // if (frameCounter < 60) {
-    //     return;
-    // }
-    // frameCounter = 0;
-
 
     if (glfwGetKey(winHandler, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(winHandler, true);
@@ -53,22 +47,6 @@ void CGL::InputController::process()
     if (glfwGetKey(winHandler, GLFW_KEY_C) == GLFW_PRESS)
         keyNotify(CGL::Key_C);
 
-    // if (glfwGetKey(winHandler, GLFW_KEY_B) == GLFW_PRESS) {
-    //     static bool cursorEnabled = false;
-    //     cursorEnabled = !cursorEnabled;
-    //     // m_window->setCursorEnabled(cursorEnabled);
-    //     // keyNotify(CGL::Key_B);
-    //     static GLFWcursorposfun defaultPosCallback = glfwSetCursorPosCallback(winHandler, nullptr);
-    //     glfwSetCursorPosCallback(winHandler, nullptr);
-    //     if (cursorEnabled) {
-    //         glfwSetCursorPosCallback(winHandler, defaultPosCallback);
-    //         glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-    //     } else {
-    //         glfwSetCursorPosCallback(winHandler, &CGL::InputController::mouseCallback);
-    //         glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    //     }
-    // }
-
     if (glfwGetKey(winHandler, GLFW_KEY_SPACE) == GLFW_PRESS && !keySpacePressed) {
         keySpacePressed = true;
     }
@@ -94,7 +72,6 @@ void CGL::InputController::mouseNotify(const CGL::MouseType &mouseType)
 
 void CGL::InputController::mouseNotify(int dx, int dy)
 {
-    std::cout << "dx: " << dx << ", dy: " << dy << std::endl;
     for (auto obj: m_objects) {
         obj->mouseEventHandler(MouseEvent(dx, dy));
     }
@@ -103,21 +80,16 @@ void CGL::InputController::mouseNotify(int dx, int dy)
 void CGL::InputController::keyCallback(GLFWwindow* window, int key, int scancode, int action, int modes)
 {
     if (key == GLFW_KEY_B && action == GLFW_PRESS) {
-        glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-        glfwSetCursorPosCallback(winHandler, &CGL::InputController::mouseCallback);
+        static bool cursorEnabled = true;
+        if (cursorEnabled) {
+            glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        } else {
+            glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        }
+
+        cursorEnabled = !cursorEnabled;
+
         keyNotify(Key_B);
-        // static bool cursorEnabled = false;
-        // cursorEnabled = !cursorEnabled;
-        // // m_window->setCursorEnabled(cursorEnabled);
-        //  keyNotify(CGL::Key_B);
-        // static GLFWcursorposfun defaultPosCallback = glfwSetCursorPosCallback(winHandler, nullptr);
-        // glfwSetCursorPosCallback(winHandler, nullptr);
-        // if (cursorEnabled) {
-        //     glfwSetCursorPosCallback(winHandler, nullptr);
-        //     glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-        // } else {
-        //     glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-        // }
     }
 }
 

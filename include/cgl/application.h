@@ -1,8 +1,6 @@
 #ifndef CGL_APPLICATION_H
 #define CGL_APPLICATION_H
 
-
-
 #include <iostream>
 #include <cmath>
 

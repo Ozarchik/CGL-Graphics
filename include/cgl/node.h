@@ -12,6 +12,7 @@ namespace CGL {
 class Node {
 public:
     Node(CGL::Mesh* mesh, CGL::Shader& shader, CGL::Transform transform = {});
+    ~Node();
     void setTransform(const CGL::Transform& transform);
     void update();    
 
