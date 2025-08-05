@@ -50,9 +50,11 @@ void CGL::Camera::rotate(float targX, float targY)
 	float xoffset = targX - lastX;
     float yoffset = lastY - targY;
 
-
 	lastX = targX;
 	lastY = targY;
+
+    if (!m_rotateMode)
+        return;
 
 	xoffset *= m_sensvity;
 	yoffset *= m_sensvity;
@@ -86,6 +88,9 @@ void CGL::Camera::keyEventHandler(const KeyEvent& event)
     case CGL::Key_A: {
         stepLeft();
     } break;
+    case CGL::Key_B: {
+        m_rotateMode = !m_rotateMode;
+    } break;
     case CGL::Key_D: {
         stepRight();
     } break;
@@ -110,8 +115,6 @@ void CGL::Camera::keyEventHandler(const KeyEvent& event)
     case CGL::Key_Space: {
         stepUp();
     } break;
-    case Key_B:
-        break;
     }
 }
 

@@ -94,6 +94,7 @@ void CGL::InputController::mouseNotify(const CGL::MouseType &mouseType)
 
 void CGL::InputController::mouseNotify(int dx, int dy)
 {
+    std::cout << "dx: " << dx << ", dy: " << dy << std::endl;
     for (auto obj: m_objects) {
         obj->mouseEventHandler(MouseEvent(dx, dy));
     }
@@ -102,19 +103,21 @@ void CGL::InputController::mouseNotify(int dx, int dy)
 void CGL::InputController::keyCallback(GLFWwindow* window, int key, int scancode, int action, int modes)
 {
     if (key == GLFW_KEY_B && action == GLFW_PRESS) {
-        static bool cursorEnabled = false;
-        cursorEnabled = !cursorEnabled;
-        // m_window->setCursorEnabled(cursorEnabled);
-        // keyNotify(CGL::Key_B);
-        static GLFWcursorposfun defaultPosCallback = glfwSetCursorPosCallback(winHandler, nullptr);
-        glfwSetCursorPosCallback(winHandler, nullptr);
-        if (cursorEnabled) {
-            glfwSetCursorPosCallback(winHandler, defaultPosCallback);
-            glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-        } else {
-            glfwSetCursorPosCallback(winHandler, &CGL::InputController::mouseCallback);
-            glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-        }
+        glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        glfwSetCursorPosCallback(winHandler, &CGL::InputController::mouseCallback);
+        keyNotify(Key_B);
+        // static bool cursorEnabled = false;
+        // cursorEnabled = !cursorEnabled;
+        // // m_window->setCursorEnabled(cursorEnabled);
+        //  keyNotify(CGL::Key_B);
+        // static GLFWcursorposfun defaultPosCallback = glfwSetCursorPosCallback(winHandler, nullptr);
+        // glfwSetCursorPosCallback(winHandler, nullptr);
+        // if (cursorEnabled) {
+        //     glfwSetCursorPosCallback(winHandler, nullptr);
+        //     glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        // } else {
+        //     glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        // }
     }
 }
 
