@@ -18,8 +18,8 @@ void CGL::Rectangle::draw(Shader& shader)
     //     glBindTexture(GL_TEXTURE_2D, m_buffer.textures[0].id);
     // }
     // glDrawArrays(GL_TRIANGLES, 0, 6);
-    glDrawArrays(GL_LINE_LOOP, 0, 6);
-    glDrawArraysInstanced(GL_LINE_LOOP, 0, 6, 4);
+    glDrawArrays(m_primitiveType, 0, 6);
+    glDrawArraysInstanced(m_primitiveType, 0, 6, 4);
     
     
 

@@ -14,6 +14,7 @@ public:
     Node(CGL::Mesh* mesh, CGL::Shader& shader, CGL::Transform transform = {});
     ~Node();
     void setTransform(const CGL::Transform& transform);
+    void setPrimitiveType(GLenum type);
     void update();    
 
 private:

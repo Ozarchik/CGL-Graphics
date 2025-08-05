@@ -18,6 +18,11 @@ void CGL::Node::setTransform(const CGL::Transform& transform)
     m_transform = transform;
 }
 
+void CGL::Node::setPrimitiveType(GLenum type)
+{
+    m_mesh->setPrimitiveType(type);
+}
+
 void CGL::Node::update()
 {    
     m_shader.setMat4("model", m_transform);
