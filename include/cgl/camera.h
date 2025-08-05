@@ -6,11 +6,12 @@
 
 #include <cgl/event/event.h>
 #include <cgl/object.h>
+#include <cgl/context.h>
 
 namespace CGL {
 class Camera: public CGL::Object {
 public:
-    Camera();
+    Camera(CGL::Context& context);
 
     void setPos(glm::vec3 pos);
     glm::vec3 pos() const;
@@ -42,6 +43,9 @@ public:
     void mouseEventHandler(const MouseEvent &event) override;
 
 private:
+    void updateInternal();
+
+private:
     float m_pitch = 0.0f, m_yaw = -90.0f, m_roll = 0.0f;
     float m_sensvity = 0.05f;
 
@@ -55,5 +59,7 @@ private:
     float lastY = 0.0f;
     float m_deltaTime = 0.0f;
     float m_speed = 5.5f;
+
+    CGL::Context& m_context;
 };
 }

@@ -1,12 +1,14 @@
-#include <cgl/window.h>
+#include <cgl/context.h>
 #include <iostream>
 
-CGL::Window::Window()
+CGL::Context::Context()
 {
 
 }
 
-void CGL::Window::init()
+
+
+void CGL::Context::init()
 {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -26,14 +28,16 @@ void CGL::Window::init()
 	glfwMakeContextCurrent(m_window);
 
 	m_alive = true;
+
+    glEnable(GL_DEPTH_TEST);
 }
 
-CGL::Window::~Window()
+CGL::Context::~Context()
 {
 	glfwTerminate();
 }
 
-void CGL::Window::setCursorEnabled(bool enabled)
+void CGL::Context::setCursorEnabled(bool enabled)
 {
 	if (enabled) {
 		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -42,54 +46,65 @@ void CGL::Window::setCursorEnabled(bool enabled)
 	}
 }
 
-int CGL::Window::width() const
+int CGL::Context::width() const
 {
 	return m_width;
 }
 
-void CGL::Window::setWidth(int width)
+void CGL::Context::setWidth(int width)
 {
 	m_width = width;
 }
 
-int CGL::Window::height() const
+int CGL::Context::height() const
 {
 	return m_height;
 }
 
-void CGL::Window::setHeight(int height)
+void CGL::Context::setHeight(int height)
 {
 	m_height = height;
 }
 
-float CGL::Window::aspect() const
+float CGL::Context::aspect() const
 {
     return m_width/m_height;
 }
 
-GLFWwindow* CGL::Window::handler() const
+float CGL::Context::deltaTime() const
+{
+    static float lastFrame = 0.0f;
+
+    float currentFrame = glfwGetTime();
+    float deltaTime = currentFrame - lastFrame;
+    lastFrame = currentFrame;
+
+    return deltaTime;
+}
+
+GLFWwindow* CGL::Context::handler() const
 {
 	return m_window;
 }
 
-void CGL::Window::update()
+void CGL::Context::update()
 {
 	glDisable(GL_DEPTH_TEST);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void CGL::Window::swapBuffers()
+void CGL::Context::swapBuffers()
 {
 	glfwSwapBuffers(m_window);
 }
 
-bool CGL::Window::alive()
+bool CGL::Context::alive()
 {
 	return m_alive;
 }
 
-// void CGL::Window::framebufferSizeCallback(GLFWwindow* window, int width, int height)
+// void CGL::Context::framebufferSizeCallback(GLFWwindow* window, int width, int height)
 // {
 //     glViewport(0, 0, width, height);
 // }

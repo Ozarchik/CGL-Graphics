@@ -3,9 +3,9 @@
 #include <cgl/texture/textureloader.h>
 
 CGL::NormalMap::NormalMap(
-    CGL::Window* window,
+    CGL::Context* context,
     CGL::Camera* camera
-): camera(camera), window(window)
+): m_camera(camera), m_context(context)
 {
     // Brick
 
@@ -108,11 +108,11 @@ void CGL::NormalMap::use()
     shader.setInt("brickNormal", 1);
 
     shader.setVec3("lightPos", glm::vec3(0.5f, 1.0f, 0.3f));
-    shader.setVec3("viewPos", camera->pos());
+    shader.setVec3("viewPos", m_camera->pos());
     CGL::Transform model;
-    CGL::Transform view = camera->getLookAt();
+    CGL::Transform view = m_camera->getLookAt();
     CGL::Transform projection;
-    projection.perspective(45.0f, window->aspect(), 1.0f, 100.0f);
+    projection.perspective(45.0f, m_context->aspect(), 1.0f, 100.0f);
     shader.setMat4("model", model);
     shader.setMat4("view", view);
     shader.setMat4("projection", projection);

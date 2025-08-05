@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include <cgl/window.h>
+#include <cgl/context.h>
 #include <cgl/camera.h>
 #include <cgl/event/event.h>
 
@@ -11,7 +11,7 @@ namespace CGL {
 class InputController
 {
 public:
-    InputController(CGL::Window* window, CGL::Camera* camera);
+    InputController(CGL::Context* window, CGL::Camera* camera);
 
     void process();
 
@@ -28,7 +28,7 @@ private:
 
 private:
     GLFWwindow* winHandler;
-    CGL::Window* m_window;
+    CGL::Context* m_context;
     bool keySpacePressed = false;
     inline static std::vector<Object*> m_objects;
 };

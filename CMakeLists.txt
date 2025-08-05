@@ -17,7 +17,7 @@ file(GLOB sources
     "cgl/model/*.cpp"
     "cgl/texture/*.cpp"
     "cgl/tools/backtrace/*.cpp"
-    "examples/*.cpp"
+    # "examples/*.cpp"
     # "C:/libs/glad/src/glad.c"
 )
 
@@ -31,7 +31,7 @@ file(GLOB headers
     "include/cgl/model/*.h"
     "include/cgl/texture/*.h"
     "include/cgl/tools/backtrace/*.h"
-    "examples/*.h"
+    # "examples/*.h"
 )
 
 file(GLOB shaders

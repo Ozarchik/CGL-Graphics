@@ -3,12 +3,12 @@
 
 CGL::InputController::InputController
 (
-    CGL::Window* window,
+    CGL::Context* context,
     CGL::Camera* camera
 )
-    : m_window(window)
+    : m_context(context)
 {
-    winHandler = window->handler();
+    winHandler = context->handler();
     addSubscriber(camera);
 
 

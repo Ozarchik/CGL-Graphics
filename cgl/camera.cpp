@@ -1,12 +1,13 @@
 #include <cgl/camera.h>
 #include <iostream>
 
-CGL::Camera::Camera()
+CGL::Camera::Camera(CGL::Context& context)
+    : m_context(context)
 {
     // m_front = glm::vec3(0.0f, 0.0f, -1.0f);
     m_worldUp = m_up;
 
-    update();
+    updateInternal();
 }
 
 glm::mat4 CGL::Camera::getLookAt() const
@@ -27,6 +28,11 @@ void CGL::Camera::setSpeed(float speed)
 float CGL::Camera::speed() const
 {
     return m_speed;
+}
+
+void CGL::Camera::update()
+{
+    correctSpeed(m_context.deltaTime());
 }
 
 void CGL::Camera::setPos(glm::vec3 pos)
@@ -57,10 +63,10 @@ void CGL::Camera::rotate(float targX, float targY)
     if (m_pitch > 89.0f)  m_pitch = 89.0f;
     if (m_pitch < -89.0f) m_pitch = -89.0f;
 
-    update();
+    updateInternal();
 }
 
-void CGL::Camera::update()
+void CGL::Camera::updateInternal()
 {
     glm::vec3 direction;
     direction.x = cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));

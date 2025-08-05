@@ -1,21 +1,21 @@
-#pragma once
+#ifndef CGL_CONTEXT_H
+#define CGL_CONTEXT_H
 
 #include <string>
+#include <glad/glad.h>
 #include <glfw/glfw3.h>
 
 namespace CGL {
 
-class Window {
+class Context {
 public:
-    Window();
-    ~Window();
+    Context();
+    ~Context();
 
 	void update();
     void swapBuffers();
 
-
 	bool alive();
-
     void setCursorEnabled(bool enabled);
 
 	int width() const;
@@ -25,6 +25,7 @@ public:
     void setHeight(int height);
     
     float aspect() const;
+    float deltaTime() const;
 
 	void init();
 
@@ -41,3 +42,5 @@ private:
 	bool m_alive = false;
 };
 }
+
+#endif

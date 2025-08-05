@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <cgl/shader.h>
 #include <cgl/camera.h>
-#include <cgl/window.h>
+#include <cgl/context.h>
 
 namespace CGL {
 enum PrimitiveType {
@@ -15,7 +15,7 @@ enum PrimitiveType {
 class NormalMap
 {
 public:
-    NormalMap(CGL::Window* window, Camera *camera);
+    NormalMap(CGL::Context* window, Camera *camera);
     void use();
 
 private:
@@ -24,8 +24,8 @@ private:
     unsigned int tex;
     unsigned int normalMap;
     CGL::Shader shader;
-    CGL::Camera* camera;
-    CGL::Window* window;
+    CGL::Camera* m_camera;
+    CGL::Context* m_context;
 };
 }
 
