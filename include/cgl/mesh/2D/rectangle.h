@@ -11,7 +11,6 @@ class Rectangle: public CGL::Mesh
 {
 public:
     Rectangle();
-    Rectangle(const CGL::TextureBase& texture);
 
     void draw(Shader &shader);
 

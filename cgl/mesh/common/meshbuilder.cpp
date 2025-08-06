@@ -17,6 +17,6 @@ void CGL::MeshBuilder::setTextures(const std::vector<CGL::TextureBase>& textures
 
 CGL::Mesh CGL::MeshBuilder::build()
 {
-    CGL::Mesh mesh = CGL::Mesh(m_vertices, m_textures, m_indices);
+    CGL::Mesh mesh = CGL::Mesh(m_vertices, m_indices);
     return mesh;
 }
