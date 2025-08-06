@@ -39,13 +39,6 @@ file(GLOB shaders
 )
 
 add_executable(cglg)
-
-# add_custom_command(TARGET cglg
-#     POST_BUILD
-#     COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/assets/simple-shader.vs ${PROJECT_BINARY_DIR}
-#     COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/assets/simple-shader.fs ${PROJECT_BINARY_DIR}
-# )
-
 target_compile_definitions(cglg PUBLIC IMGUI_IMPL_OPENGL_LOADER_GLAD)
 
 target_sources(cglg PRIVATE
@@ -104,22 +97,3 @@ install (
     ${GLFW_LIB} ${ASSIMP_LIB}
     DESTINATION ${CMAKE_BINARY_DIR}
 )
-
-# install(
-#     DIRECTORY )
-# )
-
-# add_custom_command (
-#     TARGET ${PROJECT_NAME}
-#     POST_BUILD
-#     COMMAND ${CMAKE_COMMAND}
-#     -E copy_directory_if_different
-#     "${CMAKE_CURRENT_SOURCE_DIR}/shaders"
-#     "${CMAKE_BINARY_DIR}>/shaders"
-# )
-
-# add_custom_command (
-#     TARGET ${PROJECT_NAME} POST_BUILD
-#     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-#     $<TARGET_RUNTIME
-# )
