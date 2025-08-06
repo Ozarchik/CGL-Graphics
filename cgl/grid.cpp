@@ -38,7 +38,6 @@ void CGL::Grid::draw(CGL::Camera& camera, CGL::Transform model)
             modif.rotate(90.0f, 1.0f, 0.0f, 0.0f);
             modif.translateX(i/8.0f);
             modif.translateY(j/8.0f);
-            nodes[index]->setTransform(modif);
             m_shader.use();
             gradient += 0.005;
             m_shader.setFloat("gradient", gradient);

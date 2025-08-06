@@ -61,12 +61,11 @@ void CGL::Application::loop()
 
         // m_framebuffer.enableDepth(true);
 
-
         CGL::Transform model;
 
         grid.draw(m_camera, model);
 
-        model.translateY(10.0f);
+        model.translateY(8.0f);
         grid.draw(m_camera, model);
 
         m_scene.render(m_camera);
