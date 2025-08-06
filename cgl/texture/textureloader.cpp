@@ -5,6 +5,9 @@
 
 CGL::Texture CGL::TextureLoader::loadFromFile(const std::string &filepath, bool flipVertical)
 {
+    if (m_loadedTextures.count(filepath))
+        return m_loadedTextures[filepath];
+
     unsigned int textureID;
     glGenTextures(1, &textureID);
 

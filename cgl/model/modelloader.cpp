@@ -5,6 +5,7 @@
 
 CGL::Node* CGL::ModelLoader::load(const std::string& filepath, bool flipUV)
 {
+    std::cout << "loading model from: " << filepath << std::endl;
     Assimp::Importer importer;
 
     unsigned int flags = aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace;
@@ -15,7 +16,7 @@ CGL::Node* CGL::ModelLoader::load(const std::string& filepath, bool flipUV)
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
         std::cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << std::endl;
-        return {};
+        return nullptr;
     }
 
     m_directory = filepath.substr(0, filepath.find_last_of('/'));
@@ -57,7 +58,7 @@ CGL::Mesh* CGL::ModelLoader::processMesh(const aiScene* scene, aiMesh* mesh)
 
 CGL::Material CGL::ModelLoader::processMaterial(const aiScene* scene, aiMesh* mesh)
 {
-    std::vector<CGL::TextureBase> textures = loadTextures(scene, mesh);
+    std::vector<CGL::Texture> textures = loadTextures(scene, mesh);
 
     return CGL::Material(textures);
 }
