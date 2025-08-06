@@ -16,7 +16,7 @@ CGL::Application::Application(int argc, char *argv[])
     CGL::Backtrace::init();
     CGL::ResourceManager::init();
 
-    m_meshShader = CGL::Shader("shaders/light.vert", "shaders/light.frag");
+    m_meshShader = CGL::ResourceManager::loadDefaultShader();
     createTestObjects();
 }
 
@@ -44,9 +44,6 @@ void CGL::Application::createTestObjects()
     CGL::Node* modelNode = ResourceManager::loadModel("backpack2/backpack.obj");
     if (modelNode)
         m_scene.append(modelNode);
-    // ModelLoader loader;
-    // m_scene.append(loader.load("assets/models/source/textures/carriage.fbx"));
-    // m_scene.append(loader.load("assets/models/backpack2/backpack.obj"));
 }
 
 void CGL::Application::loop()

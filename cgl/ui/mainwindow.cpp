@@ -73,7 +73,7 @@ void CGL::MainWindow::update()
     ImGui::Begin("Hello, CGL Graphics", nullptr);
     ImGui::Text("Simple text");
     if (ImGui::Button("Apply")) {
-    ImGui::Text("Button is clicked");
+        ImGui::Text("Button is clicked");
     }
     ImGui::End();
 }

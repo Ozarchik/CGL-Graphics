@@ -1,13 +1,12 @@
 #include <cgl/grid.h>
 #include <cgl/mesh/2D/rectangle.h>
 #include <cgl/texture/textureloader.h>
+#include <cgl/resourcemanager.h>
 
 CGL::Grid::Grid()
 {
-    m_shader = CGL::Shader("shaders/grid.vert", "shaders/grid.frag");
-    m_lightShader = CGL::Shader("shaders/light.vert", "shaders/light.frag");
-
-    auto brick = TextureLoader::loadFromFile("textures/brick/brick.jpg");
+    m_shader = ResourceManager::loadShader("grid");
+    m_lightShader = ResourceManager::loadDefaultShader();
     
     for (int i = -sideSize; i < sideSize; i++) {
         for (int j = -sideSize; j < sideSize; j++) {
@@ -15,8 +14,6 @@ CGL::Grid::Grid()
             m_scene.append(node);
         }
     }
-    
-    // m_lightCube = new CGL::Cube(brick);
 }
 
 void CGL::Grid::draw(CGL::Camera& camera, CGL::Transform model)

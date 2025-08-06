@@ -1,6 +1,7 @@
 #include <cgl/normalmap.h>
 #include <cgl/texture/texture.h>
 #include <cgl/texture/textureloader.h>
+#include <cgl/resourcemanager.h>
 
 CGL::NormalMap::NormalMap(
     CGL::Context* context,
@@ -98,7 +99,7 @@ CGL::NormalMap::NormalMap(
     glBindVertexArray(0);
 
 
-    shader  = CGL::Shader("shaders/brick.vert", "shaders/brick.frag");
+    shader = ResourceManager::loadShader("brick");
 }
 
 void CGL::NormalMap::use()

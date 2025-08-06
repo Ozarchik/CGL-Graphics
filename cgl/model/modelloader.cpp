@@ -1,6 +1,7 @@
 #include <cgl/model/modelloader.h>
 #include <cgl/texture/textureloader.h>
 #include <cgl/node.h>
+#include <cgl/resourcemanager.h>
 #include <iostream>
 
 CGL::Node* CGL::ModelLoader::load(const std::string& filepath, bool flipUV)
@@ -27,7 +28,7 @@ CGL::Node* CGL::ModelLoader::load(const std::string& filepath, bool flipUV)
 
     CGL::Transform modelTransform;
     // modelTransform.translateY(2.0f);
-    CGL::Node* node = new CGL::Node(Shader::defaultModelShader(), modelTransform);
+    CGL::Node* node = new CGL::Node(CGL::ResourceManager::loadDefaultModelShader(), modelTransform);
     for (int i = 0; i < meshes.size(); i++) // not valid operation, need fix in future
     {
         node->addMesh(meshes[i], materials[i]);

@@ -26,7 +26,10 @@ public:
     Shader(const std::string& vShaderPath, const std::string& fShaderPath);
     Shader(const std::string& vShaderPath, const std::string& fShaderPath, const std::string& gShaderPath);
 
-    GLuint loadShader(const std::string& shaderSrc, ShaderType type);
+    void setSourceCode(const std::string& vShaderCode, const std::string& fShaderCode, const std::string& gShaderCode = {});
+
+    GLuint loadShader(const std::string& code, ShaderType type);
+    std::string loadShaderFromFile(const std::string& path);
 
 	void use();
 
@@ -37,7 +40,6 @@ public:
         const CGL::Transform& view,
         const CGL::Transform& projection
     );
-
 
     void setBool(const std::string& name, bool state);
     bool getBool(const std::string &name);
@@ -50,9 +52,7 @@ public:
 	void setVec3(const std::string& name, const glm::vec3& vec);
 	void setVec3(const std::string& name, float x, float y, float z);
 
-	GLint getUniformLoc(const std::string& name) const;
-
-    static Shader& defaultModelShader();
+    GLint getUniformLoc(const std::string& name) const;
 
 private:
     void compile(GLuint vId, GLuint fId);

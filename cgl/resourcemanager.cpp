@@ -11,7 +11,7 @@ void CGL::ResourceManager::init()
 {
     m_modelsDirectory = (std::filesystem::current_path() / "assets/models").string();
     m_shadersDirectory = (std::filesystem::current_path() / "shaders").string();
-    m_texturesDirectory = (std::filesystem::current_path() / "textrues").string();
+    m_texturesDirectory = (std::filesystem::current_path() / "textures").string();
 }
 
 CGL::Texture CGL::ResourceManager::loadTexture(const std::string &name)
@@ -25,6 +25,38 @@ CGL::Shader CGL::ResourceManager::loadShader(const std::string &name)
         m_shadersDirectory + "/" + name + ".vert",
         m_shadersDirectory + "/" + name + ".frag"
     );
+}
+
+CGL::Shader& CGL::ResourceManager::loadDefaultShader()
+{
+    static CGL::Shader shader;
+    shader.setSourceCode(
+        std::string(
+            "#version 330 core\n"
+            "layout (location = 0) in vec3 aPos;\n"
+            "uniform mat4 model;\n"
+            "uniform mat4 view;\n"
+            "uniform mat4 projection;\n"
+            "void main() {\n"
+            "    gl_Position = projection * view * model * vec4(aPos, 1.0);\n"
+            "}\n"
+    ),
+        std::string(
+            "#version 330 core\n"
+            "out vec4 FragColor;\n"
+            "void main() {\n"
+            "    FragColor = vec4(1.0, 1.0, 1.0, 1.0);\n"
+            "}\n"
+        )
+    );
+
+    return shader;
+}
+
+CGL::Shader& CGL::ResourceManager::loadDefaultModelShader()
+{
+    static CGL::Shader shader = ResourceManager::loadShader("model");
+    return shader;
 }
 
 CGL::Node* CGL::ResourceManager::loadModel(const std::string &name)

@@ -1,5 +1,6 @@
 #include <cgl/framebuffer.h>
 #include <glad/glad.h>
+#include <iostream>
 
 CGL::FrameBuffer::FrameBuffer(int width, int height)
 {

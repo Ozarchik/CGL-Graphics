@@ -2,50 +2,49 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-// #include <filesystem>
+#include <cgl/resourcemanager.h>
 
 #define SHADER_LOG_MODE false
 
 CGL::Shader::Shader(const std::string& vShaderPath, const std::string& fShaderPath)
 {
-    GLuint vId = loadShader(vShaderPath, CGL::VERTEX_SHADER);
-    GLuint fId = loadShader(fShaderPath, CGL::FRAGMENT_SHADER);
+    GLuint vId = loadShader(loadShaderFromFile(vShaderPath), CGL::VERTEX_SHADER);
+    GLuint fId = loadShader(loadShaderFromFile(fShaderPath), CGL::FRAGMENT_SHADER);
+
     compile(vId, fId);
 }
 
 CGL::Shader::Shader(const std::string &vShaderPath, const std::string &fShaderPath, const std::string &gShaderPath)
 {
-    GLuint vId = loadShader(vShaderPath, CGL::VERTEX_SHADER);
-    GLuint fId = loadShader(fShaderPath, CGL::FRAGMENT_SHADER);
-    GLuint gId = loadShader(gShaderPath, CGL::GEOMETRY_SHADER);
-    compile(vId, fId, gId);
+    GLuint vId = loadShader(loadShaderFromFile(vShaderPath), CGL::VERTEX_SHADER);
+    GLuint fId = loadShader(loadShaderFromFile(fShaderPath), CGL::FRAGMENT_SHADER);
+
+    if (!gShaderPath.empty()) {
+        GLuint gId = loadShader(loadShaderFromFile(gShaderPath), CGL::GEOMETRY_SHADER);
+        compile(vId, fId, gId);
+    } else {
+        compile(vId, fId);
+    }
 }
 
-
-GLuint CGL::Shader::loadShader(const std::string& shaderSrc, ShaderType type)
+void CGL::Shader::setSourceCode(const std::string &vShaderCode, const std::string &fShaderCode, const std::string &gShaderCode)
 {
-    std::ifstream file;
-    std::string code;
-    GLuint shaderId;
-
-    file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-
-    try {
-        file.open(shaderSrc.c_str());
-
-        std::stringstream stream;
-        stream << file.rdbuf();
-        code = stream.str();
-
-        file.close();
-    } catch (std::ifstream::failure e) {
-        std::cout << "Failed to load shader code from file: " << shaderSrc.c_str() << std::endl;
+    GLuint vId = loadShader(vShaderCode, CGL::VERTEX_SHADER);
+    GLuint fId = loadShader(fShaderCode, CGL::FRAGMENT_SHADER);
+    if (!gShaderCode.empty()) {
+        GLuint gId = loadShader(gShaderCode, CGL::GEOMETRY_SHADER);
+        compile(vId, fId, gId);
+    } else {
+        compile(vId, fId);
     }
+}
 
+GLuint CGL::Shader::loadShader(const std::string& code, ShaderType type)
+{
+    GLuint shaderId = glCreateShader(type);
 
-    shaderId = glCreateShader(type);
-    auto srcCode = code.c_str();
-    glShaderSource(shaderId, 1, &srcCode, nullptr);
+    auto shaderSource = code.c_str();
+    glShaderSource(shaderId, 1, &shaderSource, nullptr);
     glCompileShader(shaderId);
 
     int sucess;
@@ -68,6 +67,29 @@ GLuint CGL::Shader::loadShader(const std::string& shaderSrc, ShaderType type)
     }
 
     return shaderId;
+}
+
+std::string CGL::Shader::loadShaderFromFile(const std::string &path)
+{
+    std::ifstream file;
+    std::string code;
+    GLuint shaderId;
+
+    file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+
+    try {
+        file.open(path.c_str());
+
+        std::stringstream stream;
+        stream << file.rdbuf();
+        code = stream.str();
+
+        file.close();
+    } catch (std::ifstream::failure e) {
+        std::cout << "Failed to load shader code from file: " << path.c_str() << std::endl;
+    }
+
+    return code.c_str();
 }
 
 void CGL::Shader::use()
@@ -133,12 +155,6 @@ GLint CGL::Shader::getUniformLoc(const std::string& name) const
     }
 
     return loc;
-}
-
-CGL::Shader &CGL::Shader::defaultModelShader()
-{
-    static CGL::Shader shader("shaders/model.vert", "shaders/model.frag");
-    return shader;
 }
 
 void CGL::Shader::compile(GLuint vId, GLuint fId)
