@@ -22,7 +22,7 @@
 #include <cgl/ui/editor.h>
 #include <cgl/tools/backtrace/backtrace.h>
 #include <cgl/ui/mainwindow.h>
-
+#include <cgl/resourcemanager.h>
 
 namespace CGL {
 class Application
