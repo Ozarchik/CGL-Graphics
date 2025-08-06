@@ -2,6 +2,7 @@
 #include <imconfig.h>
 #include <imgui.h>
 #include <imgui_internal.h>
+#include <cgl/logger.h>
 
 CGL::MainWindow::MainWindow(Context &context, FrameBuffer &framebuffer)
     : m_context(context), m_framebuffer(framebuffer)
@@ -28,9 +29,6 @@ CGL::MainWindow::~MainWindow() {
 
 void CGL::MainWindow::init()
 {
-    // 1. We render 3D on framebuffer and then gets its as texture
-    // 2. Pass texture to ImGui as image to render it on a ImGui window
-
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();    
@@ -38,74 +36,52 @@ void CGL::MainWindow::init()
 
 void CGL::MainWindow::update()
 {
-            // Main ImGui docking space
-        // ImGuiWindowFlags imguiWindowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking
-        // ImGuiViewport* viewport = ImGui::GetMainViewport();
-        // ImGui::SetNextWindowPos(viewport->Pos);
-        // ImGui::SetNextWindowSize(viewport->Size);
-        // ImGui::SetNextWindowViewport(viewport->ID);
+    ImGuiID dockspace_id = ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
+    static bool init = true;
+    ImGuiID dock_id_left, dock_id_right;
+    if (init) {
+        init = false;
+        ImGui::DockBuilderRemoveNode(dockspace_id);
+        ImGui::DockBuilderAddNode(dockspace_id);
+        ImGui::DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
 
-        ImGuiID dockspace_id = ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
-        static bool init = true;
-        ImGuiID dock_id_left, dock_id_right;
-        if (init) {
-            init = false;
-            ImGui::DockBuilderRemoveNode(dockspace_id);
-            ImGui::DockBuilderAddNode(dockspace_id);
-            ImGui::DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
+        ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.8f, &dock_id_left, &dock_id_right);
+        ImGui::DockBuilderDockWindow("3D scene", dock_id_left);
+        ImGui::DockBuilderDockWindow("Hello, CGL Graphics", dock_id_right);
 
-            ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.8f, &dock_id_left, &dock_id_right);
-            ImGui::DockBuilderDockWindow("3D scene", dock_id_left);
-            ImGui::DockBuilderDockWindow("Hello, CGL Graphics", dock_id_right);
+        ImGui::DockBuilderFinish(dockspace_id);
+    }
 
-            ImGui::DockBuilderFinish(dockspace_id);
-        }
+    ImGui::Begin("3D scene");
 
+    float imguiWindowWidth = ImGui::GetContentRegionAvail().x;
+    float imguiWindowHeight = ImGui::GetContentRegionAvail().y;
 
-        // ImGui::Begin("MainDockSpace", nullptr, imguiWindowFlags);
-        // ImGuiID dockspaceId = ImGui::GetID("MyDockSpace");
-        // ImGui::DockSpace(dockspaceId, ImVec2(0.0, 0.0), ImGuiDockNodeFlags_None);
-        // ImGui::End();
+    // m_framebuffer.rescale(imguiWindowWidth, imguiWindowHeight);
+    glViewport(0, 0, m_context.width(), m_context.height());
 
+    ImVec2 pos = ImGui::GetCursorScreenPos();
+    ImGui::GetWindowDrawList()->AddImage(
+        m_framebuffer.texture(),
+        ImVec2(pos.x, pos.y),
+        ImVec2(pos.x + imguiWindowWidth, pos.y + imguiWindowHeight),
+        ImVec2(0, 1),
+        ImVec2(1, 0)
+    );
+    ImGui::End();
 
-
-        ImGui::Begin("3D scene");
-
-        float imguiWindowWidth = ImGui::GetContentRegionAvail().x;
-        float imguiWindowHeight = ImGui::GetContentRegionAvail().y;
-
-        // std::cout << "width: " << imguiWindowWidth << ", height: " << imguiWindowHeight << std::endl;
-
-        m_framebuffer.rescale(imguiWindowWidth, imguiWindowHeight);
-        glViewport(0, 0, m_context.width(), m_context.height());
-
-        ImVec2 pos = ImGui::GetCursorScreenPos();
-
-        ImGui::GetWindowDrawList()->AddImage(
-            m_framebuffer.texture(),
-            ImVec2(pos.x, pos.y),
-            ImVec2(pos.x + imguiWindowWidth, pos.y + imguiWindowHeight),
-            ImVec2(0, 1),
-            ImVec2(1, 0)
-        );
-
-        ImGui::End();
-
-        ImGui::Begin("Hello, CGL Graphics", nullptr);
-        ImGui::Text("Simple text");
-        if (ImGui::Button("Apply")) {
-        ImGui::Text("Button is clicked");
-        }
-
-        ImGui::End();
+    ImGui::Begin("Hello, CGL Graphics", nullptr);
+    ImGui::Text("Simple text");
+    if (ImGui::Button("Apply")) {
+    ImGui::Text("Button is clicked");
+    }
+    ImGui::End();
 }
 
 void CGL::MainWindow::render()
 {
     m_context.update();
-
     update();
-
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 

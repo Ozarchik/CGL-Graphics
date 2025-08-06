@@ -18,8 +18,8 @@ public:
     void rescale(int width, int height);
     unsigned int texture() const;
 
-    void setStencil(GLenum mode, unsigned char mask = 0xff);
-    void enableDepth(bool mode);
+    void setStencilMode(GLenum mode, unsigned char mask = 0xff);
+    void setDepthMode(bool mode);
 
 private:
     unsigned int m_fbo, m_rbo;

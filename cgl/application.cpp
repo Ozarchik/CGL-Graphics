@@ -61,23 +61,14 @@ void CGL::Application::loop()
 
         m_mainwindow.init();
         m_framebuffer.bind();
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        // m_framebuffer.enableDepth(true);
 
         CGL::Transform model;
-
         grid.draw(m_camera, model);
-
         model.translateY(8.0f);
         grid.draw(m_camera, model);
 
         m_scene.render(m_camera);
         m_framebuffer.unbind();
-
-        m_mainwindow.update();
-        m_context.update();
-
         m_mainwindow.render();
 
         m_context.swapBuffers();
