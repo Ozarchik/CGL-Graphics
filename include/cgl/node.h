@@ -17,11 +17,7 @@ public:
     ~Node();
     void setTransform(const CGL::Transform& transform);
     void setPrimitiveType(GLenum type);
-    void update(CGL::Camera& camera,
-        CGL::Transform& model,
-        CGL::Transform& view,
-        CGL::Transform& projection
-    );
+    void update(CGL::Camera& camera, const CGL::Transform& parentTransform = {});
 
 private:
     Node* m_parent = nullptr;

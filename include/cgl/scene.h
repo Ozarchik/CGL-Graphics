@@ -9,11 +9,7 @@ class Scene {
 public:
     Scene() = default;
     ~Scene();
-    void render(CGL::Camera& camera,
-        CGL::Transform& model,
-        CGL::Transform& view,
-        CGL::Transform& projection
-    );
+    void render(CGL::Camera& camera);
     void append(Node* node);
     void clear();
     std::vector<Node*> nodes() const;

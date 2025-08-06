@@ -7,6 +7,7 @@
 #include <cgl/event/event.h>
 #include <cgl/object.h>
 #include <cgl/context.h>
+#include <cgl/transform.h>
 
 namespace CGL {
 class Camera: public CGL::Object {
@@ -32,6 +33,9 @@ public:
 
     glm::vec3 front() const;
     glm::mat4 getLookAt() const;
+
+    CGL::Transform getView();
+    CGL::Transform getProjection();
 
     void correctSpeed(float coeff);
     void setSpeed(float speed);

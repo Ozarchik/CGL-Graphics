@@ -15,6 +15,16 @@ glm::mat4 CGL::Camera::getLookAt() const
     return glm::lookAt(m_pos, m_pos + m_front, m_up);
 }
 
+CGL::Transform CGL::Camera::getView()
+{
+    return CGL::Transform(getLookAt());
+}
+
+CGL::Transform CGL::Camera::getProjection()
+{
+    return CGL::Transform::makePerspective(45.0f, m_context.aspect(), 0.1f, 500.0f);
+}
+
 void CGL::Camera::correctSpeed(float coeff)
 {
     m_deltaTime = coeff;

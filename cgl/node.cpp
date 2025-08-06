@@ -35,16 +35,13 @@ void CGL::Node::setPrimitiveType(GLenum type)
     }
 }
 
-void CGL::Node::update(CGL::Camera& camera,
-   CGL::Transform& model,
-   CGL::Transform& view,
-   CGL::Transform& projection
-)
+void CGL::Node::update(CGL::Camera& camera, const Transform &parentTransform)
 {
     m_shader.use();
-    m_shader.setMat4("model", m_transform);
-    m_shader.setMat4("view", view);
-    m_shader.setMat4("projection", projection);
+    CGL::Transform localTransform = m_transform * parentTransform;
+    m_shader.setMat4("model", /*localTransform*/m_transform);
+    m_shader.setMat4("view", camera.getView());
+    m_shader.setMat4("projection", camera.getProjection());
 
     for (auto& mesh: m_meshes) {
         mesh->draw(m_shader);

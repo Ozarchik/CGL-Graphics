@@ -30,20 +30,20 @@ void CGL::Application::createTestObjects()
     CGL::Transform model;
     
     model.translateX(-3.0f);
-    CGL::Node* node = new CGL::Node(new Sphere(brick), m_meshShader, model);
+    CGL::Node* node = new CGL::Node(new Sphere, m_meshShader, model);
     m_scene.append(node);
     
     model.translateX(3.0f);
-    node = new CGL::Node(new Rectangle(brick), m_meshShader, model);
+    node = new CGL::Node(new Rectangle, m_meshShader, model);
     m_scene.append(node);
     
     model.translateX(6.0f);
-    node = new CGL::Node(new Cube(brick), m_meshShader, model);
+    node = new CGL::Node(new Cube, m_meshShader, model);
     m_scene.append(node);
 
     ModelLoader loader;
-    m_scene.append(loader.load("assets/models/source/textures/carriage.fbx"));
     // m_scene.append(loader.load("assets/models/source/textures/carriage.fbx"));
+    m_scene.append(loader.load("assets/models/backpack2/backpack.obj"));
 }
 
 void CGL::Application::loop()
@@ -57,26 +57,19 @@ void CGL::Application::loop()
 
         m_mainwindow.init();
         m_framebuffer.bind();
-        m_framebuffer.enableDepth(true);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        // m_framebuffer.enableDepth(true);
+
 
         CGL::Transform model;
-        CGL::Transform view = m_camera.getLookAt();
 
-        CGL::Transform projection = CGL::Transform::makePerspective(45.0f, m_context.aspect(), 0.1f, 500.0f);
-
-        grid.draw(m_camera, model, view, projection);
+        grid.draw(m_camera, model);
 
         model.translateY(10.0f);
-        grid.draw(m_camera, model, view, projection);
+        grid.draw(m_camera, model);
 
-        m_meshShader.use();
-        m_meshShader.setMVP(model, view, projection);
-        m_meshShader.setVec3("light.color", 1.0, 1.0, 1.0);
-        m_meshShader.setVec3("viewPos", m_camera.pos());
-        m_meshShader.setFloat("winWidth", m_context.width());
-        m_meshShader.setFloat("winHeight", m_context.height());
-
-        m_scene.render(m_camera, model, view, projection);
+        m_scene.render(m_camera);
         m_framebuffer.unbind();
 
         m_mainwindow.update();

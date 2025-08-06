@@ -10,7 +10,7 @@ class Grid {
 
 public:
     Grid();
-    void draw(CGL::Camera& camera, CGL::Transform  model, CGL::Transform view, CGL::Transform projection);
+    void draw(CGL::Camera& camera, CGL::Transform  model);
 
 private:
     int sideSize = 10;
