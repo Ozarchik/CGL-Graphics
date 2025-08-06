@@ -8,7 +8,7 @@
 
 #include <cgl/shader.h>
 #include <cgl/mesh/common/mesh.h>
-#include <cgl/texture/texturebase.h>
+#include <cgl/texture/texture.h>
 
 namespace CGL {
 class Model
@@ -21,7 +21,7 @@ public:
 
 private:
     // std::vector<CGL::Mesh> m_meshes;
-    std::vector<CGL::TextureBase> m_textures;
+    std::vector<CGL::Texture> m_textures;
 };
 }
 

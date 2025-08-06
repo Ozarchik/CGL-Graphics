@@ -5,7 +5,7 @@ CGL::Material::Material()
 {
 }
 
-CGL::Material::Material(const std::vector<CGL::TextureBase>& textures)
+CGL::Material::Material(const std::vector<CGL::Texture>& textures)
     : m_textures(textures)
 {
 
@@ -20,7 +20,7 @@ void CGL::Material::draw(CGL::Shader& shader) {
     for(unsigned int i = 0; i < m_textures.size(); i++) {
         glActiveTexture(GL_TEXTURE0 + i);
 
-        CGL::TextureBase texture = m_textures[i];
+        CGL::Texture texture = m_textures[i];
         std::string number;
         std::string name = texture.type;
 

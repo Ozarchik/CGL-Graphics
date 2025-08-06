@@ -10,7 +10,7 @@ void CGL::MeshBuilder::setIndices(const std::vector<unsigned int>& indices)
     m_indices = indices;
 }
 
-void CGL::MeshBuilder::setTextures(const std::vector<CGL::TextureBase>& textures)
+void CGL::MeshBuilder::setTextures(const std::vector<CGL::Texture>& textures)
 {
     m_textures = textures;
 }
