@@ -6,6 +6,7 @@
 #include <glad/glad.h>
 #include <vector>
 #include <string>
+#include <unordered_map>
 
 namespace CGL {
 class TextureLoader
@@ -15,6 +16,9 @@ public:
 
     static CGL::Texture loadFromFile(const std::string &filepath, bool flipVertical = false);
     static unsigned int loadCubmap(const std::string &dir, const std::vector<std::string> &faces);
+
+private:
+    inline static std::unordered_map<std::string, CGL::Texture> m_loadedTextures;
 };
 }
 
