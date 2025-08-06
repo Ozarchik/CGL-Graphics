@@ -1,12 +1,13 @@
 # CGL-Graphics
 
 ## Requires
-1. OpenGL (version 3.3+)
-2. GLAD
-3. GLFW
-4. GLM
-5. Assimp
-6. Conan (version 2.0+)
+1. C++20
+2. OpenGL (version 3.3+)
+3. GLAD
+4. GLFW
+5. GLM
+6. Assimp
+7. Conan (version 2.0+)
 
 
 ## How to build
