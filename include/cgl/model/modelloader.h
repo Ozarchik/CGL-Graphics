@@ -10,6 +10,7 @@
 #include <cgl/texture/texturebase.h>
 #include <cgl/mesh/common/mesh.h>
 #include <cgl/model/model.h>
+#include <cgl/material.h>
 
 namespace CGL {
 class Node;
@@ -19,8 +20,9 @@ public:
     CGL::Node* load(const std::string& filepath, bool flipUV = false);
 
 private:
-    void processNode(const aiScene* scene, aiNode* node, std::vector<CGL::Mesh*>& meshes);
+    void processNode(const aiScene* scene, aiNode* node, std::vector<CGL::Mesh*>& meshes, std::vector<CGL::Material>& materials);
     CGL::Mesh* processMesh(const aiScene* scene, aiMesh* mesh);
+    CGL::Material processMaterial(const aiScene* scene, aiMesh* mesh);
 
     std::vector<CGL::Vertex> loadVertices(aiMesh *mesh);
     std::vector<unsigned int> loadIndices(aiMesh *mesh);

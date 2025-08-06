@@ -21,7 +21,8 @@ CGL::Node* CGL::ModelLoader::load(const std::string& filepath, bool flipUV)
     m_directory = filepath.substr(0, filepath.find_last_of('/'));
 
     std::vector<CGL::Mesh*> meshes;
-    processNode(scene, scene->mRootNode, meshes);
+    std::vector<CGL::Material> materials;
+    processNode(scene, scene->mRootNode, meshes, materials);
 
     CGL::Transform modelTransform;
     // modelTransform.translateY(2.0f);
@@ -29,15 +30,16 @@ CGL::Node* CGL::ModelLoader::load(const std::string& filepath, bool flipUV)
     return node;
 }
 
-void CGL::ModelLoader::processNode(const aiScene* scene, aiNode* node, std::vector<CGL::Mesh*>& meshes)
+void CGL::ModelLoader::processNode(const aiScene* scene, aiNode* node, std::vector<CGL::Mesh*>& meshes, std::vector<CGL::Material>& materials)
 {
     for (unsigned int i = 0; i < node->mNumMeshes; i++) {
         aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
         meshes.push_back(processMesh(scene, mesh));
+        materials.push_back(processMaterial(scene, mesh));
     }
 
     for (unsigned int i = 0; i < node->mNumChildren; i++) {
-        processNode(scene, node->mChildren[i], meshes);
+        processNode(scene, node->mChildren[i], meshes, materials);
     }
 }
 
@@ -45,9 +47,15 @@ CGL::Mesh* CGL::ModelLoader::processMesh(const aiScene* scene, aiMesh* mesh)
 {
     std::vector<CGL::Vertex> vertices = loadVertices(mesh);
     std::vector<unsigned int> indices  = loadIndices(mesh);
+
+    return new CGL::Mesh(vertices, indices);
+}
+
+CGL::Material CGL::ModelLoader::processMaterial(const aiScene* scene, aiMesh* mesh)
+{
     std::vector<CGL::TextureBase> textures = loadTextures(scene, mesh);
 
-    return new CGL::Mesh(vertices, textures, indices);
+    return CGL::Material(textures);
 }
 
 std::vector<CGL::Vertex> CGL::ModelLoader::loadVertices(aiMesh* mesh)

@@ -9,8 +9,6 @@
 #include <iostream>
 
 #include <cgl/shader.h>
-#include <cgl/texture/texture.h>
-#include <cgl/texture/texturebase.h> 
 #include <cgl/vertex.h>
 #include <cgl/mesh/common/meshbuffer.h>
 #include <cgl/mesh/common/meshglobals.h>
@@ -23,16 +21,11 @@ class Mesh {
     friend class MeshContoller;
 
 public:
-    explicit Mesh(
-        const std::vector<Vertex>& vertices = {},
-        const std::vector<CGL::TextureBase>& textures = {},
-        const std::vector<unsigned int>& indices = {}
-    );
+    explicit Mesh(const std::vector<Vertex>& vertices = {}, const std::vector<unsigned int>& indices = {});
 
     virtual ~Mesh() = default;
     virtual void setup();
     virtual void draw(Shader& Shader);
-    virtual void addTexture(const std::vector<CGL::TextureBase>& textures);
 
     void setPrimitiveType(GLenum type);
 
