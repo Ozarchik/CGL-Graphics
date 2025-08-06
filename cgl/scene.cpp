@@ -14,6 +14,9 @@ void CGL::Scene::render(CGL::Camera& camera)
 
 void CGL::Scene::append(Node* node)
 {
+    if (!node)
+        return;
+    
     m_nodes.push_back(node);
 }
 

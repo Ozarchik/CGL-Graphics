@@ -32,6 +32,9 @@ CGL::Node::~Node()
 
 void CGL::Node::addMesh(Mesh *mesh, const Material &material)
 {
+    if (!mesh)
+        return;
+    
     m_renders.emplace_back(mesh, material);
 }
 
