@@ -2,13 +2,13 @@
 #include <glad/glad.h>
 
 CGL::Material::Material()
+    : m_enabled(false)
 {
 }
 
 CGL::Material::Material(const std::vector<CGL::Texture>& textures)
-    : m_textures(textures)
+    : m_textures(textures), m_enabled(true)
 {
-
 }
 
 void CGL::Material::draw(CGL::Shader& shader) {
@@ -16,6 +16,8 @@ void CGL::Material::draw(CGL::Shader& shader) {
     unsigned int specularNr = 1;
     unsigned int normalNr   = 1;
     unsigned int heightNr   = 1;
+
+    shader.setBool("useTexture", m_enabled); // for test
 
     for(unsigned int i = 0; i < m_textures.size(); i++) {
         glActiveTexture(GL_TEXTURE0 + i);

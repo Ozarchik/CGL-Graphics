@@ -32,6 +32,7 @@ public:
 
     ~Node();
 
+    void addChild(CGL::Node* node);
     void addMesh(CGL::Mesh* mesh, const Material &material);
     void setTransform(const CGL::Transform& transform);
     void setPrimitiveType(GLenum type);

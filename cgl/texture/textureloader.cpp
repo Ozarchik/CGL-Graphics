@@ -5,8 +5,9 @@
 
 CGL::Texture CGL::TextureLoader::loadFromFile(const std::string &filepath, bool flipVertical)
 {
-    if (m_loadedTextures.count(filepath))
+    if (m_loadedTextures.count(filepath)) {
         return m_loadedTextures[filepath];
+    }
 
     unsigned int textureID;
     glGenTextures(1, &textureID);
@@ -34,6 +35,7 @@ CGL::Texture CGL::TextureLoader::loadFromFile(const std::string &filepath, bool 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
         stbi_image_free(data);
+        m_loadedTextures[filepath] = CGL::Texture{textureID};
     } else {
         std::cout << "Texture failed to load at path: " << filepath << std::endl;
         stbi_image_free(data);

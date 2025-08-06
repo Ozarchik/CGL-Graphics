@@ -1,4 +1,6 @@
 #include <cgl/node.h>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/matrix_decompose.hpp>
 
 CGL::Node::Node(CGL::Mesh* mesh, CGL::Shader& shader, CGL::Transform transform)
     : m_shader(shader)
@@ -30,6 +32,11 @@ CGL::Node::~Node()
     }
 }
 
+void CGL::Node::addChild(Node *node)
+{
+    m_childs.push_back(node);
+}
+
 void CGL::Node::addMesh(Mesh *mesh, const Material &material)
 {
     if (!mesh)
@@ -52,10 +59,10 @@ void CGL::Node::setPrimitiveType(GLenum type)
 
 void CGL::Node::update(CGL::Camera& camera, const Transform &parentTransform)
 {
-    CGL::Transform localTransform = parentTransform * m_transform;
+    CGL::Transform resultTransform = parentTransform * m_transform;
 
     m_shader.use();
-    m_shader.setMat4("model", localTransform);
+    m_shader.setMat4("model", resultTransform);
     m_shader.setMat4("view", camera.getView());
     m_shader.setMat4("projection", camera.getProjection());
 
@@ -65,6 +72,6 @@ void CGL::Node::update(CGL::Camera& camera, const Transform &parentTransform)
     }
 
     for (const auto child: m_childs) {
-        child->update(camera, localTransform);
+        child->update(camera, resultTransform);
     }
 }

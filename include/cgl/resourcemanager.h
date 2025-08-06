@@ -16,7 +16,7 @@ public:
     static CGL::Shader loadShader(const std::string& name);
     static CGL::Node* loadModel(const std::string& name);
 
-    static CGL::Shader& wdcwdcloadDefaultShader();
+    static CGL::Shader& loadDefaultShader();
     static CGL::Shader& loadDefaultModelShader();
 
     static void setTexturesDirectoryPath(const std::string& path);

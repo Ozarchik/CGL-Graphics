@@ -9,10 +9,11 @@
 namespace CGL {
 class Material {
 public:
-    explicit Material();
+    Material();
     explicit Material(const std::vector<CGL::Texture>& textures);
     CGL::Material& operator=(const CGL::Material& other) {
         m_textures = other.m_textures;
+        m_enabled = other.m_enabled;
         return *this;
     }
 
@@ -20,6 +21,7 @@ public:
 
 private:
     std::vector<CGL::Texture> m_textures;
+    bool m_enabled = false;
 };
 }
 

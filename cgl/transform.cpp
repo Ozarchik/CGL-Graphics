@@ -115,6 +115,11 @@ CGL::Transform &CGL::Transform::operator*=(const Transform &right)
     return *this;
 }
 
+glm::mat4& CGL::Transform::refData()
+{
+    return m_matrix;
+}
+
 glm::mat4 CGL::Transform::data() const
 {
     return m_matrix;
