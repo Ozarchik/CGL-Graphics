@@ -1,6 +1,9 @@
 #include <cgl/texture/textureloader.h>
 
-CGL::TextureBase CGL::TextureLoader::loadFromFile(const std::string &filepath, bool flipVertical)
+#define STB_IMAGE_IMPLEMENTATION
+#include <cgl/stb_image.h>
+
+CGL::Texture CGL::TextureLoader::loadFromFile(const std::string &filepath, bool flipVertical)
 {
     unsigned int textureID;
     glGenTextures(1, &textureID);

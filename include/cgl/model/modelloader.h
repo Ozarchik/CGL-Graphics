@@ -7,7 +7,7 @@
 #include <string>
 
 #include <cgl/shader.h>
-#include <cgl/texture/texturebase.h>
+#include <cgl/texture/texture.h>
 #include <cgl/mesh/common/mesh.h>
 #include <cgl/model/model.h>
 #include <cgl/material.h>
@@ -26,13 +26,13 @@ private:
 
     std::vector<CGL::Vertex> loadVertices(aiMesh *mesh);
     std::vector<unsigned int> loadIndices(aiMesh *mesh);
-    std::vector<CGL::TextureBase> loadTextures(const aiScene* scene, aiMesh* mesh);
-    std::vector<CGL::TextureBase> loadTextures(aiMaterial* material, aiTextureType type, std::string typeName);
+    std::vector<CGL::Texture> loadTextures(const aiScene* scene, aiMesh* mesh);
+    std::vector<CGL::Texture> loadTextures(aiMaterial* material, aiTextureType type, std::string typeName);
 
 
 private:
     std::string m_directory;
-    std::vector<CGL::TextureBase> textures_loaded;
-    std::vector<CGL::TextureBase> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
+    std::vector<CGL::Texture> textures_loaded;
+    std::vector<CGL::Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
 };
 }

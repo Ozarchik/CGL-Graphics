@@ -1,8 +1,7 @@
 #ifndef TEXTURELOADER_H
 #define TEXTURELOADER_H
 
-#include <cgl/texture/texturebase.h>
-#include <cgl/stb_image.h>
+#include <cgl/texture/texture.h>
 
 #include <glad/glad.h>
 #include <vector>
@@ -14,7 +13,7 @@ class TextureLoader
 public:
     TextureLoader() = default;
 
-    static CGL::TextureBase loadFromFile(const std::string &filepath, bool flipVertical = false);
+    static CGL::Texture loadFromFile(const std::string &filepath, bool flipVertical = false);
     static unsigned int loadCubmap(const std::string &dir, const std::vector<std::string> &faces);
 };
 }

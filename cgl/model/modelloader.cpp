@@ -91,15 +91,15 @@ std::vector<CGL::Vertex> CGL::ModelLoader::loadVertices(aiMesh* mesh)
     return vertices;
 }
 
-std::vector<CGL::TextureBase> CGL::ModelLoader::loadTextures(const aiScene *scene, aiMesh *mesh)
+std::vector<CGL::Texture> CGL::ModelLoader::loadTextures(const aiScene *scene, aiMesh *mesh)
 {
-    std::vector<CGL::TextureBase> textures;
+    std::vector<CGL::Texture> textures;
 
     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-    std::vector<CGL::TextureBase> diffuseMaps = loadTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+    std::vector<CGL::Texture> diffuseMaps = loadTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
     textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
-    std::vector<CGL::TextureBase> specularMaps = loadTextures(material, aiTextureType_SPECULAR, "texture_specular");
+    std::vector<CGL::Texture> specularMaps = loadTextures(material, aiTextureType_SPECULAR, "texture_specular");
     textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 
     return textures;
@@ -119,9 +119,9 @@ std::vector<unsigned int> CGL::ModelLoader::loadIndices(aiMesh *mesh)
     return indices;
 }
 
-std::vector<CGL::TextureBase> CGL::ModelLoader::loadTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
+std::vector<CGL::Texture> CGL::ModelLoader::loadTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
 {
-    std::vector<CGL::TextureBase> textures;
+    std::vector<CGL::Texture> textures;
 
     for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
     {
@@ -140,7 +140,7 @@ std::vector<CGL::TextureBase> CGL::ModelLoader::loadTextures(aiMaterial* mat, ai
 
         if(!skip) {
             std::cout << "load from: " << m_directory + "/" + std::string(str.C_Str()) << std::endl;
-            CGL::TextureBase texture = CGL::TextureLoader::loadFromFile(m_directory + "/" + std::string(str.C_Str()));
+            CGL::Texture texture = CGL::TextureLoader::loadFromFile(m_directory + "/" + std::string(str.C_Str()));
             texture.type = typeName;
             texture.path = str.C_Str();
             textures.push_back(texture);

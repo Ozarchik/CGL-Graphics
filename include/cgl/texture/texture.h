@@ -1,28 +1,12 @@
 #pragma once
 
-#include <glad/glad.h>
+#include <string>
+#include <iostream>
 
 namespace CGL {
-
-enum ColorType {
-    RGB = GL_RGB,
-    RGBA = GL_RGBA
+struct Texture {
+    unsigned int id;
+    std::string type;
+    std::string path;
 };
-
-class Texture
-{
-public:
-    Texture();
-    Texture(const char* filename, ColorType colorType = RGB);
-    ~Texture();
-
-    void bind();
-
-    void setVerticalFlip(bool status);
-    unsigned int id() const;
-    void loadImage(const char* filename, ColorType colorType);
-
-private:
-    unsigned int m_id;
-};
-};
+}
