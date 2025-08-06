@@ -1,5 +1,5 @@
 #include <cgl/normalmap.h>
-#include <cgl/texture/texturebase.h>
+#include <cgl/texture/texture.h>
 #include <cgl/texture/textureloader.h>
 
 CGL::NormalMap::NormalMap(

@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <cgl/vertex.h>
-#include <cgl/texture/texturebase.h>
+#include <cgl/texture/texture.h>
 #include <cgl/mesh/common/mesh.h>
 
 namespace CGL {
@@ -12,14 +12,14 @@ public:
     MeshBuilder() = default;
     void setVertices(const std::vector<CGL::Vertex>& vertices);
     void setIndices(const std::vector<unsigned int>& indices);
-    void setTextures(const std::vector<CGL::TextureBase>& textures);
+    void setTextures(const std::vector<CGL::Texture>& textures);
 
     CGL::Mesh build();
 
 private:
     std::vector<CGL::Vertex> m_vertices;
     std::vector<unsigned int> m_indices;
-    std::vector<CGL::TextureBase> m_textures;
+    std::vector<CGL::Texture> m_textures;
 };
 }
 

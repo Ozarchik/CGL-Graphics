@@ -102,6 +102,10 @@ void CGL::MainWindow::update()
 
 void CGL::MainWindow::render()
 {
+    m_context.update();
+
+    update();
+
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 

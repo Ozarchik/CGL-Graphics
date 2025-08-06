@@ -25,7 +25,6 @@ CGL::Application::~Application()
 
 void CGL::Application::createTestObjects()
 {
-    auto brick = CGL::TextureLoader::loadFromFile("textures/brick/brick.jpg");
     CGL::Transform model;
     
     model.translateX(-3.0f);
