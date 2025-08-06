@@ -97,3 +97,5 @@ install (
     ${GLFW_LIB} ${ASSIMP_LIB}
     DESTINATION ${CMAKE_BINARY_DIR}
 )
+
+

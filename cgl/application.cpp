@@ -5,12 +5,14 @@
 #include <cgl/node.h>
 #include <cgl/ui/mainwindow.h>
 #include <cgl/model/modelloader.h>
+#include <cgl/logger.h>
 
 CGL::Application::Application(int argc, char *argv[])
     : m_camera(m_context)
     , m_inputController(&m_context, &m_camera)
     , m_mainwindow(m_context, m_framebuffer)
 {
+    CGL_CheckErros();
     CGL::Backtrace::init();
     CGL::ResourceManager::init();
 
@@ -52,6 +54,7 @@ void CGL::Application::loop()
     CGL::Grid grid;
 
     while (m_context.isAlive()) {
+        CGL_CheckErros();
         m_inputController.process();
 
         m_camera.update();
