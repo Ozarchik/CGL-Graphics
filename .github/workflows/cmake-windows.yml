@@ -27,7 +27,8 @@ jobs:
         shell: pwsh
         run: |
           conan profile detect --force
-          (conan profile path show -pr default) -replace 'compiler\.cppstd=\d+', 'compiler.cppstd=20' | Set-Content $profilePath
+          $profilePath = conan profile path default
+          (Get-Content $profilePath) -replace 'compiler\.cppstd=\d+', 'compiler.cppstd=20' | Set-Content $profilePath
           Write-Host "Updated profile:"
           Get-Content $profilePath
           
