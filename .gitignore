@@ -39,3 +39,6 @@ assets
 *.user*
 *UserPresets.json
 imgui.ini
+
+# IDE
+.vs
