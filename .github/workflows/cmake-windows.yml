@@ -27,4 +27,5 @@ jobs:
         run: conan profile detect --force
 
       - name: Run Windows build script
-        run: call build_win.bat release default
+        run: build_win.bat release default
+        shell: cmd
