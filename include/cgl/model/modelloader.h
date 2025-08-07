@@ -9,7 +9,6 @@
 #include <cgl/shader.h>
 #include <cgl/texture/texture.h>
 #include <cgl/mesh/common/mesh.h>
-#include <cgl/model/model.h>
 #include <cgl/material.h>
 
 namespace CGL {

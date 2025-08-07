@@ -58,7 +58,7 @@ CGL::Context::Context()
     glfwSetFramebufferSizeCallback(m_window, framebufferSizeCallback);
 
     // glViewport(0, 0, width(), height());
-    glViewport(0, 0, 400, 400);
+    glViewport(0, 0, 800, 800);
     // glEnable(GL_DEPTH_TEST);
 }
 

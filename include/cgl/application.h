@@ -9,7 +9,6 @@
 #include <cgl/mesh/3D/sphere.h>
 #include <cgl/texture/texture.h>
 #include <cgl/transform.h>
-#include <cgl/model/model.h>
 #include <cgl/scene.h>
 #include <cgl/shader.h>
 #include <cgl/context.h>
@@ -18,8 +17,6 @@
 #include <cgl/framebuffer.h>
 #include <cgl/vertexbuffer.h>
 #include <cgl/grid.h>
-#include <cgl/ui/frame.h>
-#include <cgl/ui/editor.h>
 #include <cgl/tools/backtrace/backtrace.h>
 #include <cgl/ui/mainwindow.h>
 #include <cgl/resourcemanager.h>
@@ -43,7 +40,6 @@ private:
 
     CGL::Camera m_camera;
     CGL::Shader m_meshShader;
-    CGL::Editor m_editor;
     CGL::CommandDispatcher m_commandDispatcher;
 };
 }
