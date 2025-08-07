@@ -63,6 +63,7 @@ CGL::Shader& CGL::ResourceManager::loadDefaultShader()
             "in vec3 fColor;\n"
 
             "uniform bool useTexture;\n"
+            "uniform bool selected;\n"
             "uniform sampler2D texture_diffuse1;\n"
 
             "out vec4 FragColor;\n"
@@ -71,6 +72,8 @@ CGL::Shader& CGL::ResourceManager::loadDefaultShader()
             "        FragColor = texture(texture_diffuse1, fTexCoord);\n"
             "    else\n"
             "        FragColor = vec4(fColor, 1.0);\n"
+            "   if (selected)\n"
+            "        FragColor = vec4(1.0, 0.0, 1.0, 1.0);\n"
             "}\n"
         )
     );
