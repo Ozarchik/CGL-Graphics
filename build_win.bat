@@ -4,6 +4,8 @@
 
 set BUILD_TYPE_ARG=release
 set CONAN_PROFILE=default
+set CONFIG_PRESET=conan-release
+set BUILD_PRESET=conan-release
 
 if not "%~1" == "" (
     set BUILD_TYPE_ARG=%~1
@@ -24,15 +26,26 @@ if %errorlevel% neq 0 (
     exit /b %errorlevel%
 )
 
+set COMPILER=unknown
+for /f "tokens=1,* delims==" %%a in ('conan profile show -pr:b %CONAN_PROFILE%') do (
+    if /i "%%a"=="compiler" (
+        set COMPILER=%%b
+    )
+)
+
+if /i "%COMPILER%"=="msvc" (
+    set CONFIG_PRESET=conan-default
+)
+
 echo [2/3] Configuring CMake...
-cmake --preset conan-%BUILD_TYPE_ARG%
+cmake --preset %CONFIG_PRESET%
 if %errorlevel% neq 0 (
     echo Error: cmake configure failed
     exit /b %errorlevel%
 )
 
 echo [3/3] Building project...
-cmake --build --preset conan-%BUILD_TYPE_ARG%
+cmake --build --preset %BUILD_PRESET%
 if %errorlevel% neq 0 (
     echo Error: cmake build failed
     exit /b %errorlevel%
