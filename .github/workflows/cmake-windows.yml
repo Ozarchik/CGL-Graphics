@@ -24,8 +24,13 @@ jobs:
           pip install conan
 
       - name: Detect Conan profile
-        run: conan profile detect --force
-
+        shell: pwsh
+        run: |
+          $profilePath = conan profile path default
+          (Get-Content $profilePath) -replace 'compiler\.cppstd=\d+', 'compiler.cppstd=20' | Set-Content $profilePath
+          Write-Host "Updated profile:"
+          Get-Content $profilePath
+          
       - name: Run Windows build script
         run: build_win.bat release default
         shell: cmd
