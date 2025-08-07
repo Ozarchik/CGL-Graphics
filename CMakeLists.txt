@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.25)
 project(CGL-Graphics)
 set(CMAKE_CXX_STANDARD 20)
+
 find_package(assimp REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(glad REQUIRED)
@@ -19,7 +20,6 @@ file(GLOB sources
     "cgl/texture/*.cpp"
     "cgl/tools/backtrace/*.cpp"
     # "examples/*.cpp"
-    # "C:/libs/glad/src/glad.c"
 )
 
 file(GLOB headers
@@ -40,8 +40,7 @@ file(GLOB shaders
     "shaders/*"
 )
 
-add_executable(cglg
-    include/cgl/command/createcubecommand.h include/cgl/command/createcubecommand.cpp)
+add_executable(cglg)
 target_compile_definitions(cglg PUBLIC IMGUI_IMPL_OPENGL_LOADER_GLAD)
 
 target_sources(cglg PRIVATE
@@ -53,8 +52,6 @@ target_sources(cglg PRIVATE
     bindings/imgui_impl_opengl3.cpp
     bindings/imgui_impl_opengl3.h
     bindings/imgui_impl_opengl3_loader.h
-    # assets/simple-shader.vs
-    # assets/simple-shader.fs
 )
 
 target_link_libraries(cglg PRIVATE
