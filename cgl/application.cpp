@@ -9,8 +9,9 @@
 
 CGL::Application::Application(int argc, char *argv[])
     : m_camera(m_context)
+    , m_commandDispatcher(m_scene)
     , m_inputController(&m_context, &m_camera)
-    , m_mainwindow(m_context, m_framebuffer)
+    , m_mainwindow(m_context, m_commandDispatcher, m_framebuffer)
 {
     CGL_CheckErros();
     CGL::Backtrace::init();
@@ -68,6 +69,7 @@ void CGL::Application::loop()
     while (m_context.isAlive()) {
         CGL_CheckErros();
         m_inputController.process();
+        m_commandDispatcher.process();
 
         m_camera.update();
 

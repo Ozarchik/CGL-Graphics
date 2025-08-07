@@ -44,6 +44,7 @@ private:
     CGL::Camera m_camera;
     CGL::Shader m_meshShader;
     CGL::Editor m_editor;
+    CGL::CommandDispatcher m_commandDispatcher;
 };
 }
 

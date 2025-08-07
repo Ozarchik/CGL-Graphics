@@ -3,6 +3,7 @@
 
 #include <cgl/context.h>
 #include <cgl/framebuffer.h>
+#include <cgl/command/commanddispatcher.h>
 
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -12,7 +13,7 @@
 namespace CGL {
 class MainWindow {
 public:
-    MainWindow(CGL::Context& context, CGL::FrameBuffer& framebuffer);
+    MainWindow(CGL::Context& context, CommandDispatcher& commandDispatcher, CGL::FrameBuffer& framebuffer);
     ~MainWindow();
 
     void init();
@@ -22,6 +23,7 @@ public:
 private:
     CGL::Context& m_context;
     CGL::FrameBuffer& m_framebuffer;
+    CGL::CommandDispatcher& m_commandDispatcher;
 };
 }
 

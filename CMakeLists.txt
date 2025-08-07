@@ -12,6 +12,7 @@ file(GLOB sources
     "cgl/mesh/2D/*.cpp"
     "cgl/mesh/3D/*.cpp"
     "cgl/mesh/common/*.cpp"
+    "cgl/command/*.cpp"
     "cgl/event/*.cpp"
     "cgl/ui/*.cpp"
     "cgl/model/*.cpp"
@@ -26,6 +27,7 @@ file(GLOB headers
     "include/cgl/mesh/2D/*.h"
     "include/cgl/mesh/3D/*.h"
     "include/cgl/mesh/common/*.h"
+    "include/cgl/command/*.h"
     "include/cgl/event/*.h"
     "include/cgl/ui/*.h"
     "include/cgl/model/*.h"
@@ -38,7 +40,8 @@ file(GLOB shaders
     "shaders/*"
 )
 
-add_executable(cglg)
+add_executable(cglg
+    include/cgl/command/createcubecommand.h include/cgl/command/createcubecommand.cpp)
 target_compile_definitions(cglg PUBLIC IMGUI_IMPL_OPENGL_LOADER_GLAD)
 
 target_sources(cglg PRIVATE

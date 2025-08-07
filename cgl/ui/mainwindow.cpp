@@ -3,9 +3,11 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <cgl/logger.h>
+#include <cgl/command/commanddispatcher.h>
+#include <cgl/command/commands.h>
 
-CGL::MainWindow::MainWindow(Context &context, FrameBuffer &framebuffer)
-    : m_context(context), m_framebuffer(framebuffer)
+CGL::MainWindow::MainWindow(Context &context, CommandDispatcher& commandDispatcher, FrameBuffer &framebuffer)
+    : m_context(context), m_commandDispatcher(commandDispatcher), m_framebuffer(framebuffer)
 {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -71,9 +73,30 @@ void CGL::MainWindow::update()
     ImGui::End();
 
     ImGui::Begin("Hello, CGL Graphics", nullptr);
-    ImGui::Text("Simple text");
-    if (ImGui::Button("Apply")) {
-        ImGui::Text("Button is clicked");
+    static bool init2 = false;
+    if (ImGui::Button("Move")) {
+        // if (init2)
+        //     m_commandDispatcher.append(std::make_unique<CGL::MoveCommand>());
+        // else
+            // m_commandDispatcher.append(std::make_unique<CGL::CreateCubeCommand>());
+
+        init2 = true;
+    }
+
+    static float x = 0.0f;
+    static float y = 0.0f;
+    static float z = 0.0f;
+
+    if (ImGui::SliderFloat("Translate X", &x, -10.0f, 10.0f)) {
+        m_commandDispatcher.append(std::make_unique<CGL::MoveCommand>(x, y, z));
+    }
+
+    if (ImGui::SliderFloat("Translate Y", &y, -10.0f, 10.0f)) {
+        m_commandDispatcher.append(std::make_unique<CGL::MoveCommand>(x, y, z));
+    }
+
+    if (ImGui::SliderFloat("Translate Z", &z, -10.0f, 10.0f)) {
+        m_commandDispatcher.append(std::make_unique<CGL::MoveCommand>(x, y, z));
     }
     ImGui::End();
 }
