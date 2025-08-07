@@ -13,6 +13,12 @@
 
 
 namespace CGL {
+
+struct BoundingBox {
+    glm::vec3 min;
+    glm::vec3 max;
+};
+
 class Mesh {
 public:
     explicit Mesh(const std::vector<Vertex>& vertices = {}, const std::vector<unsigned int>& indices = {});
@@ -20,6 +26,7 @@ public:
     virtual ~Mesh() = default;
     virtual void setup();
     virtual void draw(Shader& Shader);
+    virtual CGL::BoundingBox boundingBox() const;
 
     void setPrimitiveType(GLenum type);
 

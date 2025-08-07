@@ -20,3 +20,21 @@ void CGL::Mesh::draw(Shader &shader) {
 
     m_buffer.unbind();
 }
+
+CGL::BoundingBox CGL::Mesh::boundingBox() const
+{
+    CGL::BoundingBox box;
+
+    if (m_buffer.vertices.empty())
+        return { glm::vec3(0), glm::vec3(0) };
+
+    box.min = m_buffer.vertices[0].position;
+    box.max = m_buffer.vertices[0].position;
+
+    for (const auto& vert: m_buffer.vertices) {
+        box.min = glm::min(box.min, vert.position);
+        box.max = glm::max(box.max, vert.position);
+    }
+
+    return box;
+}

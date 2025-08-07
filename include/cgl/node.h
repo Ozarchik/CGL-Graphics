@@ -35,9 +35,12 @@ public:
     bool selected() const;
     void setSelected(bool state);
     void addChild(CGL::Node* node);
+    std::vector<CGL::Node*> childs() const;
     void addMesh(CGL::Mesh* mesh, const Material &material);
     void setTransform(const CGL::Transform& transform);
     void setPrimitiveType(GLenum type);
+
+    CGL::BoundingBox boundingBox() const;
     void update(CGL::Camera& camera, const CGL::Transform& parentTransform = {});
 
 private:

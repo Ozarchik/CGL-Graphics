@@ -12,7 +12,7 @@ CGL::Application::Application(int argc, char *argv[])
     , m_commandDispatcher(m_scene)
     , m_inputController(&m_context, &m_camera)
     , m_mainwindow(m_context, m_commandDispatcher, m_framebuffer)
-    , m_raycast(m_context)
+    , m_raycast(m_context, m_scene, m_camera)
 {
     CGL_CheckErros();
     CGL::Backtrace::init();
@@ -79,20 +79,21 @@ void CGL::Application::loop()
         CGL_CheckErros();
         m_inputController.process();
         m_commandDispatcher.process();
-
         m_camera.update();
 
-        m_mainwindow.init();
-        m_framebuffer.bind();
+        m_context.update();
+
+        // m_mainwindow.init();
+        // m_framebuffer.bind();
 
         CGL::Transform model;
         grid.draw(m_camera, model);
         model.translateY(8.0f);
         grid.draw(m_camera, model);
-
+        m_raycast.draw();
         m_scene.render(m_camera);
-        m_framebuffer.unbind();
-        m_mainwindow.render();
+        // m_framebuffer.unbind();
+        // m_mainwindow.render();
 
         m_context.swapBuffers();
 	}
