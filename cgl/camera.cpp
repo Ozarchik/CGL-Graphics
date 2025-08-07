@@ -22,7 +22,7 @@ CGL::Transform CGL::Camera::getView()
 
 CGL::Transform CGL::Camera::getProjection()
 {
-    return CGL::Transform::makePerspective(45.0f, m_context.aspect(), 0.1f, 500.0f);
+    return CGL::Transform::makePerspective(60.0f, m_context.aspect(), 0.1f, 500.0f);
 }
 
 void CGL::Camera::correctSpeed(float coeff)
@@ -130,7 +130,7 @@ void CGL::Camera::keyEventHandler(const KeyEvent& event)
 
 void CGL::Camera::mouseEventHandler(const MouseEvent &event)
 {
-    rotate(event.dx(), event.dy());
+    rotate(event.x(), event.y());
 }
 
 void CGL::Camera::move(float x)

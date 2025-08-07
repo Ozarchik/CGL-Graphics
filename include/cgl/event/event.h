@@ -53,17 +53,17 @@ private:
 class MouseEvent: public Event
 {
 public:
-    MouseEvent(int dx, int dy, const MouseType& state = {});
+    MouseEvent(int dx, int y, const MouseState& state = {});
 
     MouseType type() const;
     MouseButton button() const;
 
-    int dx() const;
-    int dy() const;
+    int x() const;
+    int y() const;
 
 private:
     MouseState m_state;
-    int m_dx, m_dy;
+    int m_x, m_y;
 };
 }
 #endif // EVENT_H

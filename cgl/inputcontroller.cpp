@@ -67,7 +67,7 @@ void CGL::InputController::keyNotify(const CGL::KeyType &keyType)
 void CGL::InputController::mouseNotify(int dx, int dy, CGL::MouseState state)
 {
     for (auto obj: m_objects) {
-        obj->mouseEventHandler(MouseEvent(dx, dy));
+        obj->mouseEventHandler(MouseEvent(dx, dy, state));
     }
 }
 
@@ -97,9 +97,9 @@ void CGL::InputController::mouseCallback(GLFWwindow* window, double x, double y)
 
 void CGL::InputController::mouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
 {
-    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+    // if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
         mouseNotify(m_mouseX, m_mouseY, CGL::MouseState{CGL::MouseType::Press, CGL::MouseButton::Left});
-    }
+// }
 }
 
 void CGL::InputController::addSubscriber(Object *object)
