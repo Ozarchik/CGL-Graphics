@@ -20,6 +20,7 @@
 #include <cgl/tools/backtrace/backtrace.h>
 #include <cgl/ui/mainwindow.h>
 #include <cgl/resourcemanager.h>
+#include <cgl/physics/raycast.h>
 
 namespace CGL {
 class Application
@@ -41,6 +42,7 @@ private:
     CGL::Camera m_camera;
     CGL::Shader m_meshShader;
     CGL::CommandDispatcher m_commandDispatcher;
+    CGL::Raycast m_raycast;
 };
 }
 

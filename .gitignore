@@ -33,6 +33,7 @@
 
 # Directories
 build
+assets
 
 # Generate files
 *.user*

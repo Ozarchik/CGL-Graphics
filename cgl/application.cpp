@@ -12,6 +12,7 @@ CGL::Application::Application(int argc, char *argv[])
     , m_commandDispatcher(m_scene)
     , m_inputController(&m_context, &m_camera)
     , m_mainwindow(m_context, m_commandDispatcher, m_framebuffer)
+    , m_raycast(m_context)
 {
     CGL_CheckErros();
     CGL::Backtrace::init();
@@ -30,24 +31,28 @@ void CGL::Application::createTestObjects()
 {
     CGL::Transform model;
     CGL::Node* node;
+    CGL::Node* node2;
+    CGL::Node* node3;
 
     model.translateX(10.0f);
     node = new CGL::Node(m_meshShader, model);
     node->addMesh(new CGL::Cube, CGL::Material({CGL::ResourceManager::loadTexture("terrazzo/terrazzo_17_normal-1K.png")}));
     // node = new CGL::Node(new Cube, m_meshShader, model);
-    m_scene.append(node);
+    // m_scene.append(node);
 
     model.translateX(-3.0f);
     // node = new CGL::Node(new Sphere, m_meshShader, model);
-    node = new CGL::Node(m_meshShader, model);
-    node->addMesh(new CGL::Sphere, CGL::Material({CGL::ResourceManager::loadTexture("planets/earth.bmp")}));
-    m_scene.append(node);
+    node2 = new CGL::Node(m_meshShader, model);
+    node2->addMesh(new CGL::Sphere, CGL::Material({CGL::ResourceManager::loadTexture("planets/earth.bmp")}));
+    // m_scene.append(node);
     
     model.translateX(6.0f);
     model.translateY(3.0f);
-    node = new CGL::Node(m_meshShader, model);
-    node->addMesh(new CGL::Rectangle, CGL::Material({CGL::ResourceManager::loadTexture("brick/brick.jpg")}));
-    m_scene.append(node);
+    node3 = new CGL::Node(m_meshShader, model);
+    node3->addMesh(new CGL::Rectangle, CGL::Material({CGL::ResourceManager::loadTexture("brick/brick.jpg")}));
+    node2->addChild(node);
+    node3->addChild(node2);
+    m_scene.append(node3);
     
     CGL::Transform scaleTransform;
     scaleTransform.scale(0.5);

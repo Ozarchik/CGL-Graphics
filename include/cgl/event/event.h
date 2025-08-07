@@ -22,9 +22,21 @@ enum KeyType {
 };
 
 enum MouseType {
-    Key_Left,
-    Key_Right,
-    Key_Middle
+    Move,
+    Press,
+    Click
+};
+
+enum MouseButton {
+    NoButton,
+    Left,
+    Right,
+    Middle
+};
+
+struct MouseState {
+    MouseType type = Move;
+    MouseButton button = NoButton;
 };
 
 class KeyEvent: public Event
@@ -41,16 +53,16 @@ private:
 class MouseEvent: public Event
 {
 public:
-    MouseEvent(int dx, int dy);
-    MouseEvent(const MouseType& mouseType);
-    MouseEvent(const MouseType& mouseType, int dx, int dy);
+    MouseEvent(int dx, int dy, const MouseType& state = {});
 
     MouseType type() const;
+    MouseButton button() const;
+
     int dx() const;
     int dy() const;
 
 private:
-    MouseType m_type;
+    MouseState m_state;
     int m_dx, m_dy;
 };
 }
