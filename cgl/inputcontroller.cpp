@@ -13,6 +13,7 @@ CGL::InputController::InputController
 
     glfwSetKeyCallback(winHandler, &CGL::InputController::keyCallback);
     glfwSetCursorPosCallback(winHandler, &CGL::InputController::mouseCallback);
+    glfwSetMouseButtonCallback(winHandler, &CGL::InputController::mouseButtonCallback);
     glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
@@ -95,7 +96,17 @@ void CGL::InputController::keyCallback(GLFWwindow* window, int key, int scancode
 
 void CGL::InputController::mouseCallback(GLFWwindow* window, double x, double y)
 {
-    mouseNotify(x, y);
+    m_mouseX = x;
+    m_mouseY = y;
+
+    mouseNotify(m_mouseX, m_mouseY);
+}
+
+void CGL::InputController::mouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
+{
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+        mouseNotify(m_mouseX, m_mouseY, CGL::MouseState{CGL::MouseType::Press, CGL::MouseButton::Left});
+    }
 }
 
 void CGL::InputController::addSubscriber(Object *object)

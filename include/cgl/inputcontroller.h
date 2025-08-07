@@ -26,12 +26,14 @@ private:
 
     static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int modes);
     static void mouseCallback(GLFWwindow* window, double x, double y);
+    static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 
 private:
     inline static GLFWwindow* winHandler;
     CGL::Context* m_context;
     bool keySpacePressed = false;
-    inline static std::vector<Object*> m_objects;
+    inline static std::vector<CGL::Object*> m_objects;
+    inline static double m_mouseX, m_mouseY;
 };
 }
 
