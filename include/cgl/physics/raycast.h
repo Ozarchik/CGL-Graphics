@@ -3,19 +3,29 @@
 
 #include <cgl/camera.h>
 #include <cgl/context.h>
+#include <cgl/scene.h>
+#include <cgl/physics/rayline.h>
 
 namespace CGL {
 class Raycast: public CGL::Object {
 public:
-    Raycast(CGL::Context& context);
+    Raycast(CGL::Context& context, CGL::Scene& scene, CGL::Camera& camera);
 
-    void seek(CGL::Camera& camera, float mouseX, float mouseY);
+    void seek(float mouseX, float mouseY);
+    void draw();
 
 protected:
     void mouseEventHandler(const CGL::MouseEvent& event) override;
+    void keyEventHandler(const CGL::KeyEvent& event) override;
+
+private:
+    bool intersectRayAABB(glm::vec3 origin, glm::vec3 direction, BoundingBox &box, float &tMin);
 
 private:
     CGL::Context& m_context;
+    CGL::Scene& m_scene;
+    CGL::Camera& m_camera;
+    CGL::RayLine m_rayline;
 };
 }
 
