@@ -33,7 +33,7 @@ private:
     GLFWwindow* m_window = nullptr;
     std::string m_title = "Test Project";
 
-    int m_width = 1000;
+    int m_width = 800;
     int m_height = 800;
 	bool m_alive = false;
 };

@@ -71,6 +71,9 @@ void CGL::Application::loop()
 {
     CGL::Grid grid;
     m_inputController.addSubscriber(&m_raycast);
+    m_context.setWidth(800);
+    m_context.setHeight(800);
+    glViewport(0, 0, 800, 800);
 
     while (m_context.isAlive()) {
         CGL_CheckErros();

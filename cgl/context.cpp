@@ -23,7 +23,8 @@ void framebufferSizeCallback(GLFWwindow* window, int width, int height)
 
     int viewportX = (width - viewportWidth) / 2;
     int viewportY = (height - viewportHeight) / 2;
-    glViewport(0, 0, 400, 400);
+    // glViewport(0, 0, width, height);
+    // glViewport(0, 0, 800, 800);
     // glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
     // glViewport(0, 0, width, height);
 }
@@ -58,7 +59,7 @@ CGL::Context::Context()
     glfwSetFramebufferSizeCallback(m_window, framebufferSizeCallback);
 
     // glViewport(0, 0, width(), height());
-    glViewport(0, 0, 800, 800);
+    // glViewport(0, 0, 800, 800);
     // glEnable(GL_DEPTH_TEST);
 }
 
