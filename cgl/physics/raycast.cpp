@@ -43,3 +43,6 @@ void CGL::Raycast::seek(CGL::Camera &camera, float mouseX, float mouseY)
     world = glm::normalize(world);
 }
 
+void CGL::Raycast::mouseEventHandler(const MouseEvent &event)
+{
+}

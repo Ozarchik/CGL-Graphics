@@ -11,6 +11,8 @@ public:
 
     void seek(CGL::Camera& camera, float mouseX, float mouseY);
 
+protected:
+    void mouseEventHandler(const CGL::MouseEvent& event) override;
 
 private:
     CGL::Context& m_context;

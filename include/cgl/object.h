@@ -6,9 +6,12 @@
 namespace CGL {
 class Object
 {
+    friend class InputController;
+
 public:
     Object();
 
+protected:
     virtual void keyEventHandler(const CGL::KeyEvent& event) {}
     virtual void mouseEventHandler(const CGL::MouseEvent& event) {}
 };

@@ -70,6 +70,7 @@ void CGL::Application::createTestObjects()
 void CGL::Application::loop()
 {
     CGL::Grid grid;
+    m_inputController.addSubscriber(&m_raycast);
 
     while (m_context.isAlive()) {
         CGL_CheckErros();
