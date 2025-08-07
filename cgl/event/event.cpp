@@ -13,21 +13,18 @@ CGL::KeyType CGL::KeyEvent::type() const
     return m_type;
 }
 
-CGL::MouseEvent::MouseEvent(int dx, int dy)
-    : Event(), m_dx(dx), m_dy(dy)
-{}
-
-CGL::MouseEvent::MouseEvent(const MouseType &mouseType)
-    : Event(), m_type(mouseType)
-{}
-
-CGL::MouseEvent::MouseEvent(const MouseType &mouseType, int dx, int dy)
-    : Event(), m_type(mouseType), m_dx(dx), m_dy(dy)
+CGL::MouseEvent::MouseEvent(int dx, int dy, const MouseType &state)
+    : Event(), m_dx(dx), m_dy(dy), m_state(state)
 {}
 
 CGL::MouseType CGL::MouseEvent::type() const
 {
-    return m_type;
+    return m_state.type;
+}
+
+CGL::MouseButton CGL::MouseEvent::button() const
+{
+    return m_state.button;
 }
 
 int CGL::MouseEvent::dx() const

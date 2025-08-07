@@ -21,8 +21,7 @@ public:
 
 private:
     static void keyNotify(const CGL::KeyType& keyType);
-    static void mouseNotify(const CGL::MouseType &mouseType);
-    static void mouseNotify(int dx, int dy);
+    static void mouseNotify(int dx, int dy, MouseState state = {});
 
     static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int modes);
     static void mouseCallback(GLFWwindow* window, double x, double y);

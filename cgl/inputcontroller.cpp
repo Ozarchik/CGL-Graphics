@@ -64,14 +64,7 @@ void CGL::InputController::keyNotify(const CGL::KeyType &keyType)
     }
 }
 
-void CGL::InputController::mouseNotify(const CGL::MouseType &mouseType)
-{
-    for (auto obj: m_objects) {
-        obj->mouseEventHandler(MouseEvent(mouseType));
-    }
-}
-
-void CGL::InputController::mouseNotify(int dx, int dy)
+void CGL::InputController::mouseNotify(int dx, int dy, CGL::MouseState state)
 {
     for (auto obj: m_objects) {
         obj->mouseEventHandler(MouseEvent(dx, dy));
