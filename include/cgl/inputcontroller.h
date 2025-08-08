@@ -14,16 +14,16 @@ public:
     InputController(CGL::Context* window, CGL::Camera* camera);
 
     void process();
-
     bool isKeySpacePressed() const;
-
     void addSubscriber(CGL::Object* object);
 
 private:
     static void keyNotify(const CGL::KeyType& keyType);
     static void mouseNotify(int dx, int dy, MouseState state = {});
+    static void wheelNotify(double dx, double dy, MouseWheelState state = {});
 
     static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int modes);
+    static void scrollCallback(GLFWwindow* window, double dx, double dy);
     static void mouseCallback(GLFWwindow* window, double x, double y);
     static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 

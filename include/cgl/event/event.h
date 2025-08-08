@@ -34,9 +34,19 @@ enum MouseButton {
     Middle
 };
 
+enum MouseWheelDirection {
+    Up,
+    Down
+};
+
+
 struct MouseState {
-    MouseType type = Move;
+    MouseAction type = Move;
     MouseButton button = NoButton;
+};
+
+struct MouseWheelState {
+    MouseWheelDirection direction;
 };
 
 class KeyEvent: public Event
@@ -55,7 +65,7 @@ class MouseEvent: public Event
 public:
     MouseEvent(int dx, int y, const MouseState& state = {});
 
-    MouseType type() const;
+    MouseAction type() const;
     MouseButton button() const;
 
     int x() const;
@@ -65,5 +75,20 @@ private:
     MouseState m_state;
     int m_x, m_y;
 };
+
+class MouseWheelEvent: public Event
+{
+public:
+    MouseWheelEvent(double dx, double dy, const MouseWheelState& state = {});
+
+    double dx() const;
+    double dy() const;
+    MouseWheelDirection direction() const;
+
+private:
+    MouseWheelState m_state;
+    double m_dx, m_dy;
+};
+
 }
 #endif // EVENT_H

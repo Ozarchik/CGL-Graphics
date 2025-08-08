@@ -13,6 +13,7 @@ CGL::InputController::InputController
 
     glfwSetKeyCallback(winHandler, &CGL::InputController::keyCallback);
     glfwSetCursorPosCallback(winHandler, &CGL::InputController::mouseCallback);
+    glfwSetScrollCallback(winHandler, &CGL::InputController::scrollCallback);
     glfwSetMouseButtonCallback(winHandler, &CGL::InputController::mouseButtonCallback);
     glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
@@ -71,6 +72,13 @@ void CGL::InputController::mouseNotify(int dx, int dy, CGL::MouseState state)
     }
 }
 
+void CGL::InputController::wheelNotify(double dx, double dy, MouseWheelState state)
+{
+    for (auto obj: m_objects) {
+        obj->mouseWheelEventHandler(MouseWheelEvent(dx, dy, state));
+    }
+}
+
 void CGL::InputController::keyCallback(GLFWwindow* window, int key, int scancode, int action, int modes)
 {
     if (key == GLFW_KEY_B && action == GLFW_PRESS) {
@@ -85,6 +93,14 @@ void CGL::InputController::keyCallback(GLFWwindow* window, int key, int scancode
 
         keyNotify(Key_B);
     }
+}
+
+void CGL::InputController::scrollCallback(GLFWwindow *window, double dx, double dy)
+{
+    if (dy < 0)
+        wheelNotify(dx, dy, CGL::MouseWheelState{CGL::Down});
+    else
+        wheelNotify(dx, dy, CGL::MouseWheelState{CGL::Up});
 }
 
 void CGL::InputController::mouseCallback(GLFWwindow* window, double x, double y)

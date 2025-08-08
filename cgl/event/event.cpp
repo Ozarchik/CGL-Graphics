@@ -17,7 +17,7 @@ CGL::MouseEvent::MouseEvent(int x, int y, const MouseState &state)
     : Event(), m_x(x), m_y(y), m_state(state)
 {}
 
-CGL::MouseType CGL::MouseEvent::type() const
+CGL::MouseAction CGL::MouseEvent::type() const
 {
     return m_state.type;
 }
@@ -35,4 +35,25 @@ int CGL::MouseEvent::x() const
 int CGL::MouseEvent::y() const
 {
     return m_y;
+}
+
+CGL::MouseWheelDirection CGL::MouseWheelEvent::direction() const
+{
+    return m_state.direction;
+}
+
+CGL::MouseWheelEvent::MouseWheelEvent(double dx, double dy, const MouseWheelState &state)
+    : m_dx(dx), m_dy(dy), m_state(state)
+{
+
+}
+
+double CGL::MouseWheelEvent::dx() const
+{
+    return m_dx;
+}
+
+double CGL::MouseWheelEvent::dy() const
+{
+    return m_dy;
 }
