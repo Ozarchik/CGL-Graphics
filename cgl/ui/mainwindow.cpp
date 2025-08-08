@@ -6,8 +6,8 @@
 #include <cgl/command/commanddispatcher.h>
 #include <cgl/command/commands.h>
 
-CGL::MainWindow::MainWindow(Context &context, CommandDispatcher& commandDispatcher, FrameBuffer &framebuffer)
-    : m_context(context), m_commandDispatcher(commandDispatcher), m_framebuffer(framebuffer)
+CGL::MainWindow::MainWindow(Context &context, Camera& camera, CommandDispatcher& commandDispatcher, FrameBuffer &framebuffer)
+    : m_context(context), m_camera(camera), m_commandDispatcher(commandDispatcher), m_framebuffer(framebuffer)
 {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -43,9 +43,11 @@ void CGL::MainWindow::update()
     ImGuiID dock_id_left, dock_id_right;
     if (init) {
         init = false;
+        auto wSize = ImGui::GetMainViewport()->Size;
+        wSize.x *= 1.2;
         ImGui::DockBuilderRemoveNode(dockspace_id);
         ImGui::DockBuilderAddNode(dockspace_id);
-        ImGui::DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
+        ImGui::DockBuilderSetNodeSize(dockspace_id, wSize);
 
         ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.8f, &dock_id_left, &dock_id_right);
         ImGui::DockBuilderDockWindow("3D scene", dock_id_left);
@@ -56,13 +58,15 @@ void CGL::MainWindow::update()
 
     ImGui::Begin("3D scene");
 
-    float imguiWindowWidth = ImGui::GetContentRegionAvail().x;
-    float imguiWindowHeight = ImGui::GetContentRegionAvail().y;
+    float imguiWindowWidth = m_context.width(); //ImGui::GetContentRegionAvail().x;
+    float imguiWindowHeight = m_context.height(); //ImGui::GetContentRegionAvail().y;
 
     // m_framebuffer.rescale(imguiWindowWidth, imguiWindowHeight);
     glViewport(0, 0, m_context.width(), m_context.height());
 
     ImVec2 pos = ImGui::GetCursorScreenPos();
+    pos.x += (ImGui::GetContentRegionAvail().x - imguiWindowWidth)/2.0f;
+    pos.y += (ImGui::GetContentRegionAvail().y - imguiWindowHeight)/2.0f;
     ImGui::GetWindowDrawList()->AddImage(
         m_framebuffer.texture(),
         ImVec2(pos.x, pos.y),

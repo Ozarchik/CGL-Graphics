@@ -8,7 +8,7 @@ namespace CGL {
 class FrameBuffer
 {
 public:
-    FrameBuffer(int width = 800, int height = 600);
+    FrameBuffer(int width, int height);
     ~FrameBuffer();
 
     void use();
