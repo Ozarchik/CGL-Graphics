@@ -1,5 +1,5 @@
 # CGL-Graphics
-
+[![Windows](https://github.com/Ozarchik/CGL-Graphics/actions/workflows/cmake-windows.yml/badge.svg)](https://github.com/Ozarchik/CGL-Graphics/actions/workflows/cmake-windows.yml)
 ## Requires
 1. C++20
 2. OpenGL (version 3.3+)
