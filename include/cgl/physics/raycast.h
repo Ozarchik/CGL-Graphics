@@ -25,7 +25,7 @@ private:
     CGL::Context& m_context;
     CGL::Scene& m_scene;
     CGL::Camera& m_camera;
-    CGL::RayLine m_rayline;
+    std::vector<CGL::RayLine> m_raylines;
 };
 }
 

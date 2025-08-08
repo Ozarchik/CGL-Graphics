@@ -5,9 +5,16 @@ CGL::Rectangle::Rectangle()
 {
 }
 
+CGL::Rectangle::Rectangle(glm::vec3 color)
+    : Mesh(), m_color(color), m_vertexBuffer(vertices)
+{
+
+}
+
 void CGL::Rectangle::draw(Shader& shader)
 {
     m_vertexBuffer.use();
     glDrawArrays(m_primitiveType, 0, 6);
     glDrawArraysInstanced(m_primitiveType, 0, 6, 4);
+    m_vertexBuffer.done();
 }

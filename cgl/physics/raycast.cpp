@@ -20,11 +20,11 @@ void CGL::Raycast::seek(float mouseX, float mouseY)
     // y: 1.0 - (2.0 * mouseY)/height
     // z: 1
     // ray_3nd = (x,y,z)
-
     glm::vec3 ray_3nd;
     ray_3nd.x = (2.0f * mouseX) / (m_context.width()) - 1.0f;
     ray_3nd.y = 1.0f - (2.0f * mouseY) / m_context.height();
     ray_3nd.z = 1.0f;
+
 
     // 2. Get 4D Homogenius coords
     // hom_coords = ([-1;1], [-1;1], [-1;1], [-1;1])
@@ -35,14 +35,13 @@ void CGL::Raycast::seek(float mouseX, float mouseY)
     // 3. Get camera coords
     // eye = inverse(projection) * clip
     // eye = vec4(eye.xy, -1.0, 0.0)
-
     glm::vec4 eye = glm::inverse(m_camera.getProjection().data()) * clip;
     eye = glm::vec4(eye.x, eye.y, -1.0f, 0.0f);
+
 
     // 4. Get world coords
     // world = (inverse(view) * eye).xyz
     // world = normalize(world)
-
     glm::vec3 world = glm::inverse(m_camera.getView().data()) * eye; // vec4 -> vec3 check conversion
     world = glm::normalize(world);
 
@@ -76,6 +75,9 @@ void CGL::Raycast::seek(float mouseX, float mouseY)
     // org = rayEnd;
 
 
+    m_raylines.push_back(m_camera);
+    m_raylines.back().update(origin, direction);
+
     for (auto& node: m_scene.nodes()) {
 
         float t;
@@ -95,10 +97,9 @@ void CGL::Raycast::seek(float mouseX, float mouseY)
 
 void CGL::Raycast::draw()
 {
-    // glDisable(GL_DEPTH_TEST);
-    m_rayline.update(org, dir, 30.0f);
-    m_rayline.draw();
-    // glEnable(GL_DEPTH_TEST);
+    for (auto& rl: m_raylines) {
+        rl.draw();
+    }
 }
 
 bool CGL::Raycast::intersectRayAABB(glm::vec3 origin, glm::vec3 direction, CGL::BoundingBox& box, float& tMin)
