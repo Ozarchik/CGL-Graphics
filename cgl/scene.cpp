@@ -29,6 +29,22 @@ void CGL::Scene::clear()
     m_nodes.clear();
 }
 
+void CGL::Scene::setSelectedNode(Node *node)
+{
+    if (node)
+        m_selectedNode = node;
+}
+
+void CGL::Scene::upselectNode()
+{
+    m_selectedNode = nullptr;
+}
+
+CGL::Node *CGL::Scene::selectedNode() const
+{
+    return m_selectedNode;
+}
+
 std::vector<CGL::Node*> CGL::Scene::nodes() const
 {
     return m_nodes;

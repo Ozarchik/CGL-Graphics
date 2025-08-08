@@ -81,13 +81,12 @@ void CGL::Raycast::seek(float mouseX, float mouseY)
         float t;
         CGL::BoundingBox box = node->boundingBox();
 
-        std::cout << index++ << ": box: [" << box.min.x << "," << box.min.y << "," << box.min.z
-                  << "; " << box.max.x << "," << box.max.y << "," << box.max.z << std::endl;
         static int count = 0;
         node->setSelected(false);
         if (intersectRayAABB(origin, direction, box, t)) {
+            m_scene.setSelectedNode(node);
             node->setSelected(true);
-            std::cout << "Raycast: passed [" << ++count << "]" << std::endl;
+            break;
         }
     }
 

@@ -12,6 +12,11 @@ public:
     void render(CGL::Camera& camera);
     void append(Node* node);
     void clear();
+
+    void setSelectedNode(Node* node);
+    void upselectNode();
+    Node* selectedNode() const;
+
     std::vector<Node*> nodes() const;
     
 private:
