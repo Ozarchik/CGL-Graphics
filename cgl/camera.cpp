@@ -2,12 +2,22 @@
 #include <iostream>
 
 CGL::Camera::Camera(CGL::Context& context)
-    : m_context(context)
+    : m_context(context), m_fov(45.0)
 {
     // m_front = glm::vec3(0.0f, 0.0f, -1.0f);
     m_worldUp = m_up;
 
     updateInternal();
+}
+
+float CGL::Camera::fov() const
+{
+    return m_fov;
+}
+
+void CGL::Camera::setFov(float fov)
+{
+    m_fov = fov;
 }
 
 glm::mat4 CGL::Camera::getLookAt() const
@@ -22,7 +32,7 @@ CGL::Transform CGL::Camera::getView()
 
 CGL::Transform CGL::Camera::getProjection()
 {
-    return CGL::Transform::makePerspective(60.0f, m_context.aspect(), 0.1f, 500.0f);
+    return CGL::Transform::makePerspective(m_fov, m_context.aspect(), 0.1f, 100.0f);
 }
 
 void CGL::Camera::correctSpeed(float coeff)
@@ -128,6 +138,14 @@ void CGL::Camera::keyEventHandler(const KeyEvent& event)
     }
 }
 
+void CGL::Camera::mouseWheelEventHandler(const MouseWheelEvent &event)
+{
+    if (event.direction() == CGL::MouseWheelDirection::Up)
+        zoomUp();
+    if (event.direction() == CGL::MouseWheelDirection::Down)
+        zoomDown();
+}
+
 void CGL::Camera::mouseEventHandler(const MouseEvent &event)
 {
     rotate(event.x(), event.y());
@@ -141,6 +159,16 @@ void CGL::Camera::move(float x)
 void CGL::Camera::move(float x, float y, float z)
 {
 
+}
+
+void CGL::Camera::zoomUp()
+{
+    m_pos += 100.0f*m_speed * m_front* m_deltaTime;
+}
+
+void CGL::Camera::zoomDown()
+{
+    m_pos -= 100.0f*m_speed * m_front* m_deltaTime;
 }
 
 void CGL::Camera::stepUp()
