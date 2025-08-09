@@ -32,9 +32,13 @@ public:
     std::string loadShaderFromFile(const std::string& path);
 
 	void use();
+    void done();
 
 	GLuint id() const;
 
+    void setModel(const CGL::Transform& model);
+    void setView(const CGL::Transform& view);
+    void setProjection(const CGL::Transform& projection);
     void setMVP(
         const CGL::Transform& model,
         const CGL::Transform& view,

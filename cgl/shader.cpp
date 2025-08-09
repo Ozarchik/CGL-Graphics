@@ -97,9 +97,29 @@ void CGL::Shader::use()
 	glUseProgram(m_id);
 }
 
+void CGL::Shader::done()
+{
+    glUseProgram(0);
+}
+
 GLuint CGL::Shader::id() const
 {
 	return m_id;
+}
+
+void CGL::Shader::setModel(const Transform &model)
+{
+    setMat4("model", model.data());
+}
+
+void CGL::Shader::setView(const Transform &view)
+{
+    setMat4("view", view.data());
+}
+
+void CGL::Shader::setProjection(const Transform &projection)
+{
+    setMat4("projection", projection.data());
 }
 
 void CGL::Shader::setMVP(
