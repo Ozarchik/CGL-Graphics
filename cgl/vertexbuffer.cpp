@@ -22,10 +22,17 @@ CGL::VertexBuffer::VertexBuffer(const std::vector<CGL::Vertex> &vertices)
     glEnableVertexAttribArray(3);
     glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(CGL::Vertex), (void*)offsetof(CGL::Vertex, color));
 
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
 
 void CGL::VertexBuffer::use()
 {
     glBindVertexArray(vao);
+}
+
+void CGL::VertexBuffer::done()
+{
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 }

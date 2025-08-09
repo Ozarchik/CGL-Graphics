@@ -8,8 +8,10 @@ namespace CGL {
 class VertexBuffer
 {
 public:
+    VertexBuffer() = default;
     VertexBuffer(const std::vector<CGL::Vertex>& vertices);
     void use();
+    void done();
 
 private:
     unsigned int vbo, vao, tex;
