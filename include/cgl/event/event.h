@@ -21,10 +21,10 @@ enum KeyType {
     Key_Space,
 };
 
-enum MouseType {
+enum MouseAction {
     Move,
     Press,
-    Click
+    Release
 };
 
 enum MouseButton {
