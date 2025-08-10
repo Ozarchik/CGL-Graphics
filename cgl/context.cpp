@@ -140,8 +140,3 @@ bool CGL::Context::isAlive()
 {
 	return m_alive;
 }
-
-// void CGL::Context::framebufferSizeCallback(GLFWwindow* window, int width, int height)
-// {
-//     glViewport(0, 0, width, height);
-// }
