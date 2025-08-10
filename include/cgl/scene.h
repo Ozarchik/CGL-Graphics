@@ -21,5 +21,6 @@ public:
     
 private:
     std::vector<Node*> m_nodes;
+    Node* m_selectedNode = nullptr;
 };
 }
