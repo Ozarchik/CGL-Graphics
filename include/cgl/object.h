@@ -14,6 +14,7 @@ public:
 protected:
     virtual void keyEventHandler(const CGL::KeyEvent& event) {}
     virtual void mouseEventHandler(const CGL::MouseEvent& event) {}
+    virtual void mouseWheelEventHandler(const CGL::MouseWheelEvent& event) {}
 };
 }
 
