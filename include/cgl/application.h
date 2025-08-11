@@ -43,6 +43,7 @@ private:
     CGL::Shader m_meshShader;
     CGL::CommandDispatcher m_commandDispatcher;
     CGL::Raycast m_raycast;
+    CGL::Renderer m_renderer;
 };
 }
 

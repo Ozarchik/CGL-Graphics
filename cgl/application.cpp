@@ -98,3 +98,20 @@ void CGL::Application::loop()
         m_context.swapBuffers();
 	}
 }
+
+void CGL::Application::draw()
+{
+    CGL_CheckErros();
+    m_commandDispatcher.process();
+    m_camera.update();
+
+    m_context.update();
+
+    m_mainwindow.init();
+
+    m_renderer.render(m_scene, m_camera);
+    m_mainwindow.render();
+
+    m_inputController.process();
+    m_context.swapBuffers();
+}
