@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CGL_SCENE_H
+#define CGL_SCENE_H
+
 #include <vector>
 #include <cgl/node.h>
 #include <cgl/shader.h>
@@ -24,3 +26,5 @@ private:
     Node* m_selectedNode = nullptr;
 };
 }
+
+#endif
