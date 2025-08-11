@@ -14,7 +14,7 @@ public:
     void clear();
 
     void setSelectedNode(Node* node);
-    void upselectNode();
+    void unselectNode();
     Node* selectedNode() const;
 
     std::vector<Node*> nodes() const;

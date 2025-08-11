@@ -35,7 +35,7 @@ void CGL::Scene::setSelectedNode(Node *node)
         m_selectedNode = node;
 }
 
-void CGL::Scene::upselectNode()
+void CGL::Scene::unselectNode()
 {
     m_selectedNode = nullptr;
 }
