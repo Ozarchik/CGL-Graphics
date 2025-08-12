@@ -30,12 +30,16 @@ public:
     GLFWwindow* handler() const;
 
 private:
+    void calcDeltaTime();
+
+private:
     GLFWwindow* m_window = nullptr;
     std::string m_title = "Test Project";
 
     int m_width = 800;
     int m_height = 800;
 	bool m_alive = false;
+    float m_deltaTime = 0.0f;
 };
 }
 

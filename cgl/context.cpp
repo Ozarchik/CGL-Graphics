@@ -102,15 +102,18 @@ float CGL::Context::aspect() const
     return m_width/m_height;
 }
 
-float CGL::Context::deltaTime() const
+void CGL::Context::calcDeltaTime()
 {
     static float lastFrame = 0.0f;
 
     float currentFrame = glfwGetTime();
-    float deltaTime = currentFrame - lastFrame;
+    m_deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
+}
 
-    return deltaTime;
+float CGL::Context::deltaTime() const
+{
+    return m_deltaTime;
 }
 
 GLFWwindow* CGL::Context::handler() const
