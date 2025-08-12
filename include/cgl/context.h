@@ -4,11 +4,19 @@
 #include <string>
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
+#include <glm/glm.hpp>
 
 namespace CGL {
 
 class Context {
 public:
+    enum BuffersToClear {
+        NoClear = 0,
+        Color = GL_COLOR_BUFFER_BIT,
+        Depth = GL_DEPTH_BUFFER_BIT,
+        Stecil = GL_STENCIL_BUFFER_BIT
+    };
+
     Context();
     ~Context();
 
@@ -24,6 +32,9 @@ public:
 	int height() const;
     void setHeight(int height);
     
+    void setBuffersToClear(const BuffersToClear& buffersToClear);
+    void setBackgroundColor(const glm::vec4& backgroundColor);
+
     float aspect() const;
     float deltaTime() const;
 
@@ -39,6 +50,9 @@ private:
     int m_width = 800;
     int m_height = 800;
 	bool m_alive = false;
+
+    BuffersToClear m_buffersToClear;
+    glm::vec4 m_backgroundColor;
     float m_deltaTime = 0.0f;
 };
 }

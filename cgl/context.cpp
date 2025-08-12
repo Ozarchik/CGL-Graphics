@@ -95,6 +95,17 @@ int CGL::Context::height() const
 void CGL::Context::setHeight(int height)
 {
 	m_height = height;
+    glfwSetWindowSize(m_window, m_width, m_height);
+}
+
+void CGL::Context::setBuffersToClear(const BuffersToClear &buffersToClear)
+{
+    m_buffersToClear = buffersToClear;
+}
+
+void CGL::Context::setBackgroundColor(const glm::vec4 &backgroundColor)
+{
+    m_backgroundColor = backgroundColor;
 }
 
 float CGL::Context::aspect() const
@@ -126,12 +137,12 @@ void CGL::Context::update()
     if (glfwWindowShouldClose(m_window))
         m_alive = false;
 
-    // glDisable(GL_DEPTH_TEST);
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(m_backgroundColor.r, m_backgroundColor.g, m_backgroundColor.b, m_backgroundColor.a);
+    glClear(m_buffersToClear);
 
     setWidth(viewportWidth);
     setHeight(viewportHeight);
+    calcDeltaTime();
 }
 
 void CGL::Context::swapBuffers()
