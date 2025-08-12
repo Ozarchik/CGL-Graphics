@@ -98,6 +98,42 @@ void CGL::Context::setHeight(int height)
     glfwSetWindowSize(m_window, m_width, m_height);
 }
 
+void CGL::Context::setDepthEnable(bool enabled)
+{
+    if (enabled)
+        glEnable(GL_DEPTH_TEST);
+    else
+        glDisable(GL_DEPTH_TEST);
+}
+
+void CGL::Context::setDepthFunction(BufferCheckFunction function)
+{
+    m_depthFunction = function;
+}
+
+void CGL::Context::setDepthWriteMode(bool mode)
+{
+    m_depthWriteMode = mode;
+}
+
+void CGL::Context::setStencilEnable(bool enabled)
+{
+    if (enabled)
+        glEnable(GL_STENCIL_TEST);
+    else
+        glDisable(GL_STENCIL_TEST);
+}
+
+void CGL::Context::setStencilMask(unsigned char mask)
+{
+    m_stencilMask = mask;
+}
+
+void CGL::Context::setStencilFunction(BufferCheckFunction function)
+{
+    m_stencilFunction = function;
+}
+
 void CGL::Context::setBuffersToClear(const BuffersToClear &buffersToClear)
 {
     m_buffersToClear = buffersToClear;
@@ -139,9 +175,10 @@ void CGL::Context::update()
 
     glClearColor(m_backgroundColor.r, m_backgroundColor.g, m_backgroundColor.b, m_backgroundColor.a);
     glClear(m_buffersToClear);
+    glDepthFunc(m_depthFunction);
+    glStencilFunc(m_stencilFunction, 1, 0xff);
+    glStencilMask(m_stencilMask);
 
-    setWidth(viewportWidth);
-    setHeight(viewportHeight);
     calcDeltaTime();
 }
 

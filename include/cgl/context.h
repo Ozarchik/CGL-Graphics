@@ -44,6 +44,12 @@ public:
 	int height() const;
     void setHeight(int height);
     
+    void setStencilEnable(bool enabled);
+    void setStencilMask(unsigned char mask);
+    void setStencilFunction(BufferCheckFunction function);
+    void setDepthEnable(bool enabled);
+    void setDepthFunction(BufferCheckFunction function);
+    void setDepthWriteMode(bool mode);
     void setBuffersToClear(const BuffersToClear& buffersToClear);
     void setBackgroundColor(const glm::vec4& backgroundColor);
 
@@ -61,8 +67,13 @@ private:
 
     int m_width = 800;
     int m_height = 800;
-	bool m_alive = false;
+    unsigned char m_stencilMask = 0x00;
+    bool m_depthEnable = false;
+    bool m_stencilEnable = false;
+    bool m_depthWriteMode = false;
 
+    BufferCheckFunction m_depthFunction = BufferCheckFunction::Less;
+    BufferCheckFunction m_stencilFunction = BufferCheckFunction::Less;
     BuffersToClear m_buffersToClear;
     glm::vec4 m_backgroundColor;
     float m_deltaTime = 0.0f;
