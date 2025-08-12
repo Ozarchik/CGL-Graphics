@@ -4,9 +4,11 @@ CGL::Event::Event()
 {
 }
 
-CGL::KeyEvent::KeyEvent(CGL::KeyType keyType)
-    : Event(), m_type(keyType)
-{}
+CGL::KeyEvent::KeyEvent(KeyType keyType, KeyAction action, KeyModifier modifiers)
+    : Event(), m_type(keyType), m_action(action), m_modifiers(modifiers)
+{
+
+}
 
 CGL::KeyType CGL::KeyEvent::type() const
 {
@@ -37,10 +39,6 @@ int CGL::MouseEvent::y() const
     return m_y;
 }
 
-CGL::MouseWheelDirection CGL::MouseWheelEvent::direction() const
-{
-    return m_state.direction;
-}
 
 CGL::MouseWheelEvent::MouseWheelEvent(double dx, double dy, const MouseWheelState &state)
     : m_dx(dx), m_dy(dy), m_state(state)
@@ -56,4 +54,35 @@ double CGL::MouseWheelEvent::dx() const
 double CGL::MouseWheelEvent::dy() const
 {
     return m_dy;
+}
+
+CGL::KeyModifier CGL::MouseWheelEvent::modifiers() const
+{
+    return m_state.modifiers;
+}
+
+CGL::MouseWheelDirection CGL::MouseWheelEvent::direction() const
+{
+    return m_state.direction;
+}
+
+CGL::WindowEvent::WindowEvent(WindowAction action, int width, int height)
+    : Event(), m_action(action), m_width(width), m_height(height)
+{
+
+}
+
+int CGL::WindowEvent::width() const
+{
+    return m_width;
+}
+
+int CGL::WindowEvent::height() const
+{
+    return m_height;
+}
+
+CGL::WindowAction CGL::WindowEvent::action() const
+{
+    return m_action;
 }

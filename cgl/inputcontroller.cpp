@@ -61,7 +61,7 @@ void CGL::InputController::process()
 void CGL::InputController::keyNotify(const CGL::KeyType &keyType)
 {
     for (auto obj: m_objects) {
-        obj->keyEventHandler(KeyEvent(keyType));
+        obj->keyEventHandler(KeyEvent(keyType, Key_Press));
     }
 }
 
