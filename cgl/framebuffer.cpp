@@ -2,13 +2,14 @@
 #include <glad/glad.h>
 #include <iostream>
 
-CGL::FrameBuffer::FrameBuffer(int width, int height)
+CGL::FrameBuffer::FrameBuffer(CGL::Context& context)
+    : m_context(context)
 {
     glGenTextures(1, &m_texture);
     glGenFramebuffers(1, &m_fbo);
     glGenRenderbuffers(1, &m_rbo);
 
-    rescale(width, height);
+    rescale(m_context.width(), m_context.height());
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
         std::cout << "FrameBuffer compliete error" << std::endl;
@@ -30,30 +31,16 @@ void CGL::FrameBuffer::bind()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 
-    glDepthFunc(GL_LESS);
-    glDepthMask(GL_TRUE);
-    glEnable(GL_DEPTH_TEST);
+    m_context.setStencilEnable(true);
+    m_context.setStencilMask(true);
+    m_context.setStencilFunction(CGL::Context::BufferCheckFunction::Less);
 
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
+    m_context.setDepthEnable(true);
+    m_context.setDepthWriteMode(true);
+    m_context.setDepthFunction(CGL::Context::BufferCheckFunction::Less);
 
-void CGL::FrameBuffer::setStencilMode(GLenum mode, unsigned char mask)
-{
-    glStencilFunc(mode, 1, 0xff);
-    glStencilMask(mask);
-}
-
-void CGL::FrameBuffer::setDepthMode(bool mode)
-{
-    if (mode)
-        glEnable(GL_DEPTH_TEST);
-    else
-        glDisable(GL_DEPTH_TEST);
-}
-
-void CGL::FrameBuffer::use()
-{
+    m_context.setBuffersToClear(CGL::Context::BuffersToClear::All);
+    m_context.update();
 }
 
 void CGL::FrameBuffer::unbind()

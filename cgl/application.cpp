@@ -11,7 +11,8 @@ CGL::Application::Application(int argc, char *argv[])
     : m_camera(m_context)
     , m_commandDispatcher(m_scene)
     , m_inputController(&m_context, &m_camera)
-    , m_mainwindow(m_context, m_commandDispatcher, m_framebuffer)
+    , m_renderer(m_context)
+    , m_mainwindow(m_context, m_commandDispatcher, m_renderer.framebuffer())
     , m_raycast(m_context, m_scene, m_camera)
 {
     CGL_CheckErros();

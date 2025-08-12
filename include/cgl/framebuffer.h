@@ -1,31 +1,27 @@
-#ifndef FRAMEBUFFER_H
-#define FRAMEBUFFER_H
+#ifndef CGL_FRAMEBUFFER_H
+#define CGL_FRAMEBUFFER_H
 
-// #include <cgl/mesh/3D/cube.h>
-#include <cgl/mesh/3D/cube.h>
+#include <cgl/context.h>
 
 namespace CGL {
 class FrameBuffer
 {
 public:
-    FrameBuffer(int width, int height);
+    FrameBuffer(CGL::Context& context);
     ~FrameBuffer();
 
-    void use();
     void bind();
     void unbind();
     void detach();
     void rescale(int width, int height);
     unsigned int texture() const;
 
-    void setStencilMode(GLenum mode, unsigned char mask = 0xff);
-    void setDepthMode(bool mode);
-
 private:
     unsigned int m_fbo, m_rbo;
     unsigned int m_vao, m_vbo;
     unsigned int m_texture;
 
+    CGL::Context& m_context;
 };
 }
 
