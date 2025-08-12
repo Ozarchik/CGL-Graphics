@@ -14,7 +14,19 @@ public:
         NoClear = 0,
         Color = GL_COLOR_BUFFER_BIT,
         Depth = GL_DEPTH_BUFFER_BIT,
-        Stecil = GL_STENCIL_BUFFER_BIT
+        Stecil = GL_STENCIL_BUFFER_BIT,
+        All = Color | Depth | Stecil
+    };
+
+    enum BufferCheckFunction {
+        Never = GL_NEVER,
+        Always = GL_ALWAYS,
+        Equal = GL_EQUAL,
+        NotEqual = GL_NOTEQUAL,
+        Less = GL_LESS,
+        LessEqual = GL_LEQUAL,
+        Great = GL_GREATER,
+        GreatEqual = GL_GEQUAL,
     };
 
     Context();
