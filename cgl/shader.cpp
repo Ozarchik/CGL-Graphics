@@ -8,19 +8,19 @@
 
 CGL::Shader::Shader(const std::string& vShaderPath, const std::string& fShaderPath)
 {
-    GLuint vId = loadShader(loadShaderFromFile(vShaderPath), CGL::VERTEX_SHADER);
-    GLuint fId = loadShader(loadShaderFromFile(fShaderPath), CGL::FRAGMENT_SHADER);
+    GLuint vId = loadShader(loadShaderFromFile(vShaderPath), CGL::VertexShader);
+    GLuint fId = loadShader(loadShaderFromFile(fShaderPath), CGL::FragmentShader);
 
     compile(vId, fId);
 }
 
 CGL::Shader::Shader(const std::string &vShaderPath, const std::string &fShaderPath, const std::string &gShaderPath)
 {
-    GLuint vId = loadShader(loadShaderFromFile(vShaderPath), CGL::VERTEX_SHADER);
-    GLuint fId = loadShader(loadShaderFromFile(fShaderPath), CGL::FRAGMENT_SHADER);
+    GLuint vId = loadShader(loadShaderFromFile(vShaderPath), CGL::VertexShader);
+    GLuint fId = loadShader(loadShaderFromFile(fShaderPath), CGL::FragmentShader);
 
     if (!gShaderPath.empty()) {
-        GLuint gId = loadShader(loadShaderFromFile(gShaderPath), CGL::GEOMETRY_SHADER);
+        GLuint gId = loadShader(loadShaderFromFile(gShaderPath), CGL::GeometryShader);
         compile(vId, fId, gId);
     } else {
         compile(vId, fId);
@@ -29,10 +29,10 @@ CGL::Shader::Shader(const std::string &vShaderPath, const std::string &fShaderPa
 
 void CGL::Shader::setSourceCode(const std::string &vShaderCode, const std::string &fShaderCode, const std::string &gShaderCode)
 {
-    GLuint vId = loadShader(vShaderCode, CGL::VERTEX_SHADER);
-    GLuint fId = loadShader(fShaderCode, CGL::FRAGMENT_SHADER);
+    GLuint vId = loadShader(vShaderCode, CGL::VertexShader);
+    GLuint fId = loadShader(fShaderCode, CGL::FragmentShader);
     if (!gShaderCode.empty()) {
-        GLuint gId = loadShader(gShaderCode, CGL::GEOMETRY_SHADER);
+        GLuint gId = loadShader(gShaderCode, CGL::GeometryShader);
         compile(vId, fId, gId);
     } else {
         compile(vId, fId);
@@ -54,11 +54,11 @@ GLuint CGL::Shader::loadShader(const std::string& code, ShaderType type)
 
     if (!sucess) {
         glGetShaderInfoLog(shaderId, 512, nullptr, infoLog);
-        if (type == VERTEX_SHADER) {
+        if (type == VertexShader) {
             std::cout << "Vertex shader compile failed: " << infoLog << std::endl;
-        } else if (type == FRAGMENT_SHADER) {
+        } else if (type == FragmentShader) {
             std::cout << "Fragment shader compile failed: " << infoLog << std::endl;
-        } else if (type == GEOMETRY_SHADER) {
+        } else if (type == GeometryShader) {
             std::cout << "Geometry shader compile failed: " << infoLog << std::endl;
         } else {
             std::cout << "Underfined shader compile failed: " << infoLog << std::endl;

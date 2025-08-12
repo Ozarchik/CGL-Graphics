@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CGL_SHADER_H
+#define CGL_SHADER_H
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
@@ -10,9 +11,9 @@
 namespace CGL {
 
 enum ShaderType {
-    VERTEX_SHADER = GL_VERTEX_SHADER,
-    FRAGMENT_SHADER = GL_FRAGMENT_SHADER,
-    GEOMETRY_SHADER = GL_GEOMETRY_SHADER
+    VertexShader = GL_VERTEX_SHADER,
+    FragmentShader = GL_FRAGMENT_SHADER,
+    GeometryShader = GL_GEOMETRY_SHADER
 };
 
 enum ErrorCode {
@@ -66,3 +67,5 @@ private:
     GLuint m_id;
 };
 }
+
+#endif
