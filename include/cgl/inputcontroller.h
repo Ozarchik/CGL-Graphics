@@ -18,7 +18,7 @@ public:
     void addSubscriber(CGL::Object* object);
 
 private:
-    static void keyNotify(const CGL::KeyType& keyType);
+    static void keyNotify(KeyType type, KeyAction action, KeyModifier modifier);
     static void mouseNotify(int dx, int dy, MouseState state = {});
     static void wheelNotify(double dx, double dy, MouseWheelState state = {});
 
