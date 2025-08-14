@@ -19,6 +19,8 @@ public:
 
     void draw(CGL::Shader& shader);
 
+    void setEnabled(bool enabled);
+
 private:
     std::vector<CGL::Texture> m_textures;
     bool m_enabled = false;

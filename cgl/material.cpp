@@ -46,3 +46,8 @@ void CGL::Material::draw(CGL::Shader& shader) {
 
     glActiveTexture(GL_TEXTURE0);
 }
+
+void CGL::Material::setEnabled(bool enabled)
+{
+    m_enabled = enabled;
+}
