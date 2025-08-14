@@ -1,6 +1,4 @@
 #include <cgl/node.h>
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/matrix_decompose.hpp>
 #include <limits>
 
 CGL::Node::Node(CGL::Mesh* mesh, CGL::Shader& shader, CGL::Transform transform)
@@ -51,6 +49,14 @@ void CGL::Node::addChild(Node *node)
 std::vector<CGL::Node *> CGL::Node::childs() const
 {
     return m_childs;
+}
+
+void CGL::Node::addMesh(Mesh *mesh)
+{
+    if (!mesh)
+        return;
+
+    m_renders.emplace_back(mesh);
 }
 
 void CGL::Node::addMesh(Mesh *mesh, const Material &material)

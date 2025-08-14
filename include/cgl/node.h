@@ -36,6 +36,7 @@ public:
     void setSelected(bool state);
     void addChild(CGL::Node* node);
     std::vector<CGL::Node*> childs() const;
+    void addMesh(CGL::Mesh* mesh);
     void addMesh(CGL::Mesh* mesh, const Material &material);
     void setTransform(const CGL::Transform& transform);
     void setPrimitiveType(GLenum type);
