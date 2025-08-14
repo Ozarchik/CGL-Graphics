@@ -8,11 +8,17 @@
 namespace CGL {
 struct MeshBuffer
 {
+    friend class MeshBuilder;
+
 public:
     MeshBuffer(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
 
     void bind(CGL::Shader* shader = nullptr);
     void unbind();
+
+private:
+    void setVertices(const std::vector<CGL::Vertex>& vertices);
+    void setIndices(const std::vector<unsigned int>& indices);
 
 public:
     std::vector<CGL::Vertex> vertices;

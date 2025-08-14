@@ -5,7 +5,7 @@ CGL::Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned 
 {
     m_primitiveData.type = CGL::RenderContext::Triangle;
     m_primitiveData.drawType = CGL::RenderContext::Indexes;
-    m_primitiveData.size = m_buffer.indices.size();
+    m_primitiveData.size = m_buffer.m_indices.size();
     m_primitiveData.offset = 0;
 }
 
@@ -29,13 +29,13 @@ CGL::BoundingBox CGL::Mesh::boundingBox() const
 {
     CGL::BoundingBox box;
 
-    if (m_buffer.vertices.empty())
+    if (m_buffer.m_vertices.empty())
         return { glm::vec3(0), glm::vec3(0) };
 
-    box.min = m_buffer.vertices[0].position;
-    box.max = m_buffer.vertices[0].position;
+    box.min = m_buffer.m_vertices[0].position;
+    box.max = m_buffer.m_vertices[0].position;
 
-    for (const auto& vert: m_buffer.vertices) {
+    for (const auto& vert: m_buffer.m_vertices) {
         box.min = glm::min(box.min, vert.position);
         box.max = glm::max(box.max, vert.position);
     }

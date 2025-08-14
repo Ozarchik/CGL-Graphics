@@ -18,7 +18,7 @@ CGL::Sphere::Sphere()
 void CGL::Sphere::draw(Shader &shader)
 {
     m_buffer.bind();
-    glDrawElements(GL_TRIANGLES, m_buffer.indices.size(), GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, m_buffer.m_indices.size(), GL_UNSIGNED_INT, 0);
     m_buffer.unbind();
 }
 

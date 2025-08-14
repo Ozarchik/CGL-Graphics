@@ -3,8 +3,16 @@
 
 #include <glad/glad.h>
 
+CGL::MeshBuffer::MeshBuffer()
+{
+    glGenVertexArrays(1, &vao);
+    glGenBuffers(1, &vbo);
+    glGenBuffers(1, &ebo);
+}
+
+
 CGL::MeshBuffer::MeshBuffer(const std::vector<CGL::Vertex> &vertices, const std::vector<unsigned int> &indices)
-    : vertices(vertices), indices(indices)
+    : m_vertices(vertices), m_indices(indices)
 {
     glGenVertexArrays(1, &vao);
     glGenBuffers(1, &vbo);
@@ -15,7 +23,7 @@ CGL::MeshBuffer::MeshBuffer(const std::vector<CGL::Vertex> &vertices, const std:
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(CGL::Vertex), vertices.data(), GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(unsigned int), m_indices.data(), GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(CGL::Vertex), (void*)0);
@@ -27,6 +35,13 @@ CGL::MeshBuffer::MeshBuffer(const std::vector<CGL::Vertex> &vertices, const std:
     glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(CGL::Vertex), (void*)offsetof(CGL::Vertex, color));
 
     glBindVertexArray(0);
+}
+
+CGL::MeshBuffer::~MeshBuffer()
+{
+    glDeleteVertexArrays(1, &vao);
+    glDeleteBuffers(1, &vbo);
+    glDeleteBuffers(1, &ebo);
 }
 
 void CGL::MeshBuffer::bind(CGL::Shader* shader)
