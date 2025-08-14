@@ -7,12 +7,26 @@
 #include <cgl/model/modelloader.h>
 #include <cgl/logger.h>
 
-CGL::Application::Application(int argc, char *argv[])
+float screenVertices[] = {
+    -1.0f,  1.0f,  0.0f, 1.0f,
+    -1.0f, -1.0f,  0.0f, 0.0f,
+    1.0f, -1.0f,  1.0f, 0.0f,
+
+    -1.0f,  1.0f,  0.0f, 1.0f,
+    1.0f, -1.0f,  1.0f, 0.0f,
+    1.0f,  1.0f,  1.0f, 1.0f
+};
+
+unsigned int quadVAO, quadVBO;
+
+CGL::CoreContext& CGL::Application::m_context = CGL::CoreContext::instance();
+
+CGL::Application::Application(/*int argc, char *argv[]*/)
     : m_camera(m_context)
     , m_commandDispatcher(m_scene)
     , m_inputController(&m_context, &m_camera)
     , m_renderer(m_context)
-    , m_mainwindow(m_context, m_commandDispatcher, m_renderer.framebuffer())
+    , m_mainwindow(m_context, m_commandDispatcher, m_renderer)
     , m_raycast(m_context, m_scene, m_camera)
 {
     CGL_CheckErros();
@@ -21,6 +35,20 @@ CGL::Application::Application(int argc, char *argv[])
 
     m_meshShader = CGL::ResourceManager::loadDefaultShader();
     createTestObjects();
+
+    // for screen
+
+    glGenVertexArrays(1, &quadVAO);
+    glGenBuffers(1, &quadVBO);
+    glBindVertexArray(quadVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(screenVertices), &screenVertices, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+
+    //
 }
 
 CGL::Application::~Application()
@@ -51,8 +79,10 @@ void CGL::Application::createTestObjects()
     model.translateY(3.0f);
     node3 = new CGL::Node(m_meshShader, model);
     node3->addMesh(new CGL::Rectangle, CGL::Material({CGL::ResourceManager::loadTexture("brick/brick.jpg")}));
-    node2->addChild(node);
-    node3->addChild(node2);
+    // node2->addChild(node);
+    // node3->addChild(node2);
+    m_scene.append(node);
+    m_scene.append(node2);
     m_scene.append(node3);
     
     CGL::Transform scaleTransform;
@@ -63,40 +93,35 @@ void CGL::Application::createTestObjects()
         modelNode1->setTransform(scaleTransform);
         scaleTransform.translateY(10.0f);
         modelNode2->setTransform(scaleTransform);
-        modelNode1->addChild(modelNode2);
+        // modelNode1->addChild(modelNode2);
         m_scene.append(modelNode1);
+        m_scene.append(modelNode2);
     }
 }
 
-void CGL::Application::loop()
+// void CGL::Application::useScreenFramebuffer()
+// {
+//     m_framebufferShader.use();
+//     m_framebufferShader.setInt("screen", 0);
+//     glBindVertexArray(quadVAO);
+//     glBindTexture(GL_TEXTURE_2D, m_framebuffer.texture());
+//     glDrawArrays(GL_TRIANGLES, 0, 6);
+// }
+
+CGL::Application &CGL::Application::instance()
 {
-    CGL::Grid grid;
+    static Application app;
+    return app;
+}
+
+void CGL::Application::run()
+{
     m_inputController.addSubscriber(&m_raycast);
-    m_context.setWidth(800);
-    m_context.setHeight(800);
-    glViewport(0, 0, 800, 800);
+    // glfwSwapInterval(1);
+    glfwSwapInterval(0);
 
     while (m_context.isAlive()) {
-        CGL_CheckErros();
-        m_inputController.process();
-        m_commandDispatcher.process();
-        m_camera.update();
-
-        m_context.update();
-
-        // m_mainwindow.init();
-        // m_framebuffer.bind();
-
-        CGL::Transform model;
-        grid.draw(m_camera, model);
-        model.translateY(8.0f);
-        grid.draw(m_camera, model);
-        m_raycast.draw();
-        m_scene.render(m_camera);
-        // m_framebuffer.unbind();
-        // m_mainwindow.render();
-
-        m_context.swapBuffers();
+        draw();
 	}
 }
 

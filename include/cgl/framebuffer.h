@@ -1,7 +1,7 @@
 #ifndef CGL_FRAMEBUFFER_H
 #define CGL_FRAMEBUFFER_H
 
-#include <cgl/context.h>
+#include <cgl/corecontext.h>
 
 namespace CGL {
 class FrameBuffer

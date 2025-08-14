@@ -3,8 +3,8 @@
 
 int main(int argc, char* argv[])
 {
-    CGL::Application app(argc, argv);
-    app.loop();
+    // CGL::Application app(argc, argv);
+    CGL::Application::instance().run();
     return 0;
 }
 

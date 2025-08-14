@@ -6,7 +6,7 @@
 
 #include <cgl/event/event.h>
 #include <cgl/object.h>
-#include <cgl/context.h>
+#include <cgl/corecontext.h>
 #include <cgl/transform.h>
 
 namespace CGL {

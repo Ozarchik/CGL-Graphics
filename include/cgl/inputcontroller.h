@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include <cgl/context.h>
+#include <cgl/corecontext.h>
 #include <cgl/camera.h>
 #include <cgl/event/event.h>
 

@@ -2,7 +2,7 @@
 #define CGL_RAYCAST_H
 
 #include <cgl/camera.h>
-#include <cgl/context.h>
+#include <cgl/corecontext.h>
 #include <cgl/scene.h>
 #include <cgl/physics/rayline.h>
 

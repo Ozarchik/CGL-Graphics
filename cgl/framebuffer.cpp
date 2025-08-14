@@ -2,7 +2,7 @@
 #include <glad/glad.h>
 #include <iostream>
 
-CGL::FrameBuffer::FrameBuffer(CGL::Context& context)
+CGL::FrameBuffer::FrameBuffer(CGL::CoreContext& context)
     : m_context(context)
 {
     glGenTextures(1, &m_texture);
@@ -33,13 +33,13 @@ void CGL::FrameBuffer::bind()
 
     m_context.setStencilEnable(true);
     m_context.setStencilMask(true);
-    m_context.setStencilFunction(CGL::Context::BufferCheckFunction::Less);
+    m_context.setStencilFunction(CGL::CoreContext::BufferCheckFunction::Less);
 
     m_context.setDepthEnable(true);
     m_context.setDepthWriteMode(true);
-    m_context.setDepthFunction(CGL::Context::BufferCheckFunction::Less);
+    m_context.setDepthFunction(CGL::CoreContext::BufferCheckFunction::Less);
 
-    m_context.setBuffersToClear(CGL::Context::BuffersToClear::All);
+    m_context.setBuffersToClear(CGL::CoreContext::BuffersToClear::All);
     m_context.update();
 }
 

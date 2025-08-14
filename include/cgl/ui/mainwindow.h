@@ -1,8 +1,8 @@
 #ifndef CGL_MAINWINDOW_H
 #define CGL_MAINWINDOW_H
 
-#include <cgl/context.h>
-#include <cgl/framebuffer.h>
+#include <cgl/corecontext.h>
+#include <cgl/renderer.h>
 #include <cgl/command/commanddispatcher.h>
 
 #include <imgui.h>

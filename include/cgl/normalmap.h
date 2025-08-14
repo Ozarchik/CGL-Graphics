@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <cgl/shader.h>
 #include <cgl/camera.h>
-#include <cgl/context.h>
+#include <cgl/corecontext.h>
 
 namespace CGL {
 enum PrimitiveType {

@@ -1,5 +1,5 @@
-#ifndef CGL_CONTEXT_H
-#define CGL_CONTEXT_H
+#ifndef CGL_CORECONTEXT_H
+#define CGL_CORECONTEXT_H
 
 #include <string>
 #include <glad/glad.h>
@@ -29,7 +29,6 @@ public:
         GreatEqual = GL_GEQUAL,
     };
 
-    CoreContext();
     ~CoreContext();
 
     void update();
@@ -58,8 +57,10 @@ public:
 
     GLFWwindow* handler() const;
 
+    static CoreContext& instance();
 private:
     void calcDeltaTime();
+    CoreContext();
 
 private:
     GLFWwindow* m_window = nullptr;

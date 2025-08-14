@@ -30,10 +30,7 @@ void CGL::RayLine::update(glm::vec3 origin, glm::vec3 direction, float length)
 {
     line[0] = origin;
     line[1] = origin + direction * length;
-    line[0].z -= 1.0f;
-
-    std::cout << "from: " << line[0] << std::endl;
-    std::cout << "to:   " << line[1] << std::endl;
+    // line[0].z -= 0.1f;
 
     // glm::vec3 line[] = { from, to };
     // std::swap(line[0].x, line[1].x);

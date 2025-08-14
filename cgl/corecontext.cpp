@@ -1,41 +1,49 @@
-#include <cgl/context.h>
+#include <cgl/corecontext.h>
+#include <cgl/application.h>
 #include <iostream>
 
-const int LOGICAL_WIDTH = 800;
-const int LOGICAL_HEIGHT = 600;
-int viewportWidth = LOGICAL_WIDTH, viewportHeight = LOGICAL_HEIGHT;
+
+constexpr double aspect = 1200.0/800.0;
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
-    float targetAspect = (float)LOGICAL_WIDTH / LOGICAL_HEIGHT;
-    float windowAspect = (float)width / height;
-    int offsetX = 0, offsetY = 0;
+    CGL::Application::instance().draw();
 
-    if (windowAspect > targetAspect) {
-        viewportHeight = height;
-        viewportWidth = (int)(height * targetAspect);
-        offsetX = (width - viewportWidth) / 2;
-    } else {
-        viewportWidth = width;
-        viewportHeight = (int)(width / targetAspect);
-        offsetY = (height - viewportHeight) / 2;
-    }
 
-    int viewportX = (width - viewportWidth) / 2;
-    int viewportY = (height - viewportHeight) / 2;
+    // glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    // glClear(GL_COLOR_BUFFER_BIT);
+    // glfwSwapBuffers(window);
+
+    // float targetAspect = (float)LOGICAL_WIDTH / LOGICAL_HEIGHT;
+    // float windowAspect = (float)width / height;
+    // int offsetX = 0, offsetY = 0;
+
+    // if (windowAspect > targetAspect) {
+    //     viewportHeight = height;
+    //     viewportWidth = (int)(height * targetAspect);
+    //     offsetX = (width - viewportWidth) / 2;
+    // } else {
+    //     viewportWidth = width;
+    //     viewportHeight = (int)(width / targetAspect);
+    //     offsetY = (height - viewportHeight) / 2;
+    // }
+
+    // int viewportX = (width - viewportWidth) / 2;
+    // int viewportY = (height - viewportHeight) / 2;
     // glViewport(0, 0, width, height);
     // glViewport(0, 0, 800, 800);
     // glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
     // glViewport(0, 0, width, height);
 }
 
-CGL::Context::Context()
+CGL::CoreContext::CoreContext()
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+
+    // glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
 
     m_window = glfwCreateWindow(m_width, m_height, m_title.c_str(), nullptr, nullptr);
@@ -57,18 +65,16 @@ CGL::Context::Context()
     }
 
     glfwSetFramebufferSizeCallback(m_window, framebufferSizeCallback);
-
-    // glViewport(0, 0, width(), height());
-    // glViewport(0, 0, 800, 800);
-    // glEnable(GL_DEPTH_TEST);
+    glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    glViewport(0, 0, m_width, m_height);
 }
 
-CGL::Context::~Context()
+CGL::CoreContext::~CoreContext()
 {
 	glfwTerminate();
 }
 
-void CGL::Context::setCursorEnabled(bool enabled)
+void CGL::CoreContext::setCursorEnabled(bool enabled)
 {
 	if (enabled) {
 		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -77,28 +83,29 @@ void CGL::Context::setCursorEnabled(bool enabled)
 	}
 }
 
-int CGL::Context::width() const
+int CGL::CoreContext::width() const
 {
 	return m_width;
 }
 
-void CGL::Context::setWidth(int width)
+void CGL::CoreContext::setWidth(int width)
 {
 	m_width = width;
+    glfwSetWindowSize(m_window, m_width, m_height);
 }
 
-int CGL::Context::height() const
+int CGL::CoreContext::height() const
 {
 	return m_height;
 }
 
-void CGL::Context::setHeight(int height)
+void CGL::CoreContext::setHeight(int height)
 {
 	m_height = height;
     glfwSetWindowSize(m_window, m_width, m_height);
 }
 
-void CGL::Context::setDepthEnable(bool enabled)
+void CGL::CoreContext::setDepthEnable(bool enabled)
 {
     if (enabled)
         glEnable(GL_DEPTH_TEST);
@@ -106,17 +113,17 @@ void CGL::Context::setDepthEnable(bool enabled)
         glDisable(GL_DEPTH_TEST);
 }
 
-void CGL::Context::setDepthFunction(BufferCheckFunction function)
+void CGL::CoreContext::setDepthFunction(BufferCheckFunction function)
 {
     m_depthFunction = function;
 }
 
-void CGL::Context::setDepthWriteMode(bool mode)
+void CGL::CoreContext::setDepthWriteMode(bool mode)
 {
     m_depthWriteMode = mode;
 }
 
-void CGL::Context::setStencilEnable(bool enabled)
+void CGL::CoreContext::setStencilEnable(bool enabled)
 {
     if (enabled)
         glEnable(GL_STENCIL_TEST);
@@ -124,32 +131,32 @@ void CGL::Context::setStencilEnable(bool enabled)
         glDisable(GL_STENCIL_TEST);
 }
 
-void CGL::Context::setStencilMask(unsigned char mask)
+void CGL::CoreContext::setStencilMask(unsigned char mask)
 {
     m_stencilMask = mask;
 }
 
-void CGL::Context::setStencilFunction(BufferCheckFunction function)
+void CGL::CoreContext::setStencilFunction(BufferCheckFunction function)
 {
     m_stencilFunction = function;
 }
 
-void CGL::Context::setBuffersToClear(const BuffersToClear &buffersToClear)
+void CGL::CoreContext::setBuffersToClear(const BuffersToClear &buffersToClear)
 {
     m_buffersToClear = buffersToClear;
 }
 
-void CGL::Context::setBackgroundColor(const glm::vec4 &backgroundColor)
+void CGL::CoreContext::setBackgroundColor(const glm::vec4 &backgroundColor)
 {
     m_backgroundColor = backgroundColor;
 }
 
-float CGL::Context::aspect() const
+float CGL::CoreContext::aspect() const
 {
     return m_width/m_height;
 }
 
-void CGL::Context::calcDeltaTime()
+void CGL::CoreContext::calcDeltaTime()
 {
     static float lastFrame = 0.0f;
 
@@ -158,17 +165,23 @@ void CGL::Context::calcDeltaTime()
     lastFrame = currentFrame;
 }
 
-float CGL::Context::deltaTime() const
+float CGL::CoreContext::deltaTime() const
 {
     return m_deltaTime;
 }
 
-GLFWwindow* CGL::Context::handler() const
+GLFWwindow* CGL::CoreContext::handler() const
 {
 	return m_window;
 }
 
-void CGL::Context::update()
+CGL::CoreContext& CGL::CoreContext::instance()
+{
+    static CoreContext instance;
+    return instance;
+}
+
+void CGL::CoreContext::update()
 {
     if (glfwWindowShouldClose(m_window))
         m_alive = false;
@@ -182,12 +195,12 @@ void CGL::Context::update()
     calcDeltaTime();
 }
 
-void CGL::Context::swapBuffers()
+void CGL::CoreContext::swapBuffers()
 {
 	glfwSwapBuffers(m_window);
 }
 
-bool CGL::Context::isAlive()
+bool CGL::CoreContext::isAlive()
 {
 	return m_alive;
 }

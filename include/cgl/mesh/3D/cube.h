@@ -1,6 +1,6 @@
-#pragma once
+#ifndef CGL_CUBE_H
+#define CGL_CUBE_H
 
-// #include <cgl/mesh/common/mesh.h>
 #include <cgl/mesh/common/mesh.h>
 
 namespace CGL {
@@ -12,3 +12,5 @@ public:
     void draw(Shader& Shader);
 };
 }
+
+#endif

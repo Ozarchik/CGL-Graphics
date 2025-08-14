@@ -1,7 +1,7 @@
 #include <cgl/camera.h>
 #include <iostream>
 
-CGL::Camera::Camera(CGL::Context& context)
+CGL::Camera::Camera(CGL::CoreContext& context)
     : m_context(context), m_fov(45.0)
 {
     // m_front = glm::vec3(0.0f, 0.0f, -1.0f);

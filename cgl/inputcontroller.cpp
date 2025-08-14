@@ -3,7 +3,7 @@
 
 CGL::InputController::InputController
 (
-    CGL::Context* context,
+    CGL::CoreContext* context,
     CGL::Camera* camera
 )
     : m_context(context)
