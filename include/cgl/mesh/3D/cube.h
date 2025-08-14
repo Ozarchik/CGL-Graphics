@@ -9,7 +9,7 @@ public:
     Cube();
     ~Cube();
 
-    void draw(Shader& Shader);
+    void draw(Shader& shader);
 };
 }
 
