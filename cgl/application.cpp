@@ -6,6 +6,8 @@
 #include <cgl/ui/mainwindow.h>
 #include <cgl/model/modelloader.h>
 #include <cgl/logger.h>
+#include <cgl/mesh/common/meshbuilder.h>
+#include <cgl/materialbuilder.h>
 
 float screenVertices[] = {
     -1.0f,  1.0f,  0.0f, 1.0f,
@@ -65,24 +67,41 @@ void CGL::Application::createTestObjects()
 
     model.translateX(10.0f);
     node = new CGL::Node(m_meshShader, model);
-    node->addMesh(new CGL::Cube, CGL::Material({CGL::ResourceManager::loadTexture("terrazzo/terrazzo_17_normal-1K.png")}));
-    // node = new CGL::Node(new Cube, m_meshShader, model);
-    // m_scene.append(node);
-
-    model.translateX(-3.0f);
-    // node = new CGL::Node(new Sphere, m_meshShader, model);
-    node2 = new CGL::Node(m_meshShader, model);
-    node2->addMesh(new CGL::Sphere, CGL::Material({CGL::ResourceManager::loadTexture("planets/earth.bmp")}));
-    // m_scene.append(node);
-    
-    model.translateX(6.0f);
-    model.translateY(3.0f);
-    node3 = new CGL::Node(m_meshShader, model);
-    node3->addMesh(new CGL::Rectangle, CGL::Material({CGL::ResourceManager::loadTexture("brick/brick.jpg")}));
-    // node2->addChild(node);
-    // node3->addChild(node2);
+    node->addMesh(
+        MeshBuilder
+            ::build(MeshBuilder::Cube)
+            .done(),
+        MaterialBuilder
+            ::build()
+            .addTexture("terrazzo/terrazzo_17_normal-1K.png")
+            .done()
+    );
     m_scene.append(node);
+
+    node2 = new CGL::Node(m_meshShader, model.translateX(-3.0));
+    node2->addMesh(
+        MeshBuilder
+            ::build(MeshBuilder::Sphere)
+            .done(),
+        MaterialBuilder
+            ::build()
+            .addTexture("planets/earth.bmp")
+            .enabled(true)
+            .done()
+    );
     m_scene.append(node2);
+    
+    node3 = new CGL::Node(m_meshShader, model.translateX(3.0));
+    node3->addMesh(
+        MeshBuilder
+            ::build(MeshBuilder::Rectangle)
+            .done(),
+        MaterialBuilder
+            ::build()
+            .addTexture("brick/brick.jpg")
+            .enabled(true)
+            .done()
+    );
     m_scene.append(node3);
     
     CGL::Transform scaleTransform;
