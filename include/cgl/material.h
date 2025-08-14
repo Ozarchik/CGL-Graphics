@@ -8,6 +8,8 @@
 
 namespace CGL {
 class Material {
+    friend class MaterialBuilder;
+
 public:
     Material();
     explicit Material(const std::vector<CGL::Texture>& textures);
@@ -20,6 +22,9 @@ public:
     void draw(CGL::Shader& shader);
 
     void setEnabled(bool enabled);
+
+private:
+    void add(const CGL::Texture& texture);
 
 private:
     std::vector<CGL::Texture> m_textures;

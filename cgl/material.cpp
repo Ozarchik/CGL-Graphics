@@ -51,3 +51,8 @@ void CGL::Material::setEnabled(bool enabled)
 {
     m_enabled = enabled;
 }
+
+void CGL::Material::add(const Texture &texture)
+{
+    m_textures.push_back(texture);
+}
