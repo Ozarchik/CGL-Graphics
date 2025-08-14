@@ -7,6 +7,7 @@ extern const std::vector<CGL::Vertex> vertices;
 CGL::Cube::Cube()
     : Mesh(vertices)
 {
+    m_primitiveData.size = 36;
 }
 
 CGL::Cube::~Cube()
@@ -16,9 +17,7 @@ CGL::Cube::~Cube()
 void CGL::Cube::draw(Shader &Shader) 
 {
     m_buffer.bind();
-    // glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(m_indices.size()), GL_UNSIGNED_INT, 0);
-    glDrawArrays(m_primitiveType, 0, 36);
-    // glDrawArraysInstanced(m_primitiveType, 0, 36, 100);
+    RenderContext::instance().render(m_primitiveData);
     m_buffer.unbind();
 }
 

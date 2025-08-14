@@ -2,6 +2,7 @@
 #include <cgl/texture/textureloader.h>
 #include <cgl/node.h>
 #include <cgl/resourcemanager.h>
+#include <cgl/rendercontext.h>
 #include <iostream>
 
 CGL::Node* CGL::ModelLoader::load(const std::string& filepath, bool flipUV)

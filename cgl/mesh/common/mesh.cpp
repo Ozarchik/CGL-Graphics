@@ -2,11 +2,16 @@
 
 CGL::Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices)
     : m_buffer(vertices, indices)
-{}
+{
+    m_primitiveData.type = CGL::RenderContext::Triangle;
+    m_primitiveData.drawType = CGL::RenderContext::Indexes;
+    m_primitiveData.size = m_buffer.indices.size();
+    m_primitiveData.offset = 0;
+}
 
 void CGL::Mesh::setPrimitiveType(GLenum type)
 {
-    m_primitiveType = type;
+    // m_primitiveType = type;
 }
 
 void CGL::Mesh::setup()
@@ -16,8 +21,7 @@ void CGL::Mesh::setup()
 
 void CGL::Mesh::draw(Shader &shader) {
     m_buffer.bind(&shader);
-    glDrawElements(m_primitiveType, static_cast<unsigned int>(m_buffer.indices.size()), GL_UNSIGNED_INT, 0);
-
+    RenderContext::instance().render(m_primitiveData);
     m_buffer.unbind();
 }
 

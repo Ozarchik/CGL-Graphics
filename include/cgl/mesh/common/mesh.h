@@ -9,6 +9,7 @@
 #include <cgl/shader.h>
 #include <cgl/vertex.h>
 #include <cgl/mesh/common/meshbuffer.h>
+#include <cgl/rendercontext.h>
 #include <cgl/stb_image.h>
 
 
@@ -32,6 +33,6 @@ public:
 
 protected:
     CGL::MeshBuffer m_buffer;
-    GLenum m_primitiveType = GL_TRIANGLES;
+    CGL::PrimitiveData m_primitiveData;
 };
 }

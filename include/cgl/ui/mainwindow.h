@@ -13,7 +13,7 @@
 namespace CGL {
 class MainWindow {
 public:
-    MainWindow(CGL::CoreContext& context, CommandDispatcher& commandDispatcher, CGL::FrameBuffer& framebuffer);
+    MainWindow(CGL::CoreContext& context, CommandDispatcher& commandDispatcher, CGL::Renderer& renderer);
     ~MainWindow();
 
     void init();
@@ -22,7 +22,7 @@ public:
 
 private:
     CGL::CoreContext& m_context;
-    CGL::FrameBuffer& m_framebuffer;
+    CGL::Renderer& m_renderer;
     CGL::CommandDispatcher& m_commandDispatcher;
 };
 }
