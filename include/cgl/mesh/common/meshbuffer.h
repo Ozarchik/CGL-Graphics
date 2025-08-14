@@ -11,6 +11,8 @@ struct MeshBuffer
     friend class MeshBuilder;
 
 public:
+    MeshBuffer();
+    ~MeshBuffer();
     MeshBuffer(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
 
     void bind(CGL::Shader* shader = nullptr);
@@ -21,8 +23,9 @@ private:
     void setIndices(const std::vector<unsigned int>& indices);
 
 public:
-    std::vector<CGL::Vertex> vertices;
-    std::vector<unsigned int> indices;
+    // CGL::PrimitiveData m_primitive;
+    std::vector<CGL::Vertex> m_vertices;
+    std::vector<unsigned int> m_indices;
 
     unsigned int vao, vbo, ebo;
 };

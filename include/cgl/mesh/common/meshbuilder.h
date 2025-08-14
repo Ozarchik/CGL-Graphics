@@ -1,26 +1,38 @@
-#ifndef CGL_MESHBUILD_H
-#define CGL_MESHBUILD_H
+#ifndef CGL_MESHBUILDER_H
+#define CGL_MESHBUILDER_H
 
+#include <cgl/mesh/common/mesh.h>
 #include <vector>
 #include <cgl/vertex.h>
-#include <cgl/texture/texture.h>
-#include <cgl/mesh/common/mesh.h>
 
 namespace CGL {
-class MeshBuilder {
+class MeshBuilder
+{
 public:
-    MeshBuilder() = default;
-    void setVertices(const std::vector<CGL::Vertex>& vertices);
-    void setIndices(const std::vector<unsigned int>& indices);
-    void setTextures(const std::vector<CGL::Texture>& textures);
+    enum MeshType {
+        Rectangle,
+        Sphere,
+        Cube,
+        Line,
+        UserDefine
+    };
 
-    CGL::Mesh build();
+
+    static MeshBuilder build(MeshType meshType);
+
+    MeshBuilder& bind();
+    MeshBuilder& addVertices(const std::vector<Vertex>& vertices);
+    MeshBuilder& addIndices(const std::vector<unsigned int>& indices);
+    Mesh* done();
 
 private:
-    std::vector<CGL::Vertex> m_vertices;
-    std::vector<unsigned int> m_indices;
-    std::vector<CGL::Texture> m_textures;
+    MeshBuilder(const MeshType &meshType);
+
+private:
+    MeshType m_meshType;
+    MeshBuffer m_buffer;
+    Mesh* m_mesh;
 };
 }
 
-#endif
+#endif // CGL_MESHBUILDER_H
