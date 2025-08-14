@@ -8,9 +8,22 @@ CGL::Grid::Grid()
     m_shader = ResourceManager::loadShader("grid");
     m_lightShader = ResourceManager::loadDefaultShader();
     
-    for (int i = -sideSize; i < sideSize; i++) {
-        for (int j = -sideSize; j < sideSize; j++) {
-            CGL::Node* node = new CGL::Node(new CGL::Rectangle, m_shader);
+    glm::vec3 greyLight = glm::vec3(0.2, 0.2, 0.2);
+    glm::vec3 greyDark = glm::vec3(0.8, 0.8, 0.8);
+    bool light = false;
+    for (int i = 0; i < sideSize; i++) {
+        for (int j = 0; j < sideSize; j++) {
+            light = !light;
+
+            CGL::Node* node;
+            if (light) {
+                // std::cout << "light" << std::endl;
+                node = new CGL::Node(new CGL::Rectangle(greyLight), m_shader);
+            } else {
+                // std::cout << "dark" << std::endl;
+                node = new CGL::Node(new CGL::Rectangle(greyDark), m_shader);
+            }
+
             m_scene.append(node);
         }
     }
@@ -28,17 +41,27 @@ void CGL::Grid::draw(CGL::Camera& camera, CGL::Transform model)
     int index = 0;
 
     float gradient = 0.0f;
-    for (int i = -sideSize; i < sideSize; i++) {
-        for (int j = -sideSize; j < sideSize; j++) {
+    for (int i = 0; i < sideSize; i++) {
+        for (int j = 0; j < sideSize; j++) {
             CGL::Transform modif = model;
             modif.scale(10.0);
             modif.rotate(90.0f, 1.0f, 0.0f, 0.0f);
-            modif.translateX(i/8.0f);
-            modif.translateY(j/8.0f);
+            modif.translateX(i/*/8.0f*/);
+            modif.translateY(j/*/8.0f*/);
             m_shader.use();
-            gradient += 0.005;
-            m_shader.setFloat("gradient", gradient);
-            nodes[index]->setPrimitiveType(GL_LINE_LOOP);
+            // gradient += 0.005;
+            // m_shader.setFloat("gradient", gradient);
+            // glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+            // glPolygonOffset(1, 1);
+            nodes[index]->setPrimitiveType(GL_TRIANGLES);
+            // nodes[index]->setPrimitiveType(GL_LINE_LOOP);
+            m_shader.setFloat("gradient", 0.2);
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            nodes[index]->update(camera, modif);
+
+            m_shader.use();
+            m_shader.setFloat("gradient", 0.6);
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
             nodes[index]->update(camera, modif);
         }
     }

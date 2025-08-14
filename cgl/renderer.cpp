@@ -14,7 +14,6 @@ void CGL::Renderer::render(Scene &scene, Camera &camera)
     model.translateY(30.0f);
     grid.draw(camera, model);
     scene.render(camera);
-    scene.render(camera);
     m_framebuffer.unbind();
 }
 

@@ -5,9 +5,10 @@
 #include <cgl/logger.h>
 #include <cgl/command/commanddispatcher.h>
 #include <cgl/command/commands.h>
+#include <glad/glad.h>
 
-CGL::MainWindow::MainWindow(CoreContext &context, CommandDispatcher& commandDispatcher, FrameBuffer &framebuffer)
-    : m_context(context), m_commandDispatcher(commandDispatcher), m_framebuffer(framebuffer)
+CGL::MainWindow::MainWindow(CoreContext &context, CommandDispatcher& commandDispatcher, Renderer &renderer)
+    : m_context(context), m_commandDispatcher(commandDispatcher), m_renderer(renderer)
 {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -62,13 +63,13 @@ void CGL::MainWindow::update()
     float imguiWindowHeight = m_context.height(); //ImGui::GetContentRegionAvail().y;
 
     // m_framebuffer.rescale(imguiWindowWidth, imguiWindowHeight);
-    glViewport(0, 0, m_context.width(), m_context.height());
+    // glViewport(0, 0, m_context.width(), m_context.height());
 
     ImVec2 pos = ImGui::GetCursorScreenPos();
     pos.x += (ImGui::GetContentRegionAvail().x - imguiWindowWidth)/2.0f;
     pos.y += (ImGui::GetContentRegionAvail().y - imguiWindowHeight)/2.0f;
     ImGui::GetWindowDrawList()->AddImage(
-        m_framebuffer.texture(),
+        m_renderer.framebuffer().texture(),
         ImVec2(pos.x, pos.y),
         ImVec2(pos.x + imguiWindowWidth, pos.y + imguiWindowHeight),
         ImVec2(0, 1),
@@ -102,6 +103,16 @@ void CGL::MainWindow::update()
     if (ImGui::SliderFloat("Translate Z", &z, -10.0f, 10.0f)) {
         m_commandDispatcher.append(std::make_unique<CGL::MoveCommand>(x, y, z));
     }
+
+    static float viewX = m_context.width(), viewY = m_context.height();
+    if (ImGui::SliderFloat("View X", &viewX, 1, 1000)) {
+        // glViewport(0, 0, viewX, viewY);
+    }
+
+    if (ImGui::SliderFloat("View Y", &viewY, 1, 1000)) {
+        // glViewport(0, 0, viewX, viewY);
+    }
+
     ImGui::End();
 }
 

@@ -3,8 +3,6 @@
 #include <iostream>
 #include <cmath>
 
-glm::vec3 dir;
-glm::vec3 org;
 CGL::Raycast::Raycast(CGL::CoreContext &context, CGL::Scene& scene, CGL::Camera& camera)
     : m_context(context), m_scene(scene), m_camera(camera)//, m_rayline(m_camera)
 {
@@ -41,37 +39,9 @@ void CGL::Raycast::seek(float mouseX, float mouseY)
     // 4. Get world coords
     // world = (inverse(view) * eye).xyz
     // world = normalize(world)
-    glm::vec3 world = glm::inverse(m_camera.getView().data()) * eye; // vec4 -> vec3 check conversion
-    world = glm::normalize(world);
-
+    glm::vec3 direction = glm::inverse(m_camera.getView().data()) * eye; // vec4 -> vec3 check conversion
+    direction = glm::normalize(direction);
     glm::vec3 origin = m_camera.pos();
-    glm::vec3 direction = world;
-
-    // glm::vec3 direction = /*world*/ glm::vec3(0.0, 0.0, 20.0f);
-    // glm::vec3 origin = m_camera.pos();
-
-    // glm::mat4 view = m_camera.getView().data();
-    // glm::vec3 camPosition = glm::vec3(glm::inverse(view)[3]);
-    // org = camPosition;
-    // org = glm::vec3(0.0);
-    // glm::vec3 cameraPos = m_camera.pos();
-    // glm::vec3 cameraDir = m_camera.front();
-    // glm::vec3 lookAtPoint = cameraPos + cameraDir;
-    org = origin;//lookAtPoint;
-    dir = direction;
-
-    glm::vec4 viewport(0, 0, m_context.width(), m_context.height());
-    glm::vec3 rayStart = glm::unProject(glm::vec3(mouseX, m_context.height() - mouseY, 0.0f),
-                                        m_camera.getView().data(), m_camera.getProjection().data(), viewport);
-    glm::vec3 rayEnd   = glm::unProject(glm::vec3(mouseX, m_context.height() - mouseY, 1.0f),
-                                      m_camera.getView().data(), m_camera.getProjection().data(), viewport);
-    glm::vec3 rayDir   = glm::normalize(rayEnd - rayStart);
-
-    origin = org;
-    int index = 0;
-    // m_rayline.update(origin, direction);
-    // m_rayLine.set
-    // org = rayEnd;
 
 
     m_raylines.push_back(m_camera);
@@ -134,10 +104,22 @@ static double m_lastY;
 
 void CGL::Raycast::mouseEventHandler(const MouseEvent &event)
 {
-    // if (event.type() == CGL::MouseType::Press)
-    m_lastX = event.x();
-    m_lastY = event.y();
-    seek(event.x(), event.y());
+    if (event.type() == CGL::Mouse_Release) {
+        GLint data[4];
+        glGetIntegerv(GL_VIEWPORT, data);
+        int w, h;
+        glfwGetWindowSize(m_context.handler(), &w, &h);
+        std::cout << "window: (" << w << ", " << h << ")" << std::endl;
+        std::cout << "viewport: (" << data[0] << ", " << data[1] << ") (" << data[2] << ", " << data[3] << ")" << std::endl;
+        std::cout << "mouse pos: (" << event.x() << ", " << event.y() << ")" << std::endl;
+        std::cout << std::endl;
+    // m_lastX = event.x();
+    // m_lastY = event.y();
+        seek(event.x(), event.y());
+    }
+
+    // if (event.type() == CGL::MouseAction::Release)
+        // m_scene.upselectNode();
 }
 
 void CGL::Raycast::keyEventHandler(const KeyEvent &event)

@@ -39,8 +39,9 @@ void CGL::InputController::process()
         modifiers = modifiers | CGL::Key_Alt;
     }
 
+
     const std::vector<std::pair<int, KeyType>> letterKeys = {
-        {GLFW_KEY_A, Key_A}, {GLFW_KEY_B, Key_B}, {GLFW_KEY_C, Key_C},
+        {GLFW_KEY_A, Key_A}/*, {GLFW_KEY_B, Key_B}*/, {GLFW_KEY_C, Key_C},
         {GLFW_KEY_D, Key_D}, {GLFW_KEY_E, Key_E}, {GLFW_KEY_F, Key_F},
         {GLFW_KEY_G, Key_G}, {GLFW_KEY_H, Key_H}, {GLFW_KEY_I, Key_I},
         {GLFW_KEY_J, Key_J}, {GLFW_KEY_K, Key_K}, {GLFW_KEY_L, Key_L},
@@ -139,9 +140,9 @@ void CGL::InputController::mouseCallback(GLFWwindow* window, double x, double y)
 
 void CGL::InputController::mouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
 {
-    // if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
-        mouseNotify(m_mouseX, m_mouseY, CGL::MouseState{CGL::MouseType::Press, CGL::MouseButton::Left});
-// }
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action != GLFW_RELEASE) {
+        mouseNotify(m_mouseX, m_mouseY, CGL::MouseState{CGL::Mouse_Release, CGL::Mouse_Left});
+    }
 }
 
 void CGL::InputController::addSubscriber(Object *object)

@@ -13,7 +13,7 @@ public:
     void draw(CGL::Camera& camera, CGL::Transform  model);
 
 private:
-    int sideSize = 10;
+    int sideSize = 2;
     int cellSize = 1;
     CGL::Shader m_shader;
     CGL::Shader m_lightShader;
