@@ -39,6 +39,14 @@ private:
 };
 
 struct PrimitiveData {
+    PrimitiveData()
+    : type(RenderContext::Primitive::Triangle)
+    , drawType(RenderContext::DrawType::Elements)
+    , offset(0)
+    , size(0)
+    {
+
+    }
     RenderContext::Primitive type;
     RenderContext::DrawType drawType;
     int offset;
