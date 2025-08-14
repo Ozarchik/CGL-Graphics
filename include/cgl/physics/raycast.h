@@ -9,7 +9,7 @@
 namespace CGL {
 class Raycast: public CGL::Object {
 public:
-    Raycast(CGL::Context& context, CGL::Scene& scene, CGL::Camera& camera);
+    Raycast(CGL::CoreContext& context, CGL::Scene& scene, CGL::Camera& camera);
 
     void seek(float mouseX, float mouseY);
     void draw();
@@ -22,7 +22,7 @@ private:
     bool intersectRayAABB(glm::vec3 origin, glm::vec3 direction, BoundingBox &box, float &tMin);
 
 private:
-    CGL::Context& m_context;
+    CGL::CoreContext& m_context;
     CGL::Scene& m_scene;
     CGL::Camera& m_camera;
     std::vector<CGL::RayLine> m_raylines;

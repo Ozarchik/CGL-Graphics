@@ -7,7 +7,7 @@ namespace CGL {
 class FrameBuffer
 {
 public:
-    FrameBuffer(CGL::Context& context);
+    FrameBuffer(CGL::CoreContext& context);
     ~FrameBuffer();
 
     void bind();
@@ -21,7 +21,7 @@ private:
     unsigned int m_vao, m_vbo;
     unsigned int m_texture;
 
-    CGL::Context& m_context;
+    CGL::CoreContext& m_context;
 };
 }
 

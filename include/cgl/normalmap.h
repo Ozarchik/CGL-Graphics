@@ -15,7 +15,7 @@ enum PrimitiveType {
 class NormalMap
 {
 public:
-    NormalMap(CGL::Context* window, Camera *camera);
+    NormalMap(CGL::CoreContext* window, Camera *camera);
     void use();
 
 private:
@@ -25,7 +25,7 @@ private:
     unsigned int normalMap;
     CGL::Shader shader;
     CGL::Camera* m_camera;
-    CGL::Context* m_context;
+    CGL::CoreContext* m_context;
 };
 }
 

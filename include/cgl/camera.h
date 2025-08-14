@@ -12,7 +12,7 @@
 namespace CGL {
 class Camera: public CGL::Object {
 public:
-    Camera(CGL::Context& context);
+    Camera(CGL::CoreContext& context);
 
     void setFov(float fov);
     float fov() const;
@@ -75,6 +75,6 @@ private:
     float m_speed = 5.5f;
 
     bool m_rotateMode = true;
-    CGL::Context& m_context;
+    CGL::CoreContext& m_context;
 };
 }

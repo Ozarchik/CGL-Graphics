@@ -5,9 +5,8 @@
 
 glm::vec3 dir;
 glm::vec3 org;
-
-CGL::Raycast::Raycast(CGL::Context &context, CGL::Scene& scene, CGL::Camera& camera)
-    : m_context(context), m_scene(scene), m_camera(camera), m_rayline(m_camera)
+CGL::Raycast::Raycast(CGL::CoreContext &context, CGL::Scene& scene, CGL::Camera& camera)
+    : m_context(context), m_scene(scene), m_camera(camera)//, m_rayline(m_camera)
 {
 
 }

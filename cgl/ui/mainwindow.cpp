@@ -6,8 +6,8 @@
 #include <cgl/command/commanddispatcher.h>
 #include <cgl/command/commands.h>
 
-CGL::MainWindow::MainWindow(Context &context, Camera& camera, CommandDispatcher& commandDispatcher, FrameBuffer &framebuffer)
-    : m_context(context), m_camera(camera), m_commandDispatcher(commandDispatcher), m_framebuffer(framebuffer)
+CGL::MainWindow::MainWindow(CoreContext &context, CommandDispatcher& commandDispatcher, FrameBuffer &framebuffer)
+    : m_context(context), m_commandDispatcher(commandDispatcher), m_framebuffer(framebuffer)
 {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();

@@ -11,13 +11,13 @@ namespace CGL {
 class Renderer
 {
 public:
-    Renderer(CGL::Context& context);
+    Renderer(CGL::CoreContext& context);
 
     void render(CGL::Scene& scene, CGL::Camera& camera);
     CGL::FrameBuffer& framebuffer();
 
 private:
-    CGL::Context& m_context;
+    CGL::CoreContext& m_context;
     CGL::FrameBuffer m_framebuffer;
     CGL::Shader m_framebufferShader;
     CGL::Grid grid;

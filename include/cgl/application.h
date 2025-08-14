@@ -32,7 +32,7 @@ public:
     void createTestObjects();
 
 private:
-    CGL::Context m_context;
+    CGL::CoreContext m_context;
     CGL::Scene m_scene;
 
     CGL::InputController m_inputController;

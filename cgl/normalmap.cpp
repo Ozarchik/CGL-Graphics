@@ -4,7 +4,7 @@
 #include <cgl/resourcemanager.h>
 
 CGL::NormalMap::NormalMap(
-    CGL::Context* context,
+    CGL::CoreContext* context,
     CGL::Camera* camera
 ): m_camera(camera), m_context(context)
 {

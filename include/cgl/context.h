@@ -8,7 +8,7 @@
 
 namespace CGL {
 
-class Context {
+class CoreContext {
 public:
     enum BuffersToClear {
         NoClear = 0,
@@ -29,8 +29,8 @@ public:
         GreatEqual = GL_GEQUAL,
     };
 
-    Context();
-    ~Context();
+    CoreContext();
+    ~CoreContext();
 
     void update();
     void swapBuffers();
@@ -63,9 +63,11 @@ private:
 
 private:
     GLFWwindow* m_window = nullptr;
+    bool m_alive = false;
+
     std::string m_title = "Test Project";
 
-    int m_width = 800;
+    int m_width = 1200;
     int m_height = 800;
     unsigned char m_stencilMask = 0x00;
     bool m_depthEnable = false;

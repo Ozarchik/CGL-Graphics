@@ -1,8 +1,8 @@
 #include <cgl/renderer.h>
 
-CGL::Renderer::Renderer(CGL::Context &context)
+CGL::Renderer::Renderer(CGL::CoreContext &context)
     : m_context(context)
-    , m_framebuffer(context.width(), context.height())
+    , m_framebuffer(context)
 {}
 
 void CGL::Renderer::render(Scene &scene, Camera &camera)
