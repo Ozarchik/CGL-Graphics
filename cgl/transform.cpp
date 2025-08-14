@@ -16,26 +16,35 @@ void CGL::Transform::reset()
     m_matrix = glm::mat4(1.0f);
 }
 
-void CGL::Transform::translate(const glm::vec3& pos)
+CGL::Transform& CGL::Transform::translate(const glm::vec3& pos)
 {
     m_matrix = glm::translate(m_matrix, pos);
+    return *this;
 }
 
-void CGL::Transform::translate(float x, float y, float z)
+CGL::Transform& CGL::Transform::translate(float x, float y, float z)
 {
     m_matrix = glm::translate(m_matrix, glm::vec3(x, y, z));
+    return *this;
 }
 
-void CGL::Transform::translateX(float val)
+CGL::Transform& CGL::Transform::translateX(float val)
 {
     m_matrix = glm::translate(m_matrix, glm::vec3(val, 0.0, 0.0));
+    return *this;
 }
 
-void CGL::Transform::translateZ(float val)
+CGL::Transform& CGL::Transform::translateY(float val)
+{
+    m_matrix = glm::translate(m_matrix, glm::vec3(0.0, val, 0.0));
+    return *this;
+}
+
+CGL::Transform& CGL::Transform::translateZ(float val)
 {
     m_matrix = glm::translate(m_matrix, glm::vec3(0.0, 0.0, val));
+    return *this;
 }
-
 
 CGL::Transform &CGL::Transform::inverse()
 {
@@ -47,11 +56,6 @@ CGL::Transform CGL::Transform::inversed() const
 {
     glm::mat4 inversed = glm::inverse(m_matrix);
     return CGL::Transform(inversed);
-}
-
-void CGL::Transform::translateY(float val)
-{
-    m_matrix = glm::translate(m_matrix, glm::vec3(0.0, val, 0.0));
 }
 
 void CGL::Transform::scale(float x, float y, float z)

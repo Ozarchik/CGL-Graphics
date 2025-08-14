@@ -19,11 +19,11 @@ public:
     void scaleY(float val);
     void scaleZ(float val);
 
-    void translate(const glm::vec3& pos);
-    void translate(float x, float y, float z);
-    void translateX(float val);
-    void translateY(float val);
-    void translateZ(float val);
+    CGL::Transform& translate(const glm::vec3& pos);
+    CGL::Transform& translate(float x, float y, float z);
+    CGL::Transform& translateX(float val);
+    CGL::Transform& translateY(float val);
+    CGL::Transform& translateZ(float val);
 
     CGL::Transform& inverse();
     CGL::Transform inversed() const;
