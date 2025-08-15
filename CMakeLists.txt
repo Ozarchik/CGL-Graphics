@@ -10,31 +10,43 @@ find_package(imgui REQUIRED)
 
 file(GLOB sources
     "cgl/*.cpp"
-    "cgl/mesh/2D/*.cpp"
-    "cgl/mesh/3D/*.cpp"
-    "cgl/mesh/common/*.cpp"
-    "cgl/command/*.cpp"
-    "cgl/event/*.cpp"
+    "cgl/core/*.cpp"
+    "cgl/core/command/*.cpp"
+    "cgl/core/event/*.cpp"
+    "cgl/graphics/*.cpp"
+    "cgl/graphics/mesh/2D/*.cpp"
+    "cgl/graphics/mesh/3D/*.cpp"
+    "cgl/graphics/mesh/common/*.cpp"
+    "cgl/graphics/model/*.cpp"
+    "cgl/graphics/texture/*.cpp"
+    "cgl/graphics/material/*.cpp"
+    "cgl/graphics/scene/*.cpp"
+    "cgl/graphics/vertex/*.cpp"
+    "cgl/managers/*.cpp"
     "cgl/ui/*.cpp"
-    "cgl/model/*.cpp"
     "cgl/physics/*.cpp"
-    "cgl/texture/*.cpp"
     "cgl/tools/backtrace/*.cpp"
     # "examples/*.cpp"
 )
 
 file(GLOB headers
     "include/cgl/*.h"
-    "include/cgl/mesh/2D/*.h"
-    "include/cgl/mesh/3D/*.h"
-    "include/cgl/mesh/common/*.h"
-    "include/cgl/command/*.h"
-    "include/cgl/event/*.h"
-    "include/cgl/ui/*.h"
-    "include/cgl/model/*.h"
-    "include/cgl/physics/*.h"
-    "include/cgl/texture/*.h"
+    "include/cgl/core/*.h"
+    "include/cgl/core/command/*.h"
+    "include/cgl/core/event/*.h"
+    "include/cgl/graphics/*.h"
+    "include/cgl/graphics/mesh/2D/*.h"
+    "include/cgl/graphics/mesh/3D/*.h"
+    "include/cgl/graphics/mesh/common/*.h"
+    "include/cgl/graphics/model/*.h"
+    "include/cgl/graphics/texture/*.h"
+    "include/cgl/graphics/material/*.h"
+    "include/cgl/graphics/scene/*.h"
+    "include/cgl/graphics/vertex/*.h"
     "include/cgl/tools/backtrace/*.h"
+    "include/cgl/managers/*.h"
+    "include/cgl/ui/*.h"
+    "include/cgl/physics/*.h"
     # "examples/*.h"
 )
 
@@ -49,11 +61,11 @@ target_sources(cglg PRIVATE
     ${sources}
     ${headers}
     ${shaders}
-    bindings/imgui_impl_glfw.cpp
-    bindings/imgui_impl_glfw.h
-    bindings/imgui_impl_opengl3.cpp
-    bindings/imgui_impl_opengl3.h
-    bindings/imgui_impl_opengl3_loader.h
+    thirdparty/imgui/bindings/imgui_impl_glfw.cpp
+    thirdparty/imgui/bindings/imgui_impl_glfw.h
+    thirdparty/imgui/bindings/imgui_impl_opengl3.cpp
+    thirdparty/imgui/bindings/imgui_impl_opengl3.h
+    thirdparty/imgui/bindings/imgui_impl_opengl3_loader.h
 )
 
 target_link_libraries(cglg PRIVATE
@@ -75,15 +87,7 @@ endif()
 
 target_include_directories(cglg PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
-    # ${CMAKE_CURRENT_SOURCE_DIR}/examples
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/cgl/meshes
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/cgl/event
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/cgl/model
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/cgl/texture
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/cgl/ui
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/backtrace
-    ${CMAKE_CURRENT_SOURCE_DIR}/bindings
-    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty
 )
 
 install(

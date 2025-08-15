@@ -2,9 +2,9 @@
 #include <imconfig.h>
 #include <imgui.h>
 #include <imgui_internal.h>
-#include <cgl/logger.h>
-#include <cgl/command/commanddispatcher.h>
-#include <cgl/command/commands.h>
+#include <cgl/core/logger.h>
+#include <cgl/core/command/commanddispatcher.h>
+#include <cgl/core/command/commands.h>
 #include <glad/glad.h>
 
 CGL::MainWindow::MainWindow(CoreContext &context, CommandDispatcher& commandDispatcher, Renderer &renderer)

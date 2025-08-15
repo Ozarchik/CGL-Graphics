@@ -1,13 +1,13 @@
 #include <cgl/application.h>
-#include <cgl/mesh/meshes2D.h>
-#include <cgl/mesh/meshes3D.h>
-#include <cgl/texture/textureloader.h>
-#include <cgl/node.h>
+#include <cgl/graphics/mesh/meshes2D.h>
+#include <cgl/graphics/mesh/meshes3D.h>
+#include <cgl/graphics/texture/textureloader.h>
+#include <cgl/graphics/scene/node.h>
 #include <cgl/ui/mainwindow.h>
-#include <cgl/model/modelloader.h>
-#include <cgl/logger.h>
-#include <cgl/mesh/common/meshbuilder.h>
-#include <cgl/materialbuilder.h>
+#include <cgl/graphics/model/modelloader.h>
+#include <cgl/core/logger.h>
+#include <cgl/graphics/mesh/common/meshbuilder.h>
+#include <cgl/graphics/material/materialbuilder.h>
 
 float screenVertices[] = {
     -1.0f,  1.0f,  0.0f, 1.0f,

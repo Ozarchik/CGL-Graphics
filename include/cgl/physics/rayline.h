@@ -1,8 +1,8 @@
 #ifndef CGL_RAYLINE_H
 #define CGL_RAYLINE_H
 
-#include <cgl/shader.h>
-#include <cgl/camera.h>
+#include <cgl/graphics/shader.h>
+#include <cgl/core/camera.h>
 
 namespace CGL {
 class RayLine

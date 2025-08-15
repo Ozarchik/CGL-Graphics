@@ -1,5 +1,5 @@
 #include <cgl/physics/rayline.h>
-#include <cgl/resourcemanager.h>
+#include <cgl/managers/resourcemanager.h>
 #include <glad/glad.h>
 #include <iomanip>
 

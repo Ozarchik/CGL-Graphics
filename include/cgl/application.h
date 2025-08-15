@@ -4,24 +4,24 @@
 #include <iostream>
 #include <cmath>
 
-#include <cgl/camera.h>
-#include <cgl/mesh/3D/cube.h>
-#include <cgl/mesh/3D/sphere.h>
-#include <cgl/texture/texture.h>
-#include <cgl/transform.h>
-#include <cgl/scene.h>
-#include <cgl/shader.h>
-#include <cgl/corecontext.h>
-#include <cgl/inputcontroller.h>
-#include <cgl/normalmap.h>
-#include <cgl/framebuffer.h>
-#include <cgl/vertexbuffer.h>
-#include <cgl/grid.h>
+#include <cgl/core/camera.h>
+#include <cgl/graphics/mesh/3D/cube.h>
+#include <cgl/graphics/mesh/3D/sphere.h>
+#include <cgl/graphics/texture/texture.h>
+#include <cgl/core/transform.h>
+#include <cgl/graphics/scene/scene.h>
+#include <cgl/graphics/shader.h>
+#include <cgl/core/corecontext.h>
+#include <cgl/core/event/inputcontroller.h>
+#include <cgl/graphics/normalmap.h>
+#include <cgl/graphics/framebuffer.h>
+#include <cgl/graphics/vertex/vertexbuffer.h>
+#include <cgl/graphics/grid.h>
 #include <cgl/tools/backtrace/backtrace.h>
 #include <cgl/ui/mainwindow.h>
-#include <cgl/resourcemanager.h>
+#include <cgl/managers/resourcemanager.h>
 #include <cgl/physics/raycast.h>
-#include <cgl/renderer.h>
+#include <cgl/graphics/renderer.h>
 
 namespace CGL {
 class Application

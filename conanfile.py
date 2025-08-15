@@ -11,9 +11,9 @@ class CGLGraphicsRecipe(ConanFile):
 
     def generate(self):
         copy(self, "*glfw*", os.path.join(self.dependencies["imgui"].package_folder,
-            "res", "bindings"), os.path.join(self.source_folder, "bindings"))
+            "res", "bindings"), os.path.join(self.source_folder, "thirdparty/imgui/bindings"))
         copy(self, "*opengl3*", os.path.join(self.dependencies["imgui"].package_folder,
-            "res", "bindings"), os.path.join(self.source_folder, "bindings"))
+            "res", "bindings"), os.path.join(self.source_folder, "thirdparty/imgui/bindings"))
 
     def requirements(self):
         self.requires("glad/0.1.36")

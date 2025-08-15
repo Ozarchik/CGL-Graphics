@@ -1,14 +1,14 @@
 #ifndef CGL_MAINWINDOW_H
 #define CGL_MAINWINDOW_H
 
-#include <cgl/corecontext.h>
-#include <cgl/renderer.h>
-#include <cgl/command/commanddispatcher.h>
+#include <cgl/core/corecontext.h>
+#include <cgl/graphics/renderer.h>
+#include <cgl/core/command/commanddispatcher.h>
 
 #include <imgui.h>
 #include <imgui_internal.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
+#include <imgui/bindings/imgui_impl_glfw.h>
+#include <imgui/bindings/imgui_impl_opengl3.h>
 
 namespace CGL {
 class MainWindow {

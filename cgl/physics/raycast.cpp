@@ -12,27 +12,16 @@ CGL::Raycast::Raycast(CGL::CoreContext &context, CGL::Scene& scene, CGL::Camera&
 // Reference: https://antongerdelan.net/opengl/raycasting.html
 void CGL::Raycast::seek(float mouseX, float mouseY)
 {
-    // 1. Get 3D normalized coords
-    // x: (2.0 * mouseX)/width - 1.0
-    // y: 1.0 - (2.0 * mouseY)/height
-    // z: 1
-    // ray_3nd = (x,y,z)
-    glm::vec3 ray_3nd;
-    ray_3nd.x = (2.0f * mouseX) / (m_context.width()) - 1.0f;
-    ray_3nd.y = 1.0f - (2.0f * mouseY) / m_context.height();
-    ray_3nd.z = 1.0f;
-
-
-    // 2. Get 4D Homogenius coords
-    // hom_coords = ([-1;1], [-1;1], [-1;1], [-1;1])
-    // clip = vec4(ray_3nd.xy, -1.0, 1.0);
-    glm::vec4 clip = glm::vec4(ray_3nd.x, ray_3nd.y, -1.0f, 1.0f);
-
+    glm::vec4 ray_ndc;
+    ray_ndc.x = (2.0f * mouseX) / (m_context.width()) - 1.0f;
+    ray_ndc.y = 1.0f - (2.0f * mouseY) / m_context.height();
+    ray_ndc.z = -1.0f;
+    ray_ndc.w = 1.0f;
 
     // 3. Get camera coords
-    // eye = inverse(projection) * clip
+    // eye = inverse(projection) * ray_ndc
     // eye = vec4(eye.xy, -1.0, 0.0)
-    glm::vec4 eye = glm::inverse(m_camera.getProjection().data()) * clip;
+    glm::vec4 eye = glm::inverse(m_camera.getProjection().data()) * ray_ndc;
     eye = glm::vec4(eye.x, eye.y, -1.0f, 0.0f);
 
 

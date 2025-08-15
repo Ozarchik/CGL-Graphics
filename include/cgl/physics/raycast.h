@@ -1,9 +1,9 @@
 #ifndef CGL_RAYCAST_H
 #define CGL_RAYCAST_H
 
-#include <cgl/camera.h>
-#include <cgl/corecontext.h>
-#include <cgl/scene.h>
+#include <cgl/core/camera.h>
+#include <cgl/core/corecontext.h>
+#include <cgl/graphics/scene/scene.h>
 #include <cgl/physics/rayline.h>
 
 namespace CGL {
