@@ -58,6 +58,8 @@ void CGL::MeshBuffer::setVertices(const std::vector<Vertex> &vertices)
 {
     m_vertices = vertices;
 
+    bind();
+
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(CGL::Vertex), vertices.data(), GL_STATIC_DRAW);
 
@@ -69,12 +71,18 @@ void CGL::MeshBuffer::setVertices(const std::vector<Vertex> &vertices)
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(CGL::Vertex), (void*)offsetof(CGL::Vertex, texcoord));
     glEnableVertexAttribArray(3);
     glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(CGL::Vertex), (void*)offsetof(CGL::Vertex, color));
+
+    unbind();
 }
 
 void CGL::MeshBuffer::setIndices(const std::vector<unsigned int> &indices)
 {    
     m_indices = indices;
 
+    bind();
+
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(unsigned int), m_indices.data(), GL_STATIC_DRAW);
+
+    unbind();
 }
