@@ -42,10 +42,8 @@ void CGL::Raycast::seek(float mouseX, float mouseY)
         CGL::BoundingBox box = node->boundingBox();
 
         static int count = 0;
-        node->setSelected(false);
         if (intersectRayAABB(origin, direction, box, t)) {
             m_scene.setSelectedNode(node);
-            node->setSelected(true);
             break;
         }
     }

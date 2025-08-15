@@ -31,8 +31,6 @@ public:
 
     ~Node();
 
-    bool selected() const;
-    void setSelected(bool state);
     void addChild(CGL::Node* node);
     std::vector<CGL::Node*> childs() const;
     void addMesh(CGL::Mesh* mesh);
@@ -49,7 +47,6 @@ private:
     std::vector<Node*> m_childs;
     CGL::Shader& m_shader; // it's tmp solve, need to change to shader_ptr
     CGL::Transform m_transform;
-    bool m_selected;
 };
 };
 

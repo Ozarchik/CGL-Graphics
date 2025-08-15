@@ -31,16 +31,6 @@ CGL::Node::~Node()
     }
 }
 
-bool CGL::Node::selected() const
-{
-    return m_selected;
-}
-
-void CGL::Node::setSelected(bool state)
-{
-    m_selected = state;
-}
-
 void CGL::Node::addChild(Node *node)
 {
     m_childs.push_back(node);
@@ -119,7 +109,6 @@ void CGL::Node::update(CGL::Camera& camera, const Transform &parentTransform)
     m_shader.setMat4("model", resultTransform);
     m_shader.setMat4("view", camera.getView());
     m_shader.setMat4("projection", camera.getProjection());
-    m_shader.setBool("selected", m_selected);
 
     for (auto& render: m_renders) {
         render.m_material.draw(m_shader);
