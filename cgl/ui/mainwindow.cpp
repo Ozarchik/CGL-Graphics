@@ -1,69 +1,59 @@
 #include <cgl/ui/mainwindow.h>
 #include <imconfig.h>
 #include <imgui.h>
-#include <imgui_internal.h>
+
 #include <cgl/core/logger.h>
 #include <cgl/core/command/commanddispatcher.h>
 #include <cgl/core/command/commands.h>
+#include <cgl/managers/uimanager.h>
 #include <glad/glad.h>
+#include <cgl/core/engine.h>
 
 CGL::MainWindow::MainWindow(CoreContext &context, CommandDispatcher& commandDispatcher, Renderer &renderer)
     : m_context(context), m_commandDispatcher(commandDispatcher), m_renderer(renderer)
 {
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO();
-
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-
-    ImGui::StyleColorsDark();
-
-    ImGui_ImplGlfw_InitForOpenGL(m_context.handler(), true);
-    ImGui_ImplOpenGL3_Init("#version 330");
+    CGL::UiManager::instance().init();
 }
 
-CGL::MainWindow::~MainWindow() {
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
+CGL::MainWindow::~MainWindow()
+{
+    CGL::UiManager::instance().deinit();
 }
 
 void CGL::MainWindow::init()
 {
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
-    ImGui::NewFrame();    
+    CGL::UiManager::instance().newFrame();
 }
 
-void CGL::MainWindow::update()
+void CGL::MainWindow::renderCameraControlFrame()
 {
-    ImGuiID dockspace_id = ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
-    static bool init = true;
-    ImGuiID dock_id_left, dock_id_right;
-    if (init) {
-        init = false;
-        auto wSize = ImGui::GetMainViewport()->Size;
-        wSize.x *= 1.2;
-        ImGui::DockBuilderRemoveNode(dockspace_id);
-        ImGui::DockBuilderAddNode(dockspace_id);
-        ImGui::DockBuilderSetNodeSize(dockspace_id, wSize);
+    ImGui::Begin("Camera control");
 
-        ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.8f, &dock_id_left, &dock_id_right);
-        ImGui::DockBuilderDockWindow("3D scene", dock_id_left);
-        ImGui::DockBuilderDockWindow("Hello, CGL Graphics", dock_id_right);
+    CGL::Camera* camera = CGL::Engine::instance().activeCamera();
 
-        ImGui::DockBuilderFinish(dockspace_id);
-    }
+    float fov = camera->fov();
+    ImGui::SliderFloat("Fov", &fov, 0, 90.0f);
 
+    camera->setFov(fov);
+
+    ImGui::End();
+}
+
+void CGL::MainWindow::renderSceneControlFrame()
+{
+    ImGui::Begin("Scene control");
+
+    CGL::Scene* scene = CGL::Engine::instance().activeScene();
+
+    ImGui::End();
+}
+
+void CGL::MainWindow::renderScene()
+{
     ImGui::Begin("3D scene");
 
-    float imguiWindowWidth = m_context.width(); //ImGui::GetContentRegionAvail().x;
-    float imguiWindowHeight = m_context.height(); //ImGui::GetContentRegionAvail().y;
-
-    // m_framebuffer.rescale(imguiWindowWidth, imguiWindowHeight);
-    // glViewport(0, 0, m_context.width(), m_context.height());
+    float imguiWindowWidth = m_context.width();
+    float imguiWindowHeight = m_context.height();
 
     ImVec2 pos = ImGui::GetCursorScreenPos();
     pos.x += (ImGui::GetContentRegionAvail().x - imguiWindowWidth)/2.0f;
@@ -76,41 +66,36 @@ void CGL::MainWindow::update()
         ImVec2(1, 0)
     );
     ImGui::End();
+}
 
-    ImGui::Begin("Hello, CGL Graphics", nullptr);
-    static bool init2 = false;
-    if (ImGui::Button("Move")) {
-        // if (init2)
-        //     m_commandDispatcher.append(std::make_unique<CGL::MoveCommand>());
-        // else
-            // m_commandDispatcher.append(std::make_unique<CGL::CreateCubeCommand>());
+void CGL::MainWindow::renderNodeControlFrame()
+{
+    ImGui::Begin("Node control", nullptr);
 
-        init2 = true;
+    CGL::Scene* scene = CGL::Engine::instance().activeScene();
+
+    float x = 0;
+    float y = 0;
+    float z = 0;
+
+    std::optional node = scene->selectedNode();
+    if (node.has_value()) {
+        auto pos = node.value()->transform().data()[3]; // last col in mat4
+        x = pos.x;
+        y = pos.y;
+        z = pos.z;
     }
 
-    static float x = 0.0f;
-    static float y = 0.0f;
-    static float z = 0.0f;
-
     if (ImGui::SliderFloat("Translate X", &x, -10.0f, 10.0f)) {
-        m_commandDispatcher.append(std::make_unique<CGL::MoveCommand>(x, y, z));
+        m_commandDispatcher.append(std::make_shared<CGL::MoveCommand>(x, y, z));
     }
 
     if (ImGui::SliderFloat("Translate Y", &y, -10.0f, 10.0f)) {
-        m_commandDispatcher.append(std::make_unique<CGL::MoveCommand>(x, y, z));
+        m_commandDispatcher.append(std::make_shared<CGL::MoveCommand>(x, y, z));
     }
 
     if (ImGui::SliderFloat("Translate Z", &z, -10.0f, 10.0f)) {
-        m_commandDispatcher.append(std::make_unique<CGL::MoveCommand>(x, y, z));
-    }
-
-    static float viewX = m_context.width(), viewY = m_context.height();
-    if (ImGui::SliderFloat("View X", &viewX, 1, 1000)) {
-        // glViewport(0, 0, viewX, viewY);
-    }
-
-    if (ImGui::SliderFloat("View Y", &viewY, 1, 1000)) {
-        // glViewport(0, 0, viewX, viewY);
+        m_commandDispatcher.append(std::make_shared<CGL::MoveCommand>(x, y, z));
     }
 
     ImGui::End();
@@ -118,16 +103,16 @@ void CGL::MainWindow::update()
 
 void CGL::MainWindow::render()
 {
-    m_context.update();
-    update();
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    CGL::UiManager::instance().newFrame();
 
-    if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-    {
-        GLFWwindow* backup_current_context = glfwGetCurrentContext();
-        ImGui::UpdatePlatformWindows();
-        ImGui::RenderPlatformWindowsDefault();
-        glfwMakeContextCurrent(backup_current_context);
-    }
+    // CGL::CoreContext::instance().update();
+
+    UiManager::instance().enableDocking();
+
+    renderScene();
+    renderNodeControlFrame();
+    renderCameraControlFrame();
+    renderSceneControlFrame();
+
+    CGL::UiManager::instance().render();
 }

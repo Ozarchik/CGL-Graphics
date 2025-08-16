@@ -7,8 +7,7 @@
 
 #include <imgui.h>
 #include <imgui_internal.h>
-#include <imgui/bindings/imgui_impl_glfw.h>
-#include <imgui/bindings/imgui_impl_opengl3.h>
+
 
 namespace CGL {
 class MainWindow {
@@ -17,8 +16,13 @@ public:
     ~MainWindow();
 
     void init();
-    void update();
     void render();
+
+private:
+    void renderScene();
+    void renderNodeControlFrame();
+    void renderSceneControlFrame();
+    void renderCameraControlFrame();
 
 private:
     CGL::CoreContext& m_context;
