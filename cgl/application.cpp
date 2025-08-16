@@ -8,6 +8,7 @@
 #include <cgl/core/logger.h>
 #include <cgl/graphics/mesh/common/meshbuilder.h>
 #include <cgl/graphics/material/materialbuilder.h>
+#include <cgl/core/engine.h>
 
 float screenVertices[] = {
     -1.0f,  1.0f,  0.0f, 1.0f,
@@ -31,6 +32,9 @@ CGL::Application::Application(/*int argc, char *argv[]*/)
     , m_mainwindow(m_context, m_commandDispatcher, m_renderer)
     , m_raycast(m_context, m_scene, m_camera)
 {
+    CGL::Engine::instance().setActiveScene(&m_scene);
+    CGL::Engine::instance().setActiveCamera(&m_camera);
+
     CGL_CheckErros();
     CGL::Backtrace::init();
     CGL::ResourceManager::init();
