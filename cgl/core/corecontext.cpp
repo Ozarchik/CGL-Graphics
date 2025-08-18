@@ -79,10 +79,10 @@ CGL::CoreContext::~CoreContext()
 void CGL::CoreContext::init()
 {
     m_depthEnable = false;
-    glDisable(GL_DEPTH);
+    glDisable(GL_DEPTH_TEST);
 
     m_stencilEnable = false;
-    glDisable(GL_STENCIL);
+    glDisable(GL_STENCIL_TEST);
 
     m_depthWriteMode = false;
     glDepthMask(false);
