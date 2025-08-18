@@ -11,12 +11,12 @@ class CommandDispatcher
 public:
     CommandDispatcher(Scene& scene);
 
-    void append(std::unique_ptr<CGL::ICommand> command);
+    void append(std::shared_ptr<CGL::ICommand> command);
     void process();
 
 private:
     CGL::Scene& m_scene;
-    std::queue<std::unique_ptr<CGL::ICommand>> m_queue;
+    std::queue<std::shared_ptr<CGL::ICommand>> m_queue;
 };
 }
 

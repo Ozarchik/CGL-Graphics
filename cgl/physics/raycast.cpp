@@ -43,7 +43,7 @@ void CGL::Raycast::seek(float mouseX, float mouseY)
 
         static int count = 0;
         if (intersectRayAABB(origin, direction, box, t)) {
-            m_scene.setSelectedNode(node);
+            m_scene.setSelectedNode(node.get());
             break;
         }
     }

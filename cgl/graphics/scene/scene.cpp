@@ -7,12 +7,12 @@ CGL::Scene::~Scene()
 
 void CGL::Scene::render(CGL::Camera& camera)
 {
-    for (const auto node: m_nodes) {
+    for (const auto& node: m_nodes) {
         node->update(camera);
     }
 }
 
-void CGL::Scene::append(Node* node)
+void CGL::Scene::append(const std::shared_ptr<Node>& node)
 {
     if (!node)
         return;
@@ -22,10 +22,6 @@ void CGL::Scene::append(Node* node)
 
 void CGL::Scene::clear()
 {
-    for (auto node: m_nodes) {
-        delete node;
-    }
-
     m_nodes.clear();
 }
 
@@ -37,15 +33,15 @@ void CGL::Scene::setSelectedNode(Node *node)
 
 void CGL::Scene::unselectNode()
 {
-    m_selectedNode = nullptr;
+    m_selectedNode = std::nullopt;
 }
 
-CGL::Node *CGL::Scene::selectedNode() const
+std::optional<CGL::Node*> CGL::Scene::selectedNode() const
 {
     return m_selectedNode;
 }
 
-std::vector<CGL::Node*> CGL::Scene::nodes() const
+std::vector<std::shared_ptr<CGL::Node>> CGL::Scene::nodes() const
 {
     return m_nodes;
 }

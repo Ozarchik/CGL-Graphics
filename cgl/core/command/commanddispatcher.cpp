@@ -4,7 +4,7 @@ CGL::CommandDispatcher::CommandDispatcher(CGL::Scene& scene)
     : m_scene(scene)
 {}
 
-void CGL::CommandDispatcher::append(std::unique_ptr<ICommand> command)
+void CGL::CommandDispatcher::append(std::shared_ptr<ICommand> command)
 {
     m_queue.push(std::move(command));
 }

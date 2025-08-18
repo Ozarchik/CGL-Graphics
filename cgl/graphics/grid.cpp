@@ -15,15 +15,7 @@ CGL::Grid::Grid()
         for (int j = 0; j < sideSize; j++) {
             light = !light;
 
-            CGL::Node* node;
-            if (light) {
-                // std::cout << "light" << std::endl;
-                node = new CGL::Node(new CGL::Rectangle(greyLight), m_shader);
-            } else {
-                // std::cout << "dark" << std::endl;
-                node = new CGL::Node(new CGL::Rectangle(greyDark), m_shader);
-            }
-
+            std::shared_ptr<CGL::Node> node = std::make_shared<CGL::Node>(new CGL::Rectangle(greyLight), m_shader);
             m_scene.append(node);
         }
     }
@@ -37,7 +29,7 @@ void CGL::Grid::draw(CGL::Camera& camera, CGL::Transform model)
     m_shader.setMat4("projection", camera.getProjection());
     m_shader.setVec3("viewPos", camera.pos());
 
-    auto nodes = m_scene.nodes();
+    std::vector<std::shared_ptr<Node>> nodes = m_scene.nodes();
     int index = 0;
 
     float gradient = 0.0f;

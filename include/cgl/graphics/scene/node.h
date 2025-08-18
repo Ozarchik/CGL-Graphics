@@ -11,16 +11,18 @@
 
 namespace CGL {
 struct MeshRenderer {
+    MeshRenderer() = default;
+
     MeshRenderer(Mesh* mesh) {
         m_mesh = mesh;
     }
     MeshRenderer(Mesh* mesh, Material material) {
         m_mesh = mesh;
-        m_material = material;
+        m_material = {material};
     }
 
     Mesh* m_mesh;
-    Material m_material;
+    std::vector<Material> m_material;
 };
 
 class Node {
@@ -36,6 +38,7 @@ public:
     void addMesh(CGL::Mesh* mesh);
     void addMesh(CGL::Mesh* mesh, const Material &material);
     void setTransform(const CGL::Transform& transform);
+    Transform transform() const;
     void setPrimitiveType(GLenum type);
 
     CGL::BoundingBox boundingBox() const;
@@ -43,7 +46,7 @@ public:
 
 private:
     Node* m_parent = nullptr;
-    std::vector<MeshRenderer> m_renders;
+    MeshRenderer m_renderer;
     std::vector<Node*> m_childs;
     CGL::Shader& m_shader; // it's tmp solve, need to change to shader_ptr
     CGL::Transform m_transform;

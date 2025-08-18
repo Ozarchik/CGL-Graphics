@@ -65,12 +65,9 @@ CGL::Application::~Application()
 void CGL::Application::createTestObjects()
 {
     CGL::Transform model;
-    CGL::Node* node;
-    CGL::Node* node2;
-    CGL::Node* node3;
 
     model.translateX(10.0f);
-    node = new CGL::Node(m_meshShader, model);
+    std::shared_ptr<CGL::Node> node = std::make_shared<CGL::Node>(m_meshShader, model);
     node->addMesh(
         MeshBuilder
             ::build(MeshBuilder::Cube)
@@ -82,20 +79,18 @@ void CGL::Application::createTestObjects()
     );
     m_scene.append(node);
 
-    node2 = new CGL::Node(m_meshShader, model.translateX(-3.0));
+    std::shared_ptr<CGL::Node> node2 = std::make_shared<CGL::Node>(m_meshShader, model.translateX(-3.0));
     node2->addMesh(
-        MeshBuilder
-            ::build(MeshBuilder::Sphere)
+        MeshBuilder::build(MeshBuilder::Sphere)
             .done(),
-        MaterialBuilder
-            ::build()
+        MaterialBuilder::build()
             .addTexture("planets/earth.bmp")
             .enabled(true)
             .done()
     );
     m_scene.append(node2);
     
-    node3 = new CGL::Node(m_meshShader, model.translateX(3.0));
+    std::shared_ptr<CGL::Node> node3 = std::make_shared<CGL::Node>(m_meshShader, model.translateX(3.0));
     node3->addMesh(
         MeshBuilder
             ::build(MeshBuilder::Rectangle)
@@ -110,26 +105,7 @@ void CGL::Application::createTestObjects()
     
     CGL::Transform scaleTransform;
     scaleTransform.scale(0.5);
-    CGL::Node* modelNode1 = ResourceManager::loadModel("backpack2/backpack.obj");
-    CGL::Node* modelNode2 = ResourceManager::loadModel("backpack2/backpack.obj");
-    if (modelNode1 && modelNode2) {
-        modelNode1->setTransform(scaleTransform);
-        scaleTransform.translateY(10.0f);
-        modelNode2->setTransform(scaleTransform);
-        // modelNode1->addChild(modelNode2);
-        m_scene.append(modelNode1);
-        m_scene.append(modelNode2);
-    }
 }
-
-// void CGL::Application::useScreenFramebuffer()
-// {
-//     m_framebufferShader.use();
-//     m_framebufferShader.setInt("screen", 0);
-//     glBindVertexArray(quadVAO);
-//     glBindTexture(GL_TEXTURE_2D, m_framebuffer.texture());
-//     glDrawArrays(GL_TRIANGLES, 0, 6);
-// }
 
 CGL::Application &CGL::Application::instance()
 {
