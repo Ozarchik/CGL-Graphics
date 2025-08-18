@@ -31,6 +31,8 @@ public:
 
     ~CoreContext();
 
+    void init();
+
     void update();
     void swapBuffers();
 
@@ -79,6 +81,7 @@ private:
     bool m_stencilEnable = false;
     bool m_depthWriteMode = false;
     bool m_vsync = false;
+    bool m_cursorEnabled = false;
 
     BufferCheckFunction m_depthFunction = BufferCheckFunction::Less;
     BufferCheckFunction m_stencilFunction = BufferCheckFunction::Less;

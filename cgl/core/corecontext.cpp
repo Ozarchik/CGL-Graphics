@@ -67,6 +67,8 @@ CGL::CoreContext::CoreContext()
     glfwSetFramebufferSizeCallback(m_window, framebufferSizeCallback);
     glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     glViewport(0, 0, m_width, m_height);
+
+    init();
 }
 
 CGL::CoreContext::~CoreContext()
@@ -74,9 +76,44 @@ CGL::CoreContext::~CoreContext()
 	glfwTerminate();
 }
 
+void CGL::CoreContext::init()
+{
+    m_depthEnable = false;
+    glDisable(GL_DEPTH);
+
+    m_stencilEnable = false;
+    glDisable(GL_STENCIL);
+
+    m_depthWriteMode = false;
+    glDepthMask(false);
+
+    m_vsync = false;
+    glfwSwapInterval(0);
+
+    m_depthFunction = BufferCheckFunction::Less;
+    glDepthFunc(GL_LESS);
+
+    m_stencilMask = 0xff;
+    glStencilMask(0xff);
+
+    m_stencilFunction = BufferCheckFunction::Less;
+    glStencilFunc(GL_LESS, 1, m_stencilMask);
+
+    m_cursorEnabled = false;
+    glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+    m_buffersToClear = BuffersToClear::All;
+    m_backgroundColor = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
+}
+
 void CGL::CoreContext::setCursorEnabled(bool enabled)
 {
-	if (enabled) {
+    if (m_cursorEnabled == enabled)
+        return;
+
+    m_cursorEnabled = enabled;
+
+    if (m_cursorEnabled) {
 		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	} else {
 		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -91,7 +128,6 @@ int CGL::CoreContext::width() const
 void CGL::CoreContext::setWidth(int width)
 {
 	m_width = width;
-    glfwSetWindowSize(m_window, m_width, m_height);
 }
 
 int CGL::CoreContext::height() const
@@ -102,12 +138,16 @@ int CGL::CoreContext::height() const
 void CGL::CoreContext::setHeight(int height)
 {
 	m_height = height;
-    glfwSetWindowSize(m_window, m_width, m_height);
 }
 
 void CGL::CoreContext::setDepthEnable(bool enabled)
 {
-    if (enabled)
+    if (m_depthEnable == enabled)
+        return;
+
+    m_depthEnable = enabled;
+
+    if (m_depthEnable)
         glEnable(GL_DEPTH_TEST);
     else
         glDisable(GL_DEPTH_TEST);
@@ -125,7 +165,12 @@ void CGL::CoreContext::setDepthWriteMode(bool mode)
 
 void CGL::CoreContext::setStencilEnable(bool enabled)
 {
-    if (enabled)
+    if (m_stencilEnable == enabled)
+        return;
+
+    m_stencilEnable = enabled;
+
+    if (m_stencilEnable)
         glEnable(GL_STENCIL_TEST);
     else
         glDisable(GL_STENCIL_TEST);
@@ -133,12 +178,23 @@ void CGL::CoreContext::setStencilEnable(bool enabled)
 
 void CGL::CoreContext::setStencilMask(unsigned char mask)
 {
+
+    if (m_stencilMask == mask)
+        return;
+
     m_stencilMask = mask;
+
+    glStencilMask(m_stencilMask);
+
 }
 
 void CGL::CoreContext::setStencilFunction(BufferCheckFunction function)
 {
+    if (m_stencilFunction == function)
+        return;
+
     m_stencilFunction = function;
+    glStencilFunc(m_stencilFunction, 1, m_stencilMask);
 }
 
 void CGL::CoreContext::setBuffersToClear(const BuffersToClear &buffersToClear)
@@ -177,7 +233,15 @@ GLFWwindow* CGL::CoreContext::handler() const
 
 void CGL::CoreContext::setVsync(bool mode)
 {
+    if (m_vsync == mode)
+        return;
+
     m_vsync = mode;
+
+    if (m_vsync)
+        glfwSwapInterval(1);
+    else
+        glfwSwapInterval(0);
 }
 
 bool CGL::CoreContext::vsync() const
@@ -198,9 +262,6 @@ void CGL::CoreContext::update()
 
     glClearColor(m_backgroundColor.r, m_backgroundColor.g, m_backgroundColor.b, m_backgroundColor.a);
     glClear(m_buffersToClear);
-    glDepthFunc(m_depthFunction);
-    glStencilFunc(m_stencilFunction, 1, 0xff);
-    glStencilMask(m_stencilMask);
 
     calcDeltaTime();
 }
