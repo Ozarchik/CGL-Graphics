@@ -116,10 +116,9 @@ CGL::Application &CGL::Application::instance()
 void CGL::Application::run()
 {
     m_inputController.addSubscriber(&m_raycast);
-    // glfwSwapInterval(1);
-    glfwSwapInterval(0);
 
     while (m_context.isAlive()) {
+        m_context.calcDeltaTime();
         draw();
 	}
 }
@@ -127,12 +126,11 @@ void CGL::Application::run()
 void CGL::Application::draw()
 {
     CGL_CheckErros();
-    m_commandDispatcher.process();
-    m_camera.update();
 
     m_context.update();
 
-    m_mainwindow.init();
+    m_commandDispatcher.process();
+    m_camera.update();
 
     m_renderer.render(m_scene, m_camera);
     m_mainwindow.render();

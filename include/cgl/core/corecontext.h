@@ -64,8 +64,9 @@ public:
     void setVsync(bool mode);
     bool vsync() const;
 
-private:
     void calcDeltaTime();
+
+private:
     CoreContext();
 
 private:

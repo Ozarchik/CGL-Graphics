@@ -262,8 +262,6 @@ void CGL::CoreContext::update()
 
     glClearColor(m_backgroundColor.r, m_backgroundColor.g, m_backgroundColor.b, m_backgroundColor.a);
     glClear(m_buffersToClear);
-
-    calcDeltaTime();
 }
 
 void CGL::CoreContext::swapBuffers()
