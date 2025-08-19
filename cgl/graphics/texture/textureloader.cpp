@@ -1,4 +1,5 @@
 #include <cgl/graphics/texture/textureloader.h>
+#include <iostream>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
@@ -39,11 +40,34 @@ CGL::Texture CGL::TextureLoader::loadFromFile(const std::string &filepath, bool 
     } else {
         std::cout << "Texture failed to load at path: " << filepath << std::endl;
         stbi_image_free(data);
+        return {};
     }
 
     // stbi_set_flip_vertically_on_load(false);
 
-    return {textureID, "", ""};
+    CGL::Texture texture;
+    texture.id = textureID;
+    texture.size = {width, height};
+    return texture;
+}
+
+std::tuple<std::vector<unsigned char>, glm::vec3> CGL::TextureLoader::getSourceData(const std::string &filepath, bool flipVertical)
+{
+    int width, height, nrComponents;
+
+    std::tuple<std::vector<unsigned char>, glm::vec3> result;
+    unsigned char *data = stbi_load(filepath.c_str(), &width, &height, &nrComponents, 0);
+    if (!data)
+        return {};
+
+
+    int bytes = width*height*nrComponents;
+    std::vector<unsigned char> resultData(data, data+bytes);
+    result = {std::move(resultData), glm::vec3(width,height,nrComponents)};
+
+    stbi_image_free(data);
+
+    return result;
 }
 
 unsigned int CGL::TextureLoader::loadCubmap(const std::string &dir, const std::vector<std::string>& faces)
