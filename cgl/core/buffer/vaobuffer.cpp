@@ -4,18 +4,13 @@
 
 CGL::VAOBuffer::VAOBuffer()
 {
-    CGL_CheckErros();
 }
 
 void CGL::VAOBuffer::init()
 {
-    CGL_CheckErros();
     glGenVertexArrays(1, &m_vao);
-    CGL_CheckErros();
     glGenBuffers(1, &m_vbo);
-    CGL_CheckErros();
     glGenBuffers(1, &m_ebo);
-    CGL_CheckErros();
 }
 
 CGL::VAOBuffer::~VAOBuffer()
