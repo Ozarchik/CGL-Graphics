@@ -1,7 +1,7 @@
 #include <cgl/core/corecontext.h>
+#include <cgl/utility/logger.h>
 #include <cgl/application.h>
 #include <iostream>
-
 
 constexpr double aspect = 1200.0/800.0;
 
@@ -99,6 +99,12 @@ void CGL::CoreContext::init()
     m_stencilFunction = BufferCheckFunction::Less;
     glStencilFunc(GL_LESS, 1, m_stencilMask);
 
+    m_cullfaceEnable = true;
+    glEnable(GL_CULL_FACE);
+
+    m_cullfaceMode = CullFaceMode::Front;
+    glCullFace((int)CullFaceMode::Front);
+
     m_cursorEnabled = false;
     glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -140,6 +146,19 @@ void CGL::CoreContext::setHeight(int height)
 	m_height = height;
 }
 
+void CGL::CoreContext::setCullFaceEnable(bool enabled)
+{
+    if (m_cullfaceEnable == enabled)
+        return;
+
+    m_cullfaceEnable = enabled;
+
+    if (m_cullfaceEnable)
+        glEnable(GL_CULL_FACE);
+    else
+        glDisable(GL_CULL_FACE);
+}
+
 void CGL::CoreContext::setDepthEnable(bool enabled)
 {
     if (m_depthEnable == enabled)
@@ -151,6 +170,15 @@ void CGL::CoreContext::setDepthEnable(bool enabled)
         glEnable(GL_DEPTH_TEST);
     else
         glDisable(GL_DEPTH_TEST);
+}
+
+void CGL::CoreContext::setCullFaceMode(CullFaceMode mode)
+{
+    if (m_cullfaceMode == mode)
+        return;
+
+    m_cullfaceMode = mode;
+    glCullFace((int)m_cullfaceMode);
 }
 
 void CGL::CoreContext::setDepthFunction(BufferCheckFunction function)
@@ -178,7 +206,6 @@ void CGL::CoreContext::setStencilEnable(bool enabled)
 
 void CGL::CoreContext::setStencilMask(unsigned char mask)
 {
-
     if (m_stencilMask == mask)
         return;
 
@@ -194,7 +221,7 @@ void CGL::CoreContext::setStencilFunction(BufferCheckFunction function)
         return;
 
     m_stencilFunction = function;
-    glStencilFunc(m_stencilFunction, 1, m_stencilMask);
+    glStencilFunc((int)m_stencilFunction, 1, m_stencilMask);
 }
 
 void CGL::CoreContext::setBuffersToClear(const BuffersToClear &buffersToClear)
@@ -261,7 +288,7 @@ void CGL::CoreContext::update()
         m_alive = false;
 
     glClearColor(m_backgroundColor.r, m_backgroundColor.g, m_backgroundColor.b, m_backgroundColor.a);
-    glClear(m_buffersToClear);
+    glClear((int)m_buffersToClear);
 }
 
 void CGL::CoreContext::swapBuffers()
@@ -272,4 +299,9 @@ void CGL::CoreContext::swapBuffers()
 bool CGL::CoreContext::isAlive()
 {
 	return m_alive;
+}
+
+CGL::CoreContext& CGL::cglCoreContext()
+{
+    return CGL::CoreContext::instance();
 }

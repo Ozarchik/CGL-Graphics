@@ -10,7 +10,7 @@ namespace CGL {
 
 class CoreContext {
 public:
-    enum BuffersToClear {
+    enum class BuffersToClear {
         NoClear = 0,
         Color = GL_COLOR_BUFFER_BIT,
         Depth = GL_DEPTH_BUFFER_BIT,
@@ -18,7 +18,7 @@ public:
         All = Color | Depth | Stecil
     };
 
-    enum BufferCheckFunction {
+    enum class BufferCheckFunction {
         Never = GL_NEVER,
         Always = GL_ALWAYS,
         Equal = GL_EQUAL,
@@ -29,7 +29,18 @@ public:
         GreatEqual = GL_GEQUAL,
     };
 
+    enum class CullFaceMode {
+        Front = GL_FRONT,
+        Back = GL_BACK,
+        All = GL_FRONT_AND_BACK
+    };
+
     ~CoreContext();
+    CoreContext(const CoreContext& other) = delete;
+    CoreContext& operator=(const CoreContext& other) = delete;
+
+    CoreContext(CoreContext&& other) = delete;
+    CoreContext& operator=(CoreContext&& other) = delete;
 
     void init();
 
@@ -44,7 +55,9 @@ public:
 
 	int height() const;
     void setHeight(int height);
-    
+
+    void setCullFaceEnable(bool enabled);
+    void setCullFaceMode(CullFaceMode mode);
     void setStencilEnable(bool enabled);
     void setStencilMask(unsigned char mask);
     void setStencilFunction(BufferCheckFunction function);
@@ -78,6 +91,8 @@ private:
     int m_width = 1200;
     int m_height = 800;
     unsigned char m_stencilMask = 0x00;
+    bool m_cullfaceEnable = false;
+    CullFaceMode m_cullfaceMode = CullFaceMode::Front;
     bool m_depthEnable = false;
     bool m_stencilEnable = false;
     bool m_depthWriteMode = false;
@@ -90,6 +105,8 @@ private:
     glm::vec4 m_backgroundColor;
     float m_deltaTime = 0.0f;
 };
+
+CoreContext& cglCoreContext();
 }
 
 #endif
