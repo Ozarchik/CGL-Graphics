@@ -1,23 +1,24 @@
 #include <cgl/graphics/renderer.h>
+#include <cgl/utility/logger.h>
+#include <cgl/managers/resourcemanager.h>
+#include <glm/glm.hpp>
+#include <cgl/graphics/texture/textureloader.h>
+#include <cgl/graphics/mesh/common/meshbuilder.h>
+#include <cgl/core/buffer/vaobufferbuilder.h>
 
-CGL::Renderer::Renderer(CGL::CoreContext &context)
-    : m_context(context)
-    , m_framebuffer(context)
-{}
-
-void CGL::Renderer::render(Scene &scene, Camera &camera)
+CGL::Renderer::Renderer()
 {
-    m_framebuffer.bind();
-    CGL::Transform model;
-    model.translateY(-15.0f);
-    grid.draw(camera, model);
-    model.translateY(30.0f);
-    grid.draw(camera, model);
-    scene.render(camera);
-    m_framebuffer.unbind();
 }
 
-CGL::FrameBuffer &CGL::Renderer::framebuffer()
+void CGL::Renderer::render(Scene &scene, View &view)
 {
-    return m_framebuffer;
+    view.camera->update();
+    view.framebuffer->bind();
+
+    CGL::Transform model;
+    grid.draw(*view.camera, model.translateY(-15.0f));
+    grid.draw(*view.camera, model.translateY(30.0f));
+    scene.render(*view.camera);
+
+    view.framebuffer->unbind();
 }
