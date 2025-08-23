@@ -1,8 +1,8 @@
 #ifndef CGL_GRID_H
 #define CGL_GRID_H
 
-#include <cgl/graphics/scene/scene.h>
 #include <cgl/core/camera.h>
+#include <cgl/graphics/scene/scene.h>
 #include <cgl/graphics/mesh/3D/cube.h>
 
 namespace CGL {

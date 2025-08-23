@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 #include <cgl/graphics/scene/node.h>
-#include <cgl/graphics/shader.h>
+// #include <cgl/graphics/shader.h>
 #include <cgl/core/camera.h>
 #include <optional>
 

@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <cgl/managers/resourcemanager.h>
+#include <cgl/utility/logger.h>
 
 #define SHADER_LOG_MODE false
 
@@ -94,7 +95,9 @@ std::string CGL::Shader::loadShaderFromFile(const std::string &path)
 
 void CGL::Shader::use()
 {
+    
 	glUseProgram(m_id);
+    
 }
 
 void CGL::Shader::done()
