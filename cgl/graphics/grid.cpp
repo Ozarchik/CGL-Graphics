@@ -2,12 +2,14 @@
 #include <cgl/graphics/mesh/2D/rectangle.h>
 #include <cgl/graphics/texture/textureloader.h>
 #include <cgl/managers/resourcemanager.h>
+#include <cgl/utility/logger.h>
 
 CGL::Grid::Grid()
 {
     m_shader = ResourceManager::loadShader("grid");
     m_lightShader = ResourceManager::loadDefaultShader();
     
+
     glm::vec3 greyLight = glm::vec3(0.2, 0.2, 0.2);
     glm::vec3 greyDark = glm::vec3(0.8, 0.8, 0.8);
     bool light = false;
@@ -41,12 +43,7 @@ void CGL::Grid::draw(CGL::Camera& camera, CGL::Transform model)
             modif.translateX(i/*/8.0f*/);
             modif.translateY(j/*/8.0f*/);
             m_shader.use();
-            // gradient += 0.005;
-            // m_shader.setFloat("gradient", gradient);
-            // glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-            // glPolygonOffset(1, 1);
-            nodes[index]->setPrimitiveType(GL_TRIANGLES);
-            // nodes[index]->setPrimitiveType(GL_LINE_LOOP);
+            nodes[index]->setPrimitiveType(CGL::RenderContext::Primitive::Triangle);
             m_shader.setFloat("gradient", 0.2);
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
             nodes[index]->update(camera, modif);
