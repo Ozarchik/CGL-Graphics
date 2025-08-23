@@ -1,11 +1,13 @@
-#pragma once
+#ifndef CGL_MODELLOADER_H
+#define CGL_MODELLOADER_H
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
 #include <glad/glad.h>
 #include <string>
+#include <memory>
 
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+#include <assimp/Importer.hpp>
 #include <cgl/graphics/shader.h>
 #include <cgl/graphics/texture/texture.h>
 #include <cgl/graphics/mesh/common/mesh.h>
@@ -16,7 +18,7 @@ class Node;
 class ModelLoader {
 public:
     ModelLoader() = default;
-    CGL::Node* load(const std::string& filepath, bool flipUV = false);
+    std::shared_ptr<CGL::Node> load(const std::string& filepath, bool flipUV = false);
 
 private:
     void processNode(const aiScene* scene, aiNode* node, std::vector<CGL::Mesh*>& meshes, std::vector<CGL::Material>& materials);
@@ -26,7 +28,7 @@ private:
     std::vector<CGL::Vertex> loadVertices(aiMesh *mesh);
     std::vector<unsigned int> loadIndices(aiMesh *mesh);
     std::vector<CGL::Texture> loadTextures(const aiScene* scene, aiMesh* mesh);
-    std::vector<CGL::Texture> loadTextures(aiMaterial* material, aiTextureType type, std::string typeName);
+    std::vector<CGL::Texture> loadTextures(aiMaterial* material, aiTextureType assimpType, TextureType cglType);
 
 
 private:
@@ -35,3 +37,5 @@ private:
     std::vector<CGL::Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
 };
 }
+
+#endif

@@ -5,7 +5,7 @@
 #include <cgl/core/rendercontext.h>
 #include <iostream>
 
-CGL::Node* CGL::ModelLoader::load(const std::string& filepath, bool flipUV)
+std::shared_ptr<CGL::Node> CGL::ModelLoader::load(const std::string& filepath, bool flipUV)
 {
     std::cout << "loading model from: " << filepath << std::endl;
     Assimp::Importer importer;
@@ -27,9 +27,8 @@ CGL::Node* CGL::ModelLoader::load(const std::string& filepath, bool flipUV)
     std::vector<CGL::Material> materials;
     processNode(scene, scene->mRootNode, meshes, materials);
 
-    CGL::Transform modelTransform;
     // modelTransform.translateY(2.0f);
-    CGL::Node* node = new CGL::Node(CGL::ResourceManager::loadDefaultModelShader(), modelTransform);
+    auto node = std::make_shared<CGL::Node>(CGL::ResourceManager::loadDefaultModelShader());
     for (int i = 0; i < meshes.size(); i++) // not valid operation, need fix in future
     {
         node->addMesh(meshes[i], materials[i]);
@@ -83,7 +82,7 @@ std::vector<CGL::Vertex> CGL::ModelLoader::loadVertices(aiMesh* mesh)
 
         if (mesh->mTextureCoords[0]) {
             vertex.texcoord.x = mesh->mTextureCoords[0][i].x;
-            vertex.texcoord.y = mesh->mTextureCoords[0][i].y;;
+            vertex.texcoord.y = mesh->mTextureCoords[0][i].y;
         } else {
             vertex.texcoord = glm::vec2(0.0f, 0.0f);
         }
@@ -99,10 +98,10 @@ std::vector<CGL::Texture> CGL::ModelLoader::loadTextures(const aiScene *scene, a
     std::vector<CGL::Texture> textures;
 
     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-    std::vector<CGL::Texture> diffuseMaps = loadTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+    std::vector<CGL::Texture> diffuseMaps = loadTextures(material, aiTextureType_DIFFUSE, CGL::TextureType::Diffuse);
     textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
-    std::vector<CGL::Texture> specularMaps = loadTextures(material, aiTextureType_SPECULAR, "texture_specular");
+    std::vector<CGL::Texture> specularMaps = loadTextures(material, aiTextureType_SPECULAR, CGL::TextureType::Specular);
     textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 
     return textures;
@@ -122,14 +121,14 @@ std::vector<unsigned int> CGL::ModelLoader::loadIndices(aiMesh *mesh)
     return indices;
 }
 
-std::vector<CGL::Texture> CGL::ModelLoader::loadTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
+std::vector<CGL::Texture> CGL::ModelLoader::loadTextures(aiMaterial* mat, aiTextureType assimpType, CGL::TextureType cglType)
 {
     std::vector<CGL::Texture> textures;
 
-    for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
+    for(unsigned int i = 0; i < mat->GetTextureCount(assimpType); i++)
     {
         aiString str;
-        mat->GetTexture(type, i, &str);
+        mat->GetTexture(assimpType, i, &str);
 
         bool skip = false;
 
@@ -144,7 +143,7 @@ std::vector<CGL::Texture> CGL::ModelLoader::loadTextures(aiMaterial* mat, aiText
         if(!skip) {
             std::cout << "load from: " << m_directory + "/" + std::string(str.C_Str()) << std::endl;
             CGL::Texture texture = CGL::TextureLoader::loadFromFile(m_directory + "/" + std::string(str.C_Str()));
-            texture.type = typeName;
+            texture.type = cglType;
             texture.path = str.C_Str();
             textures.push_back(texture);
             textures_loaded.push_back(texture);

@@ -47,25 +47,29 @@ CGL::Texture CGL::TextureLoader::loadFromFile(const std::string &filepath, bool 
 
     CGL::Texture texture;
     texture.id = textureID;
-    texture.size = {width, height};
+    texture.size = {(unsigned int)width, (unsigned int)height};
     return texture;
 }
 
 std::tuple<std::vector<unsigned char>, glm::vec3> CGL::TextureLoader::getSourceData(const std::string &filepath, bool flipVertical)
 {
     int width, height, nrComponents;
-
+    stbi_set_flip_vertically_on_load(true);
     std::tuple<std::vector<unsigned char>, glm::vec3> result;
     unsigned char *data = stbi_load(filepath.c_str(), &width, &height, &nrComponents, 0);
-    if (!data)
+    if (!data) {
+        std::cout << "Texture failed to load at path: " << filepath << std::endl;
+        stbi_image_free(data);
         return {};
+    }
 
-
-    int bytes = width*height*nrComponents;
+    unsigned int bytes = width*height*nrComponents;
     std::vector<unsigned char> resultData(data, data+bytes);
     result = {std::move(resultData), glm::vec3(width,height,nrComponents)};
 
     stbi_image_free(data);
+
+    // result = {data, glm::vec3(width,height,nrComponents)};
 
     return result;
 }
