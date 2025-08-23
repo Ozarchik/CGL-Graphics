@@ -39,7 +39,7 @@ public:
     void addMesh(CGL::Mesh* mesh, const Material &material);
     void setTransform(const CGL::Transform& transform);
     Transform transform() const;
-    void setPrimitiveType(GLenum type);
+    void setPrimitiveType(RenderContext::Primitive type);
 
     CGL::BoundingBox boundingBox() const;
     void update(CGL::Camera& camera, const CGL::Transform& parentTransform = {});

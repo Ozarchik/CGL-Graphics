@@ -1,4 +1,5 @@
 #include <cgl/graphics/scene/node.h>
+#include <cgl/utility/logger.h>
 #include <limits>
 
 CGL::Node::Node(CGL::Mesh* mesh, CGL::Shader& shader, CGL::Transform transform)
@@ -65,7 +66,7 @@ CGL::Transform CGL::Node::transform() const
     return m_transform;
 }
 
-void CGL::Node::setPrimitiveType(GLenum type)
+void CGL::Node::setPrimitiveType(CGL::RenderContext::Primitive type)
 {
     if (m_renderer.m_mesh)
         m_renderer.m_mesh->setPrimitiveType(type);
@@ -110,9 +111,9 @@ void CGL::Node::update(CGL::Camera& camera, const Transform &parentTransform)
     m_shader.setMat4("model", resultTransform);
     m_shader.setMat4("view", camera.getView());
     m_shader.setMat4("projection", camera.getProjection());
-
     for (auto& m: m_renderer.m_material)
         m.draw(m_shader);
+
 
     m_renderer.m_mesh->draw(m_shader);
 
