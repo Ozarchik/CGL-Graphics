@@ -87,7 +87,7 @@ CGL::Shader& CGL::ResourceManager::loadDefaultModelShader()
     return shader;
 }
 
-CGL::Node* CGL::ResourceManager::loadModel(const std::string &name)
+std::shared_ptr<CGL::Node> CGL::ResourceManager::loadModel(const std::string &name)
 {
     CGL::ModelLoader loader;
     return loader.load(m_modelsDirectory + "/" + name);

@@ -2,6 +2,7 @@
 #define CGL_RESOURCEMANAGER_H
 
 #include <string>
+#include <memory>
 #include <cgl/graphics/shader.h>
 #include <cgl/graphics/scene/node.h>
 
@@ -14,7 +15,7 @@ public:
 
     static CGL::Texture loadTexture(const std::string& name);
     static CGL::Shader loadShader(const std::string& name);
-    static CGL::Node* loadModel(const std::string& name);
+    static std::shared_ptr<CGL::Node> loadModel(const std::string& name);
 
     static CGL::Shader& loadDefaultShader();
     static CGL::Shader& loadDefaultModelShader();
