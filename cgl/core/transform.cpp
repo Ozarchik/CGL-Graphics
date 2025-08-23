@@ -11,9 +11,15 @@ CGL::Transform::Transform(const glm::mat4& mat)
 {
 }
 
-void CGL::Transform::reset()
+CGL::Transform CGL::Transform::clone() const
+{
+    return CGL::Transform(m_matrix);
+}
+
+CGL::Transform &CGL::Transform::reset()
 {
     m_matrix = glm::mat4(1.0f);
+    return *this;
 }
 
 CGL::Transform& CGL::Transform::translate(const glm::vec3& pos)
@@ -52,44 +58,60 @@ CGL::Transform &CGL::Transform::inverse()
     return *this;
 }
 
-CGL::Transform CGL::Transform::inversed() const
-{
-    glm::mat4 inversed = glm::inverse(m_matrix);
-    return CGL::Transform(inversed);
-}
-
-void CGL::Transform::scale(float x, float y, float z)
+CGL::Transform& CGL::Transform::scale(float x, float y, float z)
 {
     m_matrix = glm::scale(m_matrix, glm::vec3(x, y, z));
+    return *this;
 }
 
-void CGL::Transform::scale(float val)
+CGL::Transform& CGL::Transform::scale(float val)
 {
     m_matrix = glm::scale(m_matrix, glm::vec3(val, val, val));
+    return *this;
 }
 
-void CGL::Transform::scaleX(float val)
+CGL::Transform& CGL::Transform::scaleX(float val)
 {
     m_matrix = glm::scale(m_matrix, glm::vec3(val, 1.0, 1.0));
+    return *this;
 }
 
-void CGL::Transform::scaleY(float val)
+CGL::Transform& CGL::Transform::scaleY(float val)
 {
     m_matrix = glm::scale(m_matrix, glm::vec3(1.0, val, 1.0));
+    return *this;
 }
 
-void CGL::Transform::scaleZ(float val)
+CGL::Transform& CGL::Transform::scaleZ(float val)
 {
     m_matrix = glm::scale(m_matrix, glm::vec3(1.0, 1.0, val));
+    return *this;
 }
 
-void CGL::Transform::rotate(float angle, float x, float y, float z)
+CGL::Transform &CGL::Transform::rotate(float angle, float x, float y, float z)
 {
     m_matrix = glm::rotate (
         m_matrix,
         glm::radians(angle),
         glm::vec3(x, y, z)                
     );
+
+    return *this;
+}
+
+CGL::Transform &CGL::Transform::rotateX(float angle)
+{
+    return rotate(angle, 1, 0, 0);
+}
+
+CGL::Transform &CGL::Transform::rotateY(float angle)
+{
+    return rotate(angle, 0, 1, 0);
+}
+
+CGL::Transform &CGL::Transform::rotateZ(float angle)
+{
+    return rotate(angle, 0, 0, 1);
 }
 
 void CGL::Transform::ortogonal(float left, float right, float bottom, float top, float near, float far)

@@ -11,13 +11,16 @@ public:
     Transform();
     Transform(const glm::mat4& mat);
 
-    void reset();
+    CGL::Transform clone() const;
 
-    void scale(float x, float y, float z);
-    void scale(float val);
-    void scaleX(float val);
-    void scaleY(float val);
-    void scaleZ(float val);
+    CGL::Transform& reset();
+    CGL::Transform& scale(float val);
+    CGL::Transform& scale(float x, float y, float z);
+    CGL::Transform& scaleX(float val);
+    CGL::Transform& scaleY(float val);
+    CGL::Transform& scaleZ(float val);
+
+    CGL::Transform& inverse();
 
     CGL::Transform& translate(const glm::vec3& pos);
     CGL::Transform& translate(float x, float y, float z);
@@ -25,9 +28,10 @@ public:
     CGL::Transform& translateY(float val);
     CGL::Transform& translateZ(float val);
 
-    CGL::Transform& inverse();
-    CGL::Transform inversed() const;
-    void rotate(float angle, float x, float y, float z);
+    CGL::Transform& rotate(float angle, float x, float y, float z);
+    CGL::Transform& rotateX(float angle);
+    CGL::Transform& rotateY(float angle);
+    CGL::Transform& rotateZ(float angle);
 
     static Transform makeOrtogonal(float left, float right, float bottom, float top, float near, float far);
     static Transform makePerspective(float fov, float ratio, float near, float far);
