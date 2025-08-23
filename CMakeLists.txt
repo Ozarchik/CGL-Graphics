@@ -11,6 +11,7 @@ find_package(imgui REQUIRED)
 file(GLOB sources
     "cgl/*.cpp"
     "cgl/core/*.cpp"
+    "cgl/core/buffer/*.cpp"
     "cgl/core/command/*.cpp"
     "cgl/core/event/*.cpp"
     "cgl/graphics/*.cpp"
@@ -26,6 +27,7 @@ file(GLOB sources
     "cgl/ui/*.cpp"
     "cgl/physics/*.cpp"
     "cgl/tools/backtrace/*.cpp"
+    "cgl/utility/*.cpp"
     # "examples/*.cpp"
 )
 
@@ -34,6 +36,7 @@ file(GLOB headers
     "include/cgl/core/*.h"
     "include/cgl/core/command/*.h"
     "include/cgl/core/event/*.h"
+    "include/cgl/core/buffer/*.h"
     "include/cgl/graphics/*.h"
     "include/cgl/graphics/mesh/2D/*.h"
     "include/cgl/graphics/mesh/3D/*.h"
@@ -47,6 +50,7 @@ file(GLOB headers
     "include/cgl/managers/*.h"
     "include/cgl/ui/*.h"
     "include/cgl/physics/*.h"
+    "include/cgl/utility/*.h"
     # "examples/*.h"
 )
 
