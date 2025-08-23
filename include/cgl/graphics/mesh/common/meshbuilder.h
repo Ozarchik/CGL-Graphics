@@ -9,21 +9,24 @@ namespace CGL {
 class MeshBuilder
 {
 public:
-    enum MeshType {
+    enum class MeshType {
+        Mesh,
         Rectangle,
+        Terrain,
         Sphere,
         Cube,
-        Line,
-        UserDefine
+        Line
     };
-
 
     static MeshBuilder build(MeshType meshType);
 
     MeshBuilder& bind();
     MeshBuilder& addVertices(const std::vector<Vertex>& vertices);
     MeshBuilder& addIndices(const std::vector<unsigned int>& indices);
+    MeshBuilder& setPrimitiveData(PrimitiveData data);
     Mesh* done();
+
+    CGL::MeshBuilder &setVAO(VAOBuffer &&vao);
 
 private:
     MeshBuilder(const MeshType &meshType);
@@ -31,7 +34,7 @@ private:
 private:
     MeshType m_meshType;
     MeshBuffer m_buffer;
-    Mesh* m_mesh;
+    Mesh* m_mesh = nullptr;
 };
 }
 

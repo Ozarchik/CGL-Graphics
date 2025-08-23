@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CGL_MESH_H
+#define CGL_MESH_H
 
 #include <glad/glad.h>
 
@@ -29,10 +30,13 @@ public:
     virtual void draw(Shader& Shader);
     virtual CGL::BoundingBox boundingBox() const;
 
-    void setPrimitiveType(GLenum type);
+    void setPrimitiveData(PrimitiveData data);
+    void setPrimitiveType(RenderContext::Primitive type);
 
 protected:
     CGL::MeshBuffer m_buffer;
     CGL::PrimitiveData m_primitiveData;
 };
 }
+
+#endif

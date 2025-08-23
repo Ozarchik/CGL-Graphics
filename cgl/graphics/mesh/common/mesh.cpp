@@ -9,11 +9,6 @@ CGL::Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned 
     m_primitiveData.offset = 0;
 }
 
-void CGL::Mesh::setPrimitiveType(GLenum type)
-{
-    // m_primitiveType = type;
-}
-
 void CGL::Mesh::setup()
 {
 
@@ -41,4 +36,14 @@ CGL::BoundingBox CGL::Mesh::boundingBox() const
     }
 
     return box;
+}
+
+void CGL::Mesh::setPrimitiveData(PrimitiveData data)
+{
+    m_primitiveData = data;
+}
+
+void CGL::Mesh::setPrimitiveType(CGL::RenderContext::Primitive type)
+{
+    m_primitiveData.type = type;
 }

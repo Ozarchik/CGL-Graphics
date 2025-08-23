@@ -2,6 +2,7 @@
 #define CGL_MESHBUFFER_H
 
 #include <vector>
+#include <cgl/core/buffer/vaobuffer.h>
 #include <cgl/graphics/vertex/vertex.h>
 #include <cgl/graphics/shader.h>
 
@@ -18,15 +19,14 @@ public:
     void bind(CGL::Shader* shader = nullptr);
     void unbind();
 
-private:
-    void setVertices(const std::vector<CGL::Vertex>& vertices);
-    void setIndices(const std::vector<unsigned int>& indices);
+    void setVAO(VAOBuffer&& vao);
 
 public:
     // CGL::PrimitiveData m_primitive;
     std::vector<CGL::Vertex> m_vertices;
     std::vector<unsigned int> m_indices;
 
+    CGL::VAOBuffer m_vao;
     unsigned int vao, vbo, ebo;
 };
 }

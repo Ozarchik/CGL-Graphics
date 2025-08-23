@@ -13,13 +13,17 @@ static const std::vector<unsigned int> sphIndices = genSphereIndices();
 CGL::Sphere::Sphere()
     : Mesh(sphVertices, sphIndices)
 {
+    m_primitiveData.type = CGL::RenderContext::Triangle;
+    m_primitiveData.drawType = CGL::RenderContext::Indexes;
 }
 
 void CGL::Sphere::draw(Shader &shader)
 {
+    shader.use();
     m_buffer.bind();
-    glDrawElements(GL_TRIANGLES, m_buffer.m_indices.size(), GL_UNSIGNED_INT, 0);
+    CGL::RenderContext::instance().render(m_primitiveData);
     m_buffer.unbind();
+    shader.done();
 }
 
 std::vector<CGL::Vertex> genSphereVertices()
