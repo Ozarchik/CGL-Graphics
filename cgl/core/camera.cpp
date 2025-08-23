@@ -1,8 +1,8 @@
 #include <cgl/core/camera.h>
 #include <iostream>
 
-CGL::Camera::Camera(CGL::CoreContext& context)
-    : m_context(context), m_fov(45.0)
+CGL::Camera::Camera()
+    : m_fov(45.0)
 {
     // m_front = glm::vec3(0.0f, 0.0f, -1.0f);
     m_worldUp = m_up;
@@ -32,7 +32,7 @@ CGL::Transform CGL::Camera::getView()
 
 CGL::Transform CGL::Camera::getProjection()
 {
-    return CGL::Transform::makePerspective(m_fov, m_context.aspect(), 0.1f, 100.0f);
+    return CGL::Transform::makePerspective(m_fov, cglCoreContext().aspect(), 0.1f, 100000.0f);
 }
 
 void CGL::Camera::correctSpeed(float coeff)
@@ -52,7 +52,7 @@ float CGL::Camera::speed() const
 
 void CGL::Camera::update()
 {
-    correctSpeed(m_context.deltaTime());
+    correctSpeed(cglCoreContext().deltaTime());
 }
 
 void CGL::Camera::setPos(glm::vec3 pos)

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CGL_CAMERA_H
+#define CGL_CAMERA_H
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -12,7 +13,7 @@
 namespace CGL {
 class Camera: public CGL::Object {
 public:
-    Camera(CGL::CoreContext& context);
+    Camera();
 
     void setFov(float fov);
     float fov() const;
@@ -75,6 +76,7 @@ private:
     float m_speed = 5.5f;
 
     bool m_rotateMode = true;
-    CGL::CoreContext& m_context;
 };
 }
+
+#endif
