@@ -1,5 +1,6 @@
 #include <cgl/graphics/material/material.h>
 #include <glad/glad.h>
+#include <format>
 
 CGL::Material::Material()
     : m_enabled(false)
@@ -23,23 +24,27 @@ void CGL::Material::draw(CGL::Shader& shader) {
         glActiveTexture(GL_TEXTURE0 + i);
 
         CGL::Texture texture = m_textures[i];
-        std::string number;
-        std::string name = texture.type;
+        std::string samplerName;
 
-        if(name == "texture_diffuse")
-            number = std::to_string(diffuseNr++);
-        else if(name == "texture_specular")
-            number = std::to_string(specularNr++);
-        else if(name == "texture_normal")
-            number = std::to_string(normalNr++);
-        else if(name == "texture_height")
-            number = std::to_string(heightNr++);
-        else {
-            name = "texture_diffuse";
-            number = std::to_string(diffuseNr++);
+        switch (texture.type) {
+        case CGL::TextureType::Diffuse: {
+            samplerName = std::format("texture_diffuse{}", diffuseNr++);
+        } break;
+        case CGL::TextureType::Specular: {
+            samplerName = std::format("texture_specular{}", specularNr++);
+        } break;
+        case CGL::TextureType::Normal: {
+            samplerName = std::format("texture_normal{}", normalNr++);
+        } break;
+        case CGL::TextureType::Height: {
+            samplerName = std::format("texture_height{}", heightNr++);
+        } break;
+        default: {
+            samplerName = std::format("texture_height{}", heightNr++);
+        }
         }
 
-        shader.setInt((name + number).c_str(), i);
+        shader.setInt(samplerName, i);
 
         glBindTexture(GL_TEXTURE_2D, m_textures[i].id);
     }
