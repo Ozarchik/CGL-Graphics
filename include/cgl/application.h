@@ -1,7 +1,6 @@
 #ifndef CGL_APPLICATION_H
 #define CGL_APPLICATION_H
 
-#include <iostream>
 #include <cmath>
 
 #include <cgl/core/camera.h>
@@ -32,19 +31,16 @@ public:
     void run();
     void draw();
     void createTestObjects();
-    // void useScreenFramebuffer();
+    void createTerrainExample();
 
     static Application& instance();
 
 private:
-    static CGL::CoreContext& m_context;
     CGL::Scene m_scene;
 
     CGL::InputController m_inputController;
 
     CGL::Shader m_meshShader;
-    CGL::Camera m_camera;
-
     CGL::MainWindow m_mainwindow;
     CGL::CommandDispatcher m_commandDispatcher;
     CGL::Raycast m_raycast;
