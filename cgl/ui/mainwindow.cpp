@@ -2,15 +2,15 @@
 #include <imconfig.h>
 #include <imgui.h>
 
-#include <cgl/core/logger.h>
+#include <cgl/utility/logger.h>
 #include <cgl/core/command/commanddispatcher.h>
 #include <cgl/core/command/commands.h>
 #include <cgl/managers/uimanager.h>
 #include <glad/glad.h>
 #include <cgl/core/engine.h>
 
-CGL::MainWindow::MainWindow(CoreContext &context, CommandDispatcher& commandDispatcher, Renderer &renderer)
-    : m_context(context), m_commandDispatcher(commandDispatcher), m_renderer(renderer)
+CGL::MainWindow::MainWindow(CommandDispatcher& commandDispatcher, Renderer &renderer)
+    : m_commandDispatcher(commandDispatcher), m_renderer(renderer)
 {
     CGL::UiManager::instance().init();
 }
@@ -27,39 +27,39 @@ void CGL::MainWindow::init()
 
 void CGL::MainWindow::renderCameraControlFrame()
 {
-    ImGui::Begin("Camera control");
+    ImGui::BeginChild("Camera control", ImVec2(400, 200), ImGuiChildFlags_Border | ImGuiChildFlags_ResizeX | ImGuiChildFlags_ResizeY);
 
-    CGL::Camera* camera = CGL::Engine::instance().activeCamera();
+    CGL::Camera* camera = cglEngine().activeCamera();
 
     float fov = camera->fov();
     ImGui::SliderFloat("Fov", &fov, 0, 90.0f);
 
     camera->setFov(fov);
 
-    ImGui::End();
+    ImGui::EndChild();
 }
 
 void CGL::MainWindow::renderSceneControlFrame()
 {
-    ImGui::Begin("Scene control");
+    ImGui::BeginChild("Scene control", ImVec2(400, 200), ImGuiChildFlags_Border | ImGuiChildFlags_ResizeX | ImGuiChildFlags_ResizeY);
 
-    CGL::Scene* scene = CGL::Engine::instance().activeScene();
+    // CGL::Scene* scene = cglEngine().activeScene();
 
-    ImGui::End();
+    ImGui::EndChild();
 }
 
 void CGL::MainWindow::renderScene()
 {
     ImGui::Begin("3D scene");
 
-    float imguiWindowWidth = m_context.width();
-    float imguiWindowHeight = m_context.height();
+    float imguiWindowWidth = cglCoreContext().width();
+    float imguiWindowHeight = cglCoreContext().height();
 
     ImVec2 pos = ImGui::GetCursorScreenPos();
     pos.x += (ImGui::GetContentRegionAvail().x - imguiWindowWidth)/2.0f;
     pos.y += (ImGui::GetContentRegionAvail().y - imguiWindowHeight)/2.0f;
     ImGui::GetWindowDrawList()->AddImage(
-        m_renderer.framebuffer().texture(),
+        cglEngine().views().front().framebuffer->texture(),
         ImVec2(pos.x, pos.y),
         ImVec2(pos.x + imguiWindowWidth, pos.y + imguiWindowHeight),
         ImVec2(0, 1),
@@ -70,9 +70,9 @@ void CGL::MainWindow::renderScene()
 
 void CGL::MainWindow::renderNodeControlFrame()
 {
-    ImGui::Begin("Node control", nullptr);
+    ImGui::BeginChild("Node control", ImVec2(400, 200), ImGuiChildFlags_Border | ImGuiChildFlags_ResizeX | ImGuiChildFlags_ResizeY);
 
-    CGL::Scene* scene = CGL::Engine::instance().activeScene();
+    CGL::Scene* scene = cglEngine().activeScene();
 
     float x = 0;
     float y = 0;
@@ -98,21 +98,22 @@ void CGL::MainWindow::renderNodeControlFrame()
         m_commandDispatcher.append(std::make_shared<CGL::MoveCommand>(x, y, z));
     }
 
-    ImGui::End();
+    ImGui::EndChild();
 }
 
 void CGL::MainWindow::render()
 {
     CGL::UiManager::instance().newFrame();
 
-    // CGL::CoreContext::instance().update();
-
     UiManager::instance().enableDocking();
 
     renderScene();
+
+    ImGui::Begin("Tools");
     renderNodeControlFrame();
     renderCameraControlFrame();
     renderSceneControlFrame();
+    ImGui::End();
 
     CGL::UiManager::instance().render();
 }

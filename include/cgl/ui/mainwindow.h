@@ -12,7 +12,7 @@
 namespace CGL {
 class MainWindow {
 public:
-    MainWindow(CGL::CoreContext& context, CommandDispatcher& commandDispatcher, CGL::Renderer& renderer);
+    MainWindow(CommandDispatcher& commandDispatcher, CGL::Renderer& renderer);
     ~MainWindow();
 
     void init();
@@ -25,7 +25,6 @@ private:
     void renderCameraControlFrame();
 
 private:
-    CGL::CoreContext& m_context;
     CGL::Renderer& m_renderer;
     CGL::CommandDispatcher& m_commandDispatcher;
 };
