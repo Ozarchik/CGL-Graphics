@@ -1,12 +1,24 @@
-#pragma once
+#ifndef CGL_TEXTURE_H
+#define CGL_TEXTURE_H
 
 #include <string>
-#include <iostream>
+#include <glm/glm.hpp>
 
 namespace CGL {
+
+enum class TextureType {
+    Diffuse,
+    Specular,
+    Normal,
+    Height
+};
+
 struct Texture {
     unsigned int id = -1;
-    std::string type = "";
+    TextureType type = TextureType::Diffuse;
     std::string path = "";
+    glm::vec2 size;
 };
 }
+
+#endif
