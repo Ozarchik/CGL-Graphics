@@ -3,8 +3,8 @@
 #include <iostream>
 #include <cmath>
 
-CGL::Raycast::Raycast(CGL::CoreContext &context, CGL::Scene& scene, CGL::Camera& camera)
-    : m_context(context), m_scene(scene), m_camera(camera)//, m_rayline(m_camera)
+CGL::Raycast::Raycast(CGL::Scene& scene, CGL::Camera& camera)
+    : m_scene(scene), m_camera(camera)//, m_rayline(m_camera)
 {
 
 }
@@ -13,8 +13,8 @@ CGL::Raycast::Raycast(CGL::CoreContext &context, CGL::Scene& scene, CGL::Camera&
 void CGL::Raycast::seek(float mouseX, float mouseY)
 {
     glm::vec4 ray_ndc;
-    ray_ndc.x = (2.0f * mouseX) / (m_context.width()) - 1.0f;
-    ray_ndc.y = 1.0f - (2.0f * mouseY) / m_context.height();
+    ray_ndc.x = (2.0f * mouseX) / (CGL::CoreContext::instance().width()) - 1.0f;
+    ray_ndc.y = 1.0f - (2.0f * mouseY) / CGL::CoreContext::instance().height();
     ray_ndc.z = -1.0f;
     ray_ndc.w = 1.0f;
 
@@ -95,7 +95,7 @@ void CGL::Raycast::mouseEventHandler(const MouseEvent &event)
         GLint data[4];
         glGetIntegerv(GL_VIEWPORT, data);
         int w, h;
-        glfwGetWindowSize(m_context.handler(), &w, &h);
+        glfwGetWindowSize(CGL::CoreContext::instance().handler(), &w, &h);
         std::cout << "window: (" << w << ", " << h << ")" << std::endl;
         std::cout << "viewport: (" << data[0] << ", " << data[1] << ") (" << data[2] << ", " << data[3] << ")" << std::endl;
         std::cout << "mouse pos: (" << event.x() << ", " << event.y() << ")" << std::endl;

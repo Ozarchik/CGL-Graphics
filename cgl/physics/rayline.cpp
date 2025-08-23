@@ -30,11 +30,7 @@ void CGL::RayLine::update(glm::vec3 origin, glm::vec3 direction, float length)
 {
     line[0] = origin;
     line[1] = origin + direction * length;
-    // line[0].z -= 0.1f;
 
-    // glm::vec3 line[] = { from, to };
-    // std::swap(line[0].x, line[1].x);
-    // std::swap(line[0].y, line[1].y);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(line), line);
 }
