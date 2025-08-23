@@ -15,14 +15,9 @@ void CGL::VAOBuffer::init()
 
 CGL::VAOBuffer::~VAOBuffer()
 {
-    // std::cout << "VAO destruct begin" << std::endl;
-    // std::cout << "vao: " << m_vao << std::endl;
-    // std::cout << "vbo: " << m_vbo << std::endl;
-    // std::cout << "ebo: " << m_ebo << std::endl;
-    // glDeleteVertexArrays(1, &m_vao);
-    // glDeleteBuffers(1, &m_vbo);
-    // glDeleteBuffers(1, &m_ebo);
-    // std::cout << "VAO destruct end" << std::endl;
+    glDeleteVertexArrays(1, &m_vao);
+    glDeleteBuffers(1, &m_vbo);
+    glDeleteBuffers(1, &m_ebo);
 }
 
 void CGL::VAOBuffer::reset()
