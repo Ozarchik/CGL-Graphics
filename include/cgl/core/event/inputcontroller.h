@@ -11,7 +11,7 @@ namespace CGL {
 class InputController
 {
 public:
-    InputController(CGL::CoreContext* window, CGL::Camera* camera);
+    InputController(CGL::Camera* camera);
 
     void process();
     bool isKeySpacePressed() const;
@@ -29,7 +29,6 @@ private:
 
 private:
     inline static GLFWwindow* winHandler;
-    CGL::CoreContext* m_context;
     bool keySpacePressed = false;
     inline static std::vector<CGL::Object*> m_objects;
     inline static double m_mouseX, m_mouseY;

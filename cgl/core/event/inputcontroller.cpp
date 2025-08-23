@@ -3,12 +3,10 @@
 
 CGL::InputController::InputController
 (
-    CGL::CoreContext* context,
     CGL::Camera* camera
 )
-    : m_context(context)
 {
-    winHandler = context->handler();
+    winHandler = CGL::CoreContext::instance().handler();
     addSubscriber(camera);
 
     glfwSetKeyCallback(winHandler, &CGL::InputController::keyCallback);
