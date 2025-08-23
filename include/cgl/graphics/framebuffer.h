@@ -7,7 +7,7 @@ namespace CGL {
 class FrameBuffer
 {
 public:
-    FrameBuffer(CGL::CoreContext& context);
+    FrameBuffer();
     ~FrameBuffer();
 
     void bind();
@@ -16,12 +16,13 @@ public:
     void rescale(int width, int height);
     unsigned int texture() const;
 
-private:
-    unsigned int m_fbo, m_rbo;
-    unsigned int m_vao, m_vbo;
-    unsigned int m_texture;
+    void bindDefaultFramebuffer();
+    void bindCustomFramebuffer();
 
-    CGL::CoreContext& m_context;
+private:
+    unsigned int m_currentFramebuffer = 0;
+    unsigned int m_fbo, m_rbo;
+    unsigned int m_texture;
 };
 }
 
