@@ -3,5 +3,6 @@
 
 #include <cgl/graphics/mesh/3D/cube.h>
 #include <cgl/graphics/mesh/3D/sphere.h>
+#include <cgl/graphics/mesh/3D/terrain.h>
 
 #endif
