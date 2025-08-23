@@ -2,6 +2,9 @@
 #define CGL_ENGINE_H
 
 #include <cgl/graphics/scene/scene.h>
+#include <cgl/graphics/framebuffer.h>
+#include <cgl/core/camera.h>
+
 
 namespace CGL {
 struct View {
@@ -23,6 +26,11 @@ public:
     std::vector<View>& views();
 
     static Engine& instance();
+    Engine(const Engine& other) = delete;
+    Engine& operator=(const Engine& other) = delete;
+
+    Engine(Engine&& other) = delete;
+    Engine& operator=(Engine&& other) = delete;
 
 private:
     Engine();
@@ -32,6 +40,9 @@ private:
     Camera* m_camera = nullptr;
     Scene* m_scene = nullptr;
 };
+
+Engine& cglEngine();
+
 }
 
 #endif // CGL_ENGINE_H

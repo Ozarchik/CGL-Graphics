@@ -1,4 +1,5 @@
 #include <cgl/core/engine.h>
+#include <cgl/utility/logger.h>
 
 CGL::Engine &CGL::Engine::instance()
 {
@@ -10,6 +11,11 @@ void CGL::Engine::setActiveScene(Scene *scene)
 {
     assert(scene);
     m_scene = scene;
+}
+
+CGL::Scene *CGL::Engine::activeScene() const
+{
+    return m_scene;
 }
 
 void CGL::Engine::addView()
@@ -33,6 +39,7 @@ void CGL::Engine::setActiveCamera(Camera *camera)
     m_camera = camera;
 }
 
+
 CGL::Camera *CGL::Engine::activeCamera() const
 {
     return m_camera;
@@ -44,4 +51,7 @@ CGL::Engine::Engine()
     setActiveCamera(m_views.front().camera.get());
 }
 
-CGL::Engine::Engine() {}
+CGL::Engine &CGL::cglEngine()
+{
+    return Engine::instance();
+}
