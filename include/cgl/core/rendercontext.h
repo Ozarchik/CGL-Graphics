@@ -33,6 +33,8 @@ public:
 
     static RenderContext& instance();
 
+    void setPolygoneMode(int mode);
+
 private:
     RenderContext();
     std::unordered_map<Primitive, int> m_primitiveMap;

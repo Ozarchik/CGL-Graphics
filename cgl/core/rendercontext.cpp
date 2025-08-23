@@ -14,6 +14,11 @@ CGL::RenderContext::RenderContext()
     m_primitiveMap[TriangleFan] = GL_TRIANGLE_FAN;
 }
 
+void CGL::RenderContext::setPolygoneMode(int mode)
+{
+    glPolygonMode(GL_FRONT_AND_BACK, mode);
+}
+
 void CGL::RenderContext::render(const PrimitiveData &data)
 {
     switch (data.drawType) {
