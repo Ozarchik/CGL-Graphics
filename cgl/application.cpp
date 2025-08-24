@@ -13,9 +13,9 @@
 
 CGL::Application::Application(/*int argc, char *argv[]*/)
     : m_commandDispatcher(m_scene)
-    , m_inputController(cglEngine().activeCamera())
+    , m_inputController()
     , m_mainwindow(m_commandDispatcher, m_renderer)
-    , m_raycast(m_scene, *cglEngine().activeCamera())
+    , m_raycast(m_scene)
 {
     cglEngine().setActiveScene(&m_scene);
     // cglEngine().addView();

@@ -1,13 +1,9 @@
 #include <cgl/core/event/inputcontroller.h>
-#include <iostream>
+#include <cgl/core/engine.h>
 
-CGL::InputController::InputController
-(
-    CGL::Camera* camera
-)
+CGL::InputController::InputController()
 {
     winHandler = CGL::CoreContext::instance().handler();
-    addSubscriber(camera);
 
     glfwSetKeyCallback(winHandler, &CGL::InputController::keyCallback);
     glfwSetCursorPosCallback(winHandler, &CGL::InputController::mouseCallback);
@@ -88,6 +84,8 @@ void CGL::InputController::keyNotify(KeyType type, KeyAction action, KeyModifier
     for (auto obj: m_objects) {
         obj->keyEventHandler(KeyEvent(type, action, modifier));
     }
+
+    cglEngine().activeCamera()->keyEventHandler(KeyEvent(type, action, modifier));
 }
 
 void CGL::InputController::mouseNotify(int dx, int dy, CGL::MouseState state)
@@ -95,6 +93,8 @@ void CGL::InputController::mouseNotify(int dx, int dy, CGL::MouseState state)
     for (auto obj: m_objects) {
         obj->mouseEventHandler(MouseEvent(dx, dy, state));
     }
+
+    cglEngine().activeCamera()->mouseEventHandler(MouseEvent(dx, dy, state));
 }
 
 void CGL::InputController::wheelNotify(double dx, double dy, MouseWheelState state)

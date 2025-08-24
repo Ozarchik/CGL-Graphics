@@ -1,10 +1,11 @@
 #include <cgl/physics/raycast.h>
+#include <cgl/core/engine.h>
 #include <glm/glm.hpp>
 #include <iostream>
 #include <cmath>
 
-CGL::Raycast::Raycast(CGL::Scene& scene, CGL::Camera& camera)
-    : m_scene(scene), m_camera(camera)//, m_rayline(m_camera)
+CGL::Raycast::Raycast(CGL::Scene& scene)
+    : m_scene(scene)
 {
 
 }
@@ -21,19 +22,19 @@ void CGL::Raycast::seek(float mouseX, float mouseY)
     // 3. Get camera coords
     // eye = inverse(projection) * ray_ndc
     // eye = vec4(eye.xy, -1.0, 0.0)
-    glm::vec4 eye = glm::inverse(m_camera.getProjection().data()) * ray_ndc;
+    glm::vec4 eye = glm::inverse(cglEngine().activeCamera()->getProjection().data()) * ray_ndc;
     eye = glm::vec4(eye.x, eye.y, -1.0f, 0.0f);
 
 
     // 4. Get world coords
     // world = (inverse(view) * eye).xyz
     // world = normalize(world)
-    glm::vec3 direction = glm::inverse(m_camera.getView().data()) * eye; // vec4 -> vec3 check conversion
+    glm::vec3 direction = glm::inverse(cglEngine().activeCamera()->getView().data()) * eye; // vec4 -> vec3 check conversion
     direction = glm::normalize(direction);
-    glm::vec3 origin = m_camera.pos();
+    glm::vec3 origin = cglEngine().activeCamera()->pos();
 
 
-    m_raylines.push_back(m_camera);
+    m_raylines.push_back(*cglEngine().activeCamera());
     m_raylines.back().update(origin, direction);
 
     for (auto& node: m_scene.nodes()) {

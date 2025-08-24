@@ -11,7 +11,7 @@ namespace CGL {
 class InputController
 {
 public:
-    InputController(CGL::Camera* camera);
+    InputController();
 
     void process();
     bool isKeySpacePressed() const;

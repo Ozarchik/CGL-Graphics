@@ -9,7 +9,7 @@
 namespace CGL {
 class Raycast: public CGL::Object {
 public:
-    Raycast(CGL::Scene& scene, CGL::Camera& camera);
+    Raycast(CGL::Scene& scene);
 
     void seek(float mouseX, float mouseY);
     void draw();
@@ -23,7 +23,6 @@ private:
 
 private:
     CGL::Scene& m_scene;
-    CGL::Camera& m_camera;
     std::vector<CGL::RayLine> m_raylines;
 };
 }
