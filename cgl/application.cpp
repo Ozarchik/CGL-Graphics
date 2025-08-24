@@ -10,19 +10,6 @@
 #include <cgl/graphics/material/materialbuilder.h>
 #include <cgl/core/engine.h>
 #include <cgl/core/buffer/vaobufferbuilder.h>
-#include <iostream>
-
-float screenVertices[] = {
-    -1.0f,  1.0f,  0.0f, 1.0f,
-    -1.0f, -1.0f,  0.0f, 0.0f,
-    1.0f, -1.0f,  1.0f, 0.0f,
-
-    -1.0f,  1.0f,  0.0f, 1.0f,
-    1.0f, -1.0f,  1.0f, 0.0f,
-    1.0f,  1.0f,  1.0f, 1.0f
-};
-
-unsigned int quadVAO, quadVBO;
 
 CGL::Application::Application(/*int argc, char *argv[]*/)
     : m_commandDispatcher(m_scene)
@@ -36,15 +23,7 @@ CGL::Application::Application(/*int argc, char *argv[]*/)
     m_meshShader = CGL::ResourceManager::loadDefaultShader();
     // createTestObjects();
 
-    glGenVertexArrays(1, &quadVAO);
-    glGenBuffers(1, &quadVBO);
-    glBindVertexArray(quadVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(screenVertices), &screenVertices, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+    createTestObjects();
 }
 
 CGL::Application::~Application()
@@ -100,83 +79,6 @@ CGL::Application &CGL::Application::instance()
     static Application app;
     return app;
 }
-
-CGL::Shader heightMapShader;
-GLuint terrainVAO, terrainVBO, terrainEBO;
-// int numStrips;
-// int numTrisPerStrip;
-// void createTerrain()
-// {
-//     heightMapShader = CGL::ResourceManager::loadShader("cpuheight");
-//     // The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
-//     stbi_set_flip_vertically_on_load(true);
-//     int width, height, nrChannels;
-//     unsigned char *data = stbi_load("D:/MyPrivateProjects/CGL-Graphics/textures/heightmap/default.jpg", &width, &height, &nrChannels, 0);
-//     if (data)
-//     {
-//         std::cout << "Loaded heightmap of size " << height << " x " << width << std::endl;
-//     }
-//     else
-//     {
-//         std::cout << "Failed to load texture" << std::endl;
-//     }
-
-//     std::vector<float> vertices;
-//     float yScale = 64.0f / 256.0f, yShift = 16.0f;
-//     int rez = 1;
-//     unsigned bytePerPixel = nrChannels;
-//     for(int i = 0; i < height; i++)
-//     {
-//         for(int j = 0; j < width; j++)
-//         {
-//             unsigned char* pixelOffset = data + (j + width * i) * bytePerPixel;
-//             unsigned char y = pixelOffset[0];
-
-//             // vertex
-//             vertices.push_back( -height/2.0f + height*i/(float)height );   // vx
-//             vertices.push_back( (int) y * yScale - yShift);   // vy
-//             vertices.push_back( -width/2.0f + width*j/(float)width );   // vz
-//         }
-//     }
-//     std::cout << "Loaded " << vertices.size() / 3 << " vertices" << std::endl;
-//     stbi_image_free(data);
-
-//     std::vector<unsigned> indices;
-//     for(unsigned i = 0; i < height-1; i += rez)
-//     {
-//         for(unsigned j = 0; j < width; j += rez)
-//         {
-//             for(unsigned k = 0; k < 2; k++)
-//             {
-//                 indices.push_back(j + width * (i + k*rez));
-//             }
-//         }
-//     }
-//     std::cout << "Loaded " << indices.size() << " indices" << std::endl;
-
-//     numStrips = (height-1)/rez;
-//     numTrisPerStrip = (width/rez)*2-2;
-//     std::cout << "Created lattice of " << numStrips << " strips with " << numTrisPerStrip << " triangles each" << std::endl;
-//     std::cout << "Created " << numStrips * numTrisPerStrip << " triangles total" << std::endl;
-
-//     // first, configure the cube's VAO (and terrainVBO + terrainIBO)
-//     glGenVertexArrays(1, &terrainVAO);
-//     glBindVertexArray(terrainVAO);
-
-//     glGenBuffers(1, &terrainVBO);
-//     glBindBuffer(GL_ARRAY_BUFFER, terrainVBO);
-//     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_STATIC_DRAW);
-
-//     // position attribute
-//     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-//     glEnableVertexAttribArray(0);
-
-//     glGenBuffers(1, &terrainEBO);
-//     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, terrainEBO);
-//     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned), &indices[0], GL_STATIC_DRAW);
-//     glBindVertexArray(0);
-//     glBindBuffer(GL_ARRAY_BUFFER, 0);
-// }
 
 void CGL::Application::createTerrainExample()
 {

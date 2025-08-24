@@ -4,7 +4,6 @@
 
 CGL::VAOBufferBuilder CGL::VAOBufferBuilder::build()
 {
-    
     return VAOBufferBuilder();
 }
 

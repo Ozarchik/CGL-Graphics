@@ -25,12 +25,6 @@ CGL::Grid::Grid()
 
 void CGL::Grid::draw(CGL::Camera& camera, CGL::Transform model)
 {
-    m_shader.use();
-    m_shader.setMat4("model", model);
-    m_shader.setMat4("view", camera.getView());
-    m_shader.setMat4("projection", camera.getProjection());
-    m_shader.setVec3("viewPos", camera.pos());
-
     std::vector<std::shared_ptr<Node>> nodes = m_scene.nodes();
     int index = 0;
 
@@ -42,14 +36,9 @@ void CGL::Grid::draw(CGL::Camera& camera, CGL::Transform model)
             modif.rotate(90.0f, 1.0f, 0.0f, 0.0f);
             modif.translateX(i/*/8.0f*/);
             modif.translateY(j/*/8.0f*/);
-            m_shader.use();
             nodes[index]->setPrimitiveType(CGL::RenderContext::Primitive::Triangle);
-            m_shader.setFloat("gradient", 0.2);
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
             nodes[index]->update(camera, modif);
-
-            m_shader.use();
-            m_shader.setFloat("gradient", 0.6);
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
             nodes[index]->update(camera, modif);
         }
