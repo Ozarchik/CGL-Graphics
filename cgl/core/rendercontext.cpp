@@ -37,3 +37,8 @@ CGL::RenderContext& CGL::RenderContext::instance()
     static RenderContext context;
     return context;
 }
+
+CGL::RenderContext &CGL::cglRenderContext()
+{
+    return CGL::RenderContext::instance();
+}

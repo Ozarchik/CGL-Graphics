@@ -16,6 +16,11 @@ public:
         Indexes
     };
 
+    enum DrawChangeMode {
+        Static,
+        Dynamic
+    };
+
     enum Primitive {
         Point = GL_POINTS,
         Line = GL_LINES,
@@ -54,6 +59,8 @@ struct PrimitiveData {
     int offset;
     int size;
 };
+
+RenderContext& cglRenderContext();
 }
 
 #endif // CGL_RENDERCONTEXT_H

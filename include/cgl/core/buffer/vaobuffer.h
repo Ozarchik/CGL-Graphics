@@ -1,6 +1,8 @@
 #ifndef CGL_VAOBUFFER_H
 #define CGL_VAOBUFFER_H
 
+#include <cgl/core/rendercontext.h>
+
 namespace CGL {
 class VAOBuffer
 {
@@ -27,8 +29,8 @@ public:
     void disableAttribute(int index);
 
 // private:
-    void setVertexData(const void *data, int size, bool staticDraw);
-    void setIndexData(const void *data, int size, bool staticDraw);
+    void setVertexData(const void *data, int size, RenderContext::DrawChangeMode mode);
+    void setIndexData(const void *data, int size, RenderContext::DrawChangeMode mode);
     void setAttribute(int index, int components, int stride, int offset);
 
     void init();

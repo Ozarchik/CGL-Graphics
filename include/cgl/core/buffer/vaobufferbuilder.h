@@ -2,6 +2,7 @@
 #define CGL_VAOBUFFERBUILDER_H
 
 #include <cgl/core/buffer/vaobuffer.h>
+#include <cgl/core/rendercontext.h>
 
 namespace CGL {
 class VAOBufferBuilder
@@ -9,8 +10,8 @@ class VAOBufferBuilder
 public:
     static VAOBufferBuilder build();
 
-    VAOBufferBuilder& setVertexData(const void* data, int size, bool staticDraw);
-    VAOBufferBuilder& setIndexData(const void* data, int size, bool staticDraw);
+    VAOBufferBuilder& setVertexData(const void* data, int size, RenderContext::DrawChangeMode mode);
+    VAOBufferBuilder& setIndexData(const void* data, int size, RenderContext::DrawChangeMode mode);
     VAOBufferBuilder& setAttribute(int index, int components, int stride, int offset);
     VAOBuffer done();
 

@@ -47,6 +47,7 @@ CGL::MeshBuilder &CGL::MeshBuilder::bind()
 CGL::Mesh *CGL::MeshBuilder::done()
 {
     m_buffer.unbind();
+    m_mesh->setBuffer(std::move(m_buffer));
     return m_mesh;
 }
 

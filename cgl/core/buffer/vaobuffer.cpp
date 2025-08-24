@@ -15,16 +15,16 @@ void CGL::VAOBuffer::init()
 
 CGL::VAOBuffer::~VAOBuffer()
 {
-    glDeleteVertexArrays(1, &m_vao);
-    glDeleteBuffers(1, &m_vbo);
-    glDeleteBuffers(1, &m_ebo);
+    // glDeleteVertexArrays(1, &m_vao);
+    // glDeleteBuffers(1, &m_vbo);
+    // glDeleteBuffers(1, &m_ebo);
 }
 
 void CGL::VAOBuffer::reset()
 {
-    glDeleteVertexArrays(1, &m_vao);
-    glDeleteBuffers(1, &m_vbo);
-    glDeleteBuffers(1, &m_ebo);
+    // glDeleteVertexArrays(1, &m_vao);
+    // glDeleteBuffers(1, &m_vbo);
+    // glDeleteBuffers(1, &m_ebo);
 }
 
 CGL::VAOBuffer::VAOBuffer(VAOBuffer &&other) noexcept
@@ -32,9 +32,9 @@ CGL::VAOBuffer::VAOBuffer(VAOBuffer &&other) noexcept
     , m_vbo(other.m_vbo)
     , m_ebo(other.m_ebo)
 {
-    other.m_vao = 0;
-    other.m_vbo = 0;
-    other.m_ebo = 0;
+    // other.m_vao = 0;
+    // other.m_vbo = 0;
+    // other.m_ebo = 0;
 }
 
 CGL::VAOBuffer &CGL::VAOBuffer::operator=(VAOBuffer &&other) noexcept
@@ -46,9 +46,9 @@ CGL::VAOBuffer &CGL::VAOBuffer::operator=(VAOBuffer &&other) noexcept
     m_vbo = other.m_vbo;
     m_ebo = other.m_ebo;
 
-    other.m_vao = 0;
-    other.m_vbo = 0;
-    other.m_ebo = 0;
+    // other.m_vao = 0;
+    // other.m_vbo = 0;
+    // other.m_ebo = 0;
 
     return *this;
 }
@@ -70,18 +70,40 @@ void CGL::VAOBuffer::unbind()
     glBindVertexArray(0);
 }
 
-void CGL::VAOBuffer::setVertexData(const void *data, int size, bool staticDraw)
+void CGL::VAOBuffer::setVertexData(const void *data, int size, RenderContext::DrawChangeMode mode)
 {
     bind();
-    glBufferData(GL_ARRAY_BUFFER, size, data, staticDraw ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW);
+    switch (mode) {
+    case RenderContext::DrawChangeMode::Static: {
+        glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+    } break;
+    case RenderContext::DrawChangeMode::Dynamic: {
+        glBufferData(GL_ARRAY_BUFFER, size, data, GL_DYNAMIC_DRAW);
+    } break;
+    default: {
+        glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+    }
+    }
     unbind();
 }
 
-void CGL::VAOBuffer::setIndexData(const void *data, int size, bool staticDraw)
+void CGL::VAOBuffer::setIndexData(const void *data, int size, RenderContext::DrawChangeMode mode)
 {
     bind();
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, staticDraw ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW);
+
+    switch (mode) {
+        case RenderContext::DrawChangeMode::Static: {
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+        } break;
+        case RenderContext::DrawChangeMode::Dynamic: {
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_DYNAMIC_DRAW);
+        } break;
+        default: {
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+        }
+    }
+
     unbind();
 }
 

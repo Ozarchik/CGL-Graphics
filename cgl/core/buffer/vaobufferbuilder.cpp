@@ -20,15 +20,15 @@ CGL::VAOBuffer CGL::VAOBufferBuilder::done()
     return std::move(m_vao);
 }
 
-CGL::VAOBufferBuilder& CGL::VAOBufferBuilder::setVertexData(const void *data, int size, bool staticDraw)
+CGL::VAOBufferBuilder& CGL::VAOBufferBuilder::setVertexData(const void *data, int size, RenderContext::DrawChangeMode mode)
 {
-    m_vao.setVertexData(data, size, staticDraw);
+    m_vao.setVertexData(data, size, mode);
     return *this;
 }
 
-CGL::VAOBufferBuilder& CGL::VAOBufferBuilder::setIndexData(const void* data, int size, bool staticDraw)
+CGL::VAOBufferBuilder& CGL::VAOBufferBuilder::setIndexData(const void* data, int size, RenderContext::DrawChangeMode mode)
 {
-    m_vao.setIndexData(data, size, staticDraw);
+    m_vao.setIndexData(data, size, mode);
     return *this;
 }
 
