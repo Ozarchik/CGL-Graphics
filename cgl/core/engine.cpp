@@ -17,14 +17,14 @@ CGL::Scene *CGL::Engine::activeScene() const
     return m_scene;
 }
 
-void CGL::Engine::addView()
-{
+CGL::View& CGL::Engine::addView() {
     m_views.emplace_back(
-        std::make_unique<CGL::Camera>(),
-        std::make_unique<CGL::FrameBuffer>(),
-        false
+        std::make_unique<Camera>(),
+        std::make_unique<FrameBuffer>(),
+        std::make_unique<DefaultPostProcessor>()
     );
-    CGL_CheckErros();
+
+    return m_views.back();
 }
 
 std::vector<CGL::View> &CGL::Engine::views()
