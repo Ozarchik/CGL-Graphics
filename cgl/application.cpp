@@ -18,8 +18,6 @@ CGL::Application::Application(/*int argc, char *argv[]*/)
     cglEngine().setActiveScene(&m_scene);
     // cglEngine().addView();
 
-    // createTestObjects();
-
     createTestObjects();
 }
 
@@ -32,8 +30,9 @@ void CGL::Application::createTestObjects()
 {
     CGL::Transform model;
 
+    auto meshShader = CGL::ResourceManager::loadDefaultModelShader();
     model.translateX(10.0f);
-    std::shared_ptr<CGL::Node> node = std::make_shared<CGL::Node>(m_meshShader, model);
+    std::shared_ptr<CGL::Node> node = std::make_shared<CGL::Node>(meshShader, model);
     node->addMesh(
         MeshBuilder::build(MeshBuilder::MeshType::Cube)
             .done(),
@@ -44,7 +43,7 @@ void CGL::Application::createTestObjects()
     );
     m_scene.append(node);
 
-    std::shared_ptr<CGL::Node> node2 = std::make_shared<CGL::Node>(m_meshShader, model.translateX(-3.0));
+    std::shared_ptr<CGL::Node> node2 = std::make_shared<CGL::Node>(meshShader, model.translateX(-3.0));
     node2->addMesh(
         MeshBuilder::build(MeshBuilder::MeshType::Sphere)
             .done(),
@@ -55,12 +54,11 @@ void CGL::Application::createTestObjects()
     );
     m_scene.append(node2);
     
-    std::shared_ptr<CGL::Node> node3 = std::make_shared<CGL::Node>(m_meshShader, model.translateX(3.0));
+    std::shared_ptr<CGL::Node> node3 = std::make_shared<CGL::Node>(meshShader, model.translateX(3.0));
     node3->addMesh(
         MeshBuilder::build(MeshBuilder::MeshType::Rectangle)
             .done(),
-        MaterialBuilder
-            ::build()
+        MaterialBuilder::build()
             .addTexture("brick/brick.jpg")
             .enabled(true)
             .done()
@@ -81,7 +79,7 @@ void CGL::Application::createTerrainExample()
 {
     std::shared_ptr heightMapShader = CGL::ResourceManager::loadShader("cpuheight");
     CGL::TextureLoader loader;
-    std::tuple<std::vector<unsigned char>, glm::vec3> sourceData = loader.getSourceData("D:/MyPrivateProjects/CGL-Graphics/textures/heightmap/iceland_heightmap.png");
+    std::tuple<std::vector<unsigned char>, glm::vec3> sourceData = loader.getSourceData(ResourceManager::getTexturePath() + "/heightmap/iceland_heightmap.png");
     auto data = std::get<0>(sourceData);
     auto size = std::get<1>(sourceData);
     int width = size.x;
@@ -161,12 +159,11 @@ void CGL::Application::draw()
     auto& scene = *cglEngine().activeScene();
     auto& views = cglEngine().views();
 
-    glIsEnabled(GL_CULL_FACE);
-
-    for (auto& view: views) {
-        // view.useCustomFramebuffer(false);
-        m_renderer.render(scene, view);
-    }
+    // for (auto& view: views) {
+    m_animation.update();
+    views.front().useCustomFramebuffer(true);
+    m_renderer.render(scene, views.front());
+    views.front().postprocess();
 
     cglErrors();
 
