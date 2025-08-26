@@ -49,12 +49,12 @@ void CGL::ModelLoader::processNode(const aiScene* scene, aiNode* node, std::vect
     }
 }
 
-CGL::Mesh* CGL::ModelLoader::processMesh(const aiScene* scene, aiMesh* mesh)
+std::shared_ptr<CGL::Mesh> CGL::ModelLoader::processMesh(const aiScene* scene, aiMesh* mesh)
 {
     std::vector<CGL::Vertex> vertices = loadVertices(mesh);
     std::vector<unsigned int> indices  = loadIndices(mesh);
 
-    return new CGL::Mesh(vertices, indices);
+    return std::make_shared<CGL::Mesh>(vertices, indices);
 }
 
 CGL::Material CGL::ModelLoader::processMaterial(const aiScene* scene, aiMesh* mesh)

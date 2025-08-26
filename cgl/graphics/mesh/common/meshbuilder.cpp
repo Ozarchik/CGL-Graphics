@@ -4,33 +4,30 @@
 #include <cgl/utility/logger.h>
 
 CGL::MeshBuilder::MeshBuilder(const MeshType& meshType)
-    : m_meshType(meshType)
 {
-    switch (m_meshType) {
+    switch (meshType) {
     case MeshType::Rectangle: {
-        m_mesh = new CGL::Rectangle();
+        m_mesh = std::make_shared<CGL::Rectangle>();
     } break;
     case MeshType::Sphere: {
-        m_mesh = new CGL::Sphere();
+        m_mesh = std::make_shared<CGL::Sphere>();
     } break;
     case MeshType::Cube: {
-        m_mesh = new CGL::Cube();
+        m_mesh = std::make_shared<CGL::Cube>();
     } break;
     case MeshType::Line: {
-        m_mesh = new CGL::Line();
+        m_mesh = std::make_shared<CGL::Line>();
     } break;
     case MeshType::Mesh: {
-        m_mesh = new CGL::Mesh();
+        m_mesh = std::make_shared<CGL::Mesh>();
     } break;
     case MeshType::Terrain: {
-        m_mesh = new CGL::Terrain();
+        m_mesh = std::make_shared<CGL::Terrain>();
     } break;
     default: {
-        m_mesh = new CGL::Mesh();
+        m_mesh = std::make_shared<CGL::Mesh>();
     }
-    }
-
-    
+    }    
 }
 
 CGL::MeshBuilder CGL::MeshBuilder::build(MeshType meshType)
@@ -40,14 +37,11 @@ CGL::MeshBuilder CGL::MeshBuilder::build(MeshType meshType)
 
 CGL::MeshBuilder &CGL::MeshBuilder::bind()
 {
-    m_buffer.bind();
     return *this;
 }
 
-CGL::Mesh *CGL::MeshBuilder::done()
+std::shared_ptr<CGL::Mesh> CGL::MeshBuilder::done()
 {
-    m_buffer.unbind();
-    m_mesh->setBuffer(std::move(m_buffer));
     return m_mesh;
 }
 
@@ -63,8 +57,9 @@ CGL::MeshBuilder &CGL::MeshBuilder::setPrimitiveData(PrimitiveData data)
     return *this;
 }
 
-CGL::MeshBuilder &CGL::MeshBuilder::setVAO(CGL::VAOBuffer&& vao)
+CGL::MeshBuilder &CGL::MeshBuilder::setVAO(std::shared_ptr<CGL::VAOBuffer> vao)
 {
     m_buffer.setVAO(std::move(vao));
+    m_mesh->setVAO(vao);
     return *this;
 }

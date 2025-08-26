@@ -2,14 +2,14 @@
 #include <cgl/utility/logger.h>
 #include <limits>
 
-CGL::Node::Node(CGL::Mesh* mesh, CGL::Shader& shader, CGL::Transform transform)
+CGL::Node::Node(std::shared_ptr<CGL::Mesh> mesh, std::shared_ptr<CGL::Shader> shader, CGL::Transform transform)
     : m_shader(shader)
     , m_transform(transform)
 {
     m_renderer.m_mesh = mesh;
 }
 
-CGL::Node::Node(std::vector<Mesh *> meshes, Shader &shader, Transform transform)
+CGL::Node::Node(std::vector<std::shared_ptr<Mesh>> meshes, std::shared_ptr<CGL::Shader> shader, Transform transform)
     : m_shader(shader)
     , m_transform(transform)
 {
@@ -40,7 +40,7 @@ std::vector<CGL::Node *> CGL::Node::childs() const
     return m_childs;
 }
 
-void CGL::Node::addMesh(Mesh *mesh)
+void CGL::Node::addMesh(std::shared_ptr<Mesh> mesh)
 {
     if (!mesh)
         return;
@@ -48,7 +48,7 @@ void CGL::Node::addMesh(Mesh *mesh)
     m_renderer = MeshRenderer(mesh);
 }
 
-void CGL::Node::addMesh(Mesh *mesh, const Material &material)
+void CGL::Node::addMesh(std::shared_ptr<Mesh> mesh, const Material &material)
 {
     if (!mesh)
         return;

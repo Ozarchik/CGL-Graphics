@@ -21,20 +21,16 @@ public:
     static MeshBuilder build(MeshType meshType);
 
     MeshBuilder& bind();
-    MeshBuilder& addVertices(const std::vector<Vertex>& vertices);
-    MeshBuilder& addIndices(const std::vector<unsigned int>& indices);
     MeshBuilder& setPrimitiveData(PrimitiveData data);
-    Mesh* done();
-
-    CGL::MeshBuilder &setVAO(VAOBuffer &&vao);
+    std::shared_ptr<Mesh> done();
+    
+    CGL::MeshBuilder &setVAO(std::shared_ptr<VAOBuffer> vao);
 
 private:
     MeshBuilder(const MeshType &meshType);
 
 private:
-    MeshType m_meshType;
-    MeshBuffer m_buffer;
-    Mesh* m_mesh = nullptr;
+    std::shared_ptr<Mesh> m_mesh;
 };
 }
 

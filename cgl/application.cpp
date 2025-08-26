@@ -118,21 +118,22 @@ void CGL::Application::createTerrainExample()
         }
     }
 
-    auto node = std::make_shared<CGL::Node>(heightMapShader, CGL::Transform{});
-    CGL::PrimitiveData primData;
-    primData.type = CGL::RenderContext::Primitive::TriangleStrip;
-    primData.drawType = CGL::RenderContext::DrawType::Indexes;
-    primData.size = height-1;
-    primData.offset = width*2;
 
-    CGL::Mesh* mesh = MeshBuilder::build(CGL::MeshBuilder::MeshType::Terrain)
-            .setVAO(
-                VAOBufferBuilder::build()
-                    .setVertexData(vertices.data(), vertices.size() * sizeof(glm::vec3), RenderContext::DrawChangeMode::Static)
-                    .setIndexData(indices.data(), indices.size() * sizeof(unsigned int), RenderContext::DrawChangeMode::Static)
-                    .setAttribute(0, 3, sizeof(glm::vec3), 0)
-                    .done()
-                )
+    auto node = std::make_shared<CGL::Node>(heightMapShader);
+    CGL::PrimitiveData primData (
+        CGL::RenderContext::Primitive::TriangleStrip,
+        CGL::RenderContext::DrawType::Indexes,
+        height-1,
+        width*2
+    );
+
+    std::shared_ptr<Mesh> mesh = MeshBuilder::build(CGL::MeshBuilder::MeshType::Terrain)
+            .setVAO(VAOBufferBuilder::build()
+                .setVertexData(vertices.data(), vertices.size() * sizeof(glm::vec3), RenderContext::DrawChangeMode::Static)
+                .setIndexData(indices.data(), indices.size() * sizeof(unsigned int), RenderContext::DrawChangeMode::Static)
+                .setAttribute(0, 3, sizeof(glm::vec3), 0)
+                .done()
+            )
             .setPrimitiveData(primData)
             .done();
 

@@ -26,10 +26,15 @@ public:
     explicit Mesh(const std::vector<Vertex>& vertices = {}, const std::vector<unsigned int>& indices = {});
 
     virtual ~Mesh() = default;
+
+    Mesh(const Mesh& other) = delete;
+    Mesh& operator=(const Mesh& other) = delete;
+
     virtual void setup();
     virtual void draw(Shader& Shader);
     virtual CGL::BoundingBox boundingBox() const;
-
+    
+    void setVAO(std::shared_ptr<VAOBuffer> vao);
     void setPrimitiveData(PrimitiveData data);
     void setPrimitiveType(RenderContext::Primitive type);
 
