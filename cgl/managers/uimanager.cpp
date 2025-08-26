@@ -33,6 +33,26 @@ void CGL::UiManager::newFrame()
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
+
+    if (m_docking) {
+        ImGuiID dockspace_id = ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
+        static bool init = true;
+        ImGuiID dock_id_left, dock_id_right;
+        if (init) {
+            init = false;
+            auto wSize = ImGui::GetMainViewport()->Size;
+            wSize.x *= 1.2;
+            ImGui::DockBuilderRemoveNode(dockspace_id);
+            ImGui::DockBuilderAddNode(dockspace_id);
+            ImGui::DockBuilderSetNodeSize(dockspace_id, wSize);
+
+            ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.8f, &dock_id_left, &dock_id_right);
+            ImGui::DockBuilderDockWindow("3D scene", dock_id_left);
+            ImGui::DockBuilderDockWindow("Hello, CGL Graphics", dock_id_right);
+
+            ImGui::DockBuilderFinish(dockspace_id);
+        }
+    }
 }
 
 void CGL::UiManager::render()
@@ -49,25 +69,9 @@ void CGL::UiManager::render()
     }
 }
 
-void CGL::UiManager::enableDocking()
+void CGL::UiManager::setDocking(bool docking)
 {
-    ImGuiID dockspace_id = ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
-    static bool init = true;
-    ImGuiID dock_id_left, dock_id_right;
-    if (init) {
-        init = false;
-        auto wSize = ImGui::GetMainViewport()->Size;
-        wSize.x *= 1.2;
-        ImGui::DockBuilderRemoveNode(dockspace_id);
-        ImGui::DockBuilderAddNode(dockspace_id);
-        ImGui::DockBuilderSetNodeSize(dockspace_id, wSize);
-
-        ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.8f, &dock_id_left, &dock_id_right);
-        ImGui::DockBuilderDockWindow("3D scene", dock_id_left);
-        ImGui::DockBuilderDockWindow("Hello, CGL Graphics", dock_id_right);
-
-        ImGui::DockBuilderFinish(dockspace_id);
-    }
+    m_docking = docking;
 }
 
 void CGL::UiManager::deinit()

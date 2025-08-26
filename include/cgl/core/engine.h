@@ -3,8 +3,11 @@
 
 #include <cgl/graphics/scene/scene.h>
 #include <cgl/graphics/framebuffer.h>
+#include <cgl/managers/resourcemanager.h>
+#include <cgl/core/rendercontext.h>
 #include <cgl/core/camera.h>
-
+#include <cgl/core/buffer/vaobufferbuilder.h>
+#include <cgl/graphics/postprocess/defaultpostprocessor.h>
 
 namespace CGL {
 struct View {

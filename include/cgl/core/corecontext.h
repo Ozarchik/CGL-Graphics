@@ -5,6 +5,8 @@
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 #include <glm/glm.hpp>
+#include <cgl/tools/logger.h>
+#include <cgl/tools/backtrace.h>
 
 namespace CGL {
 

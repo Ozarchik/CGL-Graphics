@@ -1,7 +1,6 @@
 #include <cgl/graphics/mesh/common/meshbuilder.h>
 #include <cgl/graphics/mesh/meshes2D.h>
 #include <cgl/graphics/mesh/meshes3D.h>
-#include <cgl/utility/logger.h>
 
 CGL::MeshBuilder::MeshBuilder(const MeshType& meshType)
 {
@@ -44,12 +43,6 @@ std::shared_ptr<CGL::Mesh> CGL::MeshBuilder::done()
 {
     return m_mesh;
 }
-
-// CGL::MeshBuilder& CGL::MeshBuilder::addVertices(const std::vector<CGL::Vertex>& vertices)
-// {
-//     m_buffer.setVertices(vertices);
-//     return *this;
-// }
 
 CGL::MeshBuilder &CGL::MeshBuilder::setPrimitiveData(PrimitiveData data)
 {

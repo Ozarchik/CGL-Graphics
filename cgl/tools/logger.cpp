@@ -1,4 +1,4 @@
-#include <cgl/utility/logger.h>
+#include <cgl/tools/logger.h>
 #include <glad/glad.h>
 #include <iostream>
 

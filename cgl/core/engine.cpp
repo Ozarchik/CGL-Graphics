@@ -1,5 +1,4 @@
 #include <cgl/core/engine.h>
-#include <cgl/utility/logger.h>
 
 CGL::Engine &CGL::Engine::instance()
 {
@@ -38,7 +37,6 @@ void CGL::Engine::setActiveCamera(Camera *camera)
     assert(camera);
     m_camera = camera;
 }
-
 
 CGL::Camera *CGL::Engine::activeCamera() const
 {

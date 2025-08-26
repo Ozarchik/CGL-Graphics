@@ -32,7 +32,7 @@ CGL::Transform CGL::Camera::getView()
 
 CGL::Transform CGL::Camera::getProjection()
 {
-    return CGL::Transform::makePerspective(m_fov, cglCoreContext().aspect(), 0.1f, 100000.0f);
+    return CGL::Transform::makePerspective(m_fov, cglCoreContext().aspect(), 0.1f, 100.0f);
 }
 
 void CGL::Camera::correctSpeed(float coeff)

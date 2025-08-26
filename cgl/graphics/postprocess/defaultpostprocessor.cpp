@@ -1,7 +1,6 @@
 #include <cgl/graphics/postprocess/defaultpostprocessor.h>
 #include <cgl/managers/resourcemanager.h>
 #include <cgl/graphics/mesh/common/meshbuilder.h>
-#include <cgl/utility/logger.h>
 #include <array>
 
 static std::array<glm::vec4, 6> quad {

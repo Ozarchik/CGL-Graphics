@@ -1,13 +1,12 @@
 #include <cgl/graphics/shader.h>
 #include <cgl/graphics/mesh/common/meshbuffer.h>
 #include <cgl/core/buffer/vaobufferbuilder.h>
-#include <cgl/utility/logger.h>
 #include <glad/glad.h>
 #include <iostream>
-#include <cgl/tools/backtrace/backtrace.h>
 
 CGL::MeshBuffer::MeshBuffer()
 {
+    m_vao = std::make_shared<CGL::VAOBuffer>();
 }
 
 

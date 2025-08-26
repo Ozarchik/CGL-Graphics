@@ -2,14 +2,9 @@
 #include <cgl/graphics/mesh/2D/rectangle.h>
 #include <cgl/graphics/texture/textureloader.h>
 #include <cgl/managers/resourcemanager.h>
-#include <cgl/utility/logger.h>
 
 CGL::Grid::Grid()
 {
-    m_shader = ResourceManager::loadShader("grid");
-    m_lightShader = ResourceManager::loadDefaultShader();
-    
-
     glm::vec3 greyLight = glm::vec3(0.2, 0.2, 0.2);
     glm::vec3 greyDark = glm::vec3(0.8, 0.8, 0.8);
     bool light = false;

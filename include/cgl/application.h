@@ -16,7 +16,6 @@
 #include <cgl/graphics/framebuffer.h>
 #include <cgl/graphics/vertex/vertexbuffer.h>
 #include <cgl/graphics/grid.h>
-#include <cgl/tools/backtrace/backtrace.h>
 #include <cgl/ui/mainwindow.h>
 #include <cgl/managers/resourcemanager.h>
 #include <cgl/physics/raycast.h>
@@ -40,7 +39,6 @@ private:
 
     CGL::InputController m_inputController;
 
-    CGL::Shader m_meshShader;
     CGL::MainWindow m_mainwindow;
     CGL::CommandDispatcher m_commandDispatcher;
     CGL::Raycast m_raycast;

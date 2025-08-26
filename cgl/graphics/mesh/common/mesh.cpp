@@ -38,6 +38,7 @@ CGL::BoundingBox CGL::Mesh::boundingBox() const
     return box;
 }
 
+void CGL::Mesh::setVAO(std::shared_ptr<VAOBuffer> vao)
 void CGL::Mesh::setPrimitiveData(PrimitiveData data)
 {
     m_primitiveData = data;

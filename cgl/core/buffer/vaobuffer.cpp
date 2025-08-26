@@ -1,6 +1,5 @@
 #include <cgl/core/buffer/vaobuffer.h>
 #include <glad/glad.h>
-#include <cgl/utility/logger.h>
 
 CGL::VAOBuffer::VAOBuffer()
 {

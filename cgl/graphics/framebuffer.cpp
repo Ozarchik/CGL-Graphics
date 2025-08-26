@@ -1,5 +1,5 @@
 #include <cgl/graphics/framebuffer.h>
-#include <cgl/utility/logger.h>
+#include <cgl/graphics/texture/texture.h>
 #include <glad/glad.h>
 #include <iostream>
 

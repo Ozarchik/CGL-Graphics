@@ -1,5 +1,4 @@
 #include <cgl/graphics/scene/node.h>
-#include <cgl/utility/logger.h>
 #include <limits>
 
 CGL::Node::Node(std::shared_ptr<CGL::Mesh> mesh, std::shared_ptr<CGL::Shader> shader, CGL::Transform transform)
@@ -22,12 +21,10 @@ CGL::Node::Node(Shader &shader, Transform transform)
     : m_shader(shader)
     , m_transform(transform)
 {
-
 }
 
 CGL::Node::~Node()
 {
-    delete m_renderer.m_mesh;
 }
 
 void CGL::Node::addChild(Node *node)

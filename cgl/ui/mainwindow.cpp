@@ -2,7 +2,6 @@
 #include <imconfig.h>
 #include <imgui.h>
 
-#include <cgl/utility/logger.h>
 #include <cgl/core/command/commanddispatcher.h>
 #include <cgl/core/command/commands.h>
 #include <cgl/managers/uimanager.h>

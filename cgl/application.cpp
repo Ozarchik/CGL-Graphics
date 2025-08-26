@@ -6,14 +6,12 @@
 #include <cgl/graphics/scene/node.h>
 #include <cgl/ui/mainwindow.h>
 #include <cgl/graphics/model/modelloader.h>
-#include <cgl/utility/logger.h>
 #include <cgl/graphics/material/materialbuilder.h>
 #include <cgl/core/engine.h>
 #include <cgl/core/buffer/vaobufferbuilder.h>
 
 CGL::Application::Application(/*int argc, char *argv[]*/)
     : m_commandDispatcher(m_scene)
-    , m_inputController()
     , m_mainwindow(m_commandDispatcher, m_renderer)
     , m_raycast(m_scene)
 {

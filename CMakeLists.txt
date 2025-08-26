@@ -23,11 +23,11 @@ file(GLOB sources
     "cgl/graphics/material/*.cpp"
     "cgl/graphics/scene/*.cpp"
     "cgl/graphics/vertex/*.cpp"
+    "cgl/graphics/postprocess/*.cpp"
     "cgl/managers/*.cpp"
     "cgl/ui/*.cpp"
     "cgl/physics/*.cpp"
-    "cgl/tools/backtrace/*.cpp"
-    "cgl/utility/*.cpp"
+    "cgl/tools/*.cpp"
     # "examples/*.cpp"
 )
 
@@ -46,11 +46,11 @@ file(GLOB headers
     "include/cgl/graphics/material/*.h"
     "include/cgl/graphics/scene/*.h"
     "include/cgl/graphics/vertex/*.h"
-    "include/cgl/tools/backtrace/*.h"
+    "include/cgl/graphics/postprocess/*.h"
+    "include/cgl/tools/*.h"
     "include/cgl/managers/*.h"
     "include/cgl/ui/*.h"
     "include/cgl/physics/*.h"
-    "include/cgl/utility/*.h"
     # "examples/*.h"
 )
 
@@ -60,6 +60,7 @@ file(GLOB shaders
 
 add_executable(cglg)
 target_compile_definitions(cglg PUBLIC IMGUI_IMPL_OPENGL_LOADER_GLAD)
+target_compile_options(cglg PRIVATE -Wall -Wextra -Werror=return-type)
 
 target_sources(cglg PRIVATE
     ${sources}

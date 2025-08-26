@@ -1,5 +1,4 @@
 #include <cgl/graphics/renderer.h>
-#include <cgl/utility/logger.h>
 #include <cgl/managers/resourcemanager.h>
 #include <glm/glm.hpp>
 #include <cgl/graphics/texture/textureloader.h>

@@ -1,4 +1,4 @@
-#include <cgl/tools/backtrace/backtrace.h>
+#include <cgl/tools/backtrace.h>
 
 #ifdef USE_BACKTRACE
 
