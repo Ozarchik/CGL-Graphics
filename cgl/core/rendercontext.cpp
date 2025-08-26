@@ -12,15 +12,26 @@ CGL::RenderContext::RenderContext()
     m_primitiveMap[TriangleStrip] = GL_TRIANGLE_STRIP;
     m_primitiveMap[TriangleStripAdjency] = GL_TRIANGLES_ADJACENCY;
     m_primitiveMap[TriangleFan] = GL_TRIANGLE_FAN;
+    cglErrors();
 }
 
-void CGL::RenderContext::setPolygoneMode(int mode)
+void CGL::RenderContext::setPolygoneMode(const PolygoneMode& mode)
 {
-    glPolygonMode(GL_FRONT_AND_BACK, mode);
+    switch (mode) {
+    case PolygoneMode::Fill: {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    } break;
+    case PolygoneMode::Lines: {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    } break;
+    }
+
+    cglErrors();
 }
 
 void CGL::RenderContext::render(const PrimitiveData &data)
 {
+    cglErrors();
     switch (data.drawType) {
         case CGL::RenderContext::Elements: {
             glDrawArrays(m_primitiveMap.at(data.type), data.offset, data.size);
@@ -30,6 +41,7 @@ void CGL::RenderContext::render(const PrimitiveData &data)
         } break;
         default: break;
     }
+    cglErrors();
 }
 
 CGL::RenderContext& CGL::RenderContext::instance()

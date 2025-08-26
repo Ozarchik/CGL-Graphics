@@ -21,6 +21,11 @@ public:
         Dynamic
     };
 
+    enum PolygoneMode {
+        Fill,
+        Lines
+    };
+
     enum Primitive {
         Point = GL_POINTS,
         Line = GL_LINES,
@@ -37,8 +42,8 @@ public:
     void render(const PrimitiveData& data);
 
     static RenderContext& instance();
-
-    void setPolygoneMode(int mode);
+    
+    void setPolygoneMode(const PolygoneMode &mode);
 
 private:
     RenderContext();
