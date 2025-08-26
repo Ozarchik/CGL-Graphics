@@ -25,6 +25,10 @@ public:
     static void setModelsDirectoryPath(const std::string& path);
     static void setShadersDirectoryPath(const std::string& path);
 
+    static std::string getTexturePath();
+    static std::string getShaderPath();
+    static std::string getModelPath();
+
 private:
     inline static std::mutex m_mutex;
     inline static std::string m_texturesDirectory = "textures";

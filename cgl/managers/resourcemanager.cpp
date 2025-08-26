@@ -113,6 +113,21 @@ void CGL::ResourceManager::setShadersDirectoryPath(const std::string &path)
     m_shadersDirectory = path;
 }
 
+std::string CGL::ResourceManager::getShaderPath()
+{
+    return m_shadersDirectory;
+}
+
+std::string CGL::ResourceManager::getModelPath()
+{
+    return m_modelsDirectory;
+}
+
+std::string CGL::ResourceManager::getTexturePath()
+{
+    return m_texturesDirectory;
+}
+
 void CGL::ResourceManager::setModelsDirectoryPath(const std::string &path)
 {
     m_modelsDirectory = path;
