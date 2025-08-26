@@ -52,7 +52,7 @@ CGL::MeshBuilder &CGL::MeshBuilder::setPrimitiveData(PrimitiveData data)
 
 CGL::MeshBuilder &CGL::MeshBuilder::setVAO(std::shared_ptr<CGL::VAOBuffer> vao)
 {
-    m_buffer.setVAO(std::move(vao));
+    // m_mesh->setVAO(std::move(vao));
     m_mesh->setVAO(vao);
     return *this;
 }

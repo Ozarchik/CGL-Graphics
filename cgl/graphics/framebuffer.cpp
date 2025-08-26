@@ -68,7 +68,6 @@ void CGL::FrameBuffer::unbind()
         std::cout << "Framebuffer not complete: " << framebufferStatusToString(fboStatus) << std::endl;
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glDisable(GL_DEPTH_TEST);
 }
 
 void CGL::FrameBuffer::detach()
@@ -80,10 +79,10 @@ void CGL::FrameBuffer::detach()
 
 void CGL::FrameBuffer::rescale(int width, int height)
 {
-    glBindTexture(GL_TEXTURE_2D, m_texture);
+    Texture::bind2D(m_texture, 0);
+    Texture::filter2D(TextureFilter::Linear, TextureFilter::Linear);
+    Texture::wrap2D(TextureWrap::EdgeClamp, TextureWrap::EdgeClamp);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_texture, 0);
@@ -91,6 +90,7 @@ void CGL::FrameBuffer::rescale(int width, int height)
     glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, width, height);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
+    Texture::unbind2D(0);
 }
 
 unsigned int CGL::FrameBuffer::texture() const

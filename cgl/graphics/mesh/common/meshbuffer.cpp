@@ -15,13 +15,14 @@ CGL::MeshBuffer::MeshBuffer(const std::vector<CGL::Vertex> &vertices, const std:
 {
     
     m_vao = CGL::VAOBufferBuilder::build()
-              .setVertexData(vertices.data(), vertices.size() * sizeof(CGL::Vertex), RenderContext::DrawChangeMode::Static)
-              .setIndexData(indices.data(), indices.size() * sizeof(unsigned int), RenderContext::DrawChangeMode::Static)
-              .setAttribute(0, 3, sizeof(CGL::Vertex), 0)
-              .setAttribute(1, 3, sizeof(CGL::Vertex), offsetof(CGL::Vertex, normal))
-              .setAttribute(2, 2, sizeof(CGL::Vertex), offsetof(CGL::Vertex, texcoord))
-              .setAttribute(3, 3, sizeof(CGL::Vertex), offsetof(CGL::Vertex, color))
-              .done();
+        .setVertexData(vertices.data(), vertices.size() * sizeof(CGL::Vertex), RenderContext::DrawChangeMode::Static)
+        .setIndexData(indices.data(), indices.size() * sizeof(unsigned int), RenderContext::DrawChangeMode::Static)
+        .setAttribute(0, 3, sizeof(CGL::Vertex), 0)
+        .setAttribute(1, 3, sizeof(CGL::Vertex), offsetof(CGL::Vertex, normal))
+        .setAttribute(2, 2, sizeof(CGL::Vertex), offsetof(CGL::Vertex, texcoord))
+        .setAttribute(3, 3, sizeof(CGL::Vertex), offsetof(CGL::Vertex, color))
+        .done();
+    cglErrors();
 
     
 
@@ -57,15 +58,16 @@ CGL::MeshBuffer::~MeshBuffer()
 
 void CGL::MeshBuffer::bind(CGL::Shader* shader)
 {
-    m_vao.bind();
+    m_vao->bind();
 }
 
 void CGL::MeshBuffer::unbind()
 {
-    m_vao.unbind();
+    m_vao->unbind();
 }
 
-void CGL::MeshBuffer::setVAO(VAOBuffer&& vao)
+void CGL::MeshBuffer::setVAO(std::shared_ptr<VAOBuffer> vao)
 {
-    m_vao = std::move(vao);
+    // m_vao = std::move(vao);
+    m_vao = vao;
 }

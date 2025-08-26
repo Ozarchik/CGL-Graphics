@@ -2,8 +2,9 @@
 #define CGL_MESHBUILDER_H
 
 #include <cgl/graphics/mesh/common/mesh.h>
-#include <vector>
+#include <cgl/core/buffer/vaobufferbuilder.h>
 #include <cgl/graphics/vertex/vertex.h>
+#include <memory>
 
 namespace CGL {
 class MeshBuilder

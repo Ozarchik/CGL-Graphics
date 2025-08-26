@@ -15,7 +15,7 @@ void CGL::Mesh::setup()
 }
 
 void CGL::Mesh::draw(Shader &shader) {
-    m_buffer.bind(&shader);
+    m_buffer.bind();
     RenderContext::instance().render(m_primitiveData);
     m_buffer.unbind();
 }
@@ -39,6 +39,11 @@ CGL::BoundingBox CGL::Mesh::boundingBox() const
 }
 
 void CGL::Mesh::setVAO(std::shared_ptr<VAOBuffer> vao)
+{
+    // m_buffer.setVAO(std::move(vao));
+    m_buffer.setVAO(vao);
+}
+
 void CGL::Mesh::setPrimitiveData(PrimitiveData data)
 {
     m_primitiveData = data;

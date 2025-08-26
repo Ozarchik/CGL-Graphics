@@ -79,7 +79,7 @@ CGL::Application &CGL::Application::instance()
 
 void CGL::Application::createTerrainExample()
 {
-    heightMapShader = CGL::ResourceManager::loadShader("cpuheight");
+    std::shared_ptr heightMapShader = CGL::ResourceManager::loadShader("cpuheight");
     CGL::TextureLoader loader;
     std::tuple<std::vector<unsigned char>, glm::vec3> sourceData = loader.getSourceData("D:/MyPrivateProjects/CGL-Graphics/textures/heightmap/iceland_heightmap.png");
     auto data = std::get<0>(sourceData);
