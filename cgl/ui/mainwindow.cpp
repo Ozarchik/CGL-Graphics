@@ -11,65 +11,104 @@
 CGL::MainWindow::MainWindow(CommandDispatcher& commandDispatcher, Renderer &renderer)
     : m_commandDispatcher(commandDispatcher), m_renderer(renderer)
 {
-    CGL::UiManager::instance().init();
+    UiManager::instance().init();
+    UiManager::instance().setDocking(true);
 }
 
 CGL::MainWindow::~MainWindow()
 {
-    CGL::UiManager::instance().deinit();
+    UiManager::instance().deinit();
 }
 
 void CGL::MainWindow::init()
 {
-    CGL::UiManager::instance().newFrame();
+    UiManager::instance().newFrame();
 }
 
 void CGL::MainWindow::renderCameraControlFrame()
 {
-    ImGui::BeginChild("Camera control", ImVec2(400, 200), ImGuiChildFlags_Border | ImGuiChildFlags_ResizeX | ImGuiChildFlags_ResizeY);
+    ImGui::Begin("Camera control");
 
-    CGL::Camera* camera = cglEngine().activeCamera();
+    Camera* camera = cglEngine().activeCamera();
 
     float fov = camera->fov();
     ImGui::SliderFloat("Fov", &fov, 0, 90.0f);
 
     camera->setFov(fov);
 
-    ImGui::EndChild();
+    ImGui::End();
 }
 
 void CGL::MainWindow::renderSceneControlFrame()
 {
-    ImGui::BeginChild("Scene control", ImVec2(400, 200), ImGuiChildFlags_Border | ImGuiChildFlags_ResizeX | ImGuiChildFlags_ResizeY);
+    ImGui::Begin("Scene control");
 
     // CGL::Scene* scene = cglEngine().activeScene();
 
-    ImGui::EndChild();
+    static int viewIndex = 0;
+    if (ImGui::Button("View toggle")) {
+        cglEngine().setActiveCamera(cglEngine().views()[viewIndex++].camera.get());
+        viewIndex = viewIndex == 2 ? 0 : viewIndex;
+    }
+
+    ImGui::End();
 }
 
 void CGL::MainWindow::renderScene()
 {
-    ImGui::Begin("3D scene");
+    ImGui::Begin("3D scene (original + post)");
 
-    float imguiWindowWidth = cglCoreContext().width();
-    float imguiWindowHeight = cglCoreContext().height();
+    static float splitX = cglCoreContext().width() / 2.0f;
+    float splitterThickness = 6.0f;
 
     ImVec2 pos = ImGui::GetCursorScreenPos();
-    pos.x += (ImGui::GetContentRegionAvail().x - imguiWindowWidth)/2.0f;
-    pos.y += (ImGui::GetContentRegionAvail().y - imguiWindowHeight)/2.0f;
+    ImVec2 size = ImGui::GetContentRegionAvail();
+
     ImGui::GetWindowDrawList()->AddImage(
         cglEngine().views().front().framebuffer->texture(),
         ImVec2(pos.x, pos.y),
-        ImVec2(pos.x + imguiWindowWidth, pos.y + imguiWindowHeight),
+        ImVec2(pos.x + size.x, pos.y + size.y),
         ImVec2(0, 1),
         ImVec2(1, 0)
     );
+
+    ImGui::GetWindowDrawList()->PushClipRect(
+        ImVec2(pos.x + splitX, pos.y),
+        ImVec2(pos.x + size.x, pos.y + size.y),
+        true
+    );
+
+    ImGui::GetWindowDrawList()->AddImage(
+        cglEngine().views().front().postprocessor->targetTexture(),
+        ImVec2(pos.x, pos.y),
+        ImVec2(pos.x + size.x, pos.y + size.y),
+        ImVec2(0, 1),
+        ImVec2(1, 0)
+    );
+
+    ImGui::GetWindowDrawList()->PopClipRect();
+
+    ImGui::SetCursorScreenPos(ImVec2(pos.x + splitX - splitterThickness * 0.5f, pos.y));
+    ImGui::InvisibleButton("splitter", ImVec2(splitterThickness, size.y));
+    if (ImGui::IsItemActive())
+        splitX += ImGui::GetIO().MouseDelta.x;
+    if (ImGui::IsItemHovered())
+        ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeEW);
+
+    ImU32 lineColor = IM_COL32(0, 0, 0, 255);
+    ImGui::GetWindowDrawList()->AddLine(
+        ImVec2(pos.x + splitX, pos.y),
+        ImVec2(pos.x + splitX, pos.y + size.y),
+        lineColor,
+        1.0f
+    );
+
     ImGui::End();
 }
 
 void CGL::MainWindow::renderNodeControlFrame()
 {
-    ImGui::BeginChild("Node control", ImVec2(400, 200), ImGuiChildFlags_Border | ImGuiChildFlags_ResizeX | ImGuiChildFlags_ResizeY);
+    ImGui::Begin("Node control");
 
     CGL::Scene* scene = cglEngine().activeScene();
 
@@ -97,22 +136,20 @@ void CGL::MainWindow::renderNodeControlFrame()
         m_commandDispatcher.append(std::make_shared<CGL::MoveCommand>(x, y, z));
     }
 
-    ImGui::EndChild();
+    ImGui::End();
 }
 
 void CGL::MainWindow::render()
 {
-    CGL::UiManager::instance().newFrame();
-
-    UiManager::instance().enableDocking();
+    UiManager::instance().newFrame();
 
     renderScene();
 
-    ImGui::Begin("Tools");
-    renderNodeControlFrame();
-    renderCameraControlFrame();
-    renderSceneControlFrame();
-    ImGui::End();
+    // ImGui::Begin("Tools");
+    // renderNodeControlFrame();
+    // renderCameraControlFrame();
+    // renderSceneControlFrame();
+    // ImGui::End();
 
-    CGL::UiManager::instance().render();
+    UiManager::instance().render();
 }

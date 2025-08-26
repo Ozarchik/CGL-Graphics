@@ -10,10 +10,11 @@ public:
     void deinit();
     void newFrame();
     void render();
-    void enableDocking();
+    void setDocking(bool docking);
 
 private:
     UiManager();
+    bool m_docking = false;
 };
 }
 
