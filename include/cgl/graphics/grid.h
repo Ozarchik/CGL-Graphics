@@ -15,7 +15,6 @@ public:
 private:
     int sideSize = 2;
     int cellSize = 1;
-    CGL::Shader m_shader;
     CGL::Shader m_lightShader;
     CGL::Scene m_scene;
 };

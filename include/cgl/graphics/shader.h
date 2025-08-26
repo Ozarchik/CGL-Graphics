@@ -46,6 +46,8 @@ public:
         const CGL::Transform& projection
     );
 
+    bool isValid() const;
+
     void setBool(const std::string& name, bool state);
     bool getBool(const std::string &name);
 
@@ -64,7 +66,8 @@ private:
     void compile(GLuint vId, GLuint fId, GLuint gId);
 
 private:
-    GLuint m_id;
+    GLuint m_id = 0;
+    bool m_isValid = false;
 };
 }
 

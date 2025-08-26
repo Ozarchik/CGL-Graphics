@@ -19,12 +19,22 @@ CGL::Texture CGL::ResourceManager::loadTexture(const std::string &name)
     return CGL::TextureLoader::loadFromFile(m_texturesDirectory + "/" + name);
 }
 
-CGL::Shader CGL::ResourceManager::loadShader(const std::string &name)
+std::shared_ptr<CGL::Shader> CGL::ResourceManager::loadShader(const std::string &name)
 {
-    return CGL::Shader(
+    std::unique_lock<std::mutex> lock(m_mutex);
+
+    auto it = m_shaderCache.find(name);
+    if (it != m_shaderCache.end() && !it->second.expired()) {
+        return it->second.lock();
+    }
+
+    std::shared_ptr<Shader> shader = std::make_shared<CGL::Shader>(
         m_shadersDirectory + "/" + name + ".vert",
         m_shadersDirectory + "/" + name + ".frag"
     );
+
+    m_shaderCache[name] = shader;
+    return shader;
 }
 
 CGL::Shader& CGL::ResourceManager::loadDefaultShader()
@@ -81,9 +91,9 @@ CGL::Shader& CGL::ResourceManager::loadDefaultShader()
     return shader;
 }
 
-CGL::Shader& CGL::ResourceManager::loadDefaultModelShader()
+std::shared_ptr<CGL::Shader> CGL::ResourceManager::loadDefaultModelShader()
 {
-    static CGL::Shader shader = ResourceManager::loadShader("model");
+    static auto shader = ResourceManager::loadShader("model");
     return shader;
 }
 

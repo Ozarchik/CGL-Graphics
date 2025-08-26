@@ -7,6 +7,8 @@
 #include <cgl/core/camera.h>
 #include <cgl/core/corecontext.h>
 
+#include <memory>
+
 namespace CGL {
 enum PrimitiveType {
     Triangle
@@ -23,7 +25,7 @@ private:
     unsigned int VAO;
     unsigned int tex;
     unsigned int normalMap;
-    CGL::Shader shader;
+    std::shared_ptr<CGL::Shader> m_shader;
     CGL::Camera* m_camera;
     CGL::CoreContext* m_context;
 };

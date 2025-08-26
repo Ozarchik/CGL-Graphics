@@ -15,7 +15,7 @@ static std::array<glm::vec4, 6> quad {
 
 CGL::DefaultPostProcessor::DefaultPostProcessor()
 {
-    m_shader = CGL::ResourceManager::loadShaderAloc("postprocessing_default");
+    m_shader = CGL::ResourceManager::loadShader("postprocessing_default");
     auto&& vao = VAOBufferBuilder::build()
                 .setVertexData(quad.data(), quad.size() * sizeof(glm::vec4), RenderContext::Static)
                 .setAttribute(0, 2, sizeof(glm::vec4), 0)

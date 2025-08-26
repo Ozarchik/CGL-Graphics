@@ -11,8 +11,10 @@ CGL::Grid::Grid()
     for (int i = 0; i < sideSize; i++) {
         for (int j = 0; j < sideSize; j++) {
             light = !light;
-
-            std::shared_ptr<CGL::Node> node = std::make_shared<CGL::Node>(new CGL::Rectangle(greyLight), m_shader);
+            std::shared_ptr<CGL::Node> node = std::make_shared<CGL::Node>(
+                std::make_shared<CGL::Rectangle>(greyLight),
+                ResourceManager::loadShader("grid")
+            );
             m_scene.append(node);
         }
     }

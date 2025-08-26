@@ -1,5 +1,4 @@
 #include <cgl/graphics/mesh/3D/terrain.h>
-#include <cgl/utility/logger.h>
 #include <iostream>
 
 CGL::Terrain::Terrain()

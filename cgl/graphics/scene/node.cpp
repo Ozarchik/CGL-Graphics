@@ -17,7 +17,7 @@ CGL::Node::Node(std::vector<std::shared_ptr<Mesh>> meshes, std::shared_ptr<CGL::
     }
 }
 
-CGL::Node::Node(Shader &shader, Transform transform)
+CGL::Node::Node(std::shared_ptr<CGL::Shader> shader, Transform transform)
     : m_shader(shader)
     , m_transform(transform)
 {
@@ -104,16 +104,15 @@ void CGL::Node::update(CGL::Camera& camera, const Transform &parentTransform)
 {
     CGL::Transform resultTransform = parentTransform * m_transform;
 
-    m_shader.use();
-    m_shader.setMat4("model", resultTransform);
-    m_shader.setMat4("view", camera.getView());
-    m_shader.setMat4("projection", camera.getProjection());
+    m_shader->use();
+    m_shader->setModel(resultTransform);
+    m_shader->setView(camera.getView());
+    m_shader->setProjection(camera.getProjection());
+    cglErrors();
     for (auto& m: m_renderer.m_material)
-        m.draw(m_shader);
-
-
-    m_renderer.m_mesh->draw(m_shader);
-
+        m.draw(*m_shader);
+    cglErrors();
+    m_renderer.m_mesh->draw(*m_shader);
     for (const auto child: m_childs) {
         child->update(camera, resultTransform);
     }

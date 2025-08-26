@@ -37,10 +37,10 @@ void CGL::RayLine::update(glm::vec3 origin, glm::vec3 direction, float length)
 
 void CGL::RayLine::draw()
 {
-    m_shader.use();
-    m_shader.setMat4("view", m_camera.getView());
-    m_shader.setMat4("projection", m_camera.getProjection());
-    m_shader.setVec3("color", glm::vec3(1.0f, 0.0f, 0.0f));
+    m_shader->use();
+    m_shader->setMat4("view", m_camera.getView());
+    m_shader->setMat4("projection", m_camera.getProjection());
+    m_shader->setVec3("color", glm::vec3(1.0f, 0.0f, 0.0f));
 
     glBindVertexArray(VAO);
     glDrawArrays(GL_LINES, 0, 2);

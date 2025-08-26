@@ -23,7 +23,7 @@ std::shared_ptr<CGL::Node> CGL::ModelLoader::load(const std::string& filepath, b
 
     m_directory = filepath.substr(0, filepath.find_last_of('/'));
 
-    std::vector<CGL::Mesh*> meshes;
+    std::vector<std::shared_ptr<CGL::Mesh>> meshes;
     std::vector<CGL::Material> materials;
     processNode(scene, scene->mRootNode, meshes, materials);
 
@@ -36,7 +36,7 @@ std::shared_ptr<CGL::Node> CGL::ModelLoader::load(const std::string& filepath, b
     return node;
 }
 
-void CGL::ModelLoader::processNode(const aiScene* scene, aiNode* node, std::vector<CGL::Mesh*>& meshes, std::vector<CGL::Material>& materials)
+void CGL::ModelLoader::processNode(const aiScene* scene, aiNode* node, std::vector<std::shared_ptr<CGL::Mesh>>& meshes, std::vector<CGL::Material>& materials)
 {
     for (unsigned int i = 0; i < node->mNumMeshes; i++) {
         aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];

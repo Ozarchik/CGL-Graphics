@@ -3,6 +3,7 @@
 
 #include <cgl/graphics/shader.h>
 #include <cgl/core/camera.h>
+#include <memory>
 
 namespace CGL {
 class RayLine
@@ -15,7 +16,7 @@ public:
 
 private:
     CGL::Camera& m_camera;
-    CGL::Shader m_shader;
+    std::shared_ptr<CGL::Shader> m_shader;
 
     GLuint VAO = 0, VBO = 0;
     glm::vec3 from, to;

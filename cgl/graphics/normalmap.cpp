@@ -99,24 +99,24 @@ CGL::NormalMap::NormalMap(
     glBindVertexArray(0);
 
 
-    shader = ResourceManager::loadShader("brick");
+    m_shader = ResourceManager::loadShader("brick");
 }
 
 void CGL::NormalMap::use()
 {
-    shader.use();
-    shader.setInt("brick", 0);
-    shader.setInt("brickNormal", 1);
+    m_shader->use();
+    m_shader->setInt("brick", 0);
+    m_shader->setInt("brickNormal", 1);
 
-    shader.setVec3("lightPos", glm::vec3(0.5f, 1.0f, 0.3f));
-    shader.setVec3("viewPos", m_camera->pos());
+    m_shader->setVec3("lightPos", glm::vec3(0.5f, 1.0f, 0.3f));
+    m_shader->setVec3("viewPos", m_camera->pos());
     CGL::Transform model;
     CGL::Transform view = m_camera->getLookAt();
     CGL::Transform projection;
     projection.perspective(45.0f, m_context->aspect(), 1.0f, 100.0f);
-    shader.setMat4("model", model);
-    shader.setMat4("view", view);
-    shader.setMat4("projection", projection);
+    m_shader->setMat4("model", model);
+    m_shader->setMat4("view", view);
+    m_shader->setMat4("projection", projection);
 
     glBindVertexArray(VAO);
     glActiveTexture(GL_TEXTURE0);

@@ -18,7 +18,6 @@ CGL::Application::Application(/*int argc, char *argv[]*/)
     cglEngine().setActiveScene(&m_scene);
     // cglEngine().addView();
 
-    m_meshShader = CGL::ResourceManager::loadDefaultShader();
     // createTestObjects();
 
     createTestObjects();

@@ -133,6 +133,11 @@ void CGL::Shader::setMVP(
     setMat4("projection", projection.data());
 }
 
+bool CGL::Shader::isValid() const
+{
+    return m_isValid;
+}
+
 void CGL::Shader::setBool(const std::string& name, bool state)
 {
     glUniform1i(getUniformLoc(name), state);
@@ -191,6 +196,9 @@ void CGL::Shader::compile(GLuint vId, GLuint fId)
     if (!sucess) {
         glGetProgramInfoLog(m_id, 512, nullptr, infoLog);
         std::cout << "Shader program link failed: " << infoLog << std::endl;
+        m_isValid = false;
+    } else {
+        m_isValid = true;
     }
 }
 
