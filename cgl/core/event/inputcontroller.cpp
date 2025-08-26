@@ -118,6 +118,19 @@ void CGL::InputController::keyCallback(GLFWwindow* window, int key, int scancode
 
         keyNotify(Key_B, Key_Press, Key_None);
     }
+
+    if (key == GLFW_KEY_V && action == GLFW_PRESS) {
+        static bool firstCamera = false;
+        if (firstCamera) {
+            cglEngine().setActiveCamera(cglEngine().views().front().camera.get());
+        } else {
+            cglEngine().setActiveCamera(cglEngine().views().back().camera.get());
+        }
+
+        firstCamera = !firstCamera;
+
+        keyNotify(Key_V, Key_Press, Key_None);
+    }
 }
 
 void CGL::InputController::scrollCallback(GLFWwindow *window, double dx, double dy)

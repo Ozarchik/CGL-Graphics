@@ -61,9 +61,9 @@ CGL::CoreContext::CoreContext()
         std::abort();
     }
 
-    // glfwSetFramebufferSizeCallback(m_window, framebufferSizeCallback);
-    // glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-    // glViewport(0, 0, m_width, m_height);
+    glfwSetFramebufferSizeCallback(m_window, framebufferSizeCallback);
+    glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    glViewport(0, 0, m_width, m_height);
 
     init();
 }

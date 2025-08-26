@@ -92,7 +92,7 @@ void CGL::Application::createTerrainExample()
 
     std::vector<glm::vec3> vertices;
     float yScale = 64.0f/256.0f;
-    float yShift = 16.0f;
+    float yShift = 50.0f;
 
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
@@ -142,7 +142,6 @@ void CGL::Application::createTerrainExample()
 void CGL::Application::run()
 {
     m_inputController.addSubscriber(&m_raycast);
-    glEnable(GL_DEPTH_TEST);
 
     createTerrainExample();
     while (cglCoreContext().isAlive()) {

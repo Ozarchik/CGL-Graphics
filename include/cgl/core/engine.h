@@ -10,22 +10,40 @@
 #include <cgl/graphics/postprocess/defaultpostprocessor.h>
 
 namespace CGL {
+
 struct View {
     std::unique_ptr<Camera> camera;
     std::unique_ptr<FrameBuffer> framebuffer;
-    bool postprocessing = false;
+    std::unique_ptr<IPostProcessPass> postprocessor;
+
+    void useCustomFramebuffer(bool status) {
+        if (!framebuffer)
+            return;
+
+        if (status)
+            framebuffer->bindCustomFramebuffer();
+        else
+            framebuffer->bindDefaultFramebuffer();
+    }
+
+    void postprocess() {
+        if (postprocessor && framebuffer) {
+            postprocessor->apply(*framebuffer);
+        }
+    }
 };
 
 class Engine
 {
 public:
+
     void setActiveScene(Scene* scene);
     Scene* activeScene() const;
 
     void setActiveCamera(Camera* camera);
     Camera* activeCamera() const;
 
-    void addView();
+    View& addView();
     std::vector<View>& views();
 
     static Engine& instance();
@@ -34,6 +52,7 @@ public:
 
     Engine(Engine&& other) = delete;
     Engine& operator=(Engine&& other) = delete;
+
 
 private:
     Engine();

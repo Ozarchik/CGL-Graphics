@@ -1,5 +1,4 @@
 #include <cgl/core/buffer/vaobufferbuilder.h>
-#include <cgl/utility/logger.h>
 #include <utility>
 
 CGL::VAOBufferBuilder CGL::VAOBufferBuilder::build()

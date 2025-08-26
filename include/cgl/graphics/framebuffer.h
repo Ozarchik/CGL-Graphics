@@ -19,7 +19,7 @@ public:
     void bindDefaultFramebuffer();
     void bindCustomFramebuffer();
 
-private:
+public:
     unsigned int m_currentFramebuffer = 0;
     unsigned int m_fbo, m_rbo;
     unsigned int m_texture;

@@ -52,13 +52,19 @@ private:
 
 struct PrimitiveData {
     PrimitiveData()
-    : type(RenderContext::Primitive::Triangle)
-    , drawType(RenderContext::DrawType::Elements)
-    , offset(0)
-    , size(0)
-    {
+        : type(RenderContext::Primitive::Triangle)
+        , drawType(RenderContext::DrawType::Elements)
+        , offset(0)
+        , size(0)
+    {}
 
-    }
+    PrimitiveData(RenderContext::Primitive _type, RenderContext::DrawType _drawType, int _size, int _offset)
+        : type(_type)
+        , drawType(_drawType)
+        , size(_size)
+        , offset(_offset)
+    {}
+
     RenderContext::Primitive type;
     RenderContext::DrawType drawType;
     int offset;

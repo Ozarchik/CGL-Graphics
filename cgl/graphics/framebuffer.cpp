@@ -32,7 +32,6 @@ CGL::FrameBuffer::FrameBuffer()
         std::cout << "FrameBuffer compliete error: " << framebufferStatusToString(glCheckFramebufferStatus(GL_FRAMEBUFFER)) << std::endl;
     }
 
-    glBindTexture(GL_TEXTURE_2D, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
     CGL_CheckErros();
@@ -49,14 +48,13 @@ void CGL::FrameBuffer::bind()
 {
     CGL_CheckErros();
     glBindFramebuffer(GL_FRAMEBUFFER, m_currentFramebuffer);
-    CGL_CheckErros();
-    cglCoreContext().setStencilEnable(true);
-    cglCoreContext().setStencilMask(true);
-    cglCoreContext().setStencilFunction(CGL::CoreContext::BufferCheckFunction::Less);
-    cglCoreContext().setDepthEnable(true);
-    cglCoreContext().setDepthWriteMode(true);
-    cglCoreContext().setDepthFunction(CGL::CoreContext::BufferCheckFunction::Less);
-    cglCoreContext().setBuffersToClear(CGL::CoreContext::BuffersToClear::All);
+    // cglCoreContext().setStencilEnable(true);
+    // cglCoreContext().setStencilMask(true);
+    // cglCoreContext().setStencilFunction(CGL::CoreContext::BufferCheckFunction::Less);
+    // cglCoreContext().setDepthEnable(true);
+    // cglCoreContext().setDepthWriteMode(true);
+    // cglCoreContext().setDepthFunction(CGL::CoreContext::BufferCheckFunction::Less);
+    // cglCoreContext().setBuffersToClear(CGL::CoreContext::BuffersToClear::All);
     cglCoreContext().update();
     CGL_CheckErros();
 }

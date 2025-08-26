@@ -35,7 +35,7 @@ public:
 
     void init();
 
-private:
+public:
     unsigned int m_vao;
     unsigned int m_vbo;
     unsigned int m_ebo;
