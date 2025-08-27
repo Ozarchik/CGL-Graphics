@@ -36,6 +36,7 @@ void framebufferSizeCallback(GLFWwindow* window, int width, int height)
 }
 
 CGL::CoreContext::CoreContext()
+    : m_alive{true}
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -52,9 +53,6 @@ CGL::CoreContext::CoreContext()
     }
 
     glfwMakeContextCurrent(m_window);
-
-    m_alive = true;
-
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         std::cout << "Failed to load GLAD" << std::endl;
@@ -141,6 +139,20 @@ int CGL::CoreContext::height() const
 void CGL::CoreContext::setHeight(int height)
 {
 	m_height = height;
+}
+
+void CGL::CoreContext::setViewport(glm::vec4 rect)
+{
+    glViewport(rect.x, rect.y, rect.z, rect.w);
+}
+
+glm::vec4 CGL::CoreContext::viewport() const
+{
+    GLint v[4];
+    glGetIntegerv(GL_VIEWPORT, v);
+
+    glm::vec4 rect {v[0], v[1], v[2], v[3]};
+    return rect;
 }
 
 void CGL::CoreContext::setCullFaceEnable(bool enabled)

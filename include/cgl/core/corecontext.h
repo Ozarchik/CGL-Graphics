@@ -58,6 +58,9 @@ public:
 	int height() const;
     void setHeight(int height);
 
+    void setViewport(glm::vec4 rect);
+    glm::vec4 viewport() const;
+
     void setCullFaceEnable(bool enabled);
     void setCullFaceMode(CullFaceMode mode);
     void setStencilEnable(bool enabled);
