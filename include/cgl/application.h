@@ -20,6 +20,7 @@
 #include <cgl/managers/resourcemanager.h>
 #include <cgl/physics/raycast.h>
 #include <cgl/graphics/renderer.h>
+#include <cgl/graphics/animationsystem.h>
 
 namespace CGL {
 class Application
@@ -43,6 +44,7 @@ private:
     CGL::CommandDispatcher m_commandDispatcher;
     CGL::Raycast m_raycast;
     CGL::Renderer m_renderer;
+    CGL::AnimationSystem m_animation;
 };
 }
 
