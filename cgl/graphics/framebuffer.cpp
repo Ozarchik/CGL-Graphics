@@ -34,7 +34,6 @@ CGL::FrameBuffer::FrameBuffer()
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
-    CGL_CheckErros();
 }
 
 CGL::FrameBuffer::~FrameBuffer()
@@ -46,7 +45,6 @@ CGL::FrameBuffer::~FrameBuffer()
 
 void CGL::FrameBuffer::bind()
 {
-    CGL_CheckErros();
     glBindFramebuffer(GL_FRAMEBUFFER, m_currentFramebuffer);
     // cglCoreContext().setStencilEnable(true);
     // cglCoreContext().setStencilMask(true);
@@ -56,7 +54,6 @@ void CGL::FrameBuffer::bind()
     // cglCoreContext().setDepthFunction(CGL::CoreContext::BufferCheckFunction::Less);
     // cglCoreContext().setBuffersToClear(CGL::CoreContext::BuffersToClear::All);
     cglCoreContext().update();
-    CGL_CheckErros();
 }
 
 void CGL::FrameBuffer::unbind()

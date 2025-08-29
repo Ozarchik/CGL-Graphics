@@ -98,8 +98,6 @@ void CGL::Camera::updateInternal()
     m_front = glm::normalize(direction);
     m_right = glm::normalize(glm::cross(m_front, m_worldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
     m_up    = glm::normalize(glm::cross(m_right, m_front));
-
-    // std::cout << "Camera pos: (" << m_pos.x << "," << m_pos.y << "," << m_pos.z << ")" << std::endl;
 }
 
 void CGL::Camera::keyEventHandler(const KeyEvent& event)
