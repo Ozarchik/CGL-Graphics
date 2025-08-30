@@ -29,8 +29,8 @@ public:
     void disableAttribute(int index);
 
 // private:
-    void setVertexData(const void *data, int size, RenderContext::DrawChangeMode mode);
-    void setIndexData(const void *data, int size, RenderContext::DrawChangeMode mode);
+    void setVertexData(const void *data, int size, cgl::DrawChangeMode mode);
+    void setIndexData(const void *data, int size, cgl::DrawChangeMode mode);
     void setAttribute(int index, int components, int stride, int offset);
 
     void init();

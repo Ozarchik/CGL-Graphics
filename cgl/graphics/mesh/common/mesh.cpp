@@ -3,8 +3,8 @@
 cgl::Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices)
     : m_buffer(vertices, indices)
 {
-    m_primitiveData.type = cgl::RenderContext::Triangle;
-    m_primitiveData.drawType = cgl::RenderContext::Indexes;
+    m_primitiveData.type = cgl::Primitive::Triangle;
+    m_primitiveData.drawType = cgl::DrawType::Indexes;
     m_primitiveData.size = m_buffer.m_indices.size();
     m_primitiveData.offset = 0;
 }
@@ -49,7 +49,7 @@ void cgl::Mesh::setPrimitiveData(PrimitiveData data)
     m_primitiveData = data;
 }
 
-void cgl::Mesh::setPrimitiveType(cgl::RenderContext::Primitive type)
+void cgl::Mesh::setPrimitiveType(cgl::Primitive type)
 {
     m_primitiveData.type = type;
 }

@@ -33,7 +33,7 @@ void cgl::Grid::draw(cgl::Camera& camera, cgl::Transform model)
             modif.rotate(90.0f, 1.0f, 0.0f, 0.0f);
             modif.translateX(i/*/8.0f*/);
             modif.translateY(j/*/8.0f*/);
-            nodes[index]->setPrimitiveType(cgl::RenderContext::Primitive::Triangle);
+            nodes[index]->setPrimitiveType(cgl::Primitive::Triangle);
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
             nodes[index]->update(camera, modif);
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

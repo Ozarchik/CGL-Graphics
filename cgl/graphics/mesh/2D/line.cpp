@@ -3,8 +3,8 @@
 cgl::Line::Line()
     : Mesh()
 {
-    m_primitiveData.drawType = cgl::RenderContext::Elements;
-    m_primitiveData.type = cgl::RenderContext::Line;
+    m_primitiveData.drawType = cgl::DrawType::Elements;
+    m_primitiveData.type = cgl::Primitive::Line;
     m_primitiveData.size = 4;
     m_primitiveData.offset = 0;
 }

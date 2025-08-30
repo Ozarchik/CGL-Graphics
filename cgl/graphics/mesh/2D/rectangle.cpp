@@ -3,8 +3,8 @@
 cgl::Rectangle::Rectangle()
     : Mesh(), m_vertexBuffer(vertices)
 {
-    m_primitiveData.drawType = cgl::RenderContext::Elements;
-    m_primitiveData.type = cgl::RenderContext::Triangle;
+    m_primitiveData.drawType = cgl::DrawType::Elements;
+    m_primitiveData.type = cgl::Primitive::Triangle;
     m_primitiveData.size = 6;
     m_primitiveData.offset = 0;
 

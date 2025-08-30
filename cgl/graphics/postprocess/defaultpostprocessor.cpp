@@ -17,14 +17,14 @@ cgl::DefaultPostProcessor::DefaultPostProcessor()
 {
     m_shader = cgl::ResourceManager::loadShader("postprocessing_default");
     auto&& vao = VAOBufferBuilder::build()
-                .setVertexData(quad.data(), quad.size() * sizeof(glm::vec4), RenderContext::Static)
+                .setVertexData(quad.data(), quad.size() * sizeof(glm::vec4), cgl::DrawChangeMode::Static)
                 .setAttribute(0, 2, sizeof(glm::vec4), 0)
                 .setAttribute(1, 2, sizeof(glm::vec4), sizeof(glm::vec2))
                 .done();
 
     m_quad = cgl::MeshBuilder::build(MeshType::Mesh)
             .setVAO(std::move(vao))
-            .setPrimitiveData(PrimitiveData(RenderContext::Triangle, RenderContext::Elements, 6, 0))
+            .setPrimitiveData(PrimitiveData(Primitive::Triangle, cgl::DrawType::Elements, 6, 0))
             .done();
 
     m_targetFrambuffer.bindCustomFramebuffer();
@@ -35,7 +35,7 @@ void cgl::DefaultPostProcessor::apply(FrameBuffer &fbuffer)
     m_targetFrambuffer.bind();
 
     cglCoreContext().update();
-    cglRenderContext().setPolygoneMode(cgl::RenderContext::PolygoneMode::Fill);
+    cglRenderContext().setPolygoneMode(cgl::PolygoneMode::Fill);
     m_shader->use();
     m_shader->setInt("screenTexture", 0);
     Texture::bind2D(fbuffer.texture(), 0);

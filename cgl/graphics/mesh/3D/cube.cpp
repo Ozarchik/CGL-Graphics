@@ -7,8 +7,8 @@ extern const std::vector<cgl::Vertex> vertices;
 cgl::Cube::Cube()
     : Mesh(vertices)
 {
-    m_primitiveData.drawType = cgl::RenderContext::Elements;
-    m_primitiveData.type = cgl::RenderContext::Triangle;
+    m_primitiveData.drawType = cgl::DrawType::Elements;
+    m_primitiveData.type = cgl::Primitive::Triangle;
     m_primitiveData.size = 36;
     m_primitiveData.offset = 0;
 }

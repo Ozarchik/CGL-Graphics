@@ -13,8 +13,8 @@ cgl::MeshBuffer::MeshBuffer(const std::vector<cgl::Vertex> &vertices, const std:
 {
     
     m_vao = cgl::VAOBufferBuilder::build()
-        .setVertexData(vertices.data(), vertices.size() * sizeof(cgl::Vertex), RenderContext::DrawChangeMode::Static)
-        .setIndexData(indices.data(), indices.size() * sizeof(unsigned int), RenderContext::DrawChangeMode::Static)
+        .setVertexData(vertices.data(), vertices.size() * sizeof(cgl::Vertex), cgl::DrawChangeMode::Static)
+        .setIndexData(indices.data(), indices.size() * sizeof(unsigned int), cgl::DrawChangeMode::Static)
         .setAttribute(0, 3, sizeof(cgl::Vertex), 0)
         .setAttribute(1, 3, sizeof(cgl::Vertex), offsetof(cgl::Vertex, normal))
         .setAttribute(2, 2, sizeof(cgl::Vertex), offsetof(cgl::Vertex, texcoord))

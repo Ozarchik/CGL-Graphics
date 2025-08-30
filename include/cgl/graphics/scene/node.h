@@ -43,7 +43,7 @@ public:
     void setTransform(const cgl::Transform& transform);
     Transform transform() const;
     Transform& transformRef();
-    void setPrimitiveType(RenderContext::Primitive type);
+    void setPrimitiveType(cgl::Primitive type);
 
     cgl::BoundingBox boundingBox() const;
     void update(cgl::Camera& camera, const cgl::Transform& parentTransform = {});

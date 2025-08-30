@@ -45,7 +45,7 @@ public:
     
     void setVAO(std::unique_ptr<VAOBuffer> &&vao);
     void setPrimitiveData(PrimitiveData data);
-    void setPrimitiveType(RenderContext::Primitive type);
+    void setPrimitiveType(cgl::Primitive type);
 
 protected:
     cgl::MeshBuffer m_buffer;

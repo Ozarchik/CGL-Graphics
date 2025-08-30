@@ -69,14 +69,14 @@ void cgl::VAOBuffer::unbind()
     glBindVertexArray(0);
 }
 
-void cgl::VAOBuffer::setVertexData(const void *data, int size, RenderContext::DrawChangeMode mode)
+void cgl::VAOBuffer::setVertexData(const void *data, int size, cgl::DrawChangeMode mode)
 {
     bind();
     switch (mode) {
-    case RenderContext::DrawChangeMode::Static: {
+    case cgl::DrawChangeMode::Static: {
         glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
     } break;
-    case RenderContext::DrawChangeMode::Dynamic: {
+    case cgl::DrawChangeMode::Dynamic: {
         glBufferData(GL_ARRAY_BUFFER, size, data, GL_DYNAMIC_DRAW);
     } break;
     default: {
@@ -86,16 +86,16 @@ void cgl::VAOBuffer::setVertexData(const void *data, int size, RenderContext::Dr
     unbind();
 }
 
-void cgl::VAOBuffer::setIndexData(const void *data, int size, RenderContext::DrawChangeMode mode)
+void cgl::VAOBuffer::setIndexData(const void *data, int size, cgl::DrawChangeMode mode)
 {
     bind();
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
 
     switch (mode) {
-        case RenderContext::DrawChangeMode::Static: {
+        case cgl::DrawChangeMode::Static: {
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
         } break;
-        case RenderContext::DrawChangeMode::Dynamic: {
+        case cgl::DrawChangeMode::Dynamic: {
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_DYNAMIC_DRAW);
         } break;
         default: {

@@ -117,16 +117,16 @@ void cgl::Application::createTerrainExample()
 
     auto node = std::make_shared<cgl::Node>(heightMapShader);
     cgl::PrimitiveData primData (
-        cgl::RenderContext::Primitive::TriangleStrip,
-        cgl::RenderContext::DrawType::Indexes,
+        cgl::Primitive::TriangleStrip,
+        cgl::DrawType::Indexes,
         height-1,
         width*2
     );
 
     std::shared_ptr<Mesh> mesh = MeshBuilder::build(MeshType::Terrain)
             .setVAO(VAOBufferBuilder::build()
-                .setVertexData(vertices.data(), vertices.size() * sizeof(glm::vec3), RenderContext::DrawChangeMode::Static)
-                .setIndexData(indices.data(), indices.size() * sizeof(unsigned int), RenderContext::DrawChangeMode::Static)
+                .setVertexData(vertices.data(), vertices.size() * sizeof(glm::vec3), cgl::DrawChangeMode::Static)
+                .setIndexData(indices.data(), indices.size() * sizeof(unsigned int), cgl::DrawChangeMode::Static)
                 .setAttribute(0, 3, sizeof(glm::vec3), 0)
                 .done()
             )

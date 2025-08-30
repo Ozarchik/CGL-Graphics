@@ -12,8 +12,8 @@ class VAOBufferBuilder
 public:
     static VAOBufferBuilder build();
 
-    VAOBufferBuilder& setVertexData(const void* data, int size, RenderContext::DrawChangeMode mode);
-    VAOBufferBuilder& setIndexData(const void* data, int size, RenderContext::DrawChangeMode mode);
+    VAOBufferBuilder& setVertexData(const void* data, int size, cgl::DrawChangeMode mode);
+    VAOBufferBuilder& setIndexData(const void* data, int size,  cgl::DrawChangeMode mode);
     VAOBufferBuilder& setAttribute(int index, int components, int stride, int offset);
     std::unique_ptr<VAOBuffer> done();
 
@@ -24,7 +24,7 @@ private:
     struct Data {
         const void *data = nullptr;
         int size = 0;
-        RenderContext::DrawChangeMode drawMode;
+        cgl::DrawChangeMode drawMode;
 
         bool isValid() {
             return data && size;
@@ -45,11 +45,11 @@ private:
     // std::shared_ptr<VAOBuffer> m_vao;
     // const void *vertices;
     // int verticesSize;
-    // RenderContext::DrawChangeMode vertDrawMode;
+    // cgl::DrawChangeMode vertDrawMode;
 
     // const void *indices;
     // int indicesSize;
-    // RenderContext::DrawChangeMode indDrawMode;
+    // cgl::DrawChangeMode indDrawMode;
 
     Data m_vertices;
     Data m_indices;

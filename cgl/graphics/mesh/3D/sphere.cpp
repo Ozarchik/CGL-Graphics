@@ -13,8 +13,8 @@ static const std::vector<unsigned int> sphIndices = genSphereIndices();
 cgl::Sphere::Sphere()
     : Mesh(sphVertices, sphIndices)
 {
-    m_primitiveData.type = cgl::RenderContext::Triangle;
-    m_primitiveData.drawType = cgl::RenderContext::Indexes;
+    m_primitiveData.type = cgl::Primitive::Triangle;
+    m_primitiveData.drawType = cgl::DrawType::Indexes;
 }
 
 void cgl::Sphere::draw(Shader &shader)

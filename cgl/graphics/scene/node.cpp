@@ -68,7 +68,7 @@ cgl::Transform cgl::Node::transform() const
     return m_transform;
 }
 
-void cgl::Node::setPrimitiveType(cgl::RenderContext::Primitive type)
+void cgl::Node::setPrimitiveType(cgl::Primitive type)
 {
     if (m_renderer.m_mesh)
         m_renderer.m_mesh->setPrimitiveType(type);

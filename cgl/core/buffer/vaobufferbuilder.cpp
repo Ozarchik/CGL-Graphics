@@ -33,7 +33,7 @@ std::unique_ptr<cgl::VAOBuffer> cgl::VAOBufferBuilder::done()
     return buffer;
 }
 
-cgl::VAOBufferBuilder& cgl::VAOBufferBuilder::setVertexData(const void *data, int size, RenderContext::DrawChangeMode mode)
+cgl::VAOBufferBuilder& cgl::VAOBufferBuilder::setVertexData(const void *data, int size, cgl::DrawChangeMode mode)
 {
     // m_vao->setVertexData(data, size, mode);
     if (data && size) {
@@ -47,7 +47,7 @@ cgl::VAOBufferBuilder& cgl::VAOBufferBuilder::setVertexData(const void *data, in
     return *this;
 }
 
-cgl::VAOBufferBuilder& cgl::VAOBufferBuilder::setIndexData(const void* data, int size, RenderContext::DrawChangeMode mode)
+cgl::VAOBufferBuilder& cgl::VAOBufferBuilder::setIndexData(const void* data, int size, cgl::DrawChangeMode mode)
 {
     // m_vao->setIndexData(data, size, mode);
     if (data && size) {
