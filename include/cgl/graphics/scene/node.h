@@ -42,6 +42,7 @@ public:
     void addMesh(std::shared_ptr<Mesh> mesh, const Material &material);
     void setTransform(const CGL::Transform& transform);
     Transform transform() const;
+    Transform& transformRef();
     void setPrimitiveType(RenderContext::Primitive type);
 
     CGL::BoundingBox boundingBox() const;

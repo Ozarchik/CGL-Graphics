@@ -58,6 +58,11 @@ void CGL::Node::setTransform(const CGL::Transform& transform)
     m_transform = transform;
 }
 
+CGL::Transform &CGL::Node::transformRef()
+{
+    return m_transform;
+}
+
 CGL::Transform CGL::Node::transform() const
 {
     return m_transform;
