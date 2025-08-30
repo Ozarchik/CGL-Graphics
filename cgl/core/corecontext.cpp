@@ -8,31 +8,17 @@ void framebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
     CGL::Application::instance().draw();
 
+    return;
 
-    // glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    // glClear(GL_COLOR_BUFFER_BIT);
-    // glfwSwapBuffers(window);
+    glm::vec4 viewRect = CGL::cglCoreContext().viewport();
 
-    // float targetAspect = (float)LOGICAL_WIDTH / LOGICAL_HEIGHT;
-    // float windowAspect = (float)width / height;
-    // int offsetX = 0, offsetY = 0;
+    int xtotalOffset = width - viewRect.z;
+    int ytotalOffset = height - viewRect.w;
 
-    // if (windowAspect > targetAspect) {
-    //     viewportHeight = height;
-    //     viewportWidth = (int)(height * targetAspect);
-    //     offsetX = (width - viewportWidth) / 2;
-    // } else {
-    //     viewportWidth = width;
-    //     viewportHeight = (int)(width / targetAspect);
-    //     offsetY = (height - viewportHeight) / 2;
-    // }
+    viewRect.x = xtotalOffset/2;
+    viewRect.y = ytotalOffset/2;
 
-    // int viewportX = (width - viewportWidth) / 2;
-    // int viewportY = (height - viewportHeight) / 2;
-    // glViewport(0, 0, width, height);
-    // glViewport(0, 0, 800, 800);
-    // glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
-    // glViewport(0, 0, width, height);
+    CGL::cglCoreContext().setViewport(viewRect);
 }
 
 CGL::CoreContext::CoreContext()
