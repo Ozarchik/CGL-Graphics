@@ -1,23 +1,23 @@
 #include <cgl/core/engine.h>
 
-CGL::Engine &CGL::Engine::instance()
+cgl::Engine &cgl::Engine::instance()
 {
     static Engine engine;
     return engine;
 }
 
-void CGL::Engine::setActiveScene(Scene *scene)
+void cgl::Engine::setActiveScene(Scene *scene)
 {
     assert(scene);
     m_scene = scene;
 }
 
-CGL::Scene *CGL::Engine::activeScene() const
+cgl::Scene *cgl::Engine::activeScene() const
 {
     return m_scene;
 }
 
-CGL::View& CGL::Engine::addView() {
+cgl::View& cgl::Engine::addView() {
     m_views.emplace_back(
         std::make_unique<Camera>(),
         std::make_unique<FrameBuffer>(),
@@ -27,29 +27,29 @@ CGL::View& CGL::Engine::addView() {
     return m_views.back();
 }
 
-std::vector<CGL::View> &CGL::Engine::views()
+std::vector<cgl::View> &cgl::Engine::views()
 {
     return m_views;
 }
 
-void CGL::Engine::setActiveCamera(Camera *camera)
+void cgl::Engine::setActiveCamera(Camera *camera)
 {
     assert(camera);
     m_camera = camera;
 }
 
-CGL::Camera *CGL::Engine::activeCamera() const
+cgl::Camera *cgl::Engine::activeCamera() const
 {
     return m_camera;
 }
 
-CGL::Engine::Engine()
+cgl::Engine::Engine()
 {
     addView();
     setActiveCamera(m_views.front().camera.get());
 }
 
-CGL::Engine &CGL::cglEngine()
+cgl::Engine &cgl::cglEngine()
 {
     return Engine::instance();
 }

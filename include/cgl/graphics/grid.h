@@ -5,18 +5,18 @@
 #include <cgl/graphics/scene/scene.h>
 #include <cgl/graphics/mesh/3D/cube.h>
 
-namespace CGL {
+namespace cgl {
 class Grid {
 
 public:
     Grid();
-    void draw(CGL::Camera& camera, CGL::Transform  model);
+    void draw(cgl::Camera& camera, cgl::Transform  model);
 
 private:
     int sideSize = 2;
     int cellSize = 1;
-    CGL::Shader m_lightShader;
-    CGL::Scene m_scene;
+    cgl::Shader m_lightShader;
+    cgl::Scene m_scene;
 };
 }
 

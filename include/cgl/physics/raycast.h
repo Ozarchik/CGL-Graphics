@@ -6,24 +6,24 @@
 #include <cgl/graphics/scene/scene.h>
 #include <cgl/physics/rayline.h>
 
-namespace CGL {
-class Raycast: public CGL::Object {
+namespace cgl {
+class Raycast: public cgl::Object {
 public:
-    Raycast(CGL::Scene& scene);
+    Raycast(cgl::Scene& scene);
 
     void seek(float mouseX, float mouseY);
     void draw();
 
 protected:
-    void mouseEventHandler(const CGL::MouseEvent& event) override;
-    void keyEventHandler(const CGL::KeyEvent& event) override;
+    void mouseEventHandler(const cgl::MouseEvent& event) override;
+    void keyEventHandler(const cgl::KeyEvent& event) override;
 
 private:
     bool intersectRayAABB(glm::vec3 origin, glm::vec3 direction, BoundingBox &box, float &tMin);
 
 private:
-    CGL::Scene& m_scene;
-    std::vector<CGL::RayLine> m_raylines;
+    cgl::Scene& m_scene;
+    std::vector<cgl::RayLine> m_raylines;
 };
 }
 

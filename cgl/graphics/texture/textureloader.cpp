@@ -4,7 +4,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
 
-CGL::Texture CGL::TextureLoader::loadFromFile(const std::string &filepath, bool flipVertical)
+cgl::Texture cgl::TextureLoader::loadFromFile(const std::string &filepath, bool flipVertical)
 {
     if (m_loadedTextures.count(filepath)) {
         return m_loadedTextures[filepath];
@@ -36,7 +36,7 @@ CGL::Texture CGL::TextureLoader::loadFromFile(const std::string &filepath, bool 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
         stbi_image_free(data);
-        m_loadedTextures[filepath] = CGL::Texture{textureID};
+        m_loadedTextures[filepath] = cgl::Texture{textureID};
     } else {
         std::cout << "Texture failed to load at path: " << filepath << std::endl;
         stbi_image_free(data);
@@ -45,13 +45,13 @@ CGL::Texture CGL::TextureLoader::loadFromFile(const std::string &filepath, bool 
 
     // stbi_set_flip_vertically_on_load(false);
 
-    CGL::Texture texture;
+    cgl::Texture texture;
     texture.id = textureID;
     texture.size = {(unsigned int)width, (unsigned int)height};
     return texture;
 }
 
-std::tuple<std::vector<unsigned char>, glm::vec3> CGL::TextureLoader::getSourceData(const std::string &filepath, bool flipVertical)
+std::tuple<std::vector<unsigned char>, glm::vec3> cgl::TextureLoader::getSourceData(const std::string &filepath, bool flipVertical)
 {
     int width, height, nrComponents;
     stbi_set_flip_vertically_on_load(true);
@@ -74,7 +74,7 @@ std::tuple<std::vector<unsigned char>, glm::vec3> CGL::TextureLoader::getSourceD
     return result;
 }
 
-unsigned int CGL::TextureLoader::loadCubmap(const std::string &dir, const std::vector<std::string>& faces)
+unsigned int cgl::TextureLoader::loadCubmap(const std::string &dir, const std::vector<std::string>& faces)
 {
     unsigned int texId;
     glGenTextures(1, &texId);

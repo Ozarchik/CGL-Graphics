@@ -2,55 +2,55 @@
 #include <cgl/graphics/mesh/meshes2D.h>
 #include <cgl/graphics/mesh/meshes3D.h>
 
-CGL::MeshBuilder::MeshBuilder(const MeshType& meshType)
+cgl::MeshBuilder::MeshBuilder(const MeshType& meshType)
 {
     switch (meshType) {
     case MeshType::Rectangle: {
-        m_mesh = std::make_shared<CGL::Rectangle>();
+        m_mesh = std::make_shared<cgl::Rectangle>();
     } break;
     case MeshType::Sphere: {
-        m_mesh = std::make_shared<CGL::Sphere>();
+        m_mesh = std::make_shared<cgl::Sphere>();
     } break;
     case MeshType::Cube: {
-        m_mesh = std::make_shared<CGL::Cube>();
+        m_mesh = std::make_shared<cgl::Cube>();
     } break;
     case MeshType::Line: {
-        m_mesh = std::make_shared<CGL::Line>();
+        m_mesh = std::make_shared<cgl::Line>();
     } break;
     case MeshType::Mesh: {
-        m_mesh = std::make_shared<CGL::Mesh>();
+        m_mesh = std::make_shared<cgl::Mesh>();
     } break;
     case MeshType::Terrain: {
-        m_mesh = std::make_shared<CGL::Terrain>();
+        m_mesh = std::make_shared<cgl::Terrain>();
     } break;
     default: {
-        m_mesh = std::make_shared<CGL::Mesh>();
+        m_mesh = std::make_shared<cgl::Mesh>();
     }
     }    
 }
 
-CGL::MeshBuilder CGL::MeshBuilder::build(MeshType meshType)
+cgl::MeshBuilder cgl::MeshBuilder::build(MeshType meshType)
 {
     return MeshBuilder(meshType);
 }
 
-CGL::MeshBuilder &CGL::MeshBuilder::bind()
+cgl::MeshBuilder &cgl::MeshBuilder::bind()
 {
     return *this;
 }
 
-std::shared_ptr<CGL::Mesh> CGL::MeshBuilder::done()
+std::shared_ptr<cgl::Mesh> cgl::MeshBuilder::done()
 {
     return m_mesh;
 }
 
-CGL::MeshBuilder &CGL::MeshBuilder::setPrimitiveData(PrimitiveData data)
+cgl::MeshBuilder &cgl::MeshBuilder::setPrimitiveData(PrimitiveData data)
 {
     m_mesh->setPrimitiveData(data);
     return *this;
 }
 
-CGL::MeshBuilder &CGL::MeshBuilder::setVAO(std::unique_ptr<CGL::VAOBuffer> vao)
+cgl::MeshBuilder &cgl::MeshBuilder::setVAO(std::unique_ptr<cgl::VAOBuffer> vao)
 {
     // m_mesh->setVAO(std::move(vao));
     m_mesh->setVAO(std::move(vao));

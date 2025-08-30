@@ -4,7 +4,7 @@
 #include <cgl/core/rendercontext.h>
 #include <cgl/graphics/framebuffer.h>
 
-namespace CGL {
+namespace cgl {
 
 class IPostProcessPass {
 public:

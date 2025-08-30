@@ -1,6 +1,6 @@
 #include <cgl/graphics/postprocess/ipostprocesspass.h>
 
-uint32_t CGL::IPostProcessPass::targetTexture() const
+uint32_t cgl::IPostProcessPass::targetTexture() const
 {
     return m_targetFrambuffer.texture();
 }

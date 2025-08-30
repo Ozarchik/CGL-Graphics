@@ -4,31 +4,31 @@ constexpr int sectors = 300;
 constexpr int stacks = 150;
 constexpr float radius = 0.5f;
 
-std::vector<CGL::Vertex> genSphereVertices();
+std::vector<cgl::Vertex> genSphereVertices();
 std::vector<unsigned int> genSphereIndices();
 
-static const std::vector<CGL::Vertex> sphVertices = genSphereVertices();
+static const std::vector<cgl::Vertex> sphVertices = genSphereVertices();
 static const std::vector<unsigned int> sphIndices = genSphereIndices();
 
-CGL::Sphere::Sphere()
+cgl::Sphere::Sphere()
     : Mesh(sphVertices, sphIndices)
 {
-    m_primitiveData.type = CGL::RenderContext::Triangle;
-    m_primitiveData.drawType = CGL::RenderContext::Indexes;
+    m_primitiveData.type = cgl::RenderContext::Triangle;
+    m_primitiveData.drawType = cgl::RenderContext::Indexes;
 }
 
-void CGL::Sphere::draw(Shader &shader)
+void cgl::Sphere::draw(Shader &shader)
 {
     shader.use();
     m_buffer.bind();
-    CGL::RenderContext::instance().render(m_primitiveData);
+    cgl::RenderContext::instance().render(m_primitiveData);
     m_buffer.unbind();
     shader.done();
 }
 
-std::vector<CGL::Vertex> genSphereVertices()
+std::vector<cgl::Vertex> genSphereVertices()
 {
-    std::vector<CGL::Vertex> vertices;
+    std::vector<cgl::Vertex> vertices;
 
     float sectorStep = 2 * 3.14 / sectors;
     float stackStep = 3.14 / stacks;
@@ -38,7 +38,7 @@ std::vector<CGL::Vertex> genSphereVertices()
         float z = radius * sinf(stackAngle); // r * sin(u)
 
         for (int j = 0; j <= sectors; ++j) {
-            CGL::Vertex v;
+            cgl::Vertex v;
 
             float sectorAngle = j * sectorStep; // from 0 to 2pi
             float x = xy * cosf(sectorAngle); // r * cos(v) * cos(u)

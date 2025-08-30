@@ -2,9 +2,9 @@
 // #include <cgl/core/engine.h>
 // #include <cgl/core/corecontext.h>
 
-// CGL::AnimationSystem::AnimationSystem() {}
+// cgl::AnimationSystem::AnimationSystem() {}
 
-// void CGL::AnimationSystem::update()
+// void cgl::AnimationSystem::update()
 // {
 //     auto scene = cglEngine().activeScene();
 //     auto tick = cglCoreContext().deltaTime();
@@ -23,7 +23,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-CGL::AnimationSystem::AnimationSystem() {
+cgl::AnimationSystem::AnimationSystem() {
     m_track.addKeyFrame(KeyFrame::makeRotation(0.0f,  glm::vec3(0.0f, 0.0f, 0.0f)));
     m_track.addKeyFrame(KeyFrame::makeRotation(3.0f,  glm::vec3(0.0f, -45.0f, 0.0f)));
     m_track.addKeyFrame(KeyFrame::makeRotation(6.0f, glm::vec3(0.0f, 0.0f, 0.0f)));
@@ -45,7 +45,7 @@ CGL::AnimationSystem::AnimationSystem() {
     m_track2.addKeyFrame(KeyFrame(22.0f,  glm::vec3(-20.0f), glm::vec3(0.0, 1.0, 0.0), glm::vec3(1.0f)));
 }
 
-void CGL::AnimationSystem::update() {
+void cgl::AnimationSystem::update() {
     auto scene = cglEngine().activeScene();
     float dt = cglCoreContext().deltaTime();
     m_time += dt;

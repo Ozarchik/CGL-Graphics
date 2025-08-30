@@ -1,3 +1,3 @@
 #include <cgl/managers/scenemanager.h>
 
-CGL::SceneManager::SceneManager() {}
+cgl::SceneManager::SceneManager() {}

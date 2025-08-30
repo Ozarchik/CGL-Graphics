@@ -4,18 +4,18 @@
 #include <iostream>
 #include <cmath>
 
-CGL::Raycast::Raycast(CGL::Scene& scene)
+cgl::Raycast::Raycast(cgl::Scene& scene)
     : m_scene(scene)
 {
 
 }
 
 // Reference: https://antongerdelan.net/opengl/raycasting.html
-void CGL::Raycast::seek(float mouseX, float mouseY)
+void cgl::Raycast::seek(float mouseX, float mouseY)
 {
     glm::vec4 ray_ndc;
-    ray_ndc.x = (2.0f * mouseX) / (CGL::CoreContext::instance().width()) - 1.0f;
-    ray_ndc.y = 1.0f - (2.0f * mouseY) / CGL::CoreContext::instance().height();
+    ray_ndc.x = (2.0f * mouseX) / (cgl::CoreContext::instance().width()) - 1.0f;
+    ray_ndc.y = 1.0f - (2.0f * mouseY) / cgl::CoreContext::instance().height();
     ray_ndc.z = -1.0f;
     ray_ndc.w = 1.0f;
 
@@ -40,7 +40,7 @@ void CGL::Raycast::seek(float mouseX, float mouseY)
     for (auto& node: m_scene.nodes()) {
 
         float t;
-        CGL::BoundingBox box = node->boundingBox();
+        cgl::BoundingBox box = node->boundingBox();
 
         static int count = 0;
         if (intersectRayAABB(origin, direction, box, t)) {
@@ -52,14 +52,14 @@ void CGL::Raycast::seek(float mouseX, float mouseY)
     std::cout << std::endl;
 }
 
-void CGL::Raycast::draw()
+void cgl::Raycast::draw()
 {
     for (auto& rl: m_raylines) {
         rl.draw();
     }
 }
 
-bool CGL::Raycast::intersectRayAABB(glm::vec3 origin, glm::vec3 direction, CGL::BoundingBox& box, float& tMin)
+bool cgl::Raycast::intersectRayAABB(glm::vec3 origin, glm::vec3 direction, cgl::BoundingBox& box, float& tMin)
 {
     float t1 = (box.min.x - origin.x) / direction.x;
     float t2 = (box.max.x - origin.x) / direction.x;
@@ -90,13 +90,13 @@ bool CGL::Raycast::intersectRayAABB(glm::vec3 origin, glm::vec3 direction, CGL::
 static double m_lastX;
 static double m_lastY;
 
-void CGL::Raycast::mouseEventHandler(const MouseEvent &event)
+void cgl::Raycast::mouseEventHandler(const MouseEvent &event)
 {
-    if (event.type() == CGL::Mouse_Release) {
+    if (event.type() == cgl::Mouse_Release) {
         GLint data[4];
         glGetIntegerv(GL_VIEWPORT, data);
         int w, h;
-        glfwGetWindowSize(CGL::CoreContext::instance().handler(), &w, &h);
+        glfwGetWindowSize(cgl::CoreContext::instance().handler(), &w, &h);
         std::cout << "window: (" << w << ", " << h << ")" << std::endl;
         std::cout << "viewport: (" << data[0] << ", " << data[1] << ") (" << data[2] << ", " << data[3] << ")" << std::endl;
         std::cout << "mouse pos: (" << event.x() << ", " << event.y() << ")" << std::endl;
@@ -106,11 +106,11 @@ void CGL::Raycast::mouseEventHandler(const MouseEvent &event)
         seek(event.x(), event.y());
     }
 
-    // if (event.type() == CGL::MouseAction::Release)
+    // if (event.type() == cgl::MouseAction::Release)
         // m_scene.upselectNode();
 }
 
-void CGL::Raycast::keyEventHandler(const KeyEvent &event)
+void cgl::Raycast::keyEventHandler(const KeyEvent &event)
 {
     // seek(m_lastX, m_lastY);
 }

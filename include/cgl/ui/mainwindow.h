@@ -9,10 +9,10 @@
 #include <imgui_internal.h>
 
 
-namespace CGL {
+namespace cgl {
 class MainWindow {
 public:
-    MainWindow(CommandDispatcher& commandDispatcher, CGL::Renderer& renderer);
+    MainWindow(CommandDispatcher& commandDispatcher, cgl::Renderer& renderer);
     ~MainWindow();
 
     void init();
@@ -25,8 +25,8 @@ private:
     void renderCameraControlFrame();
 
 private:
-    CGL::Renderer& m_renderer;
-    CGL::CommandDispatcher& m_commandDispatcher;
+    cgl::Renderer& m_renderer;
+    cgl::CommandDispatcher& m_commandDispatcher;
 };
 }
 

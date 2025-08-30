@@ -8,18 +8,18 @@
 #include <string>
 #include <unordered_map>
 
-namespace CGL {
+namespace cgl {
 class TextureLoader
 {
 public:
     TextureLoader() = default;
 
-    static CGL::Texture loadFromFile(const std::string &filepath, bool flipVertical = false);
+    static cgl::Texture loadFromFile(const std::string &filepath, bool flipVertical = false);
     static unsigned int loadCubmap(const std::string &dir, const std::vector<std::string> &faces);
     std::tuple<std::vector<unsigned char>, glm::vec3> getSourceData(const std::string &filepath, bool flipVertical = false);
 
 private:
-    inline static std::unordered_map<std::string, CGL::Texture> m_loadedTextures;
+    inline static std::unordered_map<std::string, cgl::Texture> m_loadedTextures;
 };
 }
 

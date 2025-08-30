@@ -8,7 +8,7 @@
 #include <string>
 #include <cgl/core/transform.h>
 
-namespace CGL {
+namespace cgl {
 
 enum ShaderType {
     VertexShader = GL_VERTEX_SHADER,
@@ -37,13 +37,13 @@ public:
 
 	GLuint id() const;
 
-    void setModel(const CGL::Transform& model);
-    void setView(const CGL::Transform& view);
-    void setProjection(const CGL::Transform& projection);
+    void setModel(const cgl::Transform& model);
+    void setView(const cgl::Transform& view);
+    void setProjection(const cgl::Transform& projection);
     void setMVP(
-        const CGL::Transform& model,
-        const CGL::Transform& view,
-        const CGL::Transform& projection
+        const cgl::Transform& model,
+        const cgl::Transform& view,
+        const cgl::Transform& projection
     );
 
     bool isValid() const;
@@ -54,7 +54,7 @@ public:
     void setTexture(const std::string &name, unsigned int id, int unit);
 	void setInt(const std::string& name, int value);
 	void setFloat(const std::string& name, float value);
-    void setMat4(const std::string &name, const CGL::Transform& transform) const;
+    void setMat4(const std::string &name, const cgl::Transform& transform) const;
 	void setMat4(const std::string& name, const glm::mat4& mat) const;
     void setVec2(const std::string& name, const glm::vec2& vec);
 	void setVec3(const std::string& name, const glm::vec3& vec);

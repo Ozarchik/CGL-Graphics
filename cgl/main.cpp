@@ -3,12 +3,12 @@
 
 int main(int argc, char* argv[])
 {
-    CGL::Backtrace::init();
-    CGL::ResourceManager::init();
+    cgl::Backtrace::init();
+    cgl::ResourceManager::init();
 
-    CGL::CoreContext::instance();
-    CGL::Engine::instance();
-    CGL::Application::instance().run();
+    cgl::CoreContext::instance();
+    cgl::Engine::instance();
+    cgl::Application::instance().run();
 
     return 0;
 }

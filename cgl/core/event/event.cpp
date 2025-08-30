@@ -1,88 +1,88 @@
 #include <cgl/core/event/event.h>
 
-CGL::Event::Event()
+cgl::Event::Event()
 {
 }
 
-CGL::KeyEvent::KeyEvent(KeyType keyType, KeyAction action, KeyModifier modifiers)
+cgl::KeyEvent::KeyEvent(KeyType keyType, KeyAction action, KeyModifier modifiers)
     : Event(), m_type(keyType), m_action(action), m_modifiers(modifiers)
 {
 
 }
 
-CGL::KeyType CGL::KeyEvent::type() const
+cgl::KeyType cgl::KeyEvent::type() const
 {
     return m_type;
 }
 
-CGL::MouseEvent::MouseEvent(int x, int y, const MouseState &state)
+cgl::MouseEvent::MouseEvent(int x, int y, const MouseState &state)
     : Event(), m_x(x), m_y(y), m_state(state)
 {}
 
-CGL::MouseAction CGL::MouseEvent::type() const
+cgl::MouseAction cgl::MouseEvent::type() const
 {
     return m_state.type;
 }
 
-CGL::MouseButton CGL::MouseEvent::button() const
+cgl::MouseButton cgl::MouseEvent::button() const
 {
     return m_state.button;
 }
 
-int CGL::MouseEvent::x() const
+int cgl::MouseEvent::x() const
 {
     return m_x;
 }
 
-int CGL::MouseEvent::y() const
+int cgl::MouseEvent::y() const
 {
     return m_y;
 }
 
 
-CGL::MouseWheelEvent::MouseWheelEvent(double dx, double dy, const MouseWheelState &state)
+cgl::MouseWheelEvent::MouseWheelEvent(double dx, double dy, const MouseWheelState &state)
     : m_dx(dx), m_dy(dy), m_state(state)
 {
 
 }
 
-double CGL::MouseWheelEvent::dx() const
+double cgl::MouseWheelEvent::dx() const
 {
     return m_dx;
 }
 
-double CGL::MouseWheelEvent::dy() const
+double cgl::MouseWheelEvent::dy() const
 {
     return m_dy;
 }
 
-CGL::KeyModifier CGL::MouseWheelEvent::modifiers() const
+cgl::KeyModifier cgl::MouseWheelEvent::modifiers() const
 {
     return m_state.modifiers;
 }
 
-CGL::MouseWheelDirection CGL::MouseWheelEvent::direction() const
+cgl::MouseWheelDirection cgl::MouseWheelEvent::direction() const
 {
     return m_state.direction;
 }
 
-CGL::WindowEvent::WindowEvent(WindowAction action, int width, int height)
+cgl::WindowEvent::WindowEvent(WindowAction action, int width, int height)
     : Event(), m_action(action), m_width(width), m_height(height)
 {
 
 }
 
-int CGL::WindowEvent::width() const
+int cgl::WindowEvent::width() const
 {
     return m_width;
 }
 
-int CGL::WindowEvent::height() const
+int cgl::WindowEvent::height() const
 {
     return m_height;
 }
 
-CGL::WindowAction CGL::WindowEvent::action() const
+cgl::WindowAction cgl::WindowEvent::action() const
 {
     return m_action;
 }

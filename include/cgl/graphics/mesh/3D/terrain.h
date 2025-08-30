@@ -3,13 +3,13 @@
 
 #include <cgl/graphics/mesh/common/mesh.h>
 
-namespace CGL {
-class Terrain: public CGL::Mesh
+namespace cgl {
+class Terrain: public cgl::Mesh
 {
 public:
     Terrain();
 
-    void draw(CGL::Shader& shader) override;
+    void draw(cgl::Shader& shader) override;
 };
 }
 

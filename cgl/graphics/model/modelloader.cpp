@@ -5,7 +5,7 @@
 #include <cgl/core/rendercontext.h>
 #include <iostream>
 
-std::shared_ptr<CGL::Node> CGL::ModelLoader::load(const std::string& filepath, bool flipUV)
+std::shared_ptr<cgl::Node> cgl::ModelLoader::load(const std::string& filepath, bool flipUV)
 {
     std::cout << "loading model from: " << filepath << std::endl;
     Assimp::Importer importer;
@@ -23,12 +23,12 @@ std::shared_ptr<CGL::Node> CGL::ModelLoader::load(const std::string& filepath, b
 
     m_directory = filepath.substr(0, filepath.find_last_of('/'));
 
-    std::vector<std::shared_ptr<CGL::Mesh>> meshes;
-    std::vector<CGL::Material> materials;
+    std::vector<std::shared_ptr<cgl::Mesh>> meshes;
+    std::vector<cgl::Material> materials;
     processNode(scene, scene->mRootNode, meshes, materials);
 
     // modelTransform.translateY(2.0f);
-    auto node = std::make_shared<CGL::Node>(CGL::ResourceManager::loadDefaultModelShader());
+    auto node = std::make_shared<cgl::Node>(cgl::ResourceManager::loadDefaultModelShader());
     for (int i = 0; i < meshes.size(); i++) // not valid operation, need fix in future
     {
         node->addMesh(meshes[i], materials[i]);
@@ -36,7 +36,7 @@ std::shared_ptr<CGL::Node> CGL::ModelLoader::load(const std::string& filepath, b
     return node;
 }
 
-void CGL::ModelLoader::processNode(const aiScene* scene, aiNode* node, std::vector<std::shared_ptr<CGL::Mesh>>& meshes, std::vector<CGL::Material>& materials)
+void cgl::ModelLoader::processNode(const aiScene* scene, aiNode* node, std::vector<std::shared_ptr<cgl::Mesh>>& meshes, std::vector<cgl::Material>& materials)
 {
     for (unsigned int i = 0; i < node->mNumMeshes; i++) {
         aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
@@ -49,27 +49,27 @@ void CGL::ModelLoader::processNode(const aiScene* scene, aiNode* node, std::vect
     }
 }
 
-std::shared_ptr<CGL::Mesh> CGL::ModelLoader::processMesh(const aiScene* scene, aiMesh* mesh)
+std::shared_ptr<cgl::Mesh> cgl::ModelLoader::processMesh(const aiScene* scene, aiMesh* mesh)
 {
-    std::vector<CGL::Vertex> vertices = loadVertices(mesh);
+    std::vector<cgl::Vertex> vertices = loadVertices(mesh);
     std::vector<unsigned int> indices  = loadIndices(mesh);
 
-    return std::make_shared<CGL::Mesh>(vertices, indices);
+    return std::make_shared<cgl::Mesh>(vertices, indices);
 }
 
-CGL::Material CGL::ModelLoader::processMaterial(const aiScene* scene, aiMesh* mesh)
+cgl::Material cgl::ModelLoader::processMaterial(const aiScene* scene, aiMesh* mesh)
 {
-    std::vector<CGL::Texture> textures = loadTextures(scene, mesh);
+    std::vector<cgl::Texture> textures = loadTextures(scene, mesh);
 
-    return CGL::Material(textures);
+    return cgl::Material(textures);
 }
 
-std::vector<CGL::Vertex> CGL::ModelLoader::loadVertices(aiMesh* mesh)
+std::vector<cgl::Vertex> cgl::ModelLoader::loadVertices(aiMesh* mesh)
 {
-    std::vector<CGL::Vertex> vertices;
+    std::vector<cgl::Vertex> vertices;
 
     for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
-        CGL::Vertex vertex;
+        cgl::Vertex vertex;
         vertex.position.x = mesh->mVertices[i].x;
         vertex.position.y = mesh->mVertices[i].y;
         vertex.position.z = mesh->mVertices[i].z;
@@ -93,21 +93,21 @@ std::vector<CGL::Vertex> CGL::ModelLoader::loadVertices(aiMesh* mesh)
     return vertices;
 }
 
-std::vector<CGL::Texture> CGL::ModelLoader::loadTextures(const aiScene *scene, aiMesh *mesh)
+std::vector<cgl::Texture> cgl::ModelLoader::loadTextures(const aiScene *scene, aiMesh *mesh)
 {
-    std::vector<CGL::Texture> textures;
+    std::vector<cgl::Texture> textures;
 
     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-    std::vector<CGL::Texture> diffuseMaps = loadTextures(material, aiTextureType_DIFFUSE, CGL::TextureType::Diffuse);
+    std::vector<cgl::Texture> diffuseMaps = loadTextures(material, aiTextureType_DIFFUSE, cgl::TextureType::Diffuse);
     textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
-    std::vector<CGL::Texture> specularMaps = loadTextures(material, aiTextureType_SPECULAR, CGL::TextureType::Specular);
+    std::vector<cgl::Texture> specularMaps = loadTextures(material, aiTextureType_SPECULAR, cgl::TextureType::Specular);
     textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 
     return textures;
 }
 
-std::vector<unsigned int> CGL::ModelLoader::loadIndices(aiMesh *mesh)
+std::vector<unsigned int> cgl::ModelLoader::loadIndices(aiMesh *mesh)
 {
     std::vector<unsigned int> indices;
 
@@ -121,9 +121,9 @@ std::vector<unsigned int> CGL::ModelLoader::loadIndices(aiMesh *mesh)
     return indices;
 }
 
-std::vector<CGL::Texture> CGL::ModelLoader::loadTextures(aiMaterial* mat, aiTextureType assimpType, CGL::TextureType cglType)
+std::vector<cgl::Texture> cgl::ModelLoader::loadTextures(aiMaterial* mat, aiTextureType assimpType, cgl::TextureType cglType)
 {
-    std::vector<CGL::Texture> textures;
+    std::vector<cgl::Texture> textures;
 
     for(unsigned int i = 0; i < mat->GetTextureCount(assimpType); i++)
     {
@@ -142,7 +142,7 @@ std::vector<CGL::Texture> CGL::ModelLoader::loadTextures(aiMaterial* mat, aiText
 
         if(!skip) {
             std::cout << "load from: " << m_directory + "/" + std::string(str.C_Str()) << std::endl;
-            CGL::Texture texture = CGL::TextureLoader::loadFromFile(m_directory + "/" + std::string(str.C_Str()));
+            cgl::Texture texture = cgl::TextureLoader::loadFromFile(m_directory + "/" + std::string(str.C_Str()));
             texture.type = cglType;
             texture.path = str.C_Str();
             textures.push_back(texture);

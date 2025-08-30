@@ -1,7 +1,7 @@
 #include <cgl/core/camera.h>
 #include <iostream>
 
-CGL::Camera::Camera()
+cgl::Camera::Camera()
     : m_fov(45.0)
 {
     // m_front = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -10,62 +10,62 @@ CGL::Camera::Camera()
     updateInternal();
 }
 
-float CGL::Camera::fov() const
+float cgl::Camera::fov() const
 {
     return m_fov;
 }
 
-void CGL::Camera::setFov(float fov)
+void cgl::Camera::setFov(float fov)
 {
     m_fov = fov;
 }
 
-glm::mat4 CGL::Camera::getLookAt() const
+glm::mat4 cgl::Camera::getLookAt() const
 {
     return glm::lookAt(m_pos, m_pos + m_front, m_up);
 }
 
-CGL::Transform CGL::Camera::getView()
+cgl::Transform cgl::Camera::getView()
 {
-    return CGL::Transform(getLookAt());
+    return cgl::Transform(getLookAt());
 }
 
-CGL::Transform CGL::Camera::getProjection()
+cgl::Transform cgl::Camera::getProjection()
 {
-    return CGL::Transform::makePerspective(m_fov, cglCoreContext().aspect(), 0.1f, 100.0f);
+    return cgl::Transform::makePerspective(m_fov, cglCoreContext().aspect(), 0.1f, 100.0f);
 }
 
-void CGL::Camera::correctSpeed(float coeff)
+void cgl::Camera::correctSpeed(float coeff)
 {
     m_deltaTime = coeff;
 }
 
-void CGL::Camera::setSpeed(float speed)
+void cgl::Camera::setSpeed(float speed)
 {
     m_speed = speed;
 }
 
-float CGL::Camera::speed() const
+float cgl::Camera::speed() const
 {
     return m_speed;
 }
 
-void CGL::Camera::update()
+void cgl::Camera::update()
 {
     correctSpeed(cglCoreContext().deltaTime());
 }
 
-void CGL::Camera::setPos(glm::vec3 pos)
+void cgl::Camera::setPos(glm::vec3 pos)
 {
     m_pos = pos;
 }
 
-glm::vec3 CGL::Camera::pos() const
+glm::vec3 cgl::Camera::pos() const
 {
     return m_pos;
 }
 
-void CGL::Camera::rotate(float targX, float targY)
+void cgl::Camera::rotate(float targX, float targY)
 {
 	float xoffset = targX - lastX;
     float yoffset = lastY - targY;
@@ -88,7 +88,7 @@ void CGL::Camera::rotate(float targX, float targY)
     updateInternal();
 }
 
-void CGL::Camera::updateInternal()
+void cgl::Camera::updateInternal()
 {
     glm::vec3 direction;
     direction.x = cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
@@ -100,116 +100,116 @@ void CGL::Camera::updateInternal()
     m_up    = glm::normalize(glm::cross(m_right, m_front));
 }
 
-void CGL::Camera::keyEventHandler(const KeyEvent& event)
+void cgl::Camera::keyEventHandler(const KeyEvent& event)
 {
     switch (event.type()) {
-    case CGL::Key_A: {
+    case cgl::Key_A: {
         stepLeft();
     } break;
-    case CGL::Key_B: {
+    case cgl::Key_B: {
         m_rotateMode = !m_rotateMode;
     } break;
-    case CGL::Key_D: {
+    case cgl::Key_D: {
         stepRight();
     } break;
-    case CGL::Key_Q: {
+    case cgl::Key_Q: {
         rotateLeft();
     } break;
-    case CGL::Key_E: {
+    case cgl::Key_E: {
         rotateRight();
     } break;
-    case CGL::Key_S: {
+    case cgl::Key_S: {
         stepBack();
     } break;
-    case CGL::Key_W: {
+    case cgl::Key_W: {
         stepForward();
     } break;
-    case CGL::Key_C: {
+    case cgl::Key_C: {
         stepUp();
     } break;
-    case CGL::Key_Z: {
+    case cgl::Key_Z: {
         stepDown();
     } break;
-    case CGL::Key_Space: {
+    case cgl::Key_Space: {
         stepUp();
     } break;
     }
 }
 
-void CGL::Camera::mouseWheelEventHandler(const MouseWheelEvent &event)
+void cgl::Camera::mouseWheelEventHandler(const MouseWheelEvent &event)
 {
-    if (event.direction() == CGL::MouseWheelDirection::Up)
+    if (event.direction() == cgl::MouseWheelDirection::Up)
         zoomUp();
-    if (event.direction() == CGL::MouseWheelDirection::Down)
+    if (event.direction() == cgl::MouseWheelDirection::Down)
         zoomDown();
 }
 
-void CGL::Camera::mouseEventHandler(const MouseEvent &event)
+void cgl::Camera::mouseEventHandler(const MouseEvent &event)
 {
     rotate(event.x(), event.y());
 }
 
-void CGL::Camera::move(float x)
+void cgl::Camera::move(float x)
 {
 
 }
 
-void CGL::Camera::move(float x, float y, float z)
+void cgl::Camera::move(float x, float y, float z)
 {
 
 }
 
-void CGL::Camera::zoomUp()
+void cgl::Camera::zoomUp()
 {
     m_pos += 100.0f*m_speed * m_front* m_deltaTime;
 }
 
-void CGL::Camera::zoomDown()
+void cgl::Camera::zoomDown()
 {
     m_pos -= 100.0f*m_speed * m_front* m_deltaTime;
 }
 
-void CGL::Camera::stepUp()
+void cgl::Camera::stepUp()
 {
     m_pos += m_speed * m_up * m_deltaTime;
 }
 
-void CGL::Camera::stepDown()
+void cgl::Camera::stepDown()
 {
     m_pos -= m_speed * m_up * m_deltaTime;
 }
 
-void CGL::Camera::stepForward()
+void cgl::Camera::stepForward()
 {
     m_pos += m_speed * m_front * m_deltaTime;
 }
 
-void CGL::Camera::stepBack()
+void cgl::Camera::stepBack()
 {
     m_pos -= m_speed * m_front * m_deltaTime;
 }
 
-void CGL::Camera::stepLeft()
+void cgl::Camera::stepLeft()
 {
     m_pos -= glm::normalize(glm::cross(m_front, m_up)) * m_speed * m_deltaTime;
 }
 
-void CGL::Camera::stepRight()
+void cgl::Camera::stepRight()
 {
     m_pos += glm::normalize(glm::cross(m_front, m_up)) * m_speed * m_deltaTime;
 }
 
-void CGL::Camera::rotateLeft()
+void cgl::Camera::rotateLeft()
 {
     rotate(lastX - 1.0, lastY);
 }
 
-void CGL::Camera::rotateRight()
+void cgl::Camera::rotateRight()
 {
     rotate(lastX + 1.0, lastY);
 }
 
-glm::vec3 CGL::Camera::front() const
+glm::vec3 cgl::Camera::front() const
 {
     return m_front;
 }

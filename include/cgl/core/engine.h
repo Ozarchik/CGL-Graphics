@@ -9,7 +9,7 @@
 #include <cgl/core/buffer/vaobufferbuilder.h>
 #include <cgl/graphics/postprocess/defaultpostprocessor.h>
 
-namespace CGL {
+namespace cgl {
 
 struct View {
     std::unique_ptr<Camera> camera;

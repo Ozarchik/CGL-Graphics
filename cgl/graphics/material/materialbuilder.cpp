@@ -1,27 +1,27 @@
 #include <cgl/graphics/material/materialbuilder.h>
 #include <cgl/managers/resourcemanager.h>
 
-CGL::MaterialBuilder::MaterialBuilder()
+cgl::MaterialBuilder::MaterialBuilder()
 {}
 
-CGL::MaterialBuilder CGL::MaterialBuilder::build()
+cgl::MaterialBuilder cgl::MaterialBuilder::build()
 {
     return {};
 }
 
-CGL::MaterialBuilder &CGL::MaterialBuilder::addTexture(const std::string &texture)
+cgl::MaterialBuilder &cgl::MaterialBuilder::addTexture(const std::string &texture)
 {
-    m_material.add(CGL::ResourceManager::loadTexture(texture)); // TODO: need check before add: texture mby non-valid
+    m_material.add(cgl::ResourceManager::loadTexture(texture)); // TODO: need check before add: texture mby non-valid
     return *this;
 }
 
-CGL::MaterialBuilder &CGL::MaterialBuilder::enabled(bool enabled)
+cgl::MaterialBuilder &cgl::MaterialBuilder::enabled(bool enabled)
 {
     m_material.setEnabled(enabled);
     return *this;
 }
 
-CGL::Material CGL::MaterialBuilder::done()
+cgl::Material cgl::MaterialBuilder::done()
 {
     return m_material;
 }

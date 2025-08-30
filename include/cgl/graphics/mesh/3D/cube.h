@@ -3,7 +3,7 @@
 
 #include <cgl/graphics/mesh/common/mesh.h>
 
-namespace CGL {
+namespace cgl {
 class Cube: public Mesh {
 public:
     Cube();

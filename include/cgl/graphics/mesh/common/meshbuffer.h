@@ -7,7 +7,7 @@
 #include <cgl/graphics/vertex/vertex.h>
 #include <cgl/graphics/shader.h>
 
-namespace CGL {
+namespace cgl {
 struct MeshBuffer
 {
     friend class MeshBuilder;
@@ -20,14 +20,14 @@ public:
     MeshBuffer(MeshBuffer&& other) = default;
     MeshBuffer& operator=(MeshBuffer&& other) = default;
 
-    void bind(CGL::Shader* shader = nullptr);
+    void bind(cgl::Shader* shader = nullptr);
     void unbind();
 
     void setVAO(std::unique_ptr<VAOBuffer> &&vao);
 
 public:
-    std::unique_ptr<CGL::VAOBuffer> m_vao;
-    std::vector<CGL::Vertex> m_vertices;
+    std::unique_ptr<cgl::VAOBuffer> m_vao;
+    std::vector<cgl::Vertex> m_vertices;
     std::vector<unsigned int> m_indices;
 };
 }

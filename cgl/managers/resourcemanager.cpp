@@ -3,23 +3,23 @@
 #include <cgl/graphics/texture/textureloader.h>
 #include <filesystem>
 
-CGL::ResourceManager::ResourceManager()
+cgl::ResourceManager::ResourceManager()
 {
 }
 
-void CGL::ResourceManager::init()
+void cgl::ResourceManager::init()
 {
     m_modelsDirectory = (std::filesystem::current_path() / "assets/models").string();
     m_shadersDirectory = (std::filesystem::current_path() / "shaders").string();
     m_texturesDirectory = (std::filesystem::current_path() / "textures").string();
 }
 
-CGL::Texture CGL::ResourceManager::loadTexture(const std::string &name)
+cgl::Texture cgl::ResourceManager::loadTexture(const std::string &name)
 {
-    return CGL::TextureLoader::loadFromFile(m_texturesDirectory + "/" + name);
+    return cgl::TextureLoader::loadFromFile(m_texturesDirectory + "/" + name);
 }
 
-std::shared_ptr<CGL::Shader> CGL::ResourceManager::loadShader(const std::string &name)
+std::shared_ptr<cgl::Shader> cgl::ResourceManager::loadShader(const std::string &name)
 {
     std::unique_lock<std::mutex> lock(m_mutex);
 
@@ -28,7 +28,7 @@ std::shared_ptr<CGL::Shader> CGL::ResourceManager::loadShader(const std::string 
         return it->second.lock();
     }
 
-    std::shared_ptr<Shader> shader = std::make_shared<CGL::Shader>(
+    std::shared_ptr<Shader> shader = std::make_shared<cgl::Shader>(
         m_shadersDirectory + "/" + name + ".vert",
         m_shadersDirectory + "/" + name + ".frag"
     );
@@ -37,9 +37,9 @@ std::shared_ptr<CGL::Shader> CGL::ResourceManager::loadShader(const std::string 
     return shader;
 }
 
-CGL::Shader& CGL::ResourceManager::loadDefaultShader()
+cgl::Shader& cgl::ResourceManager::loadDefaultShader()
 {
-    static CGL::Shader shader;
+    static cgl::Shader shader;
     shader.setSourceCode(
         std::string(
             "#version 330 core\n"
@@ -91,44 +91,44 @@ CGL::Shader& CGL::ResourceManager::loadDefaultShader()
     return shader;
 }
 
-std::shared_ptr<CGL::Shader> CGL::ResourceManager::loadDefaultModelShader()
+std::shared_ptr<cgl::Shader> cgl::ResourceManager::loadDefaultModelShader()
 {
     static auto shader = ResourceManager::loadShader("model");
     return shader;
 }
 
-std::shared_ptr<CGL::Node> CGL::ResourceManager::loadModel(const std::string &name)
+std::shared_ptr<cgl::Node> cgl::ResourceManager::loadModel(const std::string &name)
 {
-    CGL::ModelLoader loader;
+    cgl::ModelLoader loader;
     return loader.load(m_modelsDirectory + "/" + name);
 }
 
-void CGL::ResourceManager::setTexturesDirectoryPath(const std::string &path)
+void cgl::ResourceManager::setTexturesDirectoryPath(const std::string &path)
 {
     m_texturesDirectory = path;
 }
 
-void CGL::ResourceManager::setShadersDirectoryPath(const std::string &path)
+void cgl::ResourceManager::setShadersDirectoryPath(const std::string &path)
 {
     m_shadersDirectory = path;
 }
 
-std::string CGL::ResourceManager::getShaderPath()
+std::string cgl::ResourceManager::getShaderPath()
 {
     return m_shadersDirectory;
 }
 
-std::string CGL::ResourceManager::getModelPath()
+std::string cgl::ResourceManager::getModelPath()
 {
     return m_modelsDirectory;
 }
 
-std::string CGL::ResourceManager::getTexturePath()
+std::string cgl::ResourceManager::getTexturePath()
 {
     return m_texturesDirectory;
 }
 
-void CGL::ResourceManager::setModelsDirectoryPath(const std::string &path)
+void cgl::ResourceManager::setModelsDirectoryPath(const std::string &path)
 {
     m_modelsDirectory = path;
 }

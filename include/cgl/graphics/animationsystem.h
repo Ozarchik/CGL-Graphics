@@ -3,7 +3,7 @@
 
 #include <cgl/graphics/animationtrack.h>
 
-namespace CGL {
+namespace cgl {
 
 class AnimationSystem {
 public:

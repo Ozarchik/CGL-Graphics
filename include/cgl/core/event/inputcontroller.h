@@ -7,7 +7,7 @@
 #include <cgl/core/camera.h>
 #include <cgl/core/event/event.h>
 
-namespace CGL {
+namespace cgl {
 class InputController
 {
 public:
@@ -15,7 +15,7 @@ public:
 
     void process();
     bool isKeySpacePressed() const;
-    void addSubscriber(CGL::Object* object);
+    void addSubscriber(cgl::Object* object);
 
 private:
     static void keyNotify(KeyType type, KeyAction action, KeyModifier modifier);
@@ -30,7 +30,7 @@ private:
 private:
     inline static GLFWwindow* winHandler;
     bool keySpacePressed = false;
-    inline static std::vector<CGL::Object*> m_objects;
+    inline static std::vector<cgl::Object*> m_objects;
     inline static double m_mouseX, m_mouseY;
 };
 }

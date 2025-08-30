@@ -9,7 +9,7 @@
 
 #include <memory>
 
-namespace CGL {
+namespace cgl {
 enum PrimitiveType {
     Triangle
 };
@@ -17,7 +17,7 @@ enum PrimitiveType {
 class NormalMap
 {
 public:
-    NormalMap(CGL::CoreContext* window, Camera *camera);
+    NormalMap(cgl::CoreContext* window, Camera *camera);
     void use();
 
 private:
@@ -25,9 +25,9 @@ private:
     unsigned int VAO;
     unsigned int tex;
     unsigned int normalMap;
-    std::shared_ptr<CGL::Shader> m_shader;
-    CGL::Camera* m_camera;
-    CGL::CoreContext* m_context;
+    std::shared_ptr<cgl::Shader> m_shader;
+    cgl::Camera* m_camera;
+    cgl::CoreContext* m_context;
 };
 }
 

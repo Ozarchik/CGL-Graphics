@@ -8,7 +8,7 @@
 #include <cgl/tools/logger.h>
 #include <cgl/tools/backtrace.h>
 
-namespace CGL {
+namespace cgl {
 
 class CoreContext {
 public:

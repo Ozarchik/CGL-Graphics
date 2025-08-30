@@ -1,17 +1,17 @@
 #include <cgl/graphics/mesh/3D/terrain.h>
 #include <iostream>
 
-CGL::Terrain::Terrain()
+cgl::Terrain::Terrain()
     : Mesh()
 {
 }
 
-void CGL::Terrain::draw(Shader &shader)
+void cgl::Terrain::draw(Shader &shader)
 {
     shader.use();
     m_buffer.bind();
 
-    CGL::PrimitiveData toDraw = m_primitiveData;
+    cgl::PrimitiveData toDraw = m_primitiveData;
     toDraw.size = m_primitiveData.offset;
 
     // shader.setBool("line_polygone", false);

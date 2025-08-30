@@ -1,14 +1,14 @@
 #include <cgl/graphics/scene/node.h>
 #include <limits>
 
-CGL::Node::Node(std::shared_ptr<CGL::Mesh> mesh, std::shared_ptr<CGL::Shader> shader, CGL::Transform transform)
+cgl::Node::Node(std::shared_ptr<cgl::Mesh> mesh, std::shared_ptr<cgl::Shader> shader, cgl::Transform transform)
     : m_shader(shader)
     , m_transform(transform)
 {
     m_renderer.m_mesh = mesh;
 }
 
-CGL::Node::Node(std::vector<std::shared_ptr<Mesh>> meshes, std::shared_ptr<CGL::Shader> shader, Transform transform)
+cgl::Node::Node(std::vector<std::shared_ptr<Mesh>> meshes, std::shared_ptr<cgl::Shader> shader, Transform transform)
     : m_shader(shader)
     , m_transform(transform)
 {
@@ -17,27 +17,27 @@ CGL::Node::Node(std::vector<std::shared_ptr<Mesh>> meshes, std::shared_ptr<CGL::
     }
 }
 
-CGL::Node::Node(std::shared_ptr<CGL::Shader> shader, Transform transform)
+cgl::Node::Node(std::shared_ptr<cgl::Shader> shader, Transform transform)
     : m_shader(shader)
     , m_transform(transform)
 {
 }
 
-CGL::Node::~Node()
+cgl::Node::~Node()
 {
 }
 
-void CGL::Node::addChild(Node *node)
+void cgl::Node::addChild(Node *node)
 {
     m_childs.push_back(node);
 }
 
-std::vector<CGL::Node *> CGL::Node::childs() const
+std::vector<cgl::Node *> cgl::Node::childs() const
 {
     return m_childs;
 }
 
-void CGL::Node::addMesh(std::shared_ptr<Mesh> mesh)
+void cgl::Node::addMesh(std::shared_ptr<Mesh> mesh)
 {
     if (!mesh)
         return;
@@ -45,7 +45,7 @@ void CGL::Node::addMesh(std::shared_ptr<Mesh> mesh)
     m_renderer = MeshRenderer(mesh);
 }
 
-void CGL::Node::addMesh(std::shared_ptr<Mesh> mesh, const Material &material)
+void cgl::Node::addMesh(std::shared_ptr<Mesh> mesh, const Material &material)
 {
     if (!mesh)
         return;
@@ -53,30 +53,30 @@ void CGL::Node::addMesh(std::shared_ptr<Mesh> mesh, const Material &material)
     m_renderer = MeshRenderer(mesh, material);
 }
 
-void CGL::Node::setTransform(const CGL::Transform& transform)
+void cgl::Node::setTransform(const cgl::Transform& transform)
 {
     m_transform = transform;
 }
 
-CGL::Transform &CGL::Node::transformRef()
+cgl::Transform &cgl::Node::transformRef()
 {
     return m_transform;
 }
 
-CGL::Transform CGL::Node::transform() const
+cgl::Transform cgl::Node::transform() const
 {
     return m_transform;
 }
 
-void CGL::Node::setPrimitiveType(CGL::RenderContext::Primitive type)
+void cgl::Node::setPrimitiveType(cgl::RenderContext::Primitive type)
 {
     if (m_renderer.m_mesh)
         m_renderer.m_mesh->setPrimitiveType(type);
 }
 
-CGL::BoundingBox CGL::Node::boundingBox() const
+cgl::BoundingBox cgl::Node::boundingBox() const
 {
-    CGL::BoundingBox totalBox;
+    cgl::BoundingBox totalBox;
     totalBox.min = glm::vec3(std::numeric_limits<float>::max());
     totalBox.max = glm::vec3(std::numeric_limits<float>::lowest());
 
@@ -105,9 +105,9 @@ CGL::BoundingBox CGL::Node::boundingBox() const
     return totalBox;
 }
 
-void CGL::Node::update(CGL::Camera& camera, const Transform &parentTransform)
+void cgl::Node::update(cgl::Camera& camera, const Transform &parentTransform)
 {
-    CGL::Transform resultTransform = parentTransform * m_transform;
+    cgl::Transform resultTransform = parentTransform * m_transform;
 
     m_shader->use();
     m_shader->setModel(resultTransform);

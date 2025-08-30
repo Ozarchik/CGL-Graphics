@@ -3,13 +3,13 @@
 
 #include <cgl/core/command/icommand.h>
 
-namespace CGL {
+namespace cgl {
 class CreateCubeCommand: public ICommand
 {
 public:
     CreateCubeCommand();
 
-    void execute(CGL::Scene& scene) override;
+    void execute(cgl::Scene& scene) override;
 };
 }
 

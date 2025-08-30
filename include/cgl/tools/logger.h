@@ -13,7 +13,7 @@ void checkErrors(const char* file, int line);
 #endif
 
 
-namespace CGL {
+namespace cgl {
 class Logger
 {
 public:

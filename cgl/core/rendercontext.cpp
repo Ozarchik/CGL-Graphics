@@ -1,6 +1,6 @@
 #include <cgl/core/rendercontext.h>
 
-CGL::RenderContext::RenderContext()
+cgl::RenderContext::RenderContext()
 {
     m_primitiveMap[Point] = GL_POINTS;
     m_primitiveMap[Line] = GL_LINES;
@@ -15,7 +15,7 @@ CGL::RenderContext::RenderContext()
     cglErrors();
 }
 
-void CGL::RenderContext::setPolygoneMode(const PolygoneMode& mode)
+void cgl::RenderContext::setPolygoneMode(const PolygoneMode& mode)
 {
     switch (mode) {
     case PolygoneMode::Fill: {
@@ -29,14 +29,14 @@ void CGL::RenderContext::setPolygoneMode(const PolygoneMode& mode)
     cglErrors();
 }
 
-void CGL::RenderContext::render(const PrimitiveData &data)
+void cgl::RenderContext::render(const PrimitiveData &data)
 {
     cglErrors();
     switch (data.drawType) {
-        case CGL::RenderContext::Elements: {
+        case cgl::RenderContext::Elements: {
             glDrawArrays(m_primitiveMap.at(data.type), data.offset, data.size);
         } break;
-        case CGL::RenderContext::Indexes: {
+        case cgl::RenderContext::Indexes: {
             glDrawElements(m_primitiveMap.at(data.type), data.size, GL_UNSIGNED_INT, (void*)(size_t(data.offset)));
         } break;
         default: break;
@@ -44,13 +44,13 @@ void CGL::RenderContext::render(const PrimitiveData &data)
     cglErrors();
 }
 
-CGL::RenderContext& CGL::RenderContext::instance()
+cgl::RenderContext& cgl::RenderContext::instance()
 {
     static RenderContext context;
     return context;
 }
 
-CGL::RenderContext &CGL::cglRenderContext()
+cgl::RenderContext &cgl::cglRenderContext()
 {
-    return CGL::RenderContext::instance();
+    return cgl::RenderContext::instance();
 }

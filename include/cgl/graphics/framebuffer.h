@@ -3,7 +3,7 @@
 
 #include <cgl/core/corecontext.h>
 
-namespace CGL {
+namespace cgl {
 class FrameBuffer
 {
 public:

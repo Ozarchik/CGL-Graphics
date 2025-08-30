@@ -3,22 +3,22 @@
 
 #include <cgl/graphics/material/material.h>
 
-namespace CGL {
+namespace cgl {
 class MaterialBuilder
 {
 public:
     static MaterialBuilder build();
 
-    CGL::MaterialBuilder& addTexture(const std::string& texture);
-    CGL::MaterialBuilder& enabled(bool enabled);
+    cgl::MaterialBuilder& addTexture(const std::string& texture);
+    cgl::MaterialBuilder& enabled(bool enabled);
 
-    CGL::Material done();
+    cgl::Material done();
 
 private:
     MaterialBuilder();
 
 private:
-    CGL::Material m_material;
+    cgl::Material m_material;
 };
 }
 

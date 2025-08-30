@@ -2,22 +2,22 @@
 #include <string>
 #include <iostream>
 
-extern const std::vector<CGL::Vertex> vertices;
+extern const std::vector<cgl::Vertex> vertices;
 
-CGL::Cube::Cube()
+cgl::Cube::Cube()
     : Mesh(vertices)
 {
-    m_primitiveData.drawType = CGL::RenderContext::Elements;
-    m_primitiveData.type = CGL::RenderContext::Triangle;
+    m_primitiveData.drawType = cgl::RenderContext::Elements;
+    m_primitiveData.type = cgl::RenderContext::Triangle;
     m_primitiveData.size = 36;
     m_primitiveData.offset = 0;
 }
 
-CGL::Cube::~Cube()
+cgl::Cube::~Cube()
 {
 }
 
-void CGL::Cube::draw(Shader &shader)
+void cgl::Cube::draw(Shader &shader)
 {
     shader.use();
     m_buffer.bind();
@@ -149,7 +149,7 @@ static const std::vector<float> colors {
 -0.5f,  0.5f, -0.5f,
 };
 
-const std::vector<CGL::Vertex> vertices = {
+const std::vector<cgl::Vertex> vertices = {
     /*      POSITION                NORMAL          TEXTURE             COLOR         */
     { {-0.5f, -0.5f,  0.5f}, {0.0f, 0.0f, 1.0f},  {0.0f, 0.0f}, {-0.5f,  0.5f, -0.5f} },
     { { 0.5f, -0.5f,  0.5f}, {0.0f, 0.0f, 1.0f},  {1.0f, 0.0f}, {-0.5f,  0.5f, -0.5f} },

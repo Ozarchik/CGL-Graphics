@@ -1,7 +1,7 @@
 #ifndef CGL_SCENEMANAGER_H
 #define CGL_SCENEMANAGER_H
 
-namespace CGL {
+namespace cgl {
 class SceneManager
 {
 public:

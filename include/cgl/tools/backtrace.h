@@ -1,7 +1,7 @@
 #ifndef CGL_BACKTRACE_H
 #define CGL_BACKTRACE_H
 
-namespace CGL {
+namespace cgl {
 class Backtrace {
     Backtrace() = default;
 

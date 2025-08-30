@@ -1,15 +1,15 @@
 #include <cgl/graphics/mesh/2D/line.h>
 
-CGL::Line::Line()
+cgl::Line::Line()
     : Mesh()
 {
-    m_primitiveData.drawType = CGL::RenderContext::Elements;
-    m_primitiveData.type = CGL::RenderContext::Line;
+    m_primitiveData.drawType = cgl::RenderContext::Elements;
+    m_primitiveData.type = cgl::RenderContext::Line;
     m_primitiveData.size = 4;
     m_primitiveData.offset = 0;
 }
 
-void CGL::Line::draw(Shader &shader)
+void cgl::Line::draw(Shader &shader)
 {
     shader.use();
     m_buffer.bind();

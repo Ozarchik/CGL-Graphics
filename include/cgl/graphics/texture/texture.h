@@ -5,7 +5,7 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 
-namespace CGL {
+namespace cgl {
 
 enum class TextureType {
     Diffuse,
@@ -33,8 +33,8 @@ struct Texture {
     static void unbind2D(int unit);
     static void activate2D(int unit);
     static void diactivate2D();
-    static void filter2D(CGL::TextureFilter min, CGL::TextureFilter max);
-    static void wrap2D(CGL::TextureWrap sWrap, CGL::TextureWrap tWrap);
+    static void filter2D(cgl::TextureFilter min, cgl::TextureFilter max);
+    static void wrap2D(cgl::TextureWrap sWrap, cgl::TextureWrap tWrap);
 };
 }
 

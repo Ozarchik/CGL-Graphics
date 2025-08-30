@@ -22,7 +22,7 @@
 #include <cgl/graphics/renderer.h>
 #include <cgl/graphics/animationsystem.h>
 
-namespace CGL {
+namespace cgl {
 class Application
 {
 public:
@@ -36,15 +36,15 @@ public:
     static Application& instance();
 
 private:
-    CGL::Scene m_scene;
+    cgl::Scene m_scene;
 
-    CGL::InputController m_inputController;
+    cgl::InputController m_inputController;
 
-    CGL::MainWindow m_mainwindow;
-    CGL::CommandDispatcher m_commandDispatcher;
-    CGL::Raycast m_raycast;
-    CGL::Renderer m_renderer;
-    CGL::AnimationSystem m_animation;
+    cgl::MainWindow m_mainwindow;
+    cgl::CommandDispatcher m_commandDispatcher;
+    cgl::Raycast m_raycast;
+    cgl::Renderer m_renderer;
+    cgl::AnimationSystem m_animation;
 };
 }
 

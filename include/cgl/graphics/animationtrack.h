@@ -4,7 +4,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 
-namespace CGL {
+namespace cgl {
 
 struct KeyFrame {
     float time;                  // время в секундах

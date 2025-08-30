@@ -8,24 +8,24 @@
 #include <glad/glad.h>
 #include <cgl/core/engine.h>
 
-CGL::MainWindow::MainWindow(CommandDispatcher& commandDispatcher, Renderer &renderer)
+cgl::MainWindow::MainWindow(CommandDispatcher& commandDispatcher, Renderer &renderer)
     : m_commandDispatcher(commandDispatcher), m_renderer(renderer)
 {
     UiManager::instance().init();
     UiManager::instance().setDocking(true);
 }
 
-CGL::MainWindow::~MainWindow()
+cgl::MainWindow::~MainWindow()
 {
     UiManager::instance().deinit();
 }
 
-void CGL::MainWindow::init()
+void cgl::MainWindow::init()
 {
     UiManager::instance().newFrame();
 }
 
-void CGL::MainWindow::renderCameraControlFrame()
+void cgl::MainWindow::renderCameraControlFrame()
 {
     ImGui::Begin("Camera control");
 
@@ -39,11 +39,11 @@ void CGL::MainWindow::renderCameraControlFrame()
     ImGui::End();
 }
 
-void CGL::MainWindow::renderSceneControlFrame()
+void cgl::MainWindow::renderSceneControlFrame()
 {
     ImGui::Begin("Scene control");
 
-    // CGL::Scene* scene = cglEngine().activeScene();
+    // cgl::Scene* scene = cglEngine().activeScene();
 
     static int viewIndex = 0;
     if (ImGui::Button("View toggle")) {
@@ -60,7 +60,7 @@ float imgY = 0;
 float imgW = 0;
 float imgH = 0;
 
-// void CGL::MainWindow::renderScene()
+// void cgl::MainWindow::renderScene()
 // {
 //     ImGui::Begin("3D scene (original + post)");
 
@@ -107,7 +107,7 @@ float imgH = 0;
 
 
 
-void CGL::MainWindow::renderScene()
+void cgl::MainWindow::renderScene()
 {
     ImGui::Begin("3D scene (original + post)", nullptr/*, ImGuiWindowFlags_NoMove*/);
 
@@ -174,11 +174,11 @@ void CGL::MainWindow::renderScene()
     ImGui::End();
 }
 
-void CGL::MainWindow::renderNodeControlFrame()
+void cgl::MainWindow::renderNodeControlFrame()
 {
     ImGui::Begin("Node control");
 
-    CGL::Scene* scene = cglEngine().activeScene();
+    cgl::Scene* scene = cglEngine().activeScene();
 
     float x = 0;
     float y = 0;
@@ -193,21 +193,21 @@ void CGL::MainWindow::renderNodeControlFrame()
     }
 
     if (ImGui::SliderFloat("Translate X", &x, -10.0f, 10.0f)) {
-        m_commandDispatcher.append(std::make_shared<CGL::MoveCommand>(x, y, z));
+        m_commandDispatcher.append(std::make_shared<cgl::MoveCommand>(x, y, z));
     }
 
     if (ImGui::SliderFloat("Translate Y", &y, -10.0f, 10.0f)) {
-        m_commandDispatcher.append(std::make_shared<CGL::MoveCommand>(x, y, z));
+        m_commandDispatcher.append(std::make_shared<cgl::MoveCommand>(x, y, z));
     }
 
     if (ImGui::SliderFloat("Translate Z", &z, -10.0f, 10.0f)) {
-        m_commandDispatcher.append(std::make_shared<CGL::MoveCommand>(x, y, z));
+        m_commandDispatcher.append(std::make_shared<cgl::MoveCommand>(x, y, z));
     }
 
     ImGui::End();
 }
 
-void CGL::MainWindow::render()
+void cgl::MainWindow::render()
 {
     UiManager::instance().newFrame();
 

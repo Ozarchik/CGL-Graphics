@@ -6,7 +6,7 @@
 #include <cgl/core/rendercontext.h>
 #include <map>
 
-namespace CGL {
+namespace cgl {
 class VAOBufferBuilder
 {
 public:

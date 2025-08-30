@@ -4,12 +4,12 @@
 #include <vector>
 #include <cgl/graphics/vertex/vertex.h>
 
-namespace CGL {
+namespace cgl {
 class VertexBuffer
 {
 public:
     VertexBuffer() = default;
-    VertexBuffer(const std::vector<CGL::Vertex>& vertices);
+    VertexBuffer(const std::vector<cgl::Vertex>& vertices);
     void use();
     void done();
 

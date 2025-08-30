@@ -8,12 +8,12 @@
 #include <cgl/core/camera.h>
 #include <optional>
 
-namespace CGL {
+namespace cgl {
 class Scene {
 public:
     Scene() = default;
     ~Scene();
-    void render(CGL::Camera& camera);
+    void render(cgl::Camera& camera);
     void append(const std::shared_ptr<Node> &node);
     void clear();
 

@@ -1,28 +1,28 @@
 #include <cgl/graphics/texture/texturebuilder.h>
 
-CGL::TextureBuilder &CGL::TextureBuilder::setMinFilter(int param)
+cgl::TextureBuilder &cgl::TextureBuilder::setMinFilter(int param)
 {
     return *this;
 }
 
-CGL::TextureBuilder &CGL::TextureBuilder::setImage(int width, int height, const void *data)
+cgl::TextureBuilder &cgl::TextureBuilder::setImage(int width, int height, const void *data)
 {
     return *this;
 }
 
-CGL::TextureBuilder &CGL::TextureBuilder::setMagFilter(int param)
+cgl::TextureBuilder &cgl::TextureBuilder::setMagFilter(int param)
 {
     return *this;
 }
 
-CGL::Texture CGL::TextureBuilder::done()
+cgl::Texture cgl::TextureBuilder::done()
 {
     return {};
 }
 
-CGL::TextureBuilder::TextureBuilder() {}
+cgl::TextureBuilder::TextureBuilder() {}
 
-CGL::TextureBuilder CGL::TextureBuilder::build()
+cgl::TextureBuilder cgl::TextureBuilder::build()
 {
     return TextureBuilder();
 }

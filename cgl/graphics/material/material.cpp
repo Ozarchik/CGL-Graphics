@@ -3,17 +3,17 @@
 #include <format>
 #include <iostream>
 
-CGL::Material::Material()
+cgl::Material::Material()
     : m_enabled(false)
 {
 }
 
-CGL::Material::Material(const std::vector<CGL::Texture>& textures)
+cgl::Material::Material(const std::vector<cgl::Texture>& textures)
     : m_textures(textures), m_enabled(true)
 {
 }
 
-void CGL::Material::draw(CGL::Shader& shader) {
+void cgl::Material::draw(cgl::Shader& shader) {
     unsigned int diffuseNr  = 1;
     unsigned int specularNr = 1;
     unsigned int normalNr   = 1;
@@ -22,20 +22,20 @@ void CGL::Material::draw(CGL::Shader& shader) {
     shader.setBool("useTexture", m_enabled); // for test
 
     for(unsigned int i = 0; i < m_textures.size(); i++) {
-        const CGL::Texture& texture = m_textures[i];
+        const cgl::Texture& texture = m_textures[i];
         std::string samplerName;
 
         switch (texture.type) {
-        case CGL::TextureType::Diffuse: {
+        case cgl::TextureType::Diffuse: {
             samplerName = std::format("texture_diffuse{}", diffuseNr++);
         } break;
-        case CGL::TextureType::Specular: {
+        case cgl::TextureType::Specular: {
             samplerName = std::format("texture_specular{}", specularNr++);
         } break;
-        case CGL::TextureType::Normal: {
+        case cgl::TextureType::Normal: {
             samplerName = std::format("texture_normal{}", normalNr++);
         } break;
-        case CGL::TextureType::Height: {
+        case cgl::TextureType::Height: {
             samplerName = std::format("texture_height{}", heightNr++);
         } break;
         default: {
@@ -49,12 +49,12 @@ void CGL::Material::draw(CGL::Shader& shader) {
     Texture::diactivate2D();
 }
 
-void CGL::Material::setEnabled(bool enabled)
+void cgl::Material::setEnabled(bool enabled)
 {
     m_enabled = enabled;
 }
 
-void CGL::Material::add(const Texture &texture)
+void cgl::Material::add(const Texture &texture)
 {
     m_textures.push_back(texture);
 }

@@ -10,8 +10,8 @@
 #include <cgl/core/corecontext.h>
 #include <cgl/core/transform.h>
 
-namespace CGL {
-class Camera: public CGL::Object {
+namespace cgl {
+class Camera: public cgl::Object {
 public:
     Camera();
 
@@ -40,8 +40,8 @@ public:
     glm::vec3 front() const;
     glm::mat4 getLookAt() const;
 
-    CGL::Transform getView();
-    CGL::Transform getProjection();
+    cgl::Transform getView();
+    cgl::Transform getProjection();
 
     void correctSpeed(float coeff);
     void setSpeed(float speed);

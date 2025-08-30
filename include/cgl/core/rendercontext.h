@@ -4,7 +4,7 @@
 #include <cgl/core/corecontext.h>
 #include <unordered_map>
 
-namespace CGL {
+namespace cgl {
 
 struct PrimitiveData;
 

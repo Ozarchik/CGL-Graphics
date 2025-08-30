@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-namespace CGL {
+namespace cgl {
 struct Vertex {
     glm::vec3 position;
     glm::vec3 normal;

@@ -1,18 +1,18 @@
 #include <cgl/core/buffer/vaobufferbuilder.h>
 #include <utility>
 
-CGL::VAOBufferBuilder CGL::VAOBufferBuilder::build()
+cgl::VAOBufferBuilder cgl::VAOBufferBuilder::build()
 {
     return VAOBufferBuilder();
 }
 
-CGL::VAOBufferBuilder::VAOBufferBuilder()
+cgl::VAOBufferBuilder::VAOBufferBuilder()
 {
     // m_vao->init();
     // m_vao->bind();
 }
 
-std::unique_ptr<CGL::VAOBuffer> CGL::VAOBufferBuilder::done()
+std::unique_ptr<cgl::VAOBuffer> cgl::VAOBufferBuilder::done()
 {
     // m_vao->unbind();
     std::unique_ptr<VAOBuffer> buffer = std::make_unique<VAOBuffer>();
@@ -33,7 +33,7 @@ std::unique_ptr<CGL::VAOBuffer> CGL::VAOBufferBuilder::done()
     return buffer;
 }
 
-CGL::VAOBufferBuilder& CGL::VAOBufferBuilder::setVertexData(const void *data, int size, RenderContext::DrawChangeMode mode)
+cgl::VAOBufferBuilder& cgl::VAOBufferBuilder::setVertexData(const void *data, int size, RenderContext::DrawChangeMode mode)
 {
     // m_vao->setVertexData(data, size, mode);
     if (data && size) {
@@ -47,7 +47,7 @@ CGL::VAOBufferBuilder& CGL::VAOBufferBuilder::setVertexData(const void *data, in
     return *this;
 }
 
-CGL::VAOBufferBuilder& CGL::VAOBufferBuilder::setIndexData(const void* data, int size, RenderContext::DrawChangeMode mode)
+cgl::VAOBufferBuilder& cgl::VAOBufferBuilder::setIndexData(const void* data, int size, RenderContext::DrawChangeMode mode)
 {
     // m_vao->setIndexData(data, size, mode);
     if (data && size) {
@@ -61,7 +61,7 @@ CGL::VAOBufferBuilder& CGL::VAOBufferBuilder::setIndexData(const void* data, int
     return *this;
 }
 
-CGL::VAOBufferBuilder& CGL::VAOBufferBuilder::setAttribute(int index, int components, int stride, int offset)
+cgl::VAOBufferBuilder& cgl::VAOBufferBuilder::setAttribute(int index, int components, int stride, int offset)
 {
     // m_vao->setAttribute(index, components, stride, offset);
     m_attributes[index] = {

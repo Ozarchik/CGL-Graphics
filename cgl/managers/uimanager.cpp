@@ -4,15 +4,15 @@
 #include <imgui/bindings/imgui_impl_opengl3.h>
 #include <cgl/core/corecontext.h>
 
-CGL::UiManager::UiManager() {}
+cgl::UiManager::UiManager() {}
 
-CGL::UiManager &CGL::UiManager::instance()
+cgl::UiManager &cgl::UiManager::instance()
 {
     static UiManager instance;
     return instance;
 }
 
-void CGL::UiManager::init()
+void cgl::UiManager::init()
 {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -24,11 +24,11 @@ void CGL::UiManager::init()
 
     ImGui::StyleColorsDark();
 
-    ImGui_ImplGlfw_InitForOpenGL(CGL::CoreContext::instance().handler(), true);
+    ImGui_ImplGlfw_InitForOpenGL(cgl::CoreContext::instance().handler(), true);
     ImGui_ImplOpenGL3_Init("#version 330");
 }
 
-void CGL::UiManager::newFrame()
+void cgl::UiManager::newFrame()
 {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
@@ -55,7 +55,7 @@ void CGL::UiManager::newFrame()
     }
 }
 
-void CGL::UiManager::render()
+void cgl::UiManager::render()
 {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -69,12 +69,12 @@ void CGL::UiManager::render()
     }
 }
 
-void CGL::UiManager::setDocking(bool docking)
+void cgl::UiManager::setDocking(bool docking)
 {
     m_docking = docking;
 }
 
-void CGL::UiManager::deinit()
+void cgl::UiManager::deinit()
 {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();

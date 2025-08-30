@@ -3,7 +3,7 @@
 #include <cgl/graphics/texture/textureloader.h>
 #include <cgl/managers/resourcemanager.h>
 
-CGL::Grid::Grid()
+cgl::Grid::Grid()
 {
     glm::vec3 greyLight = glm::vec3(0.2, 0.2, 0.2);
     glm::vec3 greyDark = glm::vec3(0.8, 0.8, 0.8);
@@ -11,8 +11,8 @@ CGL::Grid::Grid()
     for (int i = 0; i < sideSize; i++) {
         for (int j = 0; j < sideSize; j++) {
             light = !light;
-            std::shared_ptr<CGL::Node> node = std::make_shared<CGL::Node>(
-                std::make_shared<CGL::Rectangle>(greyLight),
+            std::shared_ptr<cgl::Node> node = std::make_shared<cgl::Node>(
+                std::make_shared<cgl::Rectangle>(greyLight),
                 ResourceManager::loadShader("grid")
             );
             m_scene.append(node);
@@ -20,7 +20,7 @@ CGL::Grid::Grid()
     }
 }
 
-void CGL::Grid::draw(CGL::Camera& camera, CGL::Transform model)
+void cgl::Grid::draw(cgl::Camera& camera, cgl::Transform model)
 {
     std::vector<std::shared_ptr<Node>> nodes = m_scene.nodes();
     int index = 0;
@@ -28,12 +28,12 @@ void CGL::Grid::draw(CGL::Camera& camera, CGL::Transform model)
     float gradient = 0.0f;
     for (int i = 0; i < sideSize; i++) {
         for (int j = 0; j < sideSize; j++) {
-            CGL::Transform modif = model;
+            cgl::Transform modif = model;
             modif.scale(10.0);
             modif.rotate(90.0f, 1.0f, 0.0f, 0.0f);
             modif.translateX(i/*/8.0f*/);
             modif.translateY(j/*/8.0f*/);
-            nodes[index]->setPrimitiveType(CGL::RenderContext::Primitive::Triangle);
+            nodes[index]->setPrimitiveType(cgl::RenderContext::Primitive::Triangle);
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
             nodes[index]->update(camera, modif);
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

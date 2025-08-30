@@ -4,13 +4,13 @@
 #include <cgl/core/command/icommand.h>
 
 
-namespace CGL {
-class MoveCommand: public CGL::ICommand
+namespace cgl {
+class MoveCommand: public cgl::ICommand
 {
 public:
     MoveCommand(float x, float y, float z);
 
-    void execute(CGL::Scene& scene) override;
+    void execute(cgl::Scene& scene) override;
 
 private:
     float m_x, m_y, m_z;

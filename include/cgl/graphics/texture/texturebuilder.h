@@ -3,7 +3,7 @@
 
 #include <cgl/graphics/texture/texture.h>
 
-namespace CGL {
+namespace cgl {
 class TextureBuilder
 {
 public:

@@ -6,7 +6,7 @@
 #include <cgl/graphics/vertex/vertex.h>
 #include <memory>
 
-namespace CGL {
+namespace cgl {
 class MeshBuilder
 {
 public:
@@ -16,7 +16,7 @@ public:
     MeshBuilder& setPrimitiveData(PrimitiveData data);
     std::shared_ptr<Mesh> done();
     
-    CGL::MeshBuilder &setVAO(std::unique_ptr<VAOBuffer> vao);
+    cgl::MeshBuilder &setVAO(std::unique_ptr<VAOBuffer> vao);
 
 private:
     MeshBuilder(const MeshType &meshType);

@@ -1,32 +1,32 @@
 #include <cgl/core/buffer/vaobuffer.h>
 #include <glad/glad.h>
 
-CGL::VAOBuffer::VAOBuffer()
+cgl::VAOBuffer::VAOBuffer()
 {
 }
 
-void CGL::VAOBuffer::init()
+void cgl::VAOBuffer::init()
 {
     glGenVertexArrays(1, &m_vao);
     glGenBuffers(1, &m_vbo);
     glGenBuffers(1, &m_ebo);
 }
 
-CGL::VAOBuffer::~VAOBuffer()
+cgl::VAOBuffer::~VAOBuffer()
 {
     glDeleteVertexArrays(1, &m_vao);
     glDeleteBuffers(1, &m_vbo);
     glDeleteBuffers(1, &m_ebo);
 }
 
-void CGL::VAOBuffer::reset()
+void cgl::VAOBuffer::reset()
 {
     // glDeleteVertexArrays(1, &m_vao);
     // glDeleteBuffers(1, &m_vbo);
     // glDeleteBuffers(1, &m_ebo);
 }
 
-CGL::VAOBuffer::VAOBuffer(VAOBuffer &&other) noexcept
+cgl::VAOBuffer::VAOBuffer(VAOBuffer &&other) noexcept
     : m_vao(other.m_vao)
     , m_vbo(other.m_vbo)
     , m_ebo(other.m_ebo)
@@ -36,7 +36,7 @@ CGL::VAOBuffer::VAOBuffer(VAOBuffer &&other) noexcept
     // other.m_ebo = 0;
 }
 
-CGL::VAOBuffer &CGL::VAOBuffer::operator=(VAOBuffer &&other) noexcept
+cgl::VAOBuffer &cgl::VAOBuffer::operator=(VAOBuffer &&other) noexcept
 {
     if (m_vao)
         glDeleteVertexArrays(1, &m_vao);
@@ -52,24 +52,24 @@ CGL::VAOBuffer &CGL::VAOBuffer::operator=(VAOBuffer &&other) noexcept
     return *this;
 }
 
-unsigned int CGL::VAOBuffer::id()
+unsigned int cgl::VAOBuffer::id()
 {
     return m_vao;
 }
 
-void CGL::VAOBuffer::bind()
+void cgl::VAOBuffer::bind()
 {
     glBindVertexArray(m_vao);
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
 }
 
-void CGL::VAOBuffer::unbind()
+void cgl::VAOBuffer::unbind()
 {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
 
-void CGL::VAOBuffer::setVertexData(const void *data, int size, RenderContext::DrawChangeMode mode)
+void cgl::VAOBuffer::setVertexData(const void *data, int size, RenderContext::DrawChangeMode mode)
 {
     bind();
     switch (mode) {
@@ -86,7 +86,7 @@ void CGL::VAOBuffer::setVertexData(const void *data, int size, RenderContext::Dr
     unbind();
 }
 
-void CGL::VAOBuffer::setIndexData(const void *data, int size, RenderContext::DrawChangeMode mode)
+void cgl::VAOBuffer::setIndexData(const void *data, int size, RenderContext::DrawChangeMode mode)
 {
     bind();
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
@@ -106,7 +106,7 @@ void CGL::VAOBuffer::setIndexData(const void *data, int size, RenderContext::Dra
     unbind();
 }
 
-void CGL::VAOBuffer::setAttribute(int index, int components, int stride, int offset)
+void cgl::VAOBuffer::setAttribute(int index, int components, int stride, int offset)
 {
     bind();
     glEnableVertexAttribArray(index);

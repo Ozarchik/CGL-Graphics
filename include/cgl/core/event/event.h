@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-namespace CGL {
+namespace cgl {
 
 // enum declaration
 

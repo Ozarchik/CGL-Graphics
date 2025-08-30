@@ -11,7 +11,7 @@
 #include <cgl/core/buffer/vaobufferbuilder.h>
 
 
-CGL::Application::Application(/*int argc, char *argv[]*/)
+cgl::Application::Application(/*int argc, char *argv[]*/)
     : m_commandDispatcher(m_scene)
     , m_mainwindow(m_commandDispatcher, m_renderer)
     , m_raycast(m_scene)
@@ -22,18 +22,18 @@ CGL::Application::Application(/*int argc, char *argv[]*/)
     createTestObjects();
 }
 
-CGL::Application::~Application()
+cgl::Application::~Application()
 {
 
 }
 
-void CGL::Application::createTestObjects()
+void cgl::Application::createTestObjects()
 {
-    CGL::Transform model;
+    cgl::Transform model;
 
-    auto meshShader = CGL::ResourceManager::loadDefaultModelShader();
+    auto meshShader = cgl::ResourceManager::loadDefaultModelShader();
     model.translateX(10.0f);
-    std::shared_ptr<CGL::Node> node = std::make_shared<CGL::Node>(meshShader, model);
+    std::shared_ptr<cgl::Node> node = std::make_shared<cgl::Node>(meshShader, model);
     node->addMesh(
         MeshBuilder::build(MeshType::Cube)
             .done(),
@@ -44,7 +44,7 @@ void CGL::Application::createTestObjects()
     );
     m_scene.append(node);
 
-    std::shared_ptr<CGL::Node> node2 = std::make_shared<CGL::Node>(meshShader, model.translateX(-3.0));
+    std::shared_ptr<cgl::Node> node2 = std::make_shared<cgl::Node>(meshShader, model.translateX(-3.0));
     node2->addMesh(
         MeshBuilder::build(MeshType::Sphere)
             .done(),
@@ -55,7 +55,7 @@ void CGL::Application::createTestObjects()
     );
     m_scene.append(node2);
 
-    std::shared_ptr<CGL::Node> node3 = std::make_shared<CGL::Node>(meshShader, model.translateX(3.0));
+    std::shared_ptr<cgl::Node> node3 = std::make_shared<cgl::Node>(meshShader, model.translateX(3.0));
     node3->addMesh(
         MeshBuilder::build(MeshType::Rectangle)
             .done(),
@@ -66,20 +66,20 @@ void CGL::Application::createTestObjects()
     );
     m_scene.append(node3);
     
-    CGL::Transform scaleTransform;
+    cgl::Transform scaleTransform;
     scaleTransform.scale(0.5);
 }
 
-CGL::Application &CGL::Application::instance()
+cgl::Application &cgl::Application::instance()
 {
     static Application app;
     return app;
 }
 
-void CGL::Application::createTerrainExample()
+void cgl::Application::createTerrainExample()
 {
-    std::shared_ptr heightMapShader = CGL::ResourceManager::loadShader("cpuheight");
-    CGL::TextureLoader loader;
+    std::shared_ptr heightMapShader = cgl::ResourceManager::loadShader("cpuheight");
+    cgl::TextureLoader loader;
     std::tuple<std::vector<unsigned char>, glm::vec3> sourceData = loader.getSourceData(ResourceManager::getTexturePath() + "/heightmap/iceland_heightmap.png");
     auto data = std::get<0>(sourceData);
     auto size = std::get<1>(sourceData);
@@ -115,10 +115,10 @@ void CGL::Application::createTerrainExample()
     }
 
 
-    auto node = std::make_shared<CGL::Node>(heightMapShader);
-    CGL::PrimitiveData primData (
-        CGL::RenderContext::Primitive::TriangleStrip,
-        CGL::RenderContext::DrawType::Indexes,
+    auto node = std::make_shared<cgl::Node>(heightMapShader);
+    cgl::PrimitiveData primData (
+        cgl::RenderContext::Primitive::TriangleStrip,
+        cgl::RenderContext::DrawType::Indexes,
         height-1,
         width*2
     );
@@ -138,7 +138,7 @@ void CGL::Application::createTerrainExample()
     m_scene.append(node);
 }
 
-void CGL::Application::run()
+void cgl::Application::run()
 {
     m_inputController.addSubscriber(&m_raycast);
 
@@ -149,7 +149,7 @@ void CGL::Application::run()
     }
 }
 
-void CGL::Application::draw()
+void cgl::Application::draw()
 {
     cglErrors();
     cglCoreContext().update();

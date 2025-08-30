@@ -2,7 +2,7 @@
 #include <glm/glm.hpp>
 #include <cmath>
 
-CGL::KeyFrame CGL::AnimationTrack::sample(float t) const {
+cgl::KeyFrame cgl::AnimationTrack::sample(float t) const {
     if (m_keys.empty())
         return KeyFrame();
 
@@ -29,17 +29,17 @@ CGL::KeyFrame CGL::AnimationTrack::sample(float t) const {
     return m_keys.back();
 }
 
-CGL::KeyFrame CGL::KeyFrame::makeRotation(float time, glm::vec3 rotation)
+cgl::KeyFrame cgl::KeyFrame::makeRotation(float time, glm::vec3 rotation)
 {
     return KeyFrame(time, glm::vec3(0.0f), rotation, glm::vec3(1.0f));
 }
 
-CGL::KeyFrame CGL::KeyFrame::makeScale(float time, glm::vec3 scale)
+cgl::KeyFrame cgl::KeyFrame::makeScale(float time, glm::vec3 scale)
 {
     return KeyFrame(time, glm::vec3(0.0f), glm::vec3(0.0f), scale);
 }
 
-CGL::KeyFrame CGL::KeyFrame::makeTranslation(float time, glm::vec3 translation)
+cgl::KeyFrame cgl::KeyFrame::makeTranslation(float time, glm::vec3 translation)
 {
     return KeyFrame(time, translation, glm::vec3(0.0f), glm::vec3(1.0f));
 }

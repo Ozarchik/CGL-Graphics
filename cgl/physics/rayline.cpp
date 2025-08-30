@@ -8,10 +8,10 @@ std::ostream& operator<<(std::ostream& os, const glm::vec3& v) {
     return os;
 }
 
-CGL::RayLine::RayLine(CGL::Camera &camera)
+cgl::RayLine::RayLine(cgl::Camera &camera)
     : m_camera(camera)
 {
-    m_shader = CGL::ResourceManager::loadShader("rayline");
+    m_shader = cgl::ResourceManager::loadShader("rayline");
 
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -26,7 +26,7 @@ CGL::RayLine::RayLine(CGL::Camera &camera)
     glBindVertexArray(0);
 }
 
-void CGL::RayLine::update(glm::vec3 origin, glm::vec3 direction, float length)
+void cgl::RayLine::update(glm::vec3 origin, glm::vec3 direction, float length)
 {
     line[0] = origin;
     line[1] = origin + direction * length;
@@ -35,7 +35,7 @@ void CGL::RayLine::update(glm::vec3 origin, glm::vec3 direction, float length)
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(line), line);
 }
 
-void CGL::RayLine::draw()
+void cgl::RayLine::draw()
 {
     m_shader->use();
     m_shader->setMat4("view", m_camera.getView());

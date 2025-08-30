@@ -6,18 +6,18 @@
 #include <cgl/core/camera.h>
 #include <cgl/core/engine.h>
 
-namespace CGL {
+namespace cgl {
 class Renderer
 {
 public:
     Renderer();
     
-    void render(CGL::Scene& scene, View &view);
+    void render(cgl::Scene& scene, View &view);
 private:
     void createTerrainExample();
 
 private:
-    CGL::Grid grid;
+    cgl::Grid grid;
 };
 }
 

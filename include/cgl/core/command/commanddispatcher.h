@@ -5,18 +5,18 @@
 #include <memory>
 #include <cgl/core/command/icommand.h>
 
-namespace CGL {
+namespace cgl {
 class CommandDispatcher
 {
 public:
     CommandDispatcher(Scene& scene);
 
-    void append(std::shared_ptr<CGL::ICommand> command);
+    void append(std::shared_ptr<cgl::ICommand> command);
     void process();
 
 private:
-    CGL::Scene& m_scene;
-    std::queue<std::shared_ptr<CGL::ICommand>> m_queue;
+    cgl::Scene& m_scene;
+    std::queue<std::shared_ptr<cgl::ICommand>> m_queue;
 };
 }
 

@@ -6,29 +6,29 @@
 #include <cgl/graphics/texture/texture.h>
 #include <cgl/graphics/shader.h>
 
-namespace CGL {
+namespace cgl {
 class Material {
     friend class MaterialBuilder;
 
 public:
     Material();
-    explicit Material(const std::vector<CGL::Texture>& textures);
-    CGL::Material& operator=(const CGL::Material& other) {
+    explicit Material(const std::vector<cgl::Texture>& textures);
+    cgl::Material& operator=(const cgl::Material& other) {
         m_textures = other.m_textures;
         m_enabled = other.m_enabled;
         return *this;
     }
 
-    void draw(CGL::Shader& shader);
+    void draw(cgl::Shader& shader);
 
     void setEnabled(bool enabled);
     void bindTexture(Shader &shader, const Texture &texture, int samplerNum);
 
 private:
-    void add(const CGL::Texture& texture);
+    void add(const cgl::Texture& texture);
 
 private:
-    std::vector<CGL::Texture> m_textures;
+    std::vector<cgl::Texture> m_textures;
     bool m_enabled = false;
 };
 }

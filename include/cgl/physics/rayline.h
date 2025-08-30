@@ -5,18 +5,18 @@
 #include <cgl/core/camera.h>
 #include <memory>
 
-namespace CGL {
+namespace cgl {
 class RayLine
 {
 public:
-    RayLine(CGL::Camera& camera);
+    RayLine(cgl::Camera& camera);
 
     void draw();
     void update(glm::vec3 origin, glm::vec3 direction, float length = 100.0f);
 
 private:
-    CGL::Camera& m_camera;
-    std::shared_ptr<CGL::Shader> m_shader;
+    cgl::Camera& m_camera;
+    std::shared_ptr<cgl::Shader> m_shader;
 
     GLuint VAO = 0, VBO = 0;
     glm::vec3 from, to;

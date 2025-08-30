@@ -3,9 +3,9 @@
 #include <cgl/graphics/texture/textureloader.h>
 #include <cgl/managers/resourcemanager.h>
 
-CGL::NormalMap::NormalMap(
-    CGL::CoreContext* context,
-    CGL::Camera* camera
+cgl::NormalMap::NormalMap(
+    cgl::CoreContext* context,
+    cgl::Camera* camera
 ): m_camera(camera), m_context(context)
 {
     // Brick
@@ -75,8 +75,8 @@ CGL::NormalMap::NormalMap(
 
     // ---------------------
 
-    tex = CGL::TextureLoader::loadFromFile("textures/brick/brick.jpg").id;
-    normalMap = CGL::TextureLoader::loadFromFile("textures/brick/brick_normal.jpg").id;
+    tex = cgl::TextureLoader::loadFromFile("textures/brick/brick.jpg").id;
+    normalMap = cgl::TextureLoader::loadFromFile("textures/brick/brick_normal.jpg").id;
 
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
@@ -102,7 +102,7 @@ CGL::NormalMap::NormalMap(
     m_shader = ResourceManager::loadShader("brick");
 }
 
-void CGL::NormalMap::use()
+void cgl::NormalMap::use()
 {
     m_shader->use();
     m_shader->setInt("brick", 0);
@@ -110,9 +110,9 @@ void CGL::NormalMap::use()
 
     m_shader->setVec3("lightPos", glm::vec3(0.5f, 1.0f, 0.3f));
     m_shader->setVec3("viewPos", m_camera->pos());
-    CGL::Transform model;
-    CGL::Transform view = m_camera->getLookAt();
-    CGL::Transform projection;
+    cgl::Transform model;
+    cgl::Transform view = m_camera->getLookAt();
+    cgl::Transform projection;
     projection.perspective(45.0f, m_context->aspect(), 1.0f, 100.0f);
     m_shader->setMat4("model", model);
     m_shader->setMat4("view", view);

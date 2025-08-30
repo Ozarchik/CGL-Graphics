@@ -1,7 +1,7 @@
 #ifndef CGL_PHYSICSSYSTEM_H
 #define CGL_PHYSICSSYSTEM_H
 
-namespace CGL {
+namespace cgl {
 
 class PhysicsSystem
 {

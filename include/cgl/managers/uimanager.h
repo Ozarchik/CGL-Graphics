@@ -1,7 +1,7 @@
 #ifndef CGL_UIMANAGER_H
 #define CGL_UIMANAGER_H
 
-namespace CGL {
+namespace cgl {
 class UiManager
 {
 public:

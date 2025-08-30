@@ -3,13 +3,13 @@
 
 #include <cgl/graphics/mesh/common/mesh.h>
 
-namespace CGL {
-class Line: public CGL::Mesh
+namespace cgl {
+class Line: public cgl::Mesh
 {
 public:
     Line();
 
-    void draw(CGL::Shader& shader) override;
+    void draw(cgl::Shader& shader) override;
 };
 }
 

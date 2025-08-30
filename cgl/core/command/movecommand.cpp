@@ -1,13 +1,13 @@
 #include <cgl/core/command/movecommand.h>
 #include <iostream>
 
-CGL::MoveCommand::MoveCommand(float x, float y, float z)
+cgl::MoveCommand::MoveCommand(float x, float y, float z)
     : m_x(x), m_y(y), m_z(z)
 {}
 
-void CGL::MoveCommand::execute(CGL::Scene& scene)
+void cgl::MoveCommand::execute(cgl::Scene& scene)
 {
-    CGL::Transform moveTransform;
+    cgl::Transform moveTransform;
     moveTransform.translate(m_x, m_y, m_z);
 
     if (scene.selectedNode().has_value())

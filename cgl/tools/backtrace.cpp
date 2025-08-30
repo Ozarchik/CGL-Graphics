@@ -20,13 +20,13 @@ void faultHandler(int signal)
 void printTrace() {}
 #endif
 
-CGL::Backtrace& CGL::Backtrace::instance()
+cgl::Backtrace& cgl::Backtrace::instance()
 {
-    static CGL::Backtrace instance;
+    static cgl::Backtrace instance;
     return instance;
 }
 
-void CGL::Backtrace::init()
+void cgl::Backtrace::init()
 {
     static bool ready = false;
     if (ready)
@@ -42,7 +42,7 @@ void CGL::Backtrace::init()
     ready = true;
 }
 
-void CGL::Backtrace::print()
+void cgl::Backtrace::print()
 {
     printTrace();
 }

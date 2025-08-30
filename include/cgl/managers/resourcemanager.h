@@ -7,18 +7,18 @@
 #include <cgl/graphics/shader.h>
 #include <cgl/graphics/scene/node.h>
 
-namespace CGL {
+namespace cgl {
 class ResourceManager
 {
 public:
     ResourceManager();
     static void init();
 
-    static CGL::Texture loadTexture(const std::string& name);
-    static std::shared_ptr<CGL::Shader> loadShader(const std::string &name);
-    static std::shared_ptr<CGL::Node> loadModel(const std::string& name);
+    static cgl::Texture loadTexture(const std::string& name);
+    static std::shared_ptr<cgl::Shader> loadShader(const std::string &name);
+    static std::shared_ptr<cgl::Node> loadModel(const std::string& name);
 
-    static CGL::Shader& loadDefaultShader();
+    static cgl::Shader& loadDefaultShader();
     static std::shared_ptr<Shader> loadDefaultModelShader();
 
     static void setTexturesDirectoryPath(const std::string& path);

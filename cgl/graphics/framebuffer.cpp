@@ -19,7 +19,7 @@ const char* framebufferStatusToString(GLenum status) {
     }
 }
 
-CGL::FrameBuffer::FrameBuffer()
+cgl::FrameBuffer::FrameBuffer()
 {
     glGenTextures(1, &m_texture);
     glGenFramebuffers(1, &m_fbo);
@@ -37,27 +37,27 @@ CGL::FrameBuffer::FrameBuffer()
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
 }
 
-CGL::FrameBuffer::~FrameBuffer()
+cgl::FrameBuffer::~FrameBuffer()
 {
     glDeleteFramebuffers(1, &m_fbo);
     glDeleteTextures(1, &m_texture);
     glDeleteRenderbuffers(1, &m_rbo);
 }
 
-void CGL::FrameBuffer::bind()
+void cgl::FrameBuffer::bind()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, m_currentFramebuffer);
     // cglCoreContext().setStencilEnable(true);
     // cglCoreContext().setStencilMask(true);
-    // cglCoreContext().setStencilFunction(CGL::CoreContext::BufferCheckFunction::Less);
+    // cglCoreContext().setStencilFunction(cgl::CoreContext::BufferCheckFunction::Less);
     cglCoreContext().setDepthEnable(true);
     // cglCoreContext().setDepthWriteMode(true);
-    // cglCoreContext().setDepthFunction(CGL::CoreContext::BufferCheckFunction::Less);
-    // cglCoreContext().setBuffersToClear(CGL::CoreContext::BuffersToClear::All);
+    // cglCoreContext().setDepthFunction(cgl::CoreContext::BufferCheckFunction::Less);
+    // cglCoreContext().setBuffersToClear(cgl::CoreContext::BuffersToClear::All);
     cglCoreContext().update();
 }
 
-void CGL::FrameBuffer::unbind()
+void cgl::FrameBuffer::unbind()
 {
     auto fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
     if (fboStatus != GL_FRAMEBUFFER_COMPLETE)
@@ -66,14 +66,14 @@ void CGL::FrameBuffer::unbind()
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void CGL::FrameBuffer::detach()
+void cgl::FrameBuffer::detach()
 {
     glDeleteFramebuffers(1, &m_fbo);
     m_fbo = 0;
     m_currentFramebuffer = 0;
 }
 
-void CGL::FrameBuffer::rescale(int width, int height)
+void cgl::FrameBuffer::rescale(int width, int height)
 {
     Texture::bind2D(m_texture, 0);
     Texture::filter2D(TextureFilter::Linear, TextureFilter::Linear);
@@ -89,17 +89,17 @@ void CGL::FrameBuffer::rescale(int width, int height)
     Texture::unbind2D(0);
 }
 
-unsigned int CGL::FrameBuffer::texture() const
+unsigned int cgl::FrameBuffer::texture() const
 {
     return m_texture;
 }
 
-void CGL::FrameBuffer::bindDefaultFramebuffer()
+void cgl::FrameBuffer::bindDefaultFramebuffer()
 {
     m_currentFramebuffer = 0;
 }
 
-void CGL::FrameBuffer::bindCustomFramebuffer()
+void cgl::FrameBuffer::bindCustomFramebuffer()
 {
     m_currentFramebuffer = m_fbo;
 }

@@ -6,7 +6,7 @@
 #include <cgl/graphics/postprocess/ipostprocesspass.h>
 #include <memory>
 
-namespace CGL {
+namespace cgl {
 class DefaultPostProcessor: public IPostProcessPass
 {
 public:
@@ -15,8 +15,8 @@ public:
     void apply(FrameBuffer& fbuffer) override;
 
 private:
-    std::shared_ptr<CGL::Shader> m_shader;
-    std::shared_ptr<CGL::Mesh> m_quad;
+    std::shared_ptr<cgl::Shader> m_shader;
+    std::shared_ptr<cgl::Mesh> m_quad;
 };
 }
 

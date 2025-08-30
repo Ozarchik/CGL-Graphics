@@ -14,7 +14,7 @@
 #include <stb/stb_image.h>
 
 
-namespace CGL {
+namespace cgl {
 
 enum class MeshType {
     Mesh,
@@ -41,15 +41,15 @@ public:
 
     virtual void setup();
     virtual void draw(Shader& Shader);
-    virtual CGL::BoundingBox boundingBox() const;
+    virtual cgl::BoundingBox boundingBox() const;
     
     void setVAO(std::unique_ptr<VAOBuffer> &&vao);
     void setPrimitiveData(PrimitiveData data);
     void setPrimitiveType(RenderContext::Primitive type);
 
 protected:
-    CGL::MeshBuffer m_buffer;
-    CGL::PrimitiveData m_primitiveData;
+    cgl::MeshBuffer m_buffer;
+    cgl::PrimitiveData m_primitiveData;
 };
 }
 

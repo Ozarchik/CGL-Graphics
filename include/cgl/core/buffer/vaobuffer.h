@@ -3,7 +3,7 @@
 
 #include <cgl/core/rendercontext.h>
 
-namespace CGL {
+namespace cgl {
 class VAOBuffer
 {
     friend class VAOBufferBuilder;

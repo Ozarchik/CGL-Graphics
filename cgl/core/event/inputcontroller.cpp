@@ -1,36 +1,36 @@
 #include <cgl/core/event/inputcontroller.h>
 #include <cgl/core/engine.h>
 
-CGL::InputController::InputController()
+cgl::InputController::InputController()
 {
-    winHandler = CGL::CoreContext::instance().handler();
+    winHandler = cgl::CoreContext::instance().handler();
 
-    glfwSetKeyCallback(winHandler, &CGL::InputController::keyCallback);
-    glfwSetCursorPosCallback(winHandler, &CGL::InputController::mouseCallback);
-    glfwSetScrollCallback(winHandler, &CGL::InputController::scrollCallback);
-    glfwSetMouseButtonCallback(winHandler, &CGL::InputController::mouseButtonCallback);
+    glfwSetKeyCallback(winHandler, &cgl::InputController::keyCallback);
+    glfwSetCursorPosCallback(winHandler, &cgl::InputController::mouseCallback);
+    glfwSetScrollCallback(winHandler, &cgl::InputController::scrollCallback);
+    glfwSetMouseButtonCallback(winHandler, &cgl::InputController::mouseButtonCallback);
     // glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
-void CGL::InputController::process()
+void cgl::InputController::process()
 {
     glfwPollEvents();
 
     if (glfwGetKey(winHandler, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(winHandler, true);
 
-    int modifiers = CGL::Key_None;
+    int modifiers = cgl::Key_None;
     if (glfwGetKey(winHandler, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS ||
         glfwGetKey(winHandler, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS) {
-        modifiers = modifiers | CGL::Key_Shift;
+        modifiers = modifiers | cgl::Key_Shift;
     }
     if (glfwGetKey(winHandler, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS ||
         glfwGetKey(winHandler, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS) {
-        modifiers = modifiers | CGL::Key_Ctrl;
+        modifiers = modifiers | cgl::Key_Ctrl;
     }
     if (glfwGetKey(winHandler, GLFW_KEY_LEFT_ALT) == GLFW_PRESS ||
         glfwGetKey(winHandler, GLFW_KEY_RIGHT_ALT) == GLFW_PRESS) {
-        modifiers = modifiers | CGL::Key_Alt;
+        modifiers = modifiers | cgl::Key_Alt;
     }
 
 
@@ -61,7 +61,7 @@ void CGL::InputController::process()
     auto checkKeys = [=](const auto& keyMap) {
         for (const auto& [glfwKey, cglKey] : keyMap) {
             if (glfwGetKey(winHandler, glfwKey) == GLFW_PRESS) {
-                keyNotify(cglKey, CGL::Key_Press, static_cast<KeyModifier>(modifiers));
+                keyNotify(cglKey, cgl::Key_Press, static_cast<KeyModifier>(modifiers));
             }
         }
     };
@@ -79,7 +79,7 @@ void CGL::InputController::process()
     }
 }
 
-void CGL::InputController::keyNotify(KeyType type, KeyAction action, KeyModifier modifier)
+void cgl::InputController::keyNotify(KeyType type, KeyAction action, KeyModifier modifier)
 {
     for (auto obj: m_objects) {
         obj->keyEventHandler(KeyEvent(type, action, modifier));
@@ -88,7 +88,7 @@ void CGL::InputController::keyNotify(KeyType type, KeyAction action, KeyModifier
     cglEngine().activeCamera()->keyEventHandler(KeyEvent(type, action, modifier));
 }
 
-void CGL::InputController::mouseNotify(int dx, int dy, CGL::MouseState state)
+void cgl::InputController::mouseNotify(int dx, int dy, cgl::MouseState state)
 {
     for (auto obj: m_objects) {
         obj->mouseEventHandler(MouseEvent(dx, dy, state));
@@ -97,14 +97,14 @@ void CGL::InputController::mouseNotify(int dx, int dy, CGL::MouseState state)
     cglEngine().activeCamera()->mouseEventHandler(MouseEvent(dx, dy, state));
 }
 
-void CGL::InputController::wheelNotify(double dx, double dy, MouseWheelState state)
+void cgl::InputController::wheelNotify(double dx, double dy, MouseWheelState state)
 {
     for (auto obj: m_objects) {
         obj->mouseWheelEventHandler(MouseWheelEvent(dx, dy, state));
     }
 }
 
-void CGL::InputController::keyCallback(GLFWwindow* window, int key, int scancode, int action, int modes)
+void cgl::InputController::keyCallback(GLFWwindow* window, int key, int scancode, int action, int modes)
 {
     if (key == GLFW_KEY_B && action == GLFW_PRESS) {
         static bool cursorEnabled = true;
@@ -133,15 +133,15 @@ void CGL::InputController::keyCallback(GLFWwindow* window, int key, int scancode
     }
 }
 
-void CGL::InputController::scrollCallback(GLFWwindow *window, double dx, double dy)
+void cgl::InputController::scrollCallback(GLFWwindow *window, double dx, double dy)
 {
     if (dy < 0)
-        wheelNotify(dx, dy, CGL::MouseWheelState{CGL::Down});
+        wheelNotify(dx, dy, cgl::MouseWheelState{cgl::Down});
     else
-        wheelNotify(dx, dy, CGL::MouseWheelState{CGL::Up});
+        wheelNotify(dx, dy, cgl::MouseWheelState{cgl::Up});
 }
 
-void CGL::InputController::mouseCallback(GLFWwindow* window, double x, double y)
+void cgl::InputController::mouseCallback(GLFWwindow* window, double x, double y)
 {
     m_mouseX = x;
     m_mouseY = y;
@@ -149,19 +149,19 @@ void CGL::InputController::mouseCallback(GLFWwindow* window, double x, double y)
     mouseNotify(m_mouseX, m_mouseY);
 }
 
-void CGL::InputController::mouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
+void cgl::InputController::mouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
 {
     if (button == GLFW_MOUSE_BUTTON_LEFT && action != GLFW_RELEASE) {
-        mouseNotify(m_mouseX, m_mouseY, CGL::MouseState{CGL::Mouse_Release, CGL::Mouse_Left});
+        mouseNotify(m_mouseX, m_mouseY, cgl::MouseState{cgl::Mouse_Release, cgl::Mouse_Left});
     }
 }
 
-void CGL::InputController::addSubscriber(Object *object)
+void cgl::InputController::addSubscriber(Object *object)
 {
     m_objects.push_back(object);
 }
 
-bool CGL::InputController::isKeySpacePressed() const
+bool cgl::InputController::isKeySpacePressed() const
 {
     return keySpacePressed;
 }

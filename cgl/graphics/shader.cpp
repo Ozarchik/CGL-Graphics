@@ -6,40 +6,40 @@
 
 #define SHADER_LOG_MODE false
 
-CGL::Shader::Shader(const std::string& vShaderPath, const std::string& fShaderPath)
+cgl::Shader::Shader(const std::string& vShaderPath, const std::string& fShaderPath)
 {
-    GLuint vId = loadShader(loadShaderFromFile(vShaderPath), CGL::VertexShader);
-    GLuint fId = loadShader(loadShaderFromFile(fShaderPath), CGL::FragmentShader);
+    GLuint vId = loadShader(loadShaderFromFile(vShaderPath), cgl::VertexShader);
+    GLuint fId = loadShader(loadShaderFromFile(fShaderPath), cgl::FragmentShader);
 
     compile(vId, fId);
 }
 
-CGL::Shader::Shader(const std::string &vShaderPath, const std::string &fShaderPath, const std::string &gShaderPath)
+cgl::Shader::Shader(const std::string &vShaderPath, const std::string &fShaderPath, const std::string &gShaderPath)
 {
-    GLuint vId = loadShader(loadShaderFromFile(vShaderPath), CGL::VertexShader);
-    GLuint fId = loadShader(loadShaderFromFile(fShaderPath), CGL::FragmentShader);
+    GLuint vId = loadShader(loadShaderFromFile(vShaderPath), cgl::VertexShader);
+    GLuint fId = loadShader(loadShaderFromFile(fShaderPath), cgl::FragmentShader);
 
     if (!gShaderPath.empty()) {
-        GLuint gId = loadShader(loadShaderFromFile(gShaderPath), CGL::GeometryShader);
+        GLuint gId = loadShader(loadShaderFromFile(gShaderPath), cgl::GeometryShader);
         compile(vId, fId, gId);
     } else {
         compile(vId, fId);
     }
 }
 
-void CGL::Shader::setSourceCode(const std::string &vShaderCode, const std::string &fShaderCode, const std::string &gShaderCode)
+void cgl::Shader::setSourceCode(const std::string &vShaderCode, const std::string &fShaderCode, const std::string &gShaderCode)
 {
-    GLuint vId = loadShader(vShaderCode, CGL::VertexShader);
-    GLuint fId = loadShader(fShaderCode, CGL::FragmentShader);
+    GLuint vId = loadShader(vShaderCode, cgl::VertexShader);
+    GLuint fId = loadShader(fShaderCode, cgl::FragmentShader);
     if (!gShaderCode.empty()) {
-        GLuint gId = loadShader(gShaderCode, CGL::GeometryShader);
+        GLuint gId = loadShader(gShaderCode, cgl::GeometryShader);
         compile(vId, fId, gId);
     } else {
         compile(vId, fId);
     }
 }
 
-GLuint CGL::Shader::loadShader(const std::string& code, ShaderType type)
+GLuint cgl::Shader::loadShader(const std::string& code, ShaderType type)
 {
     GLuint shaderId = glCreateShader(type);
 
@@ -69,7 +69,7 @@ GLuint CGL::Shader::loadShader(const std::string& code, ShaderType type)
     return shaderId;
 }
 
-std::string CGL::Shader::loadShaderFromFile(const std::string &path)
+std::string cgl::Shader::loadShaderFromFile(const std::string &path)
 {
     std::ifstream file;
     std::string code;
@@ -92,40 +92,40 @@ std::string CGL::Shader::loadShaderFromFile(const std::string &path)
     return code.c_str();
 }
 
-void CGL::Shader::use()
+void cgl::Shader::use()
 {
 	glUseProgram(m_id);
 }
 
-void CGL::Shader::done()
+void cgl::Shader::done()
 {
     glUseProgram(0);
 }
 
-GLuint CGL::Shader::id() const
+GLuint cgl::Shader::id() const
 {
 	return m_id;
 }
 
-void CGL::Shader::setModel(const Transform &model)
+void cgl::Shader::setModel(const Transform &model)
 {
     setMat4("model", model.data());
 }
 
-void CGL::Shader::setView(const Transform &view)
+void cgl::Shader::setView(const Transform &view)
 {
     setMat4("view", view.data());
 }
 
-void CGL::Shader::setProjection(const Transform &projection)
+void cgl::Shader::setProjection(const Transform &projection)
 {
     setMat4("projection", projection.data());
 }
 
-void CGL::Shader::setMVP(
-    const CGL::Transform& model,
-    const CGL::Transform& view,
-    const CGL::Transform& projection
+void cgl::Shader::setMVP(
+    const cgl::Transform& model,
+    const cgl::Transform& view,
+    const cgl::Transform& projection
 )
 {
     setMat4("model", model.data());
@@ -133,17 +133,17 @@ void CGL::Shader::setMVP(
     setMat4("projection", projection.data());
 }
 
-bool CGL::Shader::isValid() const
+bool cgl::Shader::isValid() const
 {
     return m_isValid;
 }
 
-void CGL::Shader::setBool(const std::string& name, bool state)
+void cgl::Shader::setBool(const std::string& name, bool state)
 {
     glUniform1i(getUniformLoc(name), state);
 }
 
-bool CGL::Shader::getBool(const std::string& name)
+bool cgl::Shader::getBool(const std::string& name)
 {
     int state[1];
     glGetUniformiv(m_id, getUniformLoc(name), state);
@@ -151,34 +151,34 @@ bool CGL::Shader::getBool(const std::string& name)
     return state[0];
 }
 
-void CGL::Shader::setTexture(const std::string& name, unsigned int id, int unit)
+void cgl::Shader::setTexture(const std::string& name, unsigned int id, int unit)
 {
     Texture::activate2D(unit);
     setInt(name, unit);
     Texture::bind2D(id);
 }
 
-void CGL::Shader::setInt(const std::string& name, int value)
+void cgl::Shader::setInt(const std::string& name, int value)
 {
 	glUniform1i(getUniformLoc(name), value);
 }
 
-void CGL::Shader::setFloat(const std::string& name, float value)
+void cgl::Shader::setFloat(const std::string& name, float value)
 {
 	glUniform1f(getUniformLoc(name), value);
 }
 
-void CGL::Shader::setMat4(const std::string &name, const CGL::Transform& transform) const
+void cgl::Shader::setMat4(const std::string &name, const cgl::Transform& transform) const
 {
     setMat4(name, transform.data());
 }
 
-void CGL::Shader::setMat4(const std::string &name, const glm::mat4 &mat) const
+void cgl::Shader::setMat4(const std::string &name, const glm::mat4 &mat) const
 {
     glUniformMatrix4fv(glGetUniformLocation(m_id, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
-GLint CGL::Shader::getUniformLoc(const std::string& name) const
+GLint cgl::Shader::getUniformLoc(const std::string& name) const
 {
     GLint loc = glGetUniformLocation(m_id, name.c_str());
 
@@ -189,7 +189,7 @@ GLint CGL::Shader::getUniformLoc(const std::string& name) const
     return loc;
 }
 
-void CGL::Shader::compile(GLuint vId, GLuint fId)
+void cgl::Shader::compile(GLuint vId, GLuint fId)
 {
     m_id = glCreateProgram();
     glAttachShader(m_id, vId);
@@ -209,7 +209,7 @@ void CGL::Shader::compile(GLuint vId, GLuint fId)
     }
 }
 
-void CGL::Shader::compile(GLuint vId, GLuint fId, GLuint gId)
+void cgl::Shader::compile(GLuint vId, GLuint fId, GLuint gId)
 {
     m_id = glCreateProgram();
     glAttachShader(m_id, vId);
@@ -227,17 +227,17 @@ void CGL::Shader::compile(GLuint vId, GLuint fId, GLuint gId)
     }
 }
 
-void CGL::Shader::setVec2(const std::string &name, const glm::vec2 &vec)
+void cgl::Shader::setVec2(const std::string &name, const glm::vec2 &vec)
 {
     glUniform2f(getUniformLoc(name), vec.x, vec.y);
 }
 
-void CGL::Shader::setVec3(const std::string& name, float x, float y, float z)
+void cgl::Shader::setVec3(const std::string& name, float x, float y, float z)
 {
 	glUniform3f(getUniformLoc(name), x, y, z);
 }
 
-void CGL::Shader::setVec3(const std::string& name, const glm::vec3& vec)
+void cgl::Shader::setVec3(const std::string& name, const glm::vec3& vec)
 {
 	glUniform3f(getUniformLoc(name), vec.x, vec.y, vec.z);
 }

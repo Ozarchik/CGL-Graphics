@@ -3,8 +3,8 @@
 
 #include <cgl/graphics/mesh/common/mesh.h>
 
-namespace CGL {
-class Sphere : public CGL::Mesh
+namespace cgl {
+class Sphere : public cgl::Mesh
 {
 public:
     Sphere();
