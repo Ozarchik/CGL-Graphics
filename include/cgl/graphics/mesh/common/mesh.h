@@ -16,6 +16,15 @@
 
 namespace CGL {
 
+enum class MeshType {
+    Mesh,
+    Rectangle,
+    Terrain,
+    Sphere,
+    Cube,
+    Line
+};
+
 struct BoundingBox {
     glm::vec3 min;
     glm::vec3 max;
@@ -34,7 +43,7 @@ public:
     virtual void draw(Shader& Shader);
     virtual CGL::BoundingBox boundingBox() const;
     
-    void setVAO(std::shared_ptr<VAOBuffer> vao);
+    void setVAO(std::unique_ptr<VAOBuffer> &&vao);
     void setPrimitiveData(PrimitiveData data);
     void setPrimitiveType(RenderContext::Primitive type);
 

@@ -10,15 +10,6 @@ namespace CGL {
 class MeshBuilder
 {
 public:
-    enum class MeshType {
-        Mesh,
-        Rectangle,
-        Terrain,
-        Sphere,
-        Cube,
-        Line
-    };
-
     static MeshBuilder build(MeshType meshType);
 
     MeshBuilder& bind();

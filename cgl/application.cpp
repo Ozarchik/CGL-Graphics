@@ -10,6 +10,7 @@
 #include <cgl/core/engine.h>
 #include <cgl/core/buffer/vaobufferbuilder.h>
 
+
 CGL::Application::Application(/*int argc, char *argv[]*/)
     : m_commandDispatcher(m_scene)
     , m_mainwindow(m_commandDispatcher, m_renderer)
@@ -34,7 +35,7 @@ void CGL::Application::createTestObjects()
     model.translateX(10.0f);
     std::shared_ptr<CGL::Node> node = std::make_shared<CGL::Node>(meshShader, model);
     node->addMesh(
-        MeshBuilder::build(MeshBuilder::MeshType::Cube)
+        MeshBuilder::build(MeshType::Cube)
             .done(),
         MaterialBuilder::build()
             .addTexture("terrazzo/terrazzo_17_normal-1K.png")
@@ -45,7 +46,7 @@ void CGL::Application::createTestObjects()
 
     std::shared_ptr<CGL::Node> node2 = std::make_shared<CGL::Node>(meshShader, model.translateX(-3.0));
     node2->addMesh(
-        MeshBuilder::build(MeshBuilder::MeshType::Sphere)
+        MeshBuilder::build(MeshType::Sphere)
             .done(),
         MaterialBuilder::build()
             .addTexture("planets/earth.bmp")
@@ -53,10 +54,10 @@ void CGL::Application::createTestObjects()
             .done()
     );
     m_scene.append(node2);
-    
+
     std::shared_ptr<CGL::Node> node3 = std::make_shared<CGL::Node>(meshShader, model.translateX(3.0));
     node3->addMesh(
-        MeshBuilder::build(MeshBuilder::MeshType::Rectangle)
+        MeshBuilder::build(MeshType::Rectangle)
             .done(),
         MaterialBuilder::build()
             .addTexture("brick/brick.jpg")
@@ -122,7 +123,7 @@ void CGL::Application::createTerrainExample()
         width*2
     );
 
-    std::shared_ptr<Mesh> mesh = MeshBuilder::build(CGL::MeshBuilder::MeshType::Terrain)
+    std::shared_ptr<Mesh> mesh = MeshBuilder::build(MeshType::Terrain)
             .setVAO(VAOBufferBuilder::build()
                 .setVertexData(vertices.data(), vertices.size() * sizeof(glm::vec3), RenderContext::DrawChangeMode::Static)
                 .setIndexData(indices.data(), indices.size() * sizeof(unsigned int), RenderContext::DrawChangeMode::Static)

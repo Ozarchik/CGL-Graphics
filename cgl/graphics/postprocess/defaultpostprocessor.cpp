@@ -22,7 +22,7 @@ CGL::DefaultPostProcessor::DefaultPostProcessor()
                 .setAttribute(1, 2, sizeof(glm::vec4), sizeof(glm::vec2))
                 .done();
 
-    m_quad = CGL::MeshBuilder::build(MeshBuilder::MeshType::Mesh)
+    m_quad = CGL::MeshBuilder::build(MeshType::Mesh)
             .setVAO(std::move(vao))
             .setPrimitiveData(PrimitiveData(RenderContext::Triangle, RenderContext::Elements, 6, 0))
             .done();
