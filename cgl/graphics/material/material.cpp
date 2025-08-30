@@ -1,6 +1,7 @@
 #include <cgl/graphics/material/material.h>
 #include <glad/glad.h>
 #include <format>
+#include <iostream>
 
 CGL::Material::Material()
     : m_enabled(false)
@@ -21,9 +22,7 @@ void CGL::Material::draw(CGL::Shader& shader) {
     shader.setBool("useTexture", m_enabled); // for test
 
     for(unsigned int i = 0; i < m_textures.size(); i++) {
-        glActiveTexture(GL_TEXTURE0 + i);
-
-        CGL::Texture texture = m_textures[i];
+        const CGL::Texture& texture = m_textures[i];
         std::string samplerName;
 
         switch (texture.type) {
@@ -44,12 +43,10 @@ void CGL::Material::draw(CGL::Shader& shader) {
         }
         }
 
-        shader.setInt(samplerName, i);
-
-        glBindTexture(GL_TEXTURE_2D, m_textures[i].id);
+        shader.setTexture(samplerName, texture.id, i);
     }
 
-    glActiveTexture(GL_TEXTURE0);
+    Texture::diactivate2D();
 }
 
 void CGL::Material::setEnabled(bool enabled)

@@ -22,6 +22,7 @@ public:
     void draw(CGL::Shader& shader);
 
     void setEnabled(bool enabled);
+    void bindTexture(Shader &shader, const Texture &texture, int samplerNum);
 
 private:
     void add(const CGL::Texture& texture);
