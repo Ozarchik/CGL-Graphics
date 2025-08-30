@@ -1,5 +1,10 @@
 #include <cgl/graphics/texture/texture.h>
 
+void CGL::Texture::bind2D(unsigned int id)
+{
+    glBindTexture(GL_TEXTURE_2D, id);
+}
+
 void CGL::Texture::bind2D(unsigned int id, int unit)
 {
     glActiveTexture(GL_TEXTURE0 + unit);
@@ -10,6 +15,16 @@ void CGL::Texture::unbind2D(int unit)
 {
     glActiveTexture(GL_TEXTURE0 + unit);
     glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void CGL::Texture::activate2D(int unit)
+{
+    glActiveTexture(GL_TEXTURE0 + unit);
+}
+
+void CGL::Texture::diactivate2D()
+{
+    glActiveTexture(GL_TEXTURE0);
 }
 
 void CGL::Texture::filter2D(CGL::TextureFilter min, CGL::TextureFilter max)

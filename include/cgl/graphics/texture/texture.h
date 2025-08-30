@@ -28,8 +28,11 @@ struct Texture {
     std::string path = "";
     glm::vec2 size;
 
+    static void bind2D(unsigned int id);
     static void bind2D(unsigned int id, int unit);
     static void unbind2D(int unit);
+    static void activate2D(int unit);
+    static void diactivate2D();
     static void filter2D(CGL::TextureFilter min, CGL::TextureFilter max);
     static void wrap2D(CGL::TextureWrap sWrap, CGL::TextureWrap tWrap);
 };
