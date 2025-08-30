@@ -9,7 +9,7 @@ CGL::InputController::InputController()
     glfwSetCursorPosCallback(winHandler, &CGL::InputController::mouseCallback);
     glfwSetScrollCallback(winHandler, &CGL::InputController::scrollCallback);
     glfwSetMouseButtonCallback(winHandler, &CGL::InputController::mouseButtonCallback);
-    glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    // glfwSetInputMode(winHandler, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 void CGL::InputController::process()

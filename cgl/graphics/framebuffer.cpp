@@ -1,5 +1,6 @@
 #include <cgl/graphics/framebuffer.h>
 #include <cgl/graphics/texture/texture.h>
+#include <cgl/core/rendercontext.h>
 #include <glad/glad.h>
 #include <iostream>
 
@@ -49,7 +50,7 @@ void CGL::FrameBuffer::bind()
     // cglCoreContext().setStencilEnable(true);
     // cglCoreContext().setStencilMask(true);
     // cglCoreContext().setStencilFunction(CGL::CoreContext::BufferCheckFunction::Less);
-    // cglCoreContext().setDepthEnable(true);
+    cglCoreContext().setDepthEnable(true);
     // cglCoreContext().setDepthWriteMode(true);
     // cglCoreContext().setDepthFunction(CGL::CoreContext::BufferCheckFunction::Less);
     // cglCoreContext().setBuffersToClear(CGL::CoreContext::BuffersToClear::All);
