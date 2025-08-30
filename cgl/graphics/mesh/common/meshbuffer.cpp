@@ -4,11 +4,9 @@
 #include <glad/glad.h>
 #include <iostream>
 
-CGL::MeshBuffer::MeshBuffer()
-{
-    m_vao = std::make_shared<CGL::VAOBuffer>();
+CGL::MeshBuffer::MeshBuffer() {
+    m_vao = std::make_unique<CGL::VAOBuffer>();
 }
-
 
 CGL::MeshBuffer::MeshBuffer(const std::vector<CGL::Vertex> &vertices, const std::vector<unsigned int> &indices)
     : m_vertices(vertices), m_indices(indices)
@@ -66,8 +64,7 @@ void CGL::MeshBuffer::unbind()
     m_vao->unbind();
 }
 
-void CGL::MeshBuffer::setVAO(std::shared_ptr<VAOBuffer> vao)
-{
+void CGL::MeshBuffer::setVAO(std::unique_ptr<VAOBuffer>&& vao) {
     // m_vao = std::move(vao);
-    m_vao = vao;
+    m_vao = std::move(vao);
 }

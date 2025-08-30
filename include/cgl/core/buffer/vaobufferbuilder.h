@@ -15,7 +15,7 @@ public:
     VAOBufferBuilder& setVertexData(const void* data, int size, RenderContext::DrawChangeMode mode);
     VAOBufferBuilder& setIndexData(const void* data, int size, RenderContext::DrawChangeMode mode);
     VAOBufferBuilder& setAttribute(int index, int components, int stride, int offset);
-    std::shared_ptr<VAOBuffer> done();
+    std::unique_ptr<VAOBuffer> done();
 
 private:
     VAOBufferBuilder();

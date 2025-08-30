@@ -23,10 +23,10 @@ public:
     void bind(CGL::Shader* shader = nullptr);
     void unbind();
 
-    void setVAO(std::shared_ptr<VAOBuffer> vao);
+    void setVAO(std::unique_ptr<VAOBuffer> &&vao);
 
 public:
-    std::shared_ptr<CGL::VAOBuffer> m_vao;
+    std::unique_ptr<CGL::VAOBuffer> m_vao;
     std::vector<CGL::Vertex> m_vertices;
     std::vector<unsigned int> m_indices;
 };

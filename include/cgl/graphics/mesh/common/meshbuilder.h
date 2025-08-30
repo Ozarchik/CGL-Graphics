@@ -16,7 +16,7 @@ public:
     MeshBuilder& setPrimitiveData(PrimitiveData data);
     std::shared_ptr<Mesh> done();
     
-    CGL::MeshBuilder &setVAO(std::shared_ptr<VAOBuffer> vao);
+    CGL::MeshBuilder &setVAO(std::unique_ptr<VAOBuffer> vao);
 
 private:
     MeshBuilder(const MeshType &meshType);

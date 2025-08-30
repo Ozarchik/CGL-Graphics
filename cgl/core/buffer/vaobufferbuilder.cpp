@@ -12,10 +12,10 @@ CGL::VAOBufferBuilder::VAOBufferBuilder()
     // m_vao->bind();
 }
 
-std::shared_ptr<CGL::VAOBuffer> CGL::VAOBufferBuilder::done()
+std::unique_ptr<CGL::VAOBuffer> CGL::VAOBufferBuilder::done()
 {
     // m_vao->unbind();
-    std::shared_ptr<VAOBuffer> buffer = std::make_shared<VAOBuffer>();
+    std::unique_ptr<VAOBuffer> buffer = std::make_unique<VAOBuffer>();
     buffer->init();
     buffer->bind();
 

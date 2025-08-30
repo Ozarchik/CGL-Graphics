@@ -38,10 +38,10 @@ CGL::BoundingBox CGL::Mesh::boundingBox() const
     return box;
 }
 
-void CGL::Mesh::setVAO(std::shared_ptr<VAOBuffer> vao)
+void CGL::Mesh::setVAO(std::unique_ptr<VAOBuffer>&& vao)
 {
     // m_buffer.setVAO(std::move(vao));
-    m_buffer.setVAO(vao);
+    m_buffer.setVAO(std::move(vao));
 }
 
 void CGL::Mesh::setPrimitiveData(PrimitiveData data)
