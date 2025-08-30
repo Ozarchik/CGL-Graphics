@@ -9,7 +9,7 @@ void checkErrors(const char* file, int line);
 #ifdef CGL_DEBUG_MESSAGE
 #define cglErrors() checkErrors(__FILE__, __LINE__)
 #else
-#define cglErrors()
+#define cglErrorsCheck()
 #endif
 
 

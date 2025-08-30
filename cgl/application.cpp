@@ -151,7 +151,7 @@ void cgl::Application::run()
 
 void cgl::Application::draw()
 {
-    cglErrors();
+    cglErrorsCheck();
     cglCoreContext().update();
 
     m_commandDispatcher.process();
@@ -166,7 +166,7 @@ void cgl::Application::draw()
     m_renderer.render(scene, views.front());
     views.front().postprocess();
 
-    cglErrors();
+    cglErrorsCheck();
 
     m_mainwindow.render();
 

@@ -113,10 +113,10 @@ void cgl::Node::update(cgl::Camera& camera, const Transform &parentTransform)
     m_shader->setModel(resultTransform);
     m_shader->setView(camera.getView());
     m_shader->setProjection(camera.getProjection());
-    cglErrors();
+    cglErrorsCheck();
     for (auto& m: m_renderer.m_material)
         m.draw(*m_shader);
-    cglErrors();
+    cglErrorsCheck();
     m_renderer.m_mesh->draw(*m_shader);
     for (const auto child: m_childs) {
         child->update(camera, resultTransform);

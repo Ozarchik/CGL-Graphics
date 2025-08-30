@@ -12,7 +12,7 @@ cgl::RenderContext::RenderContext()
     m_primitiveMap[cgl::Primitive::TriangleStrip] = GL_TRIANGLE_STRIP;
     m_primitiveMap[cgl::Primitive::TriangleStripAdjency] = GL_TRIANGLES_ADJACENCY;
     m_primitiveMap[cgl::Primitive::TriangleFan] = GL_TRIANGLE_FAN;
-    cglErrors();
+    cglErrorsCheck();
 }
 
 void cgl::RenderContext::setPolygoneMode(const PolygoneMode& mode)
@@ -26,12 +26,12 @@ void cgl::RenderContext::setPolygoneMode(const PolygoneMode& mode)
     } break;
     }
 
-    cglErrors();
+    cglErrorsCheck();
 }
 
 void cgl::RenderContext::render(const PrimitiveData &data)
 {
-    cglErrors();
+    cglErrorsCheck();
     switch (data.drawType) {
         case cgl::DrawType::Elements: {
             glDrawArrays(m_primitiveMap.at(data.type), data.offset, data.size);
@@ -41,7 +41,7 @@ void cgl::RenderContext::render(const PrimitiveData &data)
         } break;
         default: break;
     }
-    cglErrors();
+    cglErrorsCheck();
 }
 
 cgl::RenderContext& cgl::RenderContext::instance()

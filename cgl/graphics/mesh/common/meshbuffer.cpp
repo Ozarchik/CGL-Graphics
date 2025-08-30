@@ -20,7 +20,7 @@ cgl::MeshBuffer::MeshBuffer(const std::vector<cgl::Vertex> &vertices, const std:
         .setAttribute(2, 2, sizeof(cgl::Vertex), offsetof(cgl::Vertex, texcoord))
         .setAttribute(3, 3, sizeof(cgl::Vertex), offsetof(cgl::Vertex, color))
         .done();
-    cglErrors();
+    cglErrorsCheck();
 
     
 
