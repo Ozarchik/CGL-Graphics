@@ -51,6 +51,7 @@ public:
     void setBool(const std::string& name, bool state);
     bool getBool(const std::string &name);
 
+    void setTexture(const std::string &name, unsigned int id, int unit);
 	void setInt(const std::string& name, int value);
 	void setFloat(const std::string& name, float value);
     void setMat4(const std::string &name, const CGL::Transform& transform) const;

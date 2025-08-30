@@ -151,6 +151,13 @@ bool CGL::Shader::getBool(const std::string& name)
     return state[0];
 }
 
+void CGL::Shader::setTexture(const std::string& name, unsigned int id, int unit)
+{
+    Texture::activate2D(unit);
+    setInt(name, unit);
+    Texture::bind2D(id);
+}
+
 void CGL::Shader::setInt(const std::string& name, int value)
 {
 	glUniform1i(getUniformLoc(name), value);
