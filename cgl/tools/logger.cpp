@@ -21,3 +21,8 @@ void checkErrors(const char* file, int line)
         std::cout << error << ", file: " << file << ", line: " << line << std::endl;
     }
 }
+
+cgl::Logger cgl::cglInfo() { return Logger(LogLevel::Info); }
+cgl::Logger cgl::cglDebug() { return Logger(LogLevel::Debug); }
+cgl::Logger cgl::cglError() { return Logger(LogLevel::Error); }
+cgl::Logger cgl::cglWarning() { return Logger(LogLevel::Warning); }
