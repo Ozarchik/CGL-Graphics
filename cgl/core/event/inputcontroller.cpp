@@ -161,7 +161,17 @@ void cgl::InputController::addSubscriber(Object *object)
     m_objects.push_back(object);
 }
 
+cgl::InputController &cgl::InputController::instance()
+{
+    static InputController instance;
+    return instance;
+}
+
 bool cgl::InputController::isKeySpacePressed() const
 {
     return keySpacePressed;
+}
+
+cgl::InputController &cgl::cglInputController() {
+    return InputController::instance();
 }

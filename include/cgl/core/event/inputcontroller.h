@@ -13,9 +13,12 @@ class InputController
 public:
     InputController();
 
+public:
     void process();
     bool isKeySpacePressed() const;
     void addSubscriber(cgl::Object* object);
+
+    static InputController& instance();
 
 private:
     static void keyNotify(KeyType type, KeyAction action, KeyModifier modifier);
@@ -33,6 +36,9 @@ private:
     inline static std::vector<cgl::Object*> m_objects;
     inline static double m_mouseX, m_mouseY;
 };
+
+InputController& cglInputController();
+
 }
 
 #endif // INPUTCONTROLLER_H
