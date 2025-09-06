@@ -9,7 +9,6 @@
 namespace cgl {
 class Raycast: public cgl::Object {
 public:
-    Raycast(cgl::Scene& scene);
 
     void seek(float mouseX, float mouseY);
     void draw();
@@ -22,7 +21,6 @@ private:
     bool intersectRayAABB(glm::vec3 origin, glm::vec3 direction, BoundingBox &box, float &tMin);
 
 private:
-    cgl::Scene& m_scene;
     std::vector<cgl::RayLine> m_raylines;
 };
 }

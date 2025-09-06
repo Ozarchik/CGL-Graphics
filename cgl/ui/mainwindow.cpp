@@ -140,7 +140,6 @@ void cgl::MainWindow::renderScene()
 
     // std::cout << "y: " << pos.y - std::abs(yoffset) << std::endl;
     // std::cout << "y offset: " << yoffset << std::endl;
-    std::cout << std::endl;
 
     // std::cout << "pos: " << pos.x << ", " << pos.y << std::endl;
     // std::cout << "size: " << size.x << ", " << size.y << "\n" << std::endl;b
@@ -244,16 +243,16 @@ void cgl::MainWindow::render()
 
     static int cull = 0;
     if (ImGui::Button("cullface [front/back]")) {
-        cglCoreContext().setCullFaceEnable(true);
+        cglCoreContext().setCullFaceEnable(false);
         switch (cull++) {
             case 0: {
-                cglCoreContext().setCullFaceMode(CoreContext::CullFaceMode::Front);
+                cglCoreContext().setCullFaceMode(CullFaceMode::Front);
             } break;
             case 1: {
-                cglCoreContext().setCullFaceMode(CoreContext::CullFaceMode::Back);
+                cglCoreContext().setCullFaceMode(CullFaceMode::Back);
             } break;
             case 2: {
-                cglCoreContext().setCullFaceMode(CoreContext::CullFaceMode::All);
+                cglCoreContext().setCullFaceMode(CullFaceMode::All);
             } break;
         }
 

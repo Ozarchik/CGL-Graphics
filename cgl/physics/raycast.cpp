@@ -4,10 +4,8 @@
 #include <iostream>
 #include <cmath>
 
-cgl::Raycast::Raycast(cgl::Scene& scene)
-    : m_scene(scene)
+cgl::Raycast::Raycast()
 {
-
 }
 
 // Reference: https://antongerdelan.net/opengl/raycasting.html
@@ -37,14 +35,14 @@ void cgl::Raycast::seek(float mouseX, float mouseY)
     m_raylines.push_back(*cglEngine().activeCamera());
     m_raylines.back().update(origin, direction);
 
-    for (auto& node: m_scene.nodes()) {
+    for (auto& node: cglEngine().activeScene()->nodes()) {
 
         float t;
         cgl::BoundingBox box = node->boundingBox();
 
         static int count = 0;
         if (intersectRayAABB(origin, direction, box, t)) {
-            m_scene.setSelectedNode(node.get());
+            cglEngine().activeScene()->setSelectedNode(node.get());
             break;
         }
     }
@@ -55,6 +53,10 @@ void cgl::Raycast::seek(float mouseX, float mouseY)
 void cgl::Raycast::draw()
 {
     for (auto& rl: m_raylines) {
+        cglCoreContext().setCullFaceEnable(true);
+        cglCoreContext().setCullFaceMode(CullFaceMode::All);
+        cglCoreContext().setDepthWriteMode(true);
+        rl.update({}, {});
         rl.draw();
     }
 }

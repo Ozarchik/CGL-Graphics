@@ -29,6 +29,7 @@ void cgl::RenderContext::setPolygoneMode(const PolygoneMode& mode)
     cglErrorsCheck();
 }
 
+
 void cgl::RenderContext::render(const PrimitiveData &data)
 {
     cglErrorsCheck();

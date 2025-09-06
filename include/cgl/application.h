@@ -21,6 +21,7 @@
 #include <cgl/physics/raycast.h>
 #include <cgl/graphics/renderer.h>
 #include <cgl/graphics/animationsystem.h>
+#include <cgl/physics/physicssystem.h>
 
 namespace cgl {
 class Application
@@ -38,13 +39,11 @@ public:
 private:
     cgl::Scene m_scene;
 
-    cgl::InputController m_inputController;
-
     cgl::MainWindow m_mainwindow;
     cgl::CommandDispatcher m_commandDispatcher;
-    cgl::Raycast m_raycast;
     cgl::Renderer m_renderer;
     cgl::AnimationSystem m_animation;
+    cgl::PhysicsSystem m_physics;
 };
 }
 
