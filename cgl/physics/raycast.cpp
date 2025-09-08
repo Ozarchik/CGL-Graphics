@@ -11,6 +11,7 @@ cgl::Raycast::Raycast()
 // Reference: https://antongerdelan.net/opengl/raycasting.html
 void cgl::Raycast::seek(float mouseX, float mouseY)
 {
+    cglDebug() << "Raycast seeking";
     glm::vec4 ray_ndc;
     ray_ndc.x = (2.0f * mouseX) / (cgl::CoreContext::instance().width()) - 1.0f;
     ray_ndc.y = 1.0f - (2.0f * mouseY) / cgl::CoreContext::instance().height();
@@ -32,8 +33,10 @@ void cgl::Raycast::seek(float mouseX, float mouseY)
     glm::vec3 origin = cglEngine().activeCamera()->pos();
 
 
-    m_raylines.push_back(*cglEngine().activeCamera());
+    // m_raylines.push_back(*cglEngine().activeCamera());
+    m_raylines.emplace_back(*cglEngine().activeCamera());
     m_raylines.back().update(origin, direction);
+    // m_raylines.back().draw();
 
     for (auto& node: cglEngine().activeScene()->nodes()) {
 
@@ -46,8 +49,6 @@ void cgl::Raycast::seek(float mouseX, float mouseY)
             break;
         }
     }
-
-    std::cout << std::endl;
 }
 
 void cgl::Raycast::draw()

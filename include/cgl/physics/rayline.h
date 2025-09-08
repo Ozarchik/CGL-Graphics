@@ -2,6 +2,7 @@
 #define CGL_RAYLINE_H
 
 #include <cgl/graphics/shader.h>
+#include <cgl/core/buffer/vaobuffer.h>
 #include <cgl/core/camera.h>
 #include <memory>
 
@@ -18,9 +19,10 @@ private:
     cgl::Camera& m_camera;
     std::shared_ptr<cgl::Shader> m_shader;
 
-    GLuint VAO = 0, VBO = 0;
     glm::vec3 from, to;
     glm::vec3 line[2];
+
+    std::unique_ptr<VAOBuffer> m_vao;
 };
 }
 
