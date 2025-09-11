@@ -161,6 +161,7 @@ void cgl::Application::draw()
     auto& views = cglEngine().views();
 
     // for (auto& view: views) {
+    m_physics.update();
     m_animation.update();
     views.front().useCustomFramebuffer(true);
     m_renderer.render(scene, views.front());
