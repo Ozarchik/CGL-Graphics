@@ -14,7 +14,6 @@
 cgl::Application::Application(/*int argc, char *argv[]*/)
     : m_commandDispatcher(m_scene)
     , m_mainwindow(m_commandDispatcher, m_renderer)
-    , m_raycast(m_scene)
 {
     cglEngine().setActiveScene(&m_scene);
     // cglEngine().addView();
@@ -80,12 +79,11 @@ void cgl::Application::createTerrainExample()
 {
     std::shared_ptr heightMapShader = cgl::ResourceManager::loadShader("cpuheight");
     cgl::TextureLoader loader;
-    std::tuple<std::vector<unsigned char>, glm::vec3> sourceData = loader.getSourceData(ResourceManager::getTexturePath() + "/heightmap/iceland_heightmap.png");
-    auto data = std::get<0>(sourceData);
-    auto size = std::get<1>(sourceData);
-    int width = size.x;
-    int height = size.y;
-    int nChannels = size.z;
+    cgl::TextureData textureData = loader.getTextureData(ResourceManager::getTexturePath() + "/heightmap/iceland_heightmap.png");
+    auto data = textureData.data;
+    int width = textureData.width;
+    int height = textureData.height;
+    int nChannels = textureData.components;
 
     int rez = 1;
 

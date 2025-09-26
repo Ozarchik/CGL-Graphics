@@ -7,8 +7,17 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <optional>
 
 namespace cgl {
+
+struct TextureData {
+    std::vector<unsigned char> data;
+    int width;
+    int height;
+    int components;
+};
+
 class TextureLoader
 {
 public:
@@ -16,7 +25,23 @@ public:
 
     static cgl::Texture loadFromFile(const std::string &filepath, bool flipVertical = false);
     static unsigned int loadCubmap(const std::string &dir, const std::vector<std::string> &faces);
-    std::tuple<std::vector<unsigned char>, glm::vec3> getSourceData(const std::string &filepath, bool flipVertical = false);
+    TextureData getTextureData(const std::string &filepath, bool flipVertical = false);
+
+private:
+    class StbiImage {
+    public:
+        StbiImage(const std::string& path, bool flipVerticaly = true);
+        ~StbiImage();
+        bool isValid();
+
+        TextureData makeTextureData();
+
+    private:
+        unsigned char* data = nullptr;
+        int width;
+        int height;
+        int components;
+    };
 
 private:
     inline static std::unordered_map<std::string, cgl::Texture> m_loadedTextures;
