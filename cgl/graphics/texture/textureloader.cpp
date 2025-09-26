@@ -58,17 +58,17 @@ unsigned int cgl::TextureLoader::loadCubmap(const std::string &dir, const std::v
     glGenTextures(1, &texId);
     glBindTexture(GL_TEXTURE_CUBE_MAP, texId);
 
-    int w, h, channels;
-    unsigned char* data;
+    auto texImage2D = [](const TextureData& texData, int coord) {
+        glTexImage2D (
+            GL_TEXTURE_CUBE_MAP_POSITIVE_X + coord, 0,
+            GL_RGB, texData.width, texData.height, 0, GL_RGB, GL_UNSIGNED_BYTE, texData.data.data()
+        );
+    };
 
     for (unsigned int i = 0; i < faces.size(); i++) {
-        data = stbi_load((dir + "/" + faces[i]).c_str(), &w, &h, &channels, 0);
-        glTexImage2D (
-            GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0,
-            GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, data
-        );
+        StbiImage image(dir + "/" + faces[i]);
 
-        stbi_image_free(data);
+        texImage2D(image.makeTextureData(), i);
     }
 
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -80,17 +80,17 @@ unsigned int cgl::TextureLoader::loadCubmap(const std::string &dir, const std::v
     return texId;
 }
 
-cgl::TextureLoader::StbiImage::StbiImage(const std::string &path, bool flipVerticaly) {
+cgl::TextureLoader::StbiImage::StbiImage(const std::string &path, bool flipVerticaly)
+    : width(0), height(0), components(0)
+{
     stbi_set_flip_vertically_on_load(flipVerticaly);
     data = stbi_load(path.c_str(), &width, &height, &components, 0);
     if (!data) {
         std::cout << "Texture failed to load at path: " << path << std::endl;
-        // stbi_image_free(data);
     }
 }
 
 cgl::TextureLoader::StbiImage::~StbiImage() {
-    // if (data)
     stbi_image_free(data);
 }
 

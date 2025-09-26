@@ -73,7 +73,6 @@ std::string cgl::Shader::loadShaderFromFile(const std::string &path)
 {
     std::ifstream file;
     std::string code;
-    GLuint shaderId;
 
     file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
