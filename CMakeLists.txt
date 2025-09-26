@@ -99,7 +99,7 @@ install(
     DIRECTORY
     ${CMAKE_SOURCE_DIR}/shaders
     ${CMAKE_SOURCE_DIR}/textures
-    ${CMAKE_SOURCE_DIR}/assets
+    # ${CMAKE_SOURCE_DIR}/assets
     DESTINATION ${CMAKE_BINARY_DIR}
 )
 

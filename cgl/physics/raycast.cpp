@@ -4,9 +4,6 @@
 #include <iostream>
 #include <cmath>
 
-cgl::Raycast::Raycast()
-{
-}
 
 // Reference: https://antongerdelan.net/opengl/raycasting.html
 void cgl::Raycast::seek(float mouseX, float mouseY)

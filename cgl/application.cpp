@@ -140,8 +140,6 @@ void cgl::Application::createTerrainExample()
 
 void cgl::Application::run()
 {
-    m_inputController.addSubscriber(&m_raycast);
-
     createTerrainExample();
     while (cglCoreContext().isAlive()) {
         cglCoreContext().calcDeltaTime();
@@ -155,22 +153,22 @@ void cgl::Application::draw()
     cglCoreContext().update();
 
     m_commandDispatcher.process();
-    m_inputController.process();
+    cglInputController().process();
 
     auto& scene = *cglEngine().activeScene();
     auto& views = cglEngine().views();
 
     // for (auto& view: views) {
-    m_physics.update();
-    m_animation.update();
-    views.front().useCustomFramebuffer(true);
+    // m_physics.update();
+    // m_animation.update();
+    views.front().useCustomFramebuffer(false);
     m_renderer.render(scene, views.front());
-    views.front().postprocess();
+    // views.front().postprocess();
 
     cglErrorsCheck();
 
-    m_mainwindow.render();
+    // m_mainwindow.render();
 
-    m_inputController.process();
+    cglInputController().process();
     cglCoreContext().swapBuffers();
 }

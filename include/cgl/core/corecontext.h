@@ -10,33 +10,33 @@
 
 namespace cgl {
 
+enum class BuffersToClear {
+    NoClear = 0,
+    Color = GL_COLOR_BUFFER_BIT,
+    Depth = GL_DEPTH_BUFFER_BIT,
+    Stecil = GL_STENCIL_BUFFER_BIT,
+    All = Color | Depth | Stecil
+};
+
+enum class BufferCheckFunction {
+    Never = GL_NEVER,
+    Always = GL_ALWAYS,
+    Equal = GL_EQUAL,
+    NotEqual = GL_NOTEQUAL,
+    Less = GL_LESS,
+    LessEqual = GL_LEQUAL,
+    Great = GL_GREATER,
+    GreatEqual = GL_GEQUAL,
+};
+
+enum class CullFaceMode {
+    Front = GL_FRONT,
+    Back = GL_BACK,
+    All = GL_FRONT_AND_BACK
+};
+
 class CoreContext {
 public:
-    enum class BuffersToClear {
-        NoClear = 0,
-        Color = GL_COLOR_BUFFER_BIT,
-        Depth = GL_DEPTH_BUFFER_BIT,
-        Stecil = GL_STENCIL_BUFFER_BIT,
-        All = Color | Depth | Stecil
-    };
-
-    enum class BufferCheckFunction {
-        Never = GL_NEVER,
-        Always = GL_ALWAYS,
-        Equal = GL_EQUAL,
-        NotEqual = GL_NOTEQUAL,
-        Less = GL_LESS,
-        LessEqual = GL_LEQUAL,
-        Great = GL_GREATER,
-        GreatEqual = GL_GEQUAL,
-    };
-
-    enum class CullFaceMode {
-        Front = GL_FRONT,
-        Back = GL_BACK,
-        All = GL_FRONT_AND_BACK
-    };
-
     ~CoreContext();
     CoreContext(const CoreContext& other) = delete;
     CoreContext& operator=(const CoreContext& other) = delete;
