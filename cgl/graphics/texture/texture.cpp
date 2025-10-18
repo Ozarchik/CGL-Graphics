@@ -38,3 +38,29 @@ void cgl::Texture::wrap2D(cgl::TextureWrap sWrap, cgl::TextureWrap tWrap)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, sWrap);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, tWrap);
 }
+
+void cgl::Texture2D::bind()
+{
+    glBindTexture(GL_TEXTURE_2D, id);
+}
+
+void cgl::Texture2D::unbind()
+{
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void cgl::Texture2D::setFilter(TextureFilter min, TextureFilter max)
+{
+    bind();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, max);
+    unbind();
+}
+
+void cgl::Texture2D::setWrap(TextureWrap sWrap, TextureWrap tWrap)
+{
+    bind();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, sWrap);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, tWrap);
+    unbind();
+}

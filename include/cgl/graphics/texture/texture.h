@@ -36,6 +36,23 @@ struct Texture {
     static void filter2D(cgl::TextureFilter min, cgl::TextureFilter max);
     static void wrap2D(cgl::TextureWrap sWrap, cgl::TextureWrap tWrap);
 };
+
+struct Texture2D {
+    void bind();
+    void unbind();
+
+    void setFilter(cgl::TextureFilter min, cgl::TextureFilter max);
+    void setWrap(cgl::TextureWrap sWrap, cgl::TextureWrap tWrap);
+
+// TODO: need to change to private
+    unsigned int id = -1;
+    TextureType type = TextureType::Diffuse;
+    std::string path = "";
+    glm::vec2 size;
+
+    cgl::TextureFilter min, max;
+    cgl::TextureWrap swrap, twrap;
+};
 }
 
 #endif

@@ -3,6 +3,8 @@
 #include <cgl/core/rendercontext.h>
 #include <glad/glad.h>
 #include <iostream>
+#include "cgl/core/gpustate.h"
+
 
 const char* framebufferStatusToString(GLenum status) {
     switch(status) {
@@ -21,7 +23,10 @@ const char* framebufferStatusToString(GLenum status) {
 
 cgl::FrameBuffer::FrameBuffer()
 {
-    glGenTextures(1, &m_texture);
+    glGenTextures(1, &m_texture.id);
+    m_texture.setFilter(TextureFilter::Linear, TextureFilter::Linear);
+    m_texture.setWrap(TextureWrap::EdgeClamp, TextureWrap::EdgeClamp);
+
     glGenFramebuffers(1, &m_fbo);
     m_currentFramebuffer = m_fbo;
 
@@ -40,7 +45,7 @@ cgl::FrameBuffer::FrameBuffer()
 cgl::FrameBuffer::~FrameBuffer()
 {
     glDeleteFramebuffers(1, &m_fbo);
-    glDeleteTextures(1, &m_texture);
+    glDeleteTextures(1, &m_texture.id);
     glDeleteRenderbuffers(1, &m_rbo);
 }
 
@@ -50,7 +55,8 @@ void cgl::FrameBuffer::bind()
     // cglCoreContext().setStencilEnable(true);
     // cglCoreContext().setStencilMask(true);
     // cglCoreContext().setStencilFunction(cgl::CoreContext::BufferCheckFunction::Less);
-    cglCoreContext().setDepthEnable(true);
+    // cglCoreContext().setDepthEnable(true);
+    cgl::GpuState::instance().setDepthEnable(true);
     // cglCoreContext().setDepthWriteMode(true);
     // cglCoreContext().setDepthFunction(cgl::CoreContext::BufferCheckFunction::Less);
     // cglCoreContext().setBuffersToClear(cgl::CoreContext::BuffersToClear::All);
@@ -75,23 +81,25 @@ void cgl::FrameBuffer::detach()
 
 void cgl::FrameBuffer::rescale(int width, int height)
 {
-    Texture::bind2D(m_texture, 0);
-    Texture::filter2D(TextureFilter::Linear, TextureFilter::Linear);
-    Texture::wrap2D(TextureWrap::EdgeClamp, TextureWrap::EdgeClamp);
+    m_texture.bind();
+    // Texture::bind2D(m_texture, 0);
+    // Texture::filter2D(TextureFilter::Linear, TextureFilter::Linear);
+    // Texture::wrap2D(TextureWrap::EdgeClamp, TextureWrap::EdgeClamp);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_texture, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_texture.id, 0);
 
     glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, width, height);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
-    Texture::unbind2D(0);
+    // Texture::unbind2D(0);
+    m_texture.unbind();
 }
 
 unsigned int cgl::FrameBuffer::texture() const
 {
-    return m_texture;
+    return m_texture.id;
 }
 
 void cgl::FrameBuffer::bindDefaultFramebuffer()
